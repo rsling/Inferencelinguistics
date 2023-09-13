@@ -1,0 +1,51 @@
+% !Rnw root = ../main.Rnw
+<<setupfisher, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Fisher}
+\label{sec:fisher}
+
+\section{Some typestting tests}
+
+\citet{Mayo2018}
+
+% \pagebreak
+%
+In this book, code listing are displayed as inline blocks such as the following simple code which simulates t-tests under the null pothesis in order to demonstrate that all p-values have equal probability under the null.
+
+<<simttest>>=
+# Set simulation parameters.
+nsim  <- 1000
+n     <- 100
+meen  <- 0
+stdev <- 1
+
+# Data structure for results.
+sims <- rep(NA, nsim)
+
+# Simulations.
+for (i in 1:nsim) {
+  a <- rnorm(n, mean = meen, sd = stdev)
+  b <- rnorm(n, mean = meen, sd = stdev)
+  p <- t.test(a,b)$p.value
+  sims[i] <- p
+}
+@
+
+
+<<simttestscatter, fig.pos="H", fig.height=4, fig.cap="Scatterplot of p-values.", echo=FALSE>>=
+plot(sims, pch=19, cex=0.1, col = "darkgreen")
+@
+
+
+<<simttesthist, fig.pos="H", fig.height=4, fig.cap="Histogram of p-values.", echo=FALSE>>=
+hist(sims, breaks = 100)
+@
+
+See Figure~\ref{fig:simttestecdf} for the cumulative density of p-values under the null in a series of \Sexpr{nsim} t-tests.
+This was plotted using the following command:
+
+<<echo=TRUE, fig.keep="none">>=
+<<simttestecdf>>
+@

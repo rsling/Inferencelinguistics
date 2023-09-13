@@ -1,0 +1,215 @@
+
+Subject:
+case-control / retrospective sampling
+From:
+Felix Bildhauer <felix.bildhauer@fu-berlin.de>
+Date:
+31.05.19, 22:15
+To:
+Roland Schäfer <roland.schaefer@fu-berlin.de>
+
+R.,
+
+> > PS: Bitte die Statistiksachen bei Gel. schicken.
+
+Also,
+
+McCullagh & Nelder (1989, 111--114) schreiben:
+
+"One important property of the logistic function not shared by the other
+link functions is that differences on the logistic scale can be
+estimated regardless of whether the data are sampled prospectively or
+retrospectively. [...] In other words, although the data have been
+sampled retrospectively, the logistic model (4.10) continues to apply
+with the same coefficients β but a different intercept. It follows
+therefore, that the logistic models described here in the context of
+prospective studies can be applied to retrospective studies provided
+that the intercept is treated as a nuisance parameter. [...] No such
+simple inversion exists for probit or complementary log-log models."
+
+Auch bei Agresti (2013, 168--169).
+
+Eine weitere Referenz, die dauernd in dem Zusammehang genannt wird, ist
+das Buch von Hosmer & Lemeshow (1982), da habe ich aber nicht reingeguckt.
+
+In Nagelkerke et al. (2005) drehen sie das ganze rum und benutzen es als
+Test (auf Modellfehlspezifikation). Das war das Paper, das mich
+überhaupt erst auf die Spur gebracht hat.
+
+Anderson (1972), Mantel (1973), Farewell (1979) und Prentice & Pike
+(1979) haben die mathematischen Herleitungen. Ich konnte die nicht ohne
+Weiteres komplett lesen/verstehen.
+
+Greenland (1981) (ja der Greenland) versucht, trotz allem was über
+risk/incidence/base rate zu sagen.
+
+King & Zeng (2002) versuchen, irgendwie Bayesisch die unbekannte base
+rate (u.a.) in case-control Studien zu bestimmen.
+
+---
+
+Bei den Pseudo-R^2 ist es die Fußnote in Cragg & Uhler (1970) auf Seite
+400. Nagelkerke (1991) ist *das* Paper zum Pseudo-R^2.
+
+---
+
+Die ganze Literatur sollte in meinem (mit dir irgendwann einmal
+geteilten) "stats"-Order in der Winchesterwolke sein.
+
+
+Gr.,
+F.
+
+
+##############
+Case-control
+##############
+
+
+@book{McCullaghNelder1989,
+	Address = {London and New York},
+	Author = {McCullagh, P. and Nelder, J.A. },
+	Edition = {2nd},
+	Publisher = {Chapman \& Hall},
+	Series = {Monographs on Statistics and Applied Probability},
+	Title = {Generalized Linear Models},
+	Volume = {37},
+	Year = {1989}}
+
+
+@book{Agresti2013,
+	Address = {Hoboken},
+	Author = {Alan Agresti},
+	Edition = {3rd},
+	Publisher = {Wiley},
+	Title = {Categorical Data Analysis},
+	Year = {2013}}
+
+
+@article{Anderson1972,
+	Author = {J. A. Anderson},
+	Journal = {Biometrika},
+	Number = {1},
+	Pages = {19--35},
+	Title = {Separate Sample Logistic Discrimination},
+	Volume = {59},
+	Year = {1972}}
+
+
+@article{Mantel1973,
+	Author = {Nathan Mantel},
+	Journal = {Biometrics},
+	Number = {3},
+	Pages = {479--486},
+	Title = {Synthetic Retrospective Studies and Related Topics},
+	Volume = {29},
+	Year = {1973}}
+
+@article{Farewell1979,
+	Author = {V. T. Farewell},
+	Journal = {Biometrika},
+	Number = {1},
+	Pages = {27--32},
+	Title = {Some Results on the Estimation of Logistic Models Based on
+Retrospective Data},
+	Volume = {66},
+	Year = {1979}}
+
+
+@article{PrenticePike1979,
+	Author = {R. L. Prentice and R. Pyke},
+	Journal = {Biometrika},
+	Number = {3},
+	Pages = {403--411},
+	Title = {Logistic Disease Incidence Models and Case-Control Studies},
+	Volume = {66},
+	Year = {1979}}
+
+
+@article{Greenland1981,
+	Author = {Sander Greenland},
+	Journal = {Journal of Chronic Diseases},
+	Number = {9},
+	Pages = {445--453},
+	Title = {Multivariate estimation of exposure-specific incidence from
+case-control studies},
+	Volume = {34},
+	Year = {1981}}
+
+
+@article{Nagelkerke-ea1995,
+	Author = {Nagelkerke, Nico J. D. and Moses, Stephen and Plummer,
+Francis A. and Brunham, Robert C. and Fish, David},
+	Journal = {Statistics in Medicine},
+	Number = {8},
+	Pages = {769-775},
+	Title = {Logistic regression in case-control studies: The effect of
+using independent as dependent variables},
+	Volume = {14},
+	Year = {1995}}
+
+
+
+@article{Nagelkerke-ea2005,
+	Author = {Nico Nagelkerke and Jeroen Smits and  Saskia le Cessie and
+Hans {van Houwelingen}},
+	Journal = {Statistics in Medicine},
+	Pages = {121--130},
+	Title = {Testing goodness-of-fit of the logistic regression model in
+case-control studies using sample reweighting},
+	Volume = {24},
+	Year = {2005}}
+
+
+
+@article{KingZeng2002,
+	Author = {Gary King and Langche Zeng},
+	Journal = {Statistics in Medicine},
+	Pages = {1409--1427},
+	Title = {Estimating risk and rate levels, ratios and differences in
+case-control studies},
+	Volume = {21},
+	Year = {2002}}
+
+
+
+##############
+Pseudo R^2
+##############
+
+
+@article{CraggUhler1970,
+	Author = {John G. Cragg and Russell S. Uhler},
+	Journal = {The Canadian Journal of Economics / Revue canadienne
+d'Economique},
+	Number = {3},
+	Pages = {386--406},
+	Title = {The Demand for Automobiles},
+	Volume = {3},
+	Year = {1970}}
+
+
+@article{Nagelkerke1991,
+	Author = {Nicolaas Jan Dirk Nagelkerke},
+	Journal = {Biometrika},
+	Number = {3},
+	Pages = {691--692},
+	Title = {A Note on a General Definition of the Coefficient of
+Determination},
+	Volume = {78},
+	Year = {1991}}
+
+
+@book{Long1997,
+	Address = {Thousand Oaks},
+	Author = {J. Scott Long},
+	Date-Added = {2016-10-14 23:38:59 +0000},
+	Date-Modified = {2016-10-14 23:38:59 +0000},
+	Publisher = {Sage},
+	Title = {Regression models for categorical and limited dependent
+variables},
+	Year = {1997}}
+
+
+-- PGP public key: https://felixbildhauer.de/6928C71D.asc
+

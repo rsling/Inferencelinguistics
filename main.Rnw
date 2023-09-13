@@ -1,0 +1,59 @@
+\documentclass[output=book
+  , colorlinks
+  , citecolor=darkblue
+  , nonewtxmath
+%  , output=final
+%  , nonflat
+%  , modfonts
+%  , colorlinks
+%  , showindex
+%  , draftmode
+%  , tblseight
+		  ]{langscibook}
+
+\input{localmetadata.tex}
+\input{localpackages.tex}
+\input{localhyphenation.tex}
+\input{localcommands.tex}
+
+\bibliography{localbibliography}
+
+\begin{document}
+
+\input{localcommands.tex}
+\maketitle
+\frontmatter
+\currentpdfbookmark{Contents}{name} % adds a PDF bookmark
+{\sloppy\tableofcontents}
+%% remove the % in the following lines if your book has these elements
+%  \include{chapters/preface}
+%  \include{chapters/acknowledgments}
+%  \include{chapters/abbreviations}
+\mainmatter
+
+<< setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+
+opts_chunk$set(cache.path='cache/',
+               fig.path='figures/',
+               fig.pos='H', message=FALSE,
+               cache=TRUE, warning=FALSE,
+               fig.align='center', comment ="",
+	             background='#F7F7F7',
+	             tidy=FALSE,
+               formatR.arrow = TRUE)
+
+
+render_listings()
+
+@
+
+\part{Statistical Inference}
+\label{part:statisticalinference}
+
+<<child="chapters/Fisher.Rnw">>=
+@
+
+\input{localseealso.tex}
+\input{backmatter.tex}
+\end{document}

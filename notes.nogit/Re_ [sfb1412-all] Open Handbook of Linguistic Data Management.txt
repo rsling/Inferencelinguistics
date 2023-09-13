@@ -1,0 +1,94 @@
+From: Felix Bildhauer <felix.bildhauer@hu-berlin.de>
+Subject: Re: [sfb1412-all] Open Handbook of Linguistic Data Management
+Date: 14. January 2022 at 00:13:02 CET
+To: Roland Schäfer <roland.schaefer@hu-berlin.de>
+
+R.,
+
+noch kurz als Nachklapp zu Dienstag (als es um prediction als model fit ging). Das hier ist aus Hosmer, Lemeshow & Sturdivant (2013), dies das auch an Beispielen durchrechnen:
+
+"[...] the ability of a fitted model to discriminate between the two outcomes is more a function of the difference between the groups and magnitudes of the slope coefficients than the logistic model itself. Thus, as noted, we can have well fitting models that discriminate poorly, just as we could have models with poor fit that discriminate well." (p. 174)
+
+
+
+Die Sache mit model selection bias ist kontrovers. Ich habe so ein Papier (mehr eine Anleitung) von Bolker et al. gelesen, die sagen, es ist eine Möglichkeit.
+
+
+Burnham & Anderson (2002) sagen, es kommt aufs Modell und die Daten an, ob es viel ausmacht und viel Bias es gibt. Schlimm kann es aber wohl werden, wenn die unabhängigen Variablen korreliert sind. B&A haben ein ganzes Kapitel dazu und einen Haufen Referenzen. Ich fürchte, bevor man sowas in einem Review so ganz apodiktisch verwirft, muss man auf diese Sachen auch noch mal kurz einen Blick werfen.
+
+Gr.,
+F.
+
+
+
+
+@book{HosmerLemeshow2013,
+	author = {David W. Hosmer and Stanley Lemeshow and Rodney X. Sturdivant},
+	edition = {3rd},
+	publisher = {Wiley},
+	title = {Applied logistic regression},
+	year = {2013}}
+
+
+
+@article{Bolker-ea2008,
+	author = {Benjamin M. Bolker and  Mollie E. Brooks and Connie J. Clark and Shane W. Geange and John R. Poulsen  and M. Henry H. Stevens and Jada-Simone S. White},
+	journal = {Trends in Ecology and Evolution},
+	number = {3},
+	pages = {127--135},
+	title = {Generalized linear mixed models: a practical guide for ecology and evolution},
+	volume = {24},
+	year = {2008}}
+
+
+Am 13.01.22 um 16:40 schrieb Roland Schäfer:
+F.
+Das war leider liegen geblieben. Aber gelesen hatte ich es mit großer Freude bzw. dieser Mischung aus Entsetzen und Freude, dass man wieder mal klar besser als andere ist (wovon man aber komischerweise nie etwas hat).
+Gr.
+R.
+On 5. Jan 2022, at 17:19, Felix Bildhauer <felix.bildhauer@hu-berlin.de> wrote:
+
+R.,
+
+„23: Managing Data for Writing a Reference Grammar“
+Das ist doch wichtig für dich als IDS-Korpusfritze.
+
+na dann lese ich das bei Gel. mal.
+
+Besonders „gespannt“ bin ich auf Kapitel 38.
+
+Von St. Th. Gr.
+
+Der wurde hier auch wieder mehrmals erwähnt in einem Paper, das ich gerade reviewe. Da drin (in dem Papier) gibts so Preziosen wie:
+
+"The variable [...] was modeled as a fifth degree polynomial function on the basis of pretests, which showed this nonlinear function to best predict the dependent variable [...]"
+
+"Pretest" heißt vermutlich Rumprobieren bis die Ärztin kommt, auf denselben Daten, auf denen hinterher "getestet" wird. Wird aber nicht weiter erklärt.
+
+
+"In a first step, I consequently calculated a maximal logistic
+regression model in R predicting the dependent variable from the three variables described in Table 3 and all possible interactions between
+these variables."
+
+Dreifach Interaktionen mit Variablen, die als 5th degree polynomial modelliert sind. Vermutlich super interpretierbar.
+
+
+Das Beste:
+
+"In order to select the most parsimonious model, I then employed an automatic backward selection process using the function pdredge from the R package MuMIn"
+
+Wenn die Funktion schon "dredge" heißt. Die erzeugt *alle* möglichen genesteten Modelle und rankt sie nach einem Lieblingskriterium (AIC z.B., aber nicht dass das in dem Papier gesagt würde.) Krasses Beispiel für post-data model selection, Inferenz kann man damit so ziemlich vergessen. Warum man überhaupt ein `most parsimoneous' *statisisches* Modell in der Linguistik haben will, sei auch mal dahingestellt.
+
+(Die drei Lösungen aus der Literatur, die ich gestern nochmal bemüht habe, von einfach nach komplex: 1. keine Modellselektion, alles drin lassen; 2. Daten vorher splitten; 3. Methoden benutzen, die die Modellstruktur selbst als random behandeln und Standardfehler entsprechend anpassen).
+
+Und dann ist die ganze Zeit von "prediction" die Rede. Ohne dass das auch nur einmal an ungesehenen Daten ausprobiert wird, auch keine Kreuzvalidierung o.ä.
+
+Und was in dem Papier gezeigt werden soll, ist wohl, dass es eigentlich keine wirklich freie Variation gibt und wenn man es nur genau genug modelliert alles komplett "predictable" wird. U.a. wird eingebracht, dass die Modellanpassung deutlich besser wird, wenn man nur komplex genuge Modelle benutzt. Zum Beipiel glm vs glmm (Griesens Beispiel übrigens). Na klar wird das R^2 dann besser, aber damit hat man ja einen Teil der nicht-"erklärten" Variabilität einfach in einen anderen Fehlerterm geschoben ("Item A oder Versuchsperson B sind halt, wie sie sind und benehmen sich A-haft und B-haft").
+
+Ts.Ts.
+
+Gr.,
+F.
+
+
+
