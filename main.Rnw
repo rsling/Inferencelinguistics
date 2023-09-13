@@ -1,3 +1,10 @@
+
+%
+% Use make only, no direct compilation.
+%
+% See localfontconfig.Rnw.template before compiling.
+%
+
 \documentclass[output=book
   , colorlinks
   , citecolor=darkblue
@@ -31,7 +38,20 @@
 %  \include{chapters/abbreviations}
 \mainmatter
 
-<< setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+<<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+
+require(lattice)
+require(lme4)
+require(fmsb)
+require(MuMIn)
+require(effects)
+require(beanplot)
+require(showtext)
+require(xtable)
+require(plyr)
+require(vcd)
+require(gridExtra)
+
 opts_knit$set(self.contained=FALSE)
 
 opts_chunk$set(cache.path='cache/',
@@ -45,7 +65,9 @@ opts_chunk$set(cache.path='cache/',
 
 
 render_listings()
+@
 
+<<child="localfontconfig.Rnw">>=
 @
 
 \part{Statistical Inference}

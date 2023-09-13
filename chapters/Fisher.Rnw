@@ -3,18 +3,16 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Fisher}
-\label{sec:fisher}
+\chapter{Fisherian Inference}
+\label{sec:fisherianinference}
 
 \section{Some typestting tests}
 
-\citet{Mayo2018}
+Citing works: \citet{Mayo2018}.
 
-% \pagebreak
-%
-In this book, code listing are displayed as inline blocks such as the following simple code which simulates t-tests under the null pothesis in order to demonstrate that all p-values have equal probability under the null.
+Note that all p-values have the same probability under the Null, see Figure~\ref{fig:simttestscatter}.
 
-<<simttest>>=
+<<simttest, echo=FALSE>>=
 # Set simulation parameters.
 nsim  <- 1000
 n     <- 100
@@ -34,18 +32,14 @@ for (i in 1:nsim) {
 @
 
 
-<<simttestscatter, fig.pos="H", fig.height=4, fig.cap="Scatterplot of p-values.", echo=FALSE>>=
-plot(sims, pch=19, cex=0.1, col = "darkgreen")
+<<simttestscatter, fig.pos="H", fig.height=4, fig.cap="Scatterplot of simulated p-values.", echo=FALSE, fig.showtext = TRUE>>=
+par(family = "Libertine")
+plot(sims, pch=19, cex=0.1, col = "darkgreen", ylab = "p-value", xlab = "Simulation run")
 @
 
 
-<<simttesthist, fig.pos="H", fig.height=4, fig.cap="Histogram of p-values.", echo=FALSE>>=
-hist(sims, breaks = 100)
+<<simttesthist, fig.pos="H", fig.height=4, fig.cap="Histogram of p-values.", echo=FALSE, fig.showtext = TRUE>>=
+par(family = "Libertine")
+hist(sims, breaks = 100, main = "", xlab = "p-value")
 @
 
-See Figure~\ref{fig:simttestecdf} for the cumulative density of p-values under the null in a series of \Sexpr{nsim} t-tests.
-This was plotted using the following command:
-
-<<echo=TRUE, fig.keep="none">>=
-<<simttestecdf>>
-@
