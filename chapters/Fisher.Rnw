@@ -3,12 +3,10 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Fisherian Inference}
-\label{sec:fisherianinference}
+\chapter{Sample Spaces and Exact Fisherian Probabilities}
+\label{sec:samplespacesandexactfisherianprobabilities}
 
 \section{Some typestting tests}
-
-Citing works: \citet{Mayo2018}.
 
 Note that all p-values have the same probability under the Null, see Figure~\ref{fig:simttestscatter}.
 

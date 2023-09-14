@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setupseverity, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Severity}
+\label{sec:severity}

@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setupchisquare, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Probabilities in Non-Exact Tests}
+\label{sec:probabilitiesinnonexacttests}

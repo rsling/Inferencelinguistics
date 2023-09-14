@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setupgeneralisedlinearmodels, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Modelling Arbitrary Outcomes}
+\label{sec:modellingarbitraryoutcomes}

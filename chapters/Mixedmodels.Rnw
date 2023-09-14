@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setupmixedmodels, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Modelling With Groups}
+\label{sec:modellingwithgroups}

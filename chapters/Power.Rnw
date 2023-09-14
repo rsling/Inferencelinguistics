@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setuppower, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{More Types of Error and Power}
+\label{sec:moretypesoferrorpower}

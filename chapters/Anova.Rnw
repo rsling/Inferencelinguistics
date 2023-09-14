@@ -1,0 +1,7 @@
+% !Rnw root = ../main.Rnw
+<<setupanova, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Differences in Means and Variances}
+\label{sec:differencesinmeansandvariances}

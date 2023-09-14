@@ -70,11 +70,53 @@ render_listings()
 <<child="localfontconfig.Rnw">>=
 @
 
-\part{Statistical Inference}
-\label{part:statisticalinference}
+\part{Scientific Inference and Error}
+\label{part:scientificinferenceanderror}
+
+
+\part{Basic Statistical Inference}
+\label{part:basicstatisticalinference}
 
 <<child="chapters/Fisher.Rnw">>=
 @
+
+<<child="chapters/Chisquare.Rnw">>=
+@
+
+<<child="chapters/ZandT.Rnw">>=
+@
+
+<<child="chapters/TwosampleT.Rnw">>=
+@
+
+<<child="chapters/Power.Rnw">>=
+@
+
+<<child="chapters/Severity.Rnw">>=
+@
+
+\part{Inference and Modelling Outcomes}
+\label{part:inferenceandmodellingoutcomes}
+
+<<child="chapters/Anova.Rnw">>=
+@
+
+<<child="chapters/Correlation.Rnw">>=
+@
+
+<<child="chapters/Linearmodels.Rnw">>=
+@
+
+<<child="chapters/Generalisedlinearmodels.Rnw">>=
+@
+
+<<child="chapters/Mixedmodels.Rnw">>=
+@
+
+\part{Finding Errors}
+\label{part:findingerrors}
+
+% The discussions.
 
 \input{localseealso.tex}
 \input{backmatter.tex}
