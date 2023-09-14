@@ -3,11 +3,11 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{More Types of Error and Power}
-\label{sec:moretypesoferrorpower}
+\chapter{Types of Error and Power}
+\label{sec:typesoferrorsandpower}
 
-\section{Probabilities, Significance, and Error}
-\label{sec:probabilitiessignificanceanderror}
+\section{Probability, Significance, and Error}
+\label{sec:probabilitysignificanceanderror}
 
 \section{Another Type of Error}
 \label{sec:anothertypeoferror}

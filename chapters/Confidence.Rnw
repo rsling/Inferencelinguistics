@@ -18,6 +18,9 @@ opts_knit$set(self.contained=FALSE)
 \section{The Normal Distribution and Confidence}
 \label{sec:thenormaldistributionandconfidence}
 
+\section{Confidence For Proportions}
+\label{sec:confidenceforproportions}
+
 \section{How to Interpret and Misinterpret Confidence Intervals}
 \label{sec:howtointerpretandmisinterpretconfidenceintervals}
 

@@ -6,8 +6,8 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Inferences About Means}
 \label{sec:inferencesaboutmeans}
 
-\section{Quantifying and Standardising Differences Between Means}
-\label{sec:quantifyingandstandardisingdifferencesbetweenmeans}
+\section{Quantifying and Standardising Mean Differences}
+\label{sec:quantifyingandstandardisingmeandifferences}
 
 \section{The Normal Distribution and Significance}
 \label{sec:thenormaldistributionandsignificance}

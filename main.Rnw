@@ -32,9 +32,8 @@
 \frontmatter
 \currentpdfbookmark{Contents}{name} % adds a PDF bookmark
 {\sloppy\tableofcontents}
-%% remove the % in the following lines if your book has these elements
-%  \include{chapters/preface}
-%  \include{chapters/acknowledgments}
+  \include{chapters/preface}
+  \include{chapters/acknowledgments}
 %  \include{chapters/abbreviations}
 \mainmatter
 
@@ -95,8 +94,8 @@ render_listings()
 <<child="chapters/Severity.Rnw">>=
 @
 
-\part{Inference and Modelling Outcomes}
-\label{part:inferenceandmodellingoutcomes}
+\part{Inference and Modelling of Outcomes}
+\label{part:inferenceandmodellingofoutcomes}
 
 %<<child="chapters/Anova.Rnw">>=
 %@
