@@ -5,3 +5,23 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{Probabilities in Non-Exact Tests}
 \label{sec:probabilitiesinnonexacttests}
+
+\section{Counting Events}
+\label{sec:countingevents}
+
+\section{Are Events Co-occurring With Other Events?}
+\label{sec:areeventscooccurringwithotherevents}
+
+\section{An Alternative To Exact Probabilities}
+\label{sec:analternativetoexactprobabilities}
+
+\section{Deviation From the Null}
+\label{sec:deviationfromthenull}
+
+\section{Satisfactory Outcomes}
+\label{sec:satisfactoryoutcomes-chi}
+
+\section{Asymptotic Tests, Degrees of Freedom, and Significance}
+\label{sec:asymptotictestsdegreesoffreedomandsignificance}
+
+\section*{Appendix: The Chi-Squared Distribution}

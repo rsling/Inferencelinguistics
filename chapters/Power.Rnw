@@ -5,3 +5,21 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{More Types of Error and Power}
 \label{sec:moretypesoferrorpower}
+
+\section{Probabilities, Significance, and Error}
+\label{sec:probabilitiessignificanceanderror}
+
+\section{Another Type of Error}
+\label{sec:anothertypeoferror}
+
+\section{Error Rates and Effect Size}
+\label{sec:errorratesandeffectsize}
+
+\section{Power, Sample Size, and Choice of Tests}
+\label{sec:powersamplesizeandchoiceoftests}
+
+\section{Why Post-Hoc Power Is Evil}
+\label{sec:whyposthocpowerisevil}
+
+\section{Fisher's and Neyman-Pearson's Approach}
+\label{sec:fishersandneymanpearsonsapproach}

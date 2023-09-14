@@ -83,10 +83,10 @@ render_listings()
 <<child="chapters/Chisquare.Rnw">>=
 @
 
-<<child="chapters/ZandT.Rnw">>=
+<<child="chapters/Confidence.Rnw">>=
 @
 
-<<child="chapters/TwosampleT.Rnw">>=
+<<child="chapters/ZandT.Rnw">>=
 @
 
 <<child="chapters/Power.Rnw">>=
@@ -98,8 +98,8 @@ render_listings()
 \part{Inference and Modelling Outcomes}
 \label{part:inferenceandmodellingoutcomes}
 
-<<child="chapters/Anova.Rnw">>=
-@
+%<<child="chapters/Anova.Rnw">>=
+%@
 
 <<child="chapters/Correlation.Rnw">>=
 @

@@ -5,3 +5,25 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{Inferences About Means}
 \label{sec:inferencesaboutmeans}
+
+\section{Quantifying and Standardising Differences Between Means}
+\label{sec:quantifyingandstandardisingdifferencesbetweenmeans}
+
+\section{The Normal Distribution and Significance}
+\label{sec:thenormaldistributionandsignificance}
+
+\section{The Same With Two Samples}
+\label{sec:thesamewithtwosamples}
+
+\section{The Same With Unknown Variance}
+\label{sec:thesamewithunknownvariance}
+
+\section{Test Conditions and Bad Probabilities}
+\label{sec:testconditionsandbadprobabilities}
+
+\section{How Confidence and Significance Are Equivalent}
+\label{sec:howconfidenceandsignificanceareequivalent}
+
+\section*{Appendix: The Normal Distribution}
+
+\section*{Appendix: The t-Distribution}
