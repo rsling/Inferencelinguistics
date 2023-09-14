@@ -15,8 +15,10 @@ opts_knit$set(self.contained=FALSE)
 \section{Satisfactory Outcomes}
 \label{sec:satisfactoryoutcomes-fisher}
 
-\section{Errors and Error Rates}
-\label{sec:errorsanderrorrates}
+\section{Or a Rare Event Occurred}
+\label{sec:orarareeventoccurred}
+
+% incl errors and error rates
 
 \section{Probality, Not Inverse Probability}
 \label{sec:probabilitynotinverseprobability}
