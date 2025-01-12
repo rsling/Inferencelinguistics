@@ -4,4 +4,4 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Differences in Means and Variances}
-\label{sec:differencesinmeansandvariances}
+\label{sec:anova}

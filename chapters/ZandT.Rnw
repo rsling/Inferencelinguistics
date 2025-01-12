@@ -5,12 +5,12 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Inferences About Means}
-\label{sec:inferencesaboutmeans}
+\label{sec:zandt}
 
 \section{Differing means}
 \label{sec:differingmeans}
 
-\Problem{Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause. This mean reaction time and the corresponding variance in measurements are extremely well established parameters. They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments. For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times. You conduct an experiment and measure reaction times in the critical region. \alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
+\Problem{Z-Tests}{Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause. This mean reaction time and the corresponding variance in measurements are extremely well established parameters. They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments. For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times. You conduct an experiment and measure reaction times in the critical region. \alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
 
 \subsection{Introducing the Logic}
 
@@ -232,7 +232,7 @@ This is exactly parallel to the argument regarding the Tea Tasting experiment wh
 It gives us a very precise and well-defined measure of how surprising the obtained result would be were the Null true.
 
 
-<<z4, fig.cap=paste0(""), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<z4, fig.cap=paste0("Distribution of sample means for mean µ and standard error S with obtained sample mean $\\bar{x}$ and corresponding z-value; area under the curve for results equal to or greater than $\\bar{x}$ is shaded"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
 
 z.minmax <- c(114, 126)
 
@@ -308,12 +308,12 @@ First, \alert{$Pr(\bar{x}|N)$} reads \textit{the probability of the sample mean 
 Remember that the Null was specified as $N$: $\mu_1\not{>}\mu$, which reas \textit{the mean under the condition of interest} (the mean reaction time in the emergent type of relative clause) \textit{is not greater than the population mean} (the reaction time in other relative clauses).
 Second, this probability is equated to \alert{$p_{\mathbf{Norm}}(\Sexpr{z2.z.rnd})$}, which is the p-value corresponding to the z-value of $\Sexpr{z2.z.rnd}$ as calculated above, which is \alert{$\Sexpr{z2.p.rnd}$}.
 
-\section{Interpreting the Results}
+\subsection{Interpreting the Results}
 
 At this point, a little exercise is in order.
 From the following statements, choose the one which is a correct interpretation of the calculations above given the scenario described in the Problem Statement.
 There is no pressure.
-Nobody can read your mind, nobody even cares whether you pick a wrong statement, and you can only gain by actually thinking about each statement thoroughly.
+Nobody can read your mind, nobody even cares whether you pick a wrong statement, and you can only gain by actually \textit{thinking} about each statement thoroughly.
 Do not decide on one statement because it is intuitively correct, but because you know why it is correct.
 
 \begin{enumerate}
@@ -323,8 +323,15 @@ Do not decide on one statement because it is intuitively correct, but because yo
   \item The p-value is very small, which indicates that mean reaction times in the emergent type of relative clause are substantially longer than in other relative clauses.
   \item The probability of obtaining another sample with a mean of $\Sexpr{round(z2.mu, 2)}$ or greater is 0.02.
   \item Based on this outcome, we can reject the possibility that reaction times under the condition of interest are actually \textit{smaller} than in the population with a certainty of $1-\Sexpr{z2.p.rnd}=\Sexpr{1-z2.p.rnd}$ (or $98\%$).
+  \item The probability that we actually drew a sample with a mean of $\Sexpr{round(z2.mu, 2)}$ is $\Sexpr{z2.p.rnd}$.
   \item The experiment has shown that reaction times are normally distributed.
   \item The experiment provides evidence in favour of the underlying theory of linguistic processing.
 \end{enumerate}
+
+
+[TODO continue here]
+
+
+\Bigpoint{Interpretation of the P-Value}{The p-value in a z-test is the \alert{frequentist probability} of drawing a sample $x$ with a mean as extreme as or more extreme than the one that was actually obtained \alert{if the Null were true}. The frequentist probability is the probability of an event occurring \alert{before it has actually occurred}.}
 
 \subsection{The Distribution of P Values}

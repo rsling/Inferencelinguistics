@@ -4,23 +4,6 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Sampling Accuracy and Confidence}
-\label{sec:samplingaccuracyandconfidence}
+\label{sec:confidence}
 
-\section{Variance}
-\label{sec:variance}
-
-\section{The Effect of Variance on Samples}
-\label{sec:theeffectofvarianceonsamples}
-
-\section{Taking Many Samples}
-\label{sec:takingmanysamples}
-
-\section{The Normal Distribution and Confidence}
-\label{sec:thenormaldistributionandconfidence}
-
-\section{Confidence For Proportions}
-\label{sec:confidenceforproportions}
-
-\section{How to Interpret and Misinterpret Confidence Intervals}
-\label{sec:howtointerpretandmisinterpretconfidenceintervals}
 

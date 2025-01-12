@@ -4,4 +4,4 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Quantifiying Correlation Between Variables}
-\label{sec:quantifyingcorrelationsbetweenvariables}
+\label{sec:correlation}

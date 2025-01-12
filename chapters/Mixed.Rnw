@@ -4,4 +4,4 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Modelling With Groups}
-\label{sec:modellingwithgroups}
+\label{sec:mixed}
