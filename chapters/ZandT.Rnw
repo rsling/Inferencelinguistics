@@ -7,8 +7,7 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Inferences About Means}
 \label{sec:zandt}
 
-\section{Differing means}
-\label{sec:differingmeans}
+\section{Population Means and Sample Means}
 
 \Problem{Z-Tests}{Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause. This mean reaction time and the corresponding variance in measurements are extremely well established parameters. They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments. For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times. You conduct an experiment and measure reaction times in the critical region. \alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
 
@@ -146,7 +145,7 @@ Given that $\mu_1$ is a non-observable, all we've got are $\Sexpr{z2.n}$ data po
 While we certainly hope that $\bar{x}$ is a good indicator of the true value $\mu_1$, we have no guarantees whatsoever that it actually is.
 Second, as we're still Fisherians on this page of this book, we have no formal method of gathering positive evidence.
 Only Neyman-Pearson philosophy and the Severity approach will give us this power (pun intended) later in Chapter~\ref{sec:powerseverity}, but with some important caveats.
-Therefore, we can only check \alert{whether the data $x$ are in accord with a \Key{Null} Hypothesis (\textit{Null} for short) N: $\mu_1\not{>}\mu$}.%
+Therefore, we can only check \alert{whether the data $x$ are in accord with a \Key{Null Hypothesis} (\textit{Null} for short) N: $\mu_1\not{>}\mu$}.%
 \footnote{The Null Hypothesis $N$ is sometimes designated as $H_0$, in which case $H$ is often called $H_1$.
 This nomenclature is---in our view---where the confusion between Fisher and Neyman-Pearson begins.
 Furtermore, as the Fisherian Null Hypothesis is not a proper hypothesis anyway but rather a non-hypothesis, we call it Null or N.}
@@ -332,6 +331,14 @@ Do not decide on one statement because it is intuitively correct, but because yo
 [TODO continue here]
 
 
-\Bigpoint{Interpretation of the P-Value}{The p-value in a z-test is the \alert{frequentist probability} of drawing a sample $x$ with a mean as extreme as or more extreme than the one that was actually obtained \alert{if the Null were true}. The frequentist probability is the probability of an event occurring \alert{before it has actually occurred}.}
+\Bigpoint{Interpretation of the P-Value in Z-Tests}{The p-value in a z-test is the \alert{frequentist probability} of drawing a sample $x$ with a mean as extreme as or more extreme than the one that was actually obtained \alert{if the Null were true}. The frequentist probability is the probability of an event occurring \alert{before it has actually occurred}. After the sample has been drawn, the probability that it was drawn is 1, regardless of how extreme its mean is.}
+
+\subsection{Differences Between the Fisher Test and the Z-Test}
 
 \subsection{The Distribution of P Values}
+
+% Difference between strong effects (effect size) and making it easier to detect the effect (sample size).
+
+\section{The Unknown Population}
+
+\section{Means of the Unknowns}

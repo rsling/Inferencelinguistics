@@ -3,5 +3,5 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Fisher and the Fisher Test}
+\chapter{Counting and Guessing}
 \label{sec:fisher}
