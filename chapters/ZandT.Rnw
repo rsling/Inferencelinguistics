@@ -320,7 +320,7 @@ Do not decide on one statement because it is intuitively correct, but because yo
   \item The probability that hypothesis $H$ (reaction times are longer in the emergent type of relative clause) is true is 0.98.
   \item The results prove that the emergent type of relative clause incurs longer reaction times than other relative clauses.
   \item The p-value is very small, which indicates that mean reaction times in the emergent type of relative clause are substantially longer than in other relative clauses.
-  \item The probability of obtaining another sample with a mean of $\Sexpr{round(z2.mu, 2)}$ or greater is 0.02.
+  \item The probability of obtaining another sample with a mean of $\Sexpr{round(z2.mu, 2)}$ or greater in an exact replication of the experiment is 0.02.
   \item Based on this outcome, we can reject the possibility that reaction times under the condition of interest are actually \textit{smaller} than in the population with a certainty of $1-\Sexpr{z2.p.rnd}=\Sexpr{1-z2.p.rnd}$ (or $98\%$).
   \item The probability that we actually drew a sample with a mean of $\Sexpr{round(z2.mu, 2)}$ is $\Sexpr{z2.p.rnd}$.
   \item The experiment has shown that reaction times are normally distributed.
