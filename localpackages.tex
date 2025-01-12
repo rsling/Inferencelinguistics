@@ -11,16 +11,37 @@
 \usepackage{tabularx}
 \usepackage{longtable}
 
+\usepackage{marginnote}
+
 % \usepackage[hang,flushmargin]{footmisc}
 % \setlength\footnotemargin{10pt}
 
 \usepackage{listings}
-
 \usepackage{unicode-math}
-
 \usepackage{csquotes}
 \usepackage{fontspec}
-
 \usepackage{enumitem}
 
+% From EGBD4
 
+\usepackage{rotating}
+\usepackage{boxedminipage}
+\usepackage{tocloft}
+\usepackage{etoolbox}
+\usepackage{pifont}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,cd}
+\tikzset{>=latex}
+\usepackage[linguistics]{forest}
+
+\usepackage[
+  extract=python,
+  prefix=memos/,
+%  deactivate={\tikz, tikzpicture},
+%  deactivate=\tikz,
+%  deactivate=tikzpicture,
+%  auto={forest}{nomemoize},
+]{memoize}
+
+\usepackage[framemethod=tikz]{mdframed}

@@ -21,7 +21,7 @@
 \input{localmetadata.tex}
 \input{localpackages.tex}
 \input{localhyphenation.tex}
-\input{localcommands.tex}
+%\input{localcommands.tex}
 
 \bibliography{localbibliography}
 
@@ -32,9 +32,9 @@
 \frontmatter
 \currentpdfbookmark{Contents}{name} % adds a PDF bookmark
 {\sloppy\tableofcontents}
-  \include{chapters/preface}
-  \include{chapters/acknowledgments}
-%  \include{chapters/abbreviations}
+  \include{chapters/Preface}
+  \include{chapters/Acknowledgments}
+%  \include{chapters/Abbreviations}
 \mainmatter
 
 <<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
@@ -62,60 +62,20 @@ opts_chunk$set(cache.path='cache/',
 	             tidy=FALSE,
                formatR.arrow = TRUE)
 
-
 render_listings()
+
+the.lwd <- 3
+the.cols <- c("darkgreen", "darkblue", "darkred")
+the.lightcols <- c("lightgreen", "lightblue", "lightred")
 @
 
 <<child="localfontconfig.Rnw">>=
 @
 
-\part{Scientific Inference and Error}
-\label{part:scientificinferenceanderror}
-
-
-\part{Basic Statistical Inference}
-\label{part:basicstatisticalinference}
-
-<<child="chapters/Fisher.Rnw">>=
-@
-
-<<child="chapters/Chisquare.Rnw">>=
-@
-
-<<child="chapters/Confidence.Rnw">>=
-@
 
 <<child="chapters/ZandT.Rnw">>=
 @
 
-<<child="chapters/Power.Rnw">>=
-@
-
-<<child="chapters/Severity.Rnw">>=
-@
-
-\part{Inference and Modelling of Outcomes}
-\label{part:inferenceandmodellingofoutcomes}
-
-%<<child="chapters/Anova.Rnw">>=
-%@
-
-<<child="chapters/Correlation.Rnw">>=
-@
-
-<<child="chapters/Linearmodels.Rnw">>=
-@
-
-<<child="chapters/Generalisedlinearmodels.Rnw">>=
-@
-
-<<child="chapters/Mixedmodels.Rnw">>=
-@
-
-\part{Finding Errors}
-\label{part:findingerrors}
-
-% The discussions.
 
 \input{localseealso.tex}
 \input{backmatter.tex}

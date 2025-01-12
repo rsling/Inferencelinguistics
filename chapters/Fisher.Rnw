@@ -3,8 +3,8 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Sample Spaces and Exact Fisherian Probabilities}
-\label{sec:samplespacesandexactfisherianprobabilities}
+\chapter{Exact Fisherian Probabilities}
+\label{sec:exactfisherianprobabilities}
 
 \section{Accidents and Effects}
 \label{sec:accidentsandeffects}
@@ -15,8 +15,8 @@ opts_knit$set(self.contained=FALSE)
 \section{Satisfactory Outcomes}
 \label{sec:satisfactoryoutcomes-fisher}
 
-\section{Or a Rare Event Occurred}
-\label{sec:orarareeventoccurred}
+\section{Or a Rare Event has Occurred}
+\label{sec:orarareeventhasoccurred}
 
 % incl errors and error rates
 

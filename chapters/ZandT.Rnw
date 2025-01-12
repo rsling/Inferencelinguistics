@@ -1,4 +1,5 @@
 % !Rnw root = ../main.Rnw
+
 <<setupzandt, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
 @
@@ -6,24 +7,324 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Inferences About Means}
 \label{sec:inferencesaboutmeans}
 
-\section{Quantifying and Standardising Mean Differences}
-\label{sec:quantifyingandstandardisingmeandifferences}
+\section{Differing means}
+\label{sec:differingmeans}
 
-\section{The Normal Distribution and Significance}
-\label{sec:thenormaldistributionandsignificance}
+\Problem{Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause. This mean reaction time and the corresponding variance in measurements are extremely well established parameters. They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments. For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times. You conduct an experiment and measure reaction times in the critical region. \alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
 
-\section{The Same With Two Samples}
-\label{sec:thesamewithtwosamples}
+\subsection{Introducing the Logic}
 
-\section{The Same With Unknown Variance}
-\label{sec:thesamewithunknownvariance}
+The Problem Statement exemplifies a common question:
+Given a known mean value, do means under a specific condition diverge from this known mean?
+In this section, we show through simple frequentist reasoning how measurements from experiments can provide evidence to tackle such questions.
+The simplest test for such tasks is the \Key{z-Test}.
+Notice that for the z-Test to be applicable, the given population mean (and the corresponding variance) must be truly known, which is why the Problem Statement stresses that the mean was predcited by a robust theory and that the prediction was tested in a long series of experiments.
+If these conditions are not met, other tests apply, and we're going to introduce such tests as we go along.
 
-\section{Test Conditions and Bad Probabilities}
-\label{sec:testconditionsandbadprobabilities}
+<<z.setup, echo=FALSE>>=
+  set.seed(3689)
+  z.n <- 1000
+  z.mu <- 120
+  z.sigma <- 4
+  z.sample <- rnorm(n = z.n, mean = z.mu, sd = z.sigma)
+  z.minmax <- c(105, 135)
+  z.dnorm <- function(x) {
+    dnorm(x, mean = z.mu, sd = z.sigma)
+  }
 
-\section{How Confidence and Significance Are Equivalent}
-\label{sec:howconfidenceandsignificanceareequivalent}
+  set.seed(673)
+  z2.n <- 16
+  z2.mu <- 123
+  z2.sample <- rnorm(n = z2.n, mean = z2.mu, sd = z.sigma)
+  z2.dnorm <- function(x) {
+    dnorm(x, mean = z2.mu, sd = z.sigma)
+  }
 
-\section*{Appendix: The Normal Distribution}
+  z2.se <- z.sigma/sqrt(z2.n)
+  z2.se.rnd <- round(z2.se, 2)
+  z2.dnorm.sample <- function(x) {
+    dnorm(x, mean = z.mu, sd = z2.se)
+  }
+@
 
-\section*{Appendix: The t-Distribution}
+For the sake of illustration, let's assume that the population mean is $\mu=\Sexpr{z.mu}$ (for example milliseconds) and the population variance is\label{page:varianceisfour} $\sigma^2=\Sexpr{z.sigma^2}$, which corresponds to a standard deviation of $\sigma=\Sexpr{z.sigma}$.
+If the population values are generated according to a normal distribution, values are distributed according to the bell curve in Figure~\ref{fig:z1}.
+
+<<z1, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z.n, " measurements from the population"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+par(mfrow = c(2,1), mar = c(2,1,1,1))
+
+plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
+     y = z.dnorm(seq(z.minmax[1], z.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "",
+     xlim = z.minmax
+)
+lines(x = c(z.mu, z.mu), y = c(0, z.dnorm(z.mu)),
+      lwd = the.lwd, col = the.cols[1])
+lines(x = c(z.mu-z.sigma, z.mu-z.sigma), y = c(0, z.dnorm(z.mu-z.sigma)),
+      lwd = the.lwd, col = the.cols[2], lty=2)
+lines(x = c(z.mu+z.sigma, z.mu+z.sigma), y = c(0, z.dnorm(z.mu+z.sigma)),
+      lwd = the.lwd, col = the.cols[2], lty=2)
+text(x = z.mu+0.6, y = z.dnorm(z.mu)/2, labels = "μ", col = the.cols[1])
+text(x = (z.mu-z.sigma)+1.1, y = z.dnorm(z.mu-z.sigma)/3, labels = "μ-σ",
+     col = the.cols[2])
+text(x = (z.mu+z.sigma)+1.3, y = z.dnorm(z.mu+z.sigma)/3, labels = "μ+σ",
+     col = the.cols[2])
+
+plot(x = z.sample, y = 1:length(z.sample),
+     pch = 20,
+     bty="n", yaxt="n", ylab = "",
+     xlim = z.minmax, col = "darkgray")
+
+par(mfrow = c(1,1))
+@
+
+To recapitulate, this curve plots the probability density for the known population (for example, of reaction times).
+In the simplest terms, it shows for each measurement (x-axis) the probability with which it occurs (y-axis).%
+\footnote{Technically, the probability of each point measurement is 0, and non-zero probabilities are only defined as integrals of the density curve for intervals.
+This mathematical detail is mostly irrelevant for practical applications, but it should be kept in mind.}
+Informally speaking, the curve shows that if we measure random values from this population, the probability of measuring a value close to $\mu$ is highest, and measurements deviate on average by the standard deviation $\sigma$ from $\mu$.
+The dashed lines show the standard deviation in each direction from the mean.
+As a result, a very much expected sample of $n=\Sexpr{z.n}$ measurements is shown in the form of the point cloud below the curve.
+The measurements are indeed centred around the mean, and they seem to follow the normal distribution.
+
+If, however, we draw a sample from a different population where the true mean is higher (for example because we're measuring reaction times under a condition that is more difficult to process) we expect samples to turn out differently and have a higher sample mean compared to the known population mean.
+However, this expectation can be treacherous because individual samples are not in any way \textit{guaranteed} to represent their population well, as we have shown in Chapter~\ref{sec:confidence}.
+Very similar to Ronald A.~Fisher in his experiment with Muriel Bristow (see Chapter~\ref{sec:fisher}), we need to ask whether the actual sample warrants any inference regarding the underlying mechanism by being very much unexpected (albeit not impossible) under the assumption that the desired inference is not correct.
+In the case of the reaction times described in the Problem Statement, the desired inference is that reaction times are higher with the emergent subtype of relative clauses because of assumed processing penalties.
+However, especially if our sample is small, inferring anything from a specific result is tricky, as will be shown.
+Figure~\ref{fig:z2} shows a possible outcome with $n=\Sexpr{z2.n}$.
+
+<<z2, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z2.n, " measurements from some population"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+par(mfrow = c(2,1), mar = c(2,1,1,1))
+
+plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
+     y = z.dnorm(seq(z.minmax[1], z.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "",
+     xlim = z.minmax
+)
+
+
+lines(x = c(z.mu, z.mu), y = c(0, z.dnorm(z.mu)),
+      lwd = the.lwd, col = the.cols[1])
+lines(x = c(z.mu-z.sigma, z.mu-z.sigma), y = c(0, z.dnorm(z.mu-z.sigma)),
+      lwd = the.lwd, col = the.cols[2])
+lines(x = c(z.mu+z.sigma, z.mu+z.sigma), y = c(0, z.dnorm(z.mu+z.sigma)),
+      lwd = the.lwd, col = the.cols[2])
+text(x = z.mu+0.7, y = z.dnorm(z.mu)/2, labels = "μ", col = the.cols[1])
+text(x = (z.mu-z.sigma)+1.2, y = z.dnorm(z.mu-z.sigma)/3, labels = "μ-σ",
+     col = the.cols[2])
+text(x = (z.mu+z.sigma)+1.4, y = z.dnorm(z.mu+z.sigma)/3, labels = "μ+σ",
+     col = the.cols[2])
+
+plot(x = z2.sample, y = 1:length(z2.sample),
+     pch = 20,
+     bty="n", yaxt="n", ylab = "",
+     xlim = z.minmax)
+abline(v = rep(mean(z2.sample)),
+      lwd = the.lwd, col = the.cols[1])
+text(x = mean(z2.sample)+2, y = 0.5+z2.n/2,
+     labels = bquote(bar("x")*"="*.(round(mean(z2.sample), 2))),
+     col = the.cols[1])
+
+par(mfrow = c(1,1))
+@
+
+Let's call the sample plotted in Figure~\ref{fig:z2} $x$, a vector of \Sexpr{z2.n} measurements $x_1$ through $x_{\Sexpr{z2.n}}$.
+The mean of $x$ is $\bar{x}=\Sexpr{round(mean(z2.sample), 2)}$.
+As we've shown, inferences in frequentist logic (see Chapter~\ref{sec:fisher}) are always made by taking into account what the outcome of an experiment could have been under one or several possibly correct hypotheses.
+In the case at hand, we're interested in the hypothesis that the true mean under the experimental condition---call it $\mu_1$---is larger than the known mean $\mu$.
+In other words, we would like to \alert{gather evidence in support of H, where H: $\mu_1>\mu$}.
+For several reasons, we cannot gather evidence that supports this hypothesis directly.
+First, $\mu_1$ is obviously not observable.
+It's a hypothesised mean in a population that exists as separate from the known population if H is correct.
+If that population is not substantially different from the known one, then we have $\mu_1=\mu$.
+Given that $\mu_1$ is a non-observable, all we've got are $\Sexpr{z2.n}$ data points from $x$ and the sample mean $\bar{x}$ calculated from them.
+While we certainly hope that $\bar{x}$ is a good indicator of the true value $\mu_1$, we have no guarantees whatsoever that it actually is.
+Second, as we're still Fisherians on this page of this book, we have no formal method of gathering positive evidence.
+Only Neyman-Pearson philosophy and the Severity approach will give us this power (pun intended) later in Chapter~\ref{sec:powerseverity}, but with some important caveats.
+Therefore, we can only check \alert{whether the data $x$ are in accord with a \Key{Null} Hypothesis (\textit{Null} for short) N: $\mu_1\not{>}\mu$}.%
+\footnote{The Null Hypothesis $N$ is sometimes designated as $H_0$, in which case $H$ is often called $H_1$.
+This nomenclature is---in our view---where the confusion between Fisher and Neyman-Pearson begins.
+Furtermore, as the Fisherian Null Hypothesis is not a proper hypothesis anyway but rather a non-hypothesis, we call it Null or N.}
+
+To test this hypothesis, the Fisherian framework assigns a certain well-defined kind of probability to (obtaining) the data $x$ given that $N$ is correct, formally $p(x|N)$ or \textit{the probability of $x$ given $N$}.
+This probability can be used to assess whether the data $x$ are in accord with the Null $N$.
+Before moving on to the calculations, it is vital to consider the question of which inferences are warranted in case $x$ is or isn't in accord with $N$.
+First, what do we infer from the data $x$ (in other words, from our experiment) if they are compatible with $N$?
+The answer is: absolutely nothing!
+If the data are in accord with $N$, we haven't found any evidence that it is not the case that $\mu_1$ is not greater than $\mu$, and that's the end of it.
+If that sounds uselessly messed up and disappointing, that's because it is.%
+\footnote{Whether you're a linguist or not, please consider that \textit{finding no evidence that A is true} is not the same as \textit{finding evidence that A is false}.}
+If you infer anything from such a result, you're not only wrong, but also Baeysians with Dutch names will come to haunt you (or at least unfollow you on the messaging platform of your choice)---and rightly so.
+Second, what do we infer from the data $x$ if they are not compatible with $N$?
+This is the much more interesting case, but it's difficult to define the admissible inerences without creating false ideas if it's done without the maths and without a deeper look at the way $H$ and $N$ were set up.
+Let's say rather informally that in such a case we've found some evidence in support of $H$ because $N$ and $H$ partition the range of possible values of $\mu_1$:
+either it's greater than $\mu$ ($H$) or it is not greater than $\mu$ ($N$).
+Finding no accordance with $N$ despite serious attempts to do so (see Chapter~\ref{sec:powerseverity}) provides at least some indication that $H$ might be correct.
+If you're looking for proof of anything, we recommend that you stick to pure theory, logic, theoretical maths, or pseudoscience.
+There is no proof to be found in (non-trivial) experiments, and statistical inferences are weak and fragile.
+
+\subsection{Doing the Maths}
+
+We have argued that in Fisherian inference, we have to asses whether $x$ is compatible or in accord with $N$.
+But how do we do this?
+The most naive but not at all wrong thing to do is calculate the difference between the known population mean $\mu$ and the mean of the obtained sample $\bar{x}$.
+In our case, this is $\bar{x}-\mu=\Sexpr{round(mean(z2.sample)-z.mu,2)}$.
+Clearly, a minimal requirement for any further calculations is that this difference is positive.
+If it were negative, the sample could hardly be interpreted as evidence against N: $\mu_1\not{>}\mu$.%
+\footnote{This way of putting it is slightly sloppy and informal.
+We will return to this notion and make it more precise.
+However, in practice it is blatantly obvious that we would never take an experiment that showed lower reaction times as evidence for higher reaction times, etc.}
+
+However, solid empirical inference requires us to evaluate how significant this difference actually is.
+This evaluation follows the same logic as in our introduction to Fisher's philosophy (Chapter~\ref{sec:fisher}).
+In the analysis of the Tea Tasting experiment, we asked how often someone who merely guesses would classify one, two, three, or four cups correctly by chance.
+In the case at hand, simply counting events is not informative as the events are occurrences of specific values, namely individual reaction times.
+Hence, the question becomes:
+how often would we expect to see a sample of $\Sexpr{z2.n}$ measurements with a sample mean of $\Sexpr{round(mean(z2.sample),2)}$ or larger if the true mean is that specified by the Null, which is $\mu=\Sexpr{z.mu}$?
+Luckily, we have already introduced the tool that we need: the \Key{standard error} of the mean.
+The standard error for $n=\Sexpr{z2.n}$ and the known variance $s=\Sexpr{z.sigma}$ (see p.~\pageref{page:varianceisfour}) tells us how much samples of this size differ from the true mean on average.
+The standard error of the mean is:
+
+\begin{center}\begin{math}
+  S(n,\sigma)=\frac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
+\end{math}\end{center}
+
+<<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+
+z.minmax <- c(110, 130)
+
+plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
+     y = z2.dnorm.sample(seq(z.minmax[1], z.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = z.minmax
+)
+lines(x = seq(z.minmax[1], z.minmax[2], 0.1),
+      y = z.dnorm(seq(z.minmax[1], z.minmax[2], 0.1)),
+      col = the.cols[1], lwd = the.lwd)
+
+lines(x = c(z.mu, z.mu), y = c(0, z.dnorm(z.mu)),
+      lwd = the.lwd, col = the.cols[1])
+lines(x = c(z.mu, z.mu), y = c(z.dnorm(z.mu), z2.dnorm.sample(z.mu)),
+      lwd = the.lwd, col = the.cols[1], lty = 2)
+
+text(x = z.mu+0.6, y = z.dnorm(z.mu)/2, labels = "μ", col = the.cols[1])
+
+@
+
+Remember what the standard error is all about (Chapter~\ref{sec:confidence}).
+If the mean in a population is $\mu$ and the standard deviation is $\sigma$, then the sample means $\bar{x}_i$ of repeated samples of size $n$ are themselves normally distributed with the standard error $S$ being the standard deviation of that normal distribution.
+Furthermore, keep in mind that we're talking about the distribution of the known population.
+Under the Null, it is also the distribution from which our small sample was drawn.
+Figure~\ref{fig:z3} contrasts the density of the distribution of individual data points (in our example: individual reaction times) with the much narrower distribution of sample means.
+Mathematically, it is narrower because the standard error is always smaller or equal to the standard deviation.
+Intuitively, it should be narrower because on average sample means from samples with $n>1$ approximate the true mean better than single measurements.%
+\footnote{Understanding this argument is crucial. If you're not following it, you should go back to Chapter~\ref{sec:confidence} for an introduction to the distribution of sample means, especially the argument concerning samples of size $n=1, 2, \ldots$.}
+
+Since (i)~the distribution of sample means is normal, (ii)~we know its mean, (iii)~we know its variance\slash standard deviation, we can calculate how many samples of infinitely many samples (or at least a lot of samples) drawn from the known population have a mean of $\Sexpr{round(mean(z2.sample),2)}$ or larger.
+In other words, we can calculate how many sample means would deviate by $\Sexpr{round(mean(z2.sample)-z.mu,2)}$ from the population mean anyway due to expected sampling error if we took a lot of samples of size $n=\Sexpr{z2.n}$.
+This is exactly parallel to the argument regarding the Tea Tasting experiment where we calculated how often we could expect certain outcomes anyway, even if the person performing the Tea Tasting task had no ability to detect which liquid was poured into the cup first.
+It gives us a very precise and well-defined measure of how surprising the obtained result would be were the Null true.
+
+
+<<z4, fig.cap=paste0(""), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+
+z.minmax <- c(114, 126)
+
+z2.mu <- mean(z2.sample)
+z2.z <- (mean(z2.sample)-z.mu)/z2.se.rnd
+z2.z.rnd <- round(z2.z, 2)
+
+z2.p <- 1-pnorm(z2.z)
+z2.p.rnd <- round(z2.p, 2)
+
+plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
+     y = z2.dnorm.sample(seq(z.minmax[1], z.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = z.minmax
+)
+
+lines(x = c(z.mu, z.mu), y = c(0, z2.dnorm.sample(z.mu)),
+      lwd = the.lwd, col = the.cols[1])
+
+z2.crit.xs <- seq(mean(z2.sample), z.minmax[2], 0.1)
+z2.crit.ys <- z2.dnorm.sample(z2.crit.xs)
+
+z2.crit.ys <- c(z2.crit.ys, rev(z2.crit.ys)[1], rep(0, length(z2.crit.xs)))
+z2.crit.xs <- c(z2.crit.xs, rev(z2.crit.xs)[1], rev(z2.crit.xs))
+
+polygon(x = z2.crit.xs, y = z2.crit.ys,
+      lwd = the.lwd, col = the.lightcols[2])
+
+text(x = z.mu+0.7, y = z2.dnorm.sample(z.mu)/2.5, col = the.cols[1],
+     labels = bquote(μ*"="*.(round(mean(z.mu), 2)))
+     )
+text(x = mean(z2.sample)+0.9, y = z2.dnorm.sample(mean(z2.sample)),
+     labels = bquote(bar("x")*"="*.(round(mean(z2.sample), 2))),
+     col = the.cols[2]
+     )
+
+lines(x = c(z.mu, mean(z2.sample)),
+      y = rep(z2.dnorm.sample(z2.mu), 2),
+      lwd = the.lwd, col = the.cols[3]
+      )
+#points(x = z.mu+z2.se, y = z2.dnorm.sample(mean(z2.sample)),
+#       col = the.cols[3], pch = 15, cex=1.5)
+text(x = z.mu+z2.se, y = z2.dnorm.sample(z2.mu)-0.02,
+     labels=bquote("z="*.(z2.z.rnd)),
+     col = the.cols[3]
+     )
+@
+
+There are many ways of calculating the number of interest.
+Since the area under the normal curve sums up to $1$ (as should be the case with probability density functions), we could integrate it over the interval $[\Sexpr{round(mean(z2.sample),2)},\infty]$.
+Alternatively, we could use the so-called cumulative density function, to which we will return later.
+To make things much simpler in practice, the most widely used way in applied statistics is based on counting the distance between the distribution mean and the sample mean as multiples of the standard error, which gives us the \Key{z-score}:
+
+\begin{center}\begin{math}
+z=\frac{\bar{x}-\mu}{S(n,\sigma)}=\frac{\Sexpr{round(mean(z2.sample), 2)}-\Sexpr{z.mu}}{\Sexpr{z2.se.rnd}}=\frac{\Sexpr{round(mean(z2.sample)-z.mu, 2)}}{\Sexpr{z2.se.rnd}}=\Sexpr{z2.z.rnd}
+\end{math}\end{center}
+
+Figure~\ref{fig:z4} shows the distribution of sample means for the known population, the true mean $\mu$, the obtained sample value $\bar{x}$, and the area under the normal curve which defines how many samples of size $n=\Sexpr{z2.n}$ (in the limit) have means of $\bar{x}$ or greater.
+In addition, the red line measures the distance from $\mu$ to $\bar{x}$, which corresponds to the z-score.
+By dividing the the distance between the sample mean and the population mean with the standard error, the z-score normalises said distance, which itself varies with the standard deviation in the population and subsequently with the standard error.
+Hence, regardless of the slope of the concrete distribution, $z=\Sexpr{z2.z.rnd}$ tells us how (im)probable the sample mean (or a more extreme sample mean) is under the Null.
+It gives us another infamous \Key{p-value}.
+In the olden days (and in this book), tables were used to look up p-values corresponding to z-scores, and modern statistics software has functions to achieve the same.
+We will discuss those tables later in this chapter, but for the time being, let's take it for granted that
+
+\begin{center}\begin{math}
+  Pr(\bar{x}|N)=p_{\mathbf{Norm}}(\Sexpr{z2.z.rnd})=\Sexpr{z2.p.rnd}
+\end{math}\end{center}
+
+Let's go through this step by step.
+First, \alert{$Pr(\bar{x}|N)$} reads \textit{the probability of the sample mean $\bar{x}$ given the Null $N$}.
+Remember that the Null was specified as $N$: $\mu_1\not{>}\mu$, which reas \textit{the mean under the condition of interest} (the mean reaction time in the emergent type of relative clause) \textit{is not greater than the population mean} (the reaction time in other relative clauses).
+Second, this probability is equated to \alert{$p_{\mathbf{Norm}}(\Sexpr{z2.z.rnd})$}, which is the p-value corresponding to the z-value of $\Sexpr{z2.z.rnd}$ as calculated above, which is \alert{$\Sexpr{z2.p.rnd}$}.
+
+\section{Interpreting the Results}
+
+At this point, a little exercise is in order.
+From the following statements, choose the one which is a correct interpretation of the calculations above given the scenario described in the Problem Statement.
+There is no pressure.
+Nobody can read your mind, nobody even cares whether you pick a wrong statement, and you can only gain by actually thinking about each statement thoroughly.
+Do not decide on one statement because it is intuitively correct, but because you know why it is correct.
+
+\begin{enumerate}
+  \item The probability that hypothesis $H$ (reaction times are longer in the emergent type of relative clause) is true is 0.02.
+  \item The probability that hypothesis $H$ (reaction times are longer in the emergent type of relative clause) is true is 0.98.
+  \item The results prove that the emergent type of relative clause incurs longer reaction times than other relative clauses.
+  \item The p-value is very small, which indicates that mean reaction times in the emergent type of relative clause are substantially longer than in other relative clauses.
+  \item The probability of obtaining another sample with a mean of $\Sexpr{round(z2.mu, 2)}$ or greater is 0.02.
+  \item Based on this outcome, we can reject the possibility that reaction times under the condition of interest are actually \textit{smaller} than in the population with a certainty of $1-\Sexpr{z2.p.rnd}=\Sexpr{1-z2.p.rnd}$ (or $98\%$).
+  \item The experiment has shown that reaction times are normally distributed.
+  \item The experiment provides evidence in favour of the underlying theory of linguistic processing.
+\end{enumerate}
+
+\subsection{The Distribution of P Values}
