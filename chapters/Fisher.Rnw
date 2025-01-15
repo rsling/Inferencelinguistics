@@ -6,55 +6,58 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Guessing and Counting}
 \label{sec:fisher}
 
-\section{Surprising Outcomes}
-
+\Problem{If there's Nothing Going On}{%
 Let's consider three rather simple questions:
-(i) Given that you know that you aren't prescient, but you decide to play the lottery anyway, how surprised would you be if you won the big prize?
-(ii) If you invited a psychic to a party as a joke because you don't believe in their powers anyway, how surprised would you be if they guessed the phone numbers of all your other guests correctly?
-(iii) On the basis that most grammatical theories (which have something to say about passives) claim that the verb \textit{to sleep} cannot be passivised, how surprised would you be to find eleven passives of \textit{to sleep} in a corpus of English?
-You should really think about your answers to these questions before continuing on.
+(i) You know that you aren't prescient, but you decide to play the lottery anyway.
+How surprised would you be if you won the big prize?
+(ii) You don't believe that your friend, who claims to be a psychic, actually has psychic abilities.
+Nevertheless, you give them a chance and invite them to a party where they have to guess the phone numbers of all other guests.
+How surprised would you be if they guessed the phone numbers of all your other guests correctly?
+(iii) Given that most grammatical theories (which have something to say about passives) claim that the verb \textit{to sleep} cannot be passivised, how surprised would you be to find eleven passives of \textit{to sleep} in a corpus of English?
+You should really think about your answers to these questions before continuing on.}
+
+\section{Unexpected Outcomes}\label{sec:unexpected}
 
 Did you think about the questions?
 Good!
 Here's one possible discussion.
-Playing the lottery, guessing phone numbers, and querying a corpus can be viewed as experiments in a broader sense.
-These experiments could be conducted to test the assumptions that you aren't prescient, that the psychic hasn't got any psychic powers, and that \textit{to sleep} can't be passivised, respectively.
-However, there are significant data missing in the presentation above.
+Most importantly, the questions from the Problem Statement cannot be answered properly, simply because there are significant data missing.
 As for (i), the question doesn't specify what kind of lottery we're considering.
-Is it a simple urn at a fair from which you get to draw one out of a thousand lots?
-Is it the Eurojackpot where (to simplify matters a bit) you have to guess five numbers out of fifty correctly to win the big prize?
+Is it a simple urn at a funfair, from which you get to draw one out of a thousand lots?
+Is it the Eurojackpot, where (to simplify matters a bit) you have to guess five numbers out of fifty correctly to win the big prize?
 Most likely, you either decided that you can't answer the question, or you answered it with respect to some specific type of lottery by way of example.
-However, people typically don't worry too much about how the lottery was conducted and whether it was fair.
-At least with big national lotteries, most people out trust in there being sufficient oversight and the draw being---here it comes---properly random.
+Potentially, you wondered whether the lottery was supposed to be fair or not.
+However, when presented with this example, people typically don't worry too much about how the lottery was conducted and whether it was fair.
+At least with big national lotteries, most people put trust in there being sufficient oversight and the draw being---here it comes---properly random.
 Above all, they see no way to rigging the lottery in their own favour.
 Considering the urn at the funfair, people likely assume that it's rigged anyway, but they don't care (at least in the Free World).%
 \footnote{\textit{It doesn’t get more American than this, my friend. Fatty foods, ugly decadence, rigged games.} (Murray Bauman, Episode~7 of Stranger Things 3)}
 
-The scenario in (ii) is very similar, and there's also relevant information missing.
+The scenario in (ii) is very similar, but there's also relevant information missing.
 You probably decided whether your degree of surprise would sharply depend on the number of guests at the party and the number of digits phone numbers have.
-In my youth, smaller German villages (like Twiste, not surprisingly located in the Twistetal district) still had three-digit phone numbers.
-If the psychic only had to guess one such phone number, guessing that number correctly even without psychic powers would be much less awe-inspiring than guessing twelve-digit phone numbers of 28 guests, for example.
-Furthermore, this scenario usually makes people much more suspicious of how it was ensured that the psychic couldn't cheat.
+In my youth, smaller German villages (like Twiste, located in the Twistetal district) still had three-digit phone numbers, for example.
+If the psychic only had to guess one such phone number, guessing that number correctly even without psychic powers would be much less awe-inspiring than guessing twelve-digit phone numbers of 28 guests with the same accuracy, for example.
+Furthermore and most likely because it involves a psychic, this scenario usually makes people much more suspicious of whether and how it was ensured that the psychic didn't cheat.
 Maybe they have a secret app that exploits a vulnerability in close-by mobile phones, and they simply read the numbers off of peoples' phones.
-Maybe the party was announced in a group on some messenger app, and they tracked all peoples' numbers down before the party.
-Maybe the host or some other guest conspired with the psychic and gave them all the numbers, either as a practical joke or even because they want to get people to pay for the psychic's services tracking down relatives who lived as maids and servants at the court of Henry XIV of France.
+Maybe the party was announced in a group chat on some messenger app, and they tracked all peoples' numbers down in the app before the party.
+Maybe the host or some other guest conspired with the psychic and gave them all the numbers, either as a practical joke or even because they want to get people to pay for the psychic's services in order to track down relatives who lived as maids and servants at the court of Henry XIV of France.
 
 Example (iii) is much more intricate and, in a way, boring, which is why it only intrigues linguists.
-Some of them would smirk at you and claim that they don't care about corpus examples because it was determined once and for all by a cherubic figure that examples from corpora don't count for anything.
+Some linguists would smirk at you and claim that they don't care about corpus examples because it was determined once and for all by a cherubic figure that examples from corpora don't count for anything.
 Some linguists, on the other hand, would take the eleven sentences as evidence that whatever random modification to their theory they can come up with is correct, or that somebody else's theory is incorrect.%
 \footnote{\textit{Whenever I find even one example that contradicts a claim, I consider that claim refuted.} (an unnamed linguist, p.\,c.)}
 What were your thoughts?
-We certainly hope that you don't belong to either of the abovementioned tribes and that you saw the parallels to the first two scenarios.
+We certainly hope that you don't belong to either of the aforementioned tribes and that you saw the parallels to the first two scenarios.
 Above all, quantitative considerations play a role, among others:
 How large is the corpus?
 How often does \textit{to sleep} occur in the corpus, regardless of its voice?
 How many active and passive verbs occur in the corpus?
-Also, the question of whether it was a fair draw are vastly more complicated that in a lottery.
+Also, the question of whether it was a fair draw are vastly more complicated than in the case of a lottery.
 For example, is it a corpus of language produced by native speakers, children, L2 learners of English, state-of-the-art large language models, or even some cute language bot from 1998?
 Finally, the underlying theory from which it allegedly follows that \textit{to sleep} cannot be passivised needs further inspection.
 Does it also exclude the figura etymologica for such unergative verbs?
 Maybe all eleven sentences are instances of silliness such as (\ref{ex:figetym}).
-Would that still count as surprising, regardless of the quantitative evaluation?
+Would the result still count as unexpected, regardless of the quantitative evaluation?
 
 \begin{exe}
   \ex The sleep of Evil has been slept by many a monster. \label{ex:figetym}
@@ -66,10 +69,49 @@ The example is about tea, and it's extremely famous, so anyone applying statisti
 
 \section{Tea}\label{sec:tea}
 
+What unites the examples in the Problem Statement is that they describe a confrontation with chance.
+Then, you're asked what kind of a \alert{result would be unexpected under the assumption that there is nothing going on}:
+you're not prescient, the psychic isn't actually a psychic, \textit{to sleep} cannot be passivised.
+In this section, we formalise the notion of \Key{unexpected outcome} in relation to experiments.
+
+First of all, an \textit{unexpected outcome} cannot be one which is deemed totally impossible.
+If you saw no chance of winning the lottery, you wouldn't play it.
+If you absolutely knew for certain that your psychic friend couldn't guess phone numbers, you wouldn't ask them to guess numbers at your party, except maybe if there were others who didn't know for certain that the psychic didn't have the ability in question.
+Finally, if you were absolutely certain anyway that \textit{to sleep} cannot be passivised, you wouldn't bother to do a corpus search for passivised forms of that verb.
+In fact, that's what many self-described theoretical linguists do.
+Clearly, unexpected outcomes are not miracles where everything we know about the world can be negated.
+
+What we usually mean when we deem an outcome \textit{unexpected} is that it had a very slim chance of occurring before we made it occur.
+Mathematically, the most straightforward case is the one with the urn at the funfair.
+If there are a thousand lots in the urn, one of them a winning one, and you draw one, most people know you have a chance of one in a thousand (or \textit{1:1,000}) to win.
+Usually, it is understood intuitively that this means that if you played this game over and over again with a fair urn, you would end up winning in one of a thousand rounds on average.
+(Playing the game over and over again, each time with a fresh urn of one thousand lots, not gradually emptying one and the same urn, of course.)
+That is why playing it once and winning is unexpected or surprising:
+winning is a rare event given the way the urn was set up (one winning lot and 999 duds).
+The maths are slightly more complex for the Eurojackpot because you have to choose five numbers out of fifty and not one lot out of a thousand, but it's essentially the same logic.
+For the psychic guessing phone numbers, the idea is also the same once the number of phone numbers and the number of the digits per phone number has been determined.
+We will return to the third scenario (the corpus study) later, but even for that we can apply a smililar logic.
+
+In each of the scenarios, we need to know the number of potential outcomes in order to quantify how unexpected a single specific outcome is.
+A seminal application of this idea to scientific reasoning is reported in \citet{Fisher1935a}, and we'll introduce it here before applying the same reasoning to the scenarios from the Problem Statement.
+In that book, Ronald A.~Fisher reports an event where Muriel Bristow, herself a scientist, claimed that she could taste whether the milk or the tea was poured into a cup first.
+While it is not impossible that some physical properties of the mixed liquids differ depending on their order of being poured into the cup, some doubt was in order.
+Therefore, Fisher devised an experiment to shed some light on the substance of Bristow's claim.
+She was presented with eight cups, four tea-first cups and four milk-first cups.
+Otherwise, the cups were identical.
+Her task in the experiment was to determine and point out the four tea-first cups merely through tasting.
+Very much like winning a lottery after buying just a single lot, some outcomes of this experiment might surprise us by being relatively unexpected if Bristow didn't have the ability which she claims to have.
+We still wouldn't consider it proven above all doubt that she does indeed have the ability if that happened.
+However, we'd at least not consider her claim refuted if she guessed a surprising number of cups correctly.
+The question is: what are those surprising outcomes?
+How many cups does she have to get right for us to call it an unexpected outcome?
+
+The answer,
+
 [TODO]
 
-\Bigpoint{Surprising Outcomes}{%
-The outcome of an experiment is surprising if it had a low probability before the experiment was conducted.
+\Bigpoint{Unexpected Outcomes}{%
+The outcome of an experiment is unexpected if it had a low probability before the experiment was conducted.
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability assigned to it.
 A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
 
