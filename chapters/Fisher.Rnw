@@ -6,6 +6,10 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Guessing and Counting}
 \label{sec:fisher}
 
+\section*{Overview}
+
+In this chapter, [todo]
+
 \Problem{If there's Nothing Going On}{%
 Let's consider three rather simple questions:
 (i) You know that you aren't prescient, but you decide to play the lottery anyway.
@@ -83,7 +87,7 @@ Clearly, unexpected outcomes are not miracles where everything we know about the
 
 What we usually mean when we deem an outcome \textit{unexpected} is that it had a very slim chance of occurring before we made it occur.
 Mathematically, the most straightforward case is the one with the urn at the funfair.
-If there are a thousand lots in the urn, one of them a winning one, and you draw one, most people know you have a chance of one in a thousand (or \textit{1:1,000}) to win.
+If there are a thousand lots in the urn, one of them a winning one, and you draw one, most people know you have a chance of one in a thousand (or 1:1,000) to win.
 Usually, it is understood intuitively that this means that if you played this game over and over again with a fair urn, you would end up winning in one of a thousand rounds on average.
 (Playing the game over and over again, each time with a fresh urn of one thousand lots, not gradually emptying one and the same urn, of course.)
 That is why playing it once and winning is unexpected or surprising:
@@ -100,7 +104,7 @@ While it is not impossible that some physical properties of the mixed liquids di
 Therefore, Fisher devised an experiment to shed some light on the substance of Bristow's claim.
 She was presented with eight cups, four tea-first cups and four milk-first cups.
 Otherwise, the cups were identical.
-Her task in the experiment was to find the four tea-first cups merely by tastingand point them out.
+Her task in the experiment was to find the four tea-first cups merely by tasting.
 Very much like winning a lottery after buying just a single lot, some outcomes of this experiment might surprise us by being relatively unexpected if Bristow didn't have the ability which she claims to have.
 We still wouldn't consider it proven above all doubt that she does indeed have the ability if that happened.
 However, we'd at least not consider her claims of being a tea expert refuted if she guessed a surprising number of cups correctly.
@@ -142,12 +146,12 @@ There is one gray, one red, one blue, and one green cup for each of the conditio
   \cline{2-9}
   \end{tabular}
 \end{center}
-\caption{Four tea-first cups (steamy) and four milk-first cups (not steamy) for Muriel Bristow to choose from; in the actual experiment, they'd all look exactly the same (without colours).}
+\caption{Four tea-first cups (steaming) and four milk-first cups (not steaming) for Muriel Bristow to choose from; in the actual experiment, they'd all look exactly the same (without colours).}
 \label{fig:cupsall}
 \end{figure}
 
 When choosing her first cup, Ms Bristow obviously has 8 choices.
-She could pick the red steamy cup, the gray steamy cup, the gray non-steamy cup, etc.
+She could pick the red steaming cup, the gray steaming cup, the gray non-steaming cup, etc.
 Figure~\ref{fig:cupselect1} shows the situation after an arbitrary first cup was chosen.
 
 \begin{figure}
@@ -183,11 +187,12 @@ Figure~\ref{fig:cupselect1} shows the situation after an arbitrary first cup was
 Before she continues on and picks the second cup, only 7 choices are still available.
 Notably, \alert{for each of the 8 distinct choices she had in the beginning, she now has 7 distinct subsequent choices}.
 In the visual example, she chose the fifth cup and has the first, second, third, fourth, sixth, seventh, and eighth still available.
-Had she chosen the first cup (read and steaming) instead in the first step, she'd now be confronted with a different set of 7 options (second through eighth cup).
+Had she chosen the leftmost cup (red and steaming) instead in the first step, she'd now be confronted with a different set of 7 options (all except the leftmost one).
 That means that after picking another cup (Figure~\ref{fig:cupselect2}), she has already decided on one specific choice from among $8\cdot 7=56$ possible choices.%
 \footnote{This is not exactly true.
 There's a catch to which we'll return presently.
 Do you remember from grammar school maths what it is?\label{fn:catch}}
+Put differently, she has taken $1$ out of $56$ possible decision paths to choose $2$ out of $8$ cups.
 
 \begin{figure}
 \begin{center}
@@ -220,10 +225,10 @@ Do you remember from grammar school maths what it is?\label{fn:catch}}
 \end{figure}
 
 The story continues in a similar vein.
-Let's assume she chooses the red steamy cup as her third pick, as in Figure~\ref{fig:cupselect3}.
+Let's assume she chooses the red steaming cup as her third pick, as in Figure~\ref{fig:cupselect3}.
 (Notice that she's doing well so far in the example.
 All three choices were correct.)
-She has now chosen one of $8\cdot 7\cdot 6=336$ possible choices, since for each of the 7 options left over after her previous decision, she had 6 distinct choices available.
+She has now chosen $1$ of $8\cdot 7\cdot 6=336$ possible choices, since for each of the 7 options left over after her previous decision, she had 6 distinct choices available.
 
 \begin{figure}
 \begin{center}
@@ -256,8 +261,8 @@ She has now chosen one of $8\cdot 7\cdot 6=336$ possible choices, since for each
 \end{figure}
 
 To make things more interesting, she makes her first incorrect guess for the fourth cup.
-She picks the green non-steamy one (sixth from the left), which is a tea-first cup.
-As it was agreed upon that we'd take her first answer, she has now picked one specific configuration from $8\cdot 7\cdot 6\cdot 5=1,680$ possible configurations.
+She picks the green non-steaming one (sixth from the left), which is a tea-first cup.
+As it was agreed upon that we would take her first answer, she has now decided on $1$ specific configuration from $8\cdot 7\cdot 6\cdot 5=1,680$ possible configurations.
 Or has she?
 As we mentioned in Footnote~\ref{fn:catch}, there's a catch.
 
@@ -291,18 +296,18 @@ As we mentioned in Footnote~\ref{fn:catch}, there's a catch.
 \label{fig:cupselect4}
 \end{figure}
 
-First, she chose the blue steamy cup, then the gray steamy cup, then  the red steamy cup, and finally the the green non-steamy cup.
+First, she chose the blue steaming cup, then the gray steaming cup, then  the red steaming cup, and finally the the green non-steaming cup.
 But is this really the only way to arrive at the same result?
-In the first step, she had 8 options, and she chose the blue steamy cup, leaving her with seven choices, etc.
-She could have chosen the red steamy one and still arrived at the same result via a different path.
-For example, she could have chosen the red steaming cup first, then the gray steaming cup, followd by the blue staeming one and the green non-steaming one.
-Put in quantitative terms, there are groups within the set of $8\cdot 7\cdot 6\cdot 5=1,680$ decision chains that yield identical results, at least if the order in which the cups were selected is irrelevant.
+In the first step, she had 8 options, and she chose the blue steaming cup, leaving her with seven choices, etc.
+She could have chosen the red steaming one and still arrived at the same result via a different path.
+For example, she could have chosen the red steaming cup first, then the gray steaming cup, followed by the blue staeming one and the green non-steaming one.
+Put in quantitative terms, there are groups within the set of $1,680$ decision chains that yield identical results, at least if the order in which the cups were selected is irrelevant.
 And for the purpose of this experiment, it is indeed irrelevant.
 In our example, she guessed three cups correctly, and the order of decisions that led to this choice would not change her success rate in our eyes.
 
 How do we know how many of the $1,680$ decision paths lead to identical results?
 Well, how many different ways of ordering four cups are there?
-Image you had to arrange the cour cups on a table from left to right one by one.
+Image you had to arrange the $4$ cups on a table from left to right one by one.
 In the first step, you can choose from among the 4 cups.
 For each of these 4 distinct choices, there are 3 distinct subsequent choices because you'll have 3 cups left.
 Then there are 2 choices each, then just 1.
@@ -320,7 +325,7 @@ results vary if the order is not irrelevant and if a cup can be chosen more than
 So, how unexpected is her performance (3 cups detected correctly) given that there are 70 different ways of choosing 4 cups out of 8?
 This would have been easier to quantify if she had guessed all four cups correctly.
 Clearly, there is only 1 such immaculate result.
-Had Ms Bristow chosen the green steamy cup instead of the green non-steamy cup, it would have been an immaculate guess.
+Had Ms Bristow chosen the green steaming cup instead of the green non-steaming cup, it would have been an immaculate guess.
 Hence, by merely guessing (without any special sensory capability), Muriel Bristow would produce such a perfect result in 1 out of 70 runs if the experiment were repeated over and over again.
 In other words, there is a 1:70 chance of guessing the four cups by mere luck.
 Put differently, the \Key{frequentist probability} of hitting the tea jackpot is $1\div 70\approx 0.014$.
@@ -371,10 +376,26 @@ Muriel Bristow thus chose 3 cups out of 4 correctly and 1 cup out of 4 incorrect
 \end{math}\end{center}
 
 \noindent There are thus $16$ distinct sets of 3 correct and 1 incorrect cups.
-We already know that there are $70$ ways of choosing any 4 cups, and hence $16\div 70\approx 0.23$ is the frequentist probability of achieving such a result by chance.
+We already know that there are $70$ ways of choosing any 4 cups out of 8, and hence $16\div 70\approx 0.23$ is the frequentist probability of achieving such a result by chance.
 Would this be a highly unexpected result?
-Most likely not.
-In about a quarter ($23\%$) of an endless sequence of runs of such an experiment, anyone would reach this level by guessing.
+Most likely not, because in about a quarter ($23\%$) of an endless sequence of runs of such an experiment, anyone would reach this level of accuracy just by guessing.
+
+There is one final amendment that we should make.
+In order to evaluate how unexpected a result with tree correctly chosen cups is, it is more informative to ask how often such a result \alert{or an even better result} would be when someone's just guessing.
+Hence, we should add the number of possible configurations with four correct cups, which is 1:
+
+\begin{center}\begin{math}
+  \binom44\cdot\binom40+\binom43\cdot\binom41=1\cdot 1+4\cdot 4=1+16=17
+\end{math}\end{center}
+
+\noindent The probability of obtaining 3 or 4 correct cups by chance is thus $17\div 70\approx 0.24$.
+Again, in the light of this number, choosing $3$ or more correct cups is not at all an unexpected result.
+It is no grounds to reject the hypothesis that Muriel Bristow is just guessing.%
+\footnote{Incidentally, she allegedly chose all four cups correctly when the experiment was conducted.
+Impressive!}
+
+What does this statistical anecdote show?
+In a first approximation,
 
 [continue here]
 
@@ -383,5 +404,10 @@ The outcome of an experiment is unexpected if it had a low probability before th
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability assigned to it.
 A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
 
-\section{The Fisher Test and Probability Distributions}
+\section{The Fisher Test}
 
+\section{Sample Size and Effect Size}
+
+\section{The Distribution of P-Values}
+
+\section{Probability Distributions}
