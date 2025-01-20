@@ -14,7 +14,14 @@
 % Fix line spacing in list environmens.
 %\setlist{noitemsep}
 
+% Make vertically centred cell type.
+\newcolumntype{P}{>{\centering\arraybackslash}r}
 
+% Strikeout in math.
+\newcommand{\stk}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
+
+% Defining equal
+\newcommand{\defeq}{\vcentcolon=}
 
 % Correct hyperref colors which otherwise give you eye cancer.
 \hypersetup{

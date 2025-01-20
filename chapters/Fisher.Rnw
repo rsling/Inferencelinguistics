@@ -44,7 +44,7 @@ Maybe the host or some other guest conspired with the psychic and gave them all 
 
 Example (iii) is much more intricate and, in a way, boring, which is why it only intrigues linguists.
 Some linguists would smirk at you and claim that they don't care about corpus examples because it was determined once and for all by a cherubic figure that examples from corpora don't count for anything.
-Some linguists, on the other hand, would take the eleven sentences as evidence that whatever random modification to their theory they can come up with is correct, or that somebody else's theory is incorrect.%
+Some linguists, on the other hand, would take the eleven sentences as conclusive evidence that whatever random modification to their theory they can come up with is provably correct, or that somebody else's theory is provably incorrect.%
 \footnote{\textit{Whenever I find even one example that contradicts a claim, I consider that claim refuted.} (an unnamed linguist, p.\,c.)}
 What were your thoughts?
 We certainly hope that you don't belong to either of the aforementioned tribes and that you saw the parallels to the first two scenarios.
@@ -90,30 +90,298 @@ That is why playing it once and winning is unexpected or surprising:
 winning is a rare event given the way the urn was set up (one winning lot and 999 duds).
 The maths are slightly more complex for the Eurojackpot because you have to choose five numbers out of fifty and not one lot out of a thousand, but it's essentially the same logic.
 For the psychic guessing phone numbers, the idea is also the same once the number of phone numbers and the number of the digits per phone number has been determined.
-We will return to the third scenario (the corpus study) later, but even for that we can apply a smililar logic.
+We will return to the third scenario (the corpus study) later, but even for that we can apply a smilar logic.
 
 In each of the scenarios, we need to know the number of potential outcomes in order to quantify how unexpected a single specific outcome is.
+The higher the number of overall possible outcomes, the more unexpected a specific outcome is.
 A seminal application of this idea to scientific reasoning is reported in \citet{Fisher1935a}, and we'll introduce it here before applying the same reasoning to the scenarios from the Problem Statement.
 In that book, Ronald A.~Fisher reports an event where Muriel Bristow, herself a scientist, claimed that she could taste whether the milk or the tea was poured into a cup first.
 While it is not impossible that some physical properties of the mixed liquids differ depending on their order of being poured into the cup, some doubt was in order.
 Therefore, Fisher devised an experiment to shed some light on the substance of Bristow's claim.
 She was presented with eight cups, four tea-first cups and four milk-first cups.
 Otherwise, the cups were identical.
-Her task in the experiment was to determine and point out the four tea-first cups merely through tasting.
+Her task in the experiment was to find the four tea-first cups merely by tastingand point them out.
 Very much like winning a lottery after buying just a single lot, some outcomes of this experiment might surprise us by being relatively unexpected if Bristow didn't have the ability which she claims to have.
 We still wouldn't consider it proven above all doubt that she does indeed have the ability if that happened.
-However, we'd at least not consider her claim refuted if she guessed a surprising number of cups correctly.
-The question is: what are those surprising outcomes?
+However, we'd at least not consider her claims of being a tea expert refuted if she guessed a surprising number of cups correctly.
+The question is: what's a surprising number?
 How many cups does she have to get right for us to call it an unexpected outcome?
 
-The answer,
+Statistics doesn't offer a final answer to this question.
+However, it provides the maths upon which we need to base out answer.
+Remember that Muriel Bristow has to choose four cups out of eight, and we first need to calculate how many distinct sets of fours cups out of eight she could potentially choose, without even considering whether she chose the right ones.
+Let's do it.
+In Figure~\ref{fig:cupsall}, we illustrate the eight cups.
+While they would all look exactly the same in the real experiment, we've made it easier to follow the argument by showing the tea-first cups with steam and the milk-first ones without steam.
+Furthermore, we've coloured the cups to make them identifiably individually.
+There is one gray, one red, one blue, and one green cup for each of the conditions (milk-first or tea-first).
 
-[TODO]
+\begin{figure}
+\begin{center}
+  \begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
+  \cline{2-9}
+  \textbf{Choices: 8} &
+    \includegraphics[width=0.06\textwidth]{images/teab2}&
+    \includegraphics[width=0.06\textwidth]{images/teab1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa2}&
+    \includegraphics[width=0.06\textwidth]{images/teab4}&
+    \includegraphics[width=0.06\textwidth]{images/teaa3}&
+    \includegraphics[width=0.06\textwidth]{images/teaa4}&
+    \includegraphics[width=0.06\textwidth]{images/teab3}\\
+  \cline{2-9}
+  \textbf{Chosen: 0} &
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}\\
+  \cline{2-9}
+  \end{tabular}
+\end{center}
+\caption{Four tea-first cups (steamy) and four milk-first cups (not steamy) for Muriel Bristow to choose from; in the actual experiment, they'd all look exactly the same (without colours).}
+\label{fig:cupsall}
+\end{figure}
+
+When choosing her first cup, Ms Bristow obviously has 8 choices.
+She could pick the red steamy cup, the gray steamy cup, the gray non-steamy cup, etc.
+Figure~\ref{fig:cupselect1} shows the situation after an arbitrary first cup was chosen.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
+  \cline{2-9}
+  \textbf{Choices: 7} &
+    \includegraphics[width=0.06\textwidth]{images/teab2}&
+    \includegraphics[width=0.06\textwidth]{images/teab1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa2}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa3}&
+    \includegraphics[width=0.06\textwidth]{images/teaa4}&
+    \includegraphics[width=0.06\textwidth]{images/teab3}\\
+  \cline{2-9}
+  \textbf{Chosen: 1} &
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teab4}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}\\
+  \cline{2-9}
+  \end{tabular}
+\end{center}
+\caption{That's the first cup chosen! Choices left: 7.}
+\label{fig:cupselect1}
+\end{figure}
+
+Before she continues on and picks the second cup, only 7 choices are still available.
+Notably, \alert{for each of the 8 distinct choices she had in the beginning, she now has 7 distinct subsequent choices}.
+In the visual example, she chose the fifth cup and has the first, second, third, fourth, sixth, seventh, and eighth still available.
+Had she chosen the first cup (read and steaming) instead in the first step, she'd now be confronted with a different set of 7 options (second through eighth cup).
+That means that after picking another cup (Figure~\ref{fig:cupselect2}), she has already decided on one specific choice from among $8\cdot 7=56$ possible choices.%
+\footnote{This is not exactly true.
+There's a catch to which we'll return presently.
+Do you remember from grammar school maths what it is?\label{fn:catch}}
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
+  \cline{2-9}
+  \textbf{Choices: 6} &
+    \includegraphics[width=0.06\textwidth]{images/teab2}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa2}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa3}&
+    \includegraphics[width=0.06\textwidth]{images/teaa4}&
+    \includegraphics[width=0.06\textwidth]{images/teab3}\\
+  \cline{2-9}
+  \textbf{Chosen: 2} &
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teab1}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teab4}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}\\
+  \cline{2-9}
+  \end{tabular}
+\end{center}
+\caption{After another cup was chosen, there are now 6 choices left.}
+\label{fig:cupselect2}
+\end{figure}
+
+The story continues in a similar vein.
+Let's assume she chooses the red steamy cup as her third pick, as in Figure~\ref{fig:cupselect3}.
+(Notice that she's doing well so far in the example.
+All three choices were correct.)
+She has now chosen one of $8\cdot 7\cdot 6=336$ possible choices, since for each of the 7 options left over after her previous decision, she had 6 distinct choices available.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
+  \cline{2-9}
+  \textbf{Choices: 5} &
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa2}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa3}&
+    \includegraphics[width=0.06\textwidth]{images/teaa4}&
+    \includegraphics[width=0.06\textwidth]{images/teab3}\\
+  \cline{2-9}
+  \textbf{Chosen: 3} &
+    \includegraphics[width=0.06\textwidth]{images/teab2}&
+    \includegraphics[width=0.06\textwidth]{images/teab1}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teab4}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}\\
+  \cline{2-9}
+  \end{tabular}
+\end{center}
+\caption{As Ms Bristow picks another cup, we're down to 5 choices.}
+\label{fig:cupselect3}
+\end{figure}
+
+To make things more interesting, she makes her first incorrect guess for the fourth cup.
+She picks the green non-steamy one (sixth from the left), which is a tea-first cup.
+As it was agreed upon that we'd take her first answer, she has now picked one specific configuration from $8\cdot 7\cdot 6\cdot 5=1,680$ possible configurations.
+Or has she?
+As we mentioned in Footnote~\ref{fn:catch}, there's a catch.
+
+\begin{figure}
+\begin{center}
+\begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
+  \cline{2-9}
+  \textbf{Choices: 4} &
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa1}&
+    \includegraphics[width=0.06\textwidth]{images/teaa2}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teaa4}&
+    \includegraphics[width=0.06\textwidth]{images/teab3}\\
+  \cline{2-9}
+  \textbf{Chosen: 4} &
+    \includegraphics[width=0.06\textwidth]{images/teab2}&
+    \includegraphics[width=0.06\textwidth]{images/teab1}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teab4}&
+    \includegraphics[width=0.06\textwidth]{images/teaa3}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}&
+    \includegraphics[width=0.06\textwidth]{images/teablank}\\
+  \cline{2-9}
+  \end{tabular}
+\end{center}
+\caption{Ms Bristow has picked her last cup.}
+\label{fig:cupselect4}
+\end{figure}
+
+First, she chose the blue steamy cup, then the gray steamy cup, then  the red steamy cup, and finally the the green non-steamy cup.
+But is this really the only way to arrive at the same result?
+In the first step, she had 8 options, and she chose the blue steamy cup, leaving her with seven choices, etc.
+She could have chosen the red steamy one and still arrived at the same result via a different path.
+For example, she could have chosen the red steaming cup first, then the gray steaming cup, followd by the blue staeming one and the green non-steaming one.
+Put in quantitative terms, there are groups within the set of $8\cdot 7\cdot 6\cdot 5=1,680$ decision chains that yield identical results, at least if the order in which the cups were selected is irrelevant.
+And for the purpose of this experiment, it is indeed irrelevant.
+In our example, she guessed three cups correctly, and the order of decisions that led to this choice would not change her success rate in our eyes.
+
+How do we know how many of the $1,680$ decision paths lead to identical results?
+Well, how many different ways of ordering four cups are there?
+Image you had to arrange the cour cups on a table from left to right one by one.
+In the first step, you can choose from among the 4 cups.
+For each of these 4 distinct choices, there are 3 distinct subsequent choices because you'll have 3 cups left.
+Then there are 2 choices each, then just 1.
+Hence, the groups of identical outcomes should have a size of $4\cdot 3\cdot 2\cdot 1=24$.
+There are thus
+
+\begin{center}\begin{math}
+  \frac{8\cdot 7\cdot 6\cdot 5}{4\cdot 3\cdot 2\cdot 1}=\frac{1,680}{24}=70
+\end{math}\end{center}
+
+\noindent truly distinct sets of four cups to be chosen from among a set of eight cups.%
+\footnote{And for those who are beginning to remember their elementary stochastics:
+results vary if the order is not irrelevant and if a cup can be chosen more than once.}
+
+So, how unexpected is her performance (3 cups detected correctly) given that there are 70 different ways of choosing 4 cups out of 8?
+This would have been easier to quantify if she had guessed all four cups correctly.
+Clearly, there is only 1 such immaculate result.
+Had Ms Bristow chosen the green steamy cup instead of the green non-steamy cup, it would have been an immaculate guess.
+Hence, by merely guessing (without any special sensory capability), Muriel Bristow would produce such a perfect result in 1 out of 70 runs if the experiment were repeated over and over again.
+In other words, there is a 1:70 chance of guessing the four cups by mere luck.
+Put differently, the \Key{frequentist probability} of hitting the tea jackpot is $1\div 70\approx 0.014$.
+This probability is sometimes converted to a percentage, in this case $1.4\%$.%
+\footnote{From our perspective, this conversion to a percentage is not at all wrong inasmuch as $1.4\%$ of an endless sequence of tries would result in an immaculate result, even if the taster is really just guessing.
+However, in scientific contexts, probabilities are customarily expressed properly as real values between 0 and 1, and not as percentages.}
+Would this be a highly unexpected result?
+So unexpected maybe that you'd doubt that Muriel Bristow merely got lucky?
+Well, you tell me!
+
+Before proceeding to such delicate matters of scientific inference, let's calculate the probability of guessing three cups correctly, as in the example.
+To do that, we first introduce a convenient general notation for the maths of choosing $k$ items out of $n$.
+First, notice that in the calculations above we often multiplied a natural number with the next smaller natural number, then the next smaller number, and so on.
+For example, we calculated $4\cdot 3\cdot 2\cdot 1$.
+Such an operation, where we multiply a natural number repeatedly with its next smaller neighbour until we reach 1, is called a \Key{factorial}, and it is expressed as $n!$ such that $4\cdot 3\cdot 2\cdot 1=4!$ if $n=4$.
+To calculate the number of possible decision chains for four out of eight cups, we calculated $8\cdot 7\cdot 6\cdot 5$, and we didn't go down to $1$.
+For two cups out of eight, we'd have calculated $8\cdot 7$ (two choices, then stop), etc.
+In general and using $n$ as the variable for the number of items and $k$ as the variable for the number of items to choose, this can be expressed as
+
+\begin{center}\begin{math}
+  \frac{n!}{(n-k)!}
+\end{math}\end{center}
+
+\noindent To illustrate, we can insert the concrete numbers from our example above:
+
+\begin{center}\begin{math}
+  \frac{8!}{(8-4)!}=\frac{8!}{4!}=\frac{8\cdot 7\cdot 6\cdot 5\cdot \stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}{\stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}=8\cdot 7\cdot 6\cdot 5
+\end{math}\end{center}
+
+\noindent To remove the decision paths that led to the same result, we divided this by $4!$ because $4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
+Generally, we need to divide by $k!$
+This gives us the \Key{binomial coefficient} used to calculate the number of distinct sets of $k$ items from $n$ items without replacement and irrespective of their order:
+
+\begin{center}\begin{math}
+  \binom{n}{k}\defeq\frac{n!}{(n-k)!k!} % \frac{\frac{n!}{(n-k)!}}{k!}=\frac{n!}{(n-k)!k!}
+\end{math}\end{center}
+
+\noindent The binomial coefficient is usually read \textit{n choose k}.
+Since the factorial results in very large numbers even with relatively low numbers, it is often impossible to calculate the binomial coefficient using the above formula, and several alternative methods are available.
+They can be found on Wikipedia or in any book teaching applied maths.
+
+With this, we can now finally calculate how many ways there are of choosing 3 tea-first cups and 1 milk-first cup out of 8 cups in total where there are 4 tea-first and 4 milk-first cups.
+This is easy if we regard the 8 cups as two sets of 4 cups (milk-first and tea-first).
+Muriel Bristow thus chose 3 cups out of 4 correctly and 1 cup out of 4 incorrectly, hence:
+
+\begin{center}\begin{math}
+  \binom43\cdot\binom41=\frac{4!}{1!3!}\cdot\frac{4!}{3!1!}=\frac{24}{6}\cdot\frac{24}{6}=4\cdot 4=16
+\end{math}\end{center}
+
+\noindent There are thus $16$ distinct sets of 3 correct and 1 incorrect cups.
+We already know that there are $70$ ways of choosing any 4 cups, and hence $16\div 70\approx 0.23$ is the frequentist probability of achieving such a result by chance.
+Would this be a highly unexpected result?
+Most likely not.
+In about a quarter ($23\%$) of an endless sequence of runs of such an experiment, anyone would reach this level by guessing.
+
+[continue here]
 
 \Bigpoint{Unexpected Outcomes}{%
 The outcome of an experiment is unexpected if it had a low probability before the experiment was conducted.
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability assigned to it.
 A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
 
-\section{Probability Distributions}
+\section{The Fisher Test and Probability Distributions}
 
