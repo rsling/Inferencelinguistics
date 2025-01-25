@@ -38,12 +38,12 @@ Considering the urn at the funfair, people likely assume that it's rigged anyway
 \footnote{\textit{It doesn’t get more American than this, my friend. Fatty foods, ugly decadence, rigged games.} (Murray Bauman, Episode~7 of Stranger Things 3)}
 
 The scenario in (ii) is very similar, but there's also relevant information missing.
-You probably decided whether your degree of surprise would sharply depend on the number of guests at the party and the number of digits phone numbers have.
+You probably decided whether your degree of surprise would critically depend on the number of guests at the party and the number of digits phone numbers have.
 In my youth, smaller German villages (like Twiste, located in the Twistetal district) still had three-digit phone numbers, for example.
 If the psychic only had to guess one such phone number, guessing that number correctly even without psychic powers would be much less awe-inspiring than guessing twelve-digit phone numbers of 28 guests with the same accuracy, for example.
 Furthermore and most likely because it involves a psychic, this scenario usually makes people much more suspicious of whether and how it was ensured that the psychic didn't cheat.
 Maybe they have a secret app that exploits a vulnerability in close-by mobile phones, and they simply read the numbers off of peoples' phones.
-Maybe the party was announced in a group chat on some messenger app, and they tracked all peoples' numbers down in the app before the party.
+Maybe the party was announced in a group chat on some messenger app, and they tracked all the guests' numbers down in the app before the party.
 Maybe the host or some other guest conspired with the psychic and gave them all the numbers, either as a practical joke or even because they want to get people to pay for the psychic's services in order to track down relatives who lived as maids and servants at the court of Henry XIV of France.
 
 Example (iii) is much more intricate and, in a way, boring, which is why it only intrigues linguists.
@@ -355,7 +355,7 @@ In general and using $n$ as the variable for the number of items and $k$ as the 
   \frac{8!}{(8-4)!}=\frac{8!}{4!}=\frac{8\cdot 7\cdot 6\cdot 5\cdot \stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}{\stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}=8\cdot 7\cdot 6\cdot 5
 \end{math}\end{center}
 
-\noindent To remove the decision paths that led to the same result, we divided this by $4!$ because $4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
+\noindent To account for the decision paths that led to identical results, we divided this by $4!$ because $4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
 Generally, we need to divide by $k!$
 This gives us the \Key{binomial coefficient} used to calculate the number of distinct sets of $k$ items from $n$ items without replacement and irrespective of their order:
 
@@ -363,8 +363,8 @@ This gives us the \Key{binomial coefficient} used to calculate the number of dis
   \binom{n}{k}\defeq\frac{n!}{(n-k)!k!} % \frac{\frac{n!}{(n-k)!}}{k!}=\frac{n!}{(n-k)!k!}
 \end{math}\end{center}
 
-\noindent The binomial coefficient is usually read \textit{n choose k}.
-Since the factorial results in very large numbers even with relatively low numbers, it is often impossible to calculate the binomial coefficient using the above formula, and several alternative methods are available.
+\noindent The binomial coefficient is usually read \textit{n choose k}, but it's OK to read it as \textit{k chosen from n} etc.
+Since the factorial results in very large numbers even for relatively low input numbers, it is often impossible to calculate the binomial coefficient using the above formula, and several alternative methods for calculating the result of the binomial coefficient are available.
 They can be found on Wikipedia or in any book teaching applied maths.
 
 With this, we can now finally calculate how many ways there are of choosing 3 tea-first cups and 1 milk-first cup out of 8 cups in total where there are 4 tea-first and 4 milk-first cups.
@@ -390,9 +390,9 @@ Hence, we should add the number of possible configurations with four correct cup
 
 \noindent The probability of obtaining 3 or 4 correct cups by chance is thus $17\div 70\approx 0.24$.
 Again, in the light of this number, choosing $3$ or more correct cups is not at all an unexpected result.
-It is no grounds to reject the hypothesis that Muriel Bristow is just guessing.%
-\footnote{Incidentally, she allegedly chose all four cups correctly when the experiment was conducted.
-Impressive!}
+It provides no grounds to reject the hypothesis that Muriel Bristow is just guessing.%
+Incidentally, she allegedly chose all four cups correctly when the experiment was actually conducted.
+Do you find this impressive?
 
 What does this statistical anecdote show?
 In a first approximation,
@@ -403,6 +403,45 @@ In a first approximation,
 The outcome of an experiment is unexpected if it had a low probability before the experiment was conducted.
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability assigned to it.
 A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
+
+[blabla]
+
+There are two important aspects with respect to making inferences from unexpected outcomes.
+Can you be \textit{sure} that Muriel Bristow had the capability of discerning tea-first cups from milk-first cups just because in the real experiment, she pointed out the four correct cups?
+The answer is clearly negative because, well, $p\approx 0.014$ and not $p=0$.
+To illustrate, consider my grandfather on my father's side, Carl.
+Carl used to play the national lottery with a bunch of friends, and in 1962, the won the big prize (true story).
+They guessed 6 numbers out of 49 correctly.
+Or did they?
+Would you take their win as evidence that they were prescient and could foresee the number that would be drawn?
+After all:
+
+\begin{center}
+\begin{math}
+  p=\frac{1}{\binom{49}{6}}=\frac{1}{13,983,816}\approx 0.0000000715
+\end{math}
+\end{center}
+
+Clearly, most readers would not make such an inference.
+The interpretation of such a statistical result needs to be informed and made with great care.
+In this case, notice that we did not conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him.
+I could have told the same story about any random person I knew (a friend's girlfriend's uncle) if it so happened that that person won the lottery instead of my grandfather.
+If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and the low p value is completely meaningless.
+Interestingly, Carl and his friends also repeated the ``experiment'' over and over again, because they played the lottery every week for some ten years in total (roughly five hundred draws) without ever winning any considerable amount of money again.
+Obviously, repeating experiments (so-called \Key{replication}) is a very good way to further test any inferences made from unexpected outcomes.
+
+In soft sciences, people are often content with $p<0.05$ to proceed with a substantive inference from an experiment.
+Such thresholds are often called the $\alpha$ level, although we prefer \Key{sig level}.
+Setting $sig\defeq 0.05$ means that researchers are satisfied to make an inference if the outcome of an experiment would only be expected in 1 out of 20 experiments under the assumption that there is nothing going on, \ie, that there really isn't any effect.
+While this may be justified in some cases, automatically assuming such a sig level is ill-advised and outright insane.
+We'll come back to this point again and again, but to show you that a chance of 1 out of 20 usually wouldn't give you any confidence when there is any important matter at stake, think about the old game show \textit{Let's Make a Deal}.
+In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and a dud called \textit{Zonk} behind the other two.
+Let's modify the rules:
+In the soft-sciences version of \textit{Let's Make a Deal} there are 20 doors, 19 of them hiding a prizes worth a significant fortune (grant money) but 1 hiding an automated turret which instantly kills the contestant if they choose that door.
+Would you expect any sane person to participate in such a game show?
+Of course you wouldn't!
+
+[blabla]
 
 \section{The Fisher Test}
 
