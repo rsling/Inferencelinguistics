@@ -17,13 +17,12 @@ How surprised would you be if you won the big prize?
 (ii) You don't believe that your friend, who claims to be a psychic, actually has psychic abilities.
 Nevertheless, you give them a chance and invite them to a party where they have to guess the phone numbers of all other guests.
 How surprised would you be if they guessed the phone numbers of all your other guests correctly?
-(iii) Given that most grammatical theories (which have something to say about passives) claim that the verb \textit{to sleep} cannot be passivised, how surprised would you be to find eleven passives of \textit{to sleep} in a corpus of English?
+(iii) Given that most grammatical theories (which have something to say about passives) claim that the verb \textit{sleep} cannot be passivised, how surprised would you be to find ten passives of \textit{sleep} in a corpus of English?
 You should really think about your answers to these questions before continuing on.}
 
 \section{Unexpected Outcomes}\label{sec:unexpected}
 
-Did you think about the questions?
-Good!
+Did you think about the questions from the Problem Statement?
 Here's one possible discussion.
 Most importantly, the questions from the Problem Statement cannot be answered properly, simply because there are significant data missing.
 As for (i), the question doesn't specify what kind of lottery we're considering.
@@ -48,19 +47,19 @@ Maybe the host or some other guest conspired with the psychic and gave them all 
 
 Example (iii) is much more intricate and, in a way, boring, which is why it only intrigues linguists.
 Some linguists would smirk at you and claim that they don't care about corpus examples because it was determined once and for all by a cherubic figure that examples from corpora don't count for anything.
-Some linguists, on the other hand, would take the eleven sentences as conclusive evidence that whatever random modification to their theory they can come up with is provably correct, or that somebody else's theory is provably incorrect.%
+Some linguists, on the other hand, would take the ten sentences as conclusive evidence that whatever random modification to their theory they can come up with is provably correct, or that somebody else's theory is provably incorrect.%
 \footnote{\textit{Whenever I find even one example that contradicts a claim, I consider that claim refuted.} (an unnamed linguist, p.\,c.)}
 What were your thoughts?
 We certainly hope that you don't belong to either of the aforementioned tribes and that you saw the parallels to the first two scenarios.
 Above all, quantitative considerations play a role, among others:
 How large is the corpus?
-How often does \textit{to sleep} occur in the corpus, regardless of its voice?
+How often does \textit{sleep} occur in the corpus, regardless of its voice?
 How many active and passive verbs occur in the corpus?
 Also, the question of whether it was a fair draw are vastly more complicated than in the case of a lottery.
 For example, is it a corpus of language produced by native speakers, children, L2 learners of English, state-of-the-art large language models, or even some cute language bot from 1998?
-Finally, the underlying theory from which it allegedly follows that \textit{to sleep} cannot be passivised needs further inspection.
+Finally, the underlying theory from which it allegedly follows that \textit{sleep} cannot be passivised needs further inspection.
 Does it also exclude the figura etymologica for such unergative verbs?
-Maybe all eleven sentences are instances of silliness such as (\ref{ex:figetym}).
+Maybe all ten sentences are instances of silliness such as (\ref{ex:figetym}).
 Would the result still count as unexpected, regardless of the quantitative evaluation?
 
 \begin{exe}
@@ -75,13 +74,13 @@ The example is about tea, and it's extremely famous, so anyone applying statisti
 
 What unites the examples in the Problem Statement is that they describe a confrontation with chance.
 Then, you're asked what kind of a \alert{result would be unexpected under the assumption that there is nothing going on}:
-you're not prescient, the psychic isn't actually a psychic, \textit{to sleep} cannot be passivised.
+you're not prescient, the psychic isn't actually a psychic, \textit{sleep} cannot be passivised.
 In this section, we formalise the notion of \Key{unexpected outcome} in relation to experiments.
 
 First of all, an \textit{unexpected outcome} cannot be one which is deemed totally impossible.
 If you saw no chance of winning the lottery, you wouldn't play it.
 If you absolutely knew for certain that your psychic friend couldn't guess phone numbers, you wouldn't ask them to guess numbers at your party, except maybe if there were others who didn't know for certain that the psychic didn't have the ability in question.
-Finally, if you were absolutely certain anyway that \textit{to sleep} cannot be passivised, you wouldn't bother to do a corpus search for passivised forms of that verb.
+Finally, if you were absolutely certain anyway that \textit{sleep} cannot be passivised, you wouldn't bother to do a corpus search for passivised forms of that verb.
 In fact, that's what many self-described theoretical linguists do.
 Clearly, unexpected outcomes are not miracles where everything we know about the world can be negated.
 
@@ -112,7 +111,7 @@ The question is: what's a surprising number?
 How many cups does she have to get right for us to call it an unexpected outcome?
 
 Statistics doesn't offer a final answer to this question.
-However, it provides the maths upon which we need to base out answer.
+However, it provides the maths upon which we need to base our answer.
 Remember that Muriel Bristow has to choose four cups out of eight, and we first need to calculate how many distinct sets of fours cups out of eight she could potentially choose, without even considering whether she chose the right ones.
 Let's do it.
 In Figure~\ref{fig:cupsall}, we illustrate the eight cups.
@@ -270,7 +269,7 @@ As we mentioned in Footnote~\ref{fn:catch}, there's a catch.
 \begin{center}
 \begin{tabular}{P|c|c|c|c|c|c|c|c|c|}
   \cline{2-9}
-  \textbf{Choices: 4} &
+  \textbf{Not chosen: 4} &
     \includegraphics[width=0.06\textwidth]{images/teablank}&
     \includegraphics[width=0.06\textwidth]{images/teablank}&
     \includegraphics[width=0.06\textwidth]{images/teaa1}&
@@ -311,7 +310,7 @@ Image you had to arrange the $4$ cups on a table from left to right one by one.
 In the first step, you can choose from among the 4 cups.
 For each of these 4 distinct choices, there are 3 distinct subsequent choices because you'll have 3 cups left.
 Then there are 2 choices each, then just 1.
-Hence, the groups of identical outcomes should have a size of $4\cdot 3\cdot 2\cdot 1=24$.
+Hence, the groups of identical outcomes should each have a size of $4\cdot 3\cdot 2\cdot 1=24$.
 There are thus
 
 \begin{center}\begin{math}
@@ -328,10 +327,10 @@ Clearly, there is only 1 such immaculate result.
 Had Ms Bristow chosen the green steaming cup instead of the green non-steaming cup, it would have been an immaculate guess.
 Hence, by merely guessing (without any special sensory capability), Muriel Bristow would produce such a perfect result in 1 out of 70 runs if the experiment were repeated over and over again.
 In other words, there is a 1:70 chance of guessing the four cups by mere luck.
-Put differently, the \Key{frequentist probability} of hitting the tea jackpot is $1\div 70\approx 0.014$.
+Put differently, the \Key{frequentist probability} of hitting the tea jackpot by uninformed guessing is $1\div 70\approx 0.014$.
 This probability is sometimes converted to a percentage, in this case $1.4\%$.%
 \footnote{From our perspective, this conversion to a percentage is not at all wrong inasmuch as $1.4\%$ of an endless sequence of tries would result in an immaculate result, even if the taster is really just guessing.
-However, in scientific contexts, probabilities are customarily expressed properly as real values between 0 and 1, and not as percentages.}
+However, in scientific contexts, probabilities are expressed properly as real values between 0 and 1, and not as percentages.}
 Would this be a highly unexpected result?
 So unexpected maybe that you'd doubt that Muriel Bristow merely got lucky?
 Well, you tell me!
@@ -341,21 +340,21 @@ To do that, we first introduce a convenient general notation for the maths of ch
 First, notice that in the calculations above we often multiplied a natural number with the next smaller natural number, then the next smaller number, and so on.
 For example, we calculated $4\cdot 3\cdot 2\cdot 1$.
 Such an operation, where we multiply a natural number repeatedly with its next smaller neighbour until we reach 1, is called a \Key{factorial}, and it is expressed as $n!$ such that $4\cdot 3\cdot 2\cdot 1=4!$ if $n=4$.
-To calculate the number of possible decision chains for four out of eight cups, we calculated $8\cdot 7\cdot 6\cdot 5$, and we didn't go down to $1$.
+To calculate the number of possible decision chains for four out of eight cups, we calculated $8\cdot 7\cdot 6\cdot 5$, but then we didn't go down all the way to $1$.
 For two cups out of eight, we'd have calculated $8\cdot 7$ (two choices, then stop), etc.
-In general and using $n$ as the variable for the number of items and $k$ as the variable for the number of items to choose, this can be expressed as
+In general and using $n$ as the variable encoding the number of items and $k$ as the variable encoding the number of items to choose, this can be expressed as
 
 \begin{center}\begin{math}
   \frac{n!}{(n-k)!}
 \end{math}\end{center}
 
-\noindent To illustrate, we can insert the concrete numbers from our example above:
+\noindent To illustrate, we insert the concrete numbers from our example above:
 
 \begin{center}\begin{math}
   \frac{8!}{(8-4)!}=\frac{8!}{4!}=\frac{8\cdot 7\cdot 6\cdot 5\cdot \stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}{\stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}=8\cdot 7\cdot 6\cdot 5
 \end{math}\end{center}
 
-\noindent To account for the decision paths that led to identical results, we divided this by $4!$ because $4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
+\noindent To account for the decision paths that led to identical results, we divided this by $4!$ because $k=4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
 Generally, we need to divide by $k!$
 This gives us the \Key{binomial coefficient} used to calculate the number of distinct sets of $k$ items from $n$ items without replacement and irrespective of their order:
 
@@ -363,17 +362,18 @@ This gives us the \Key{binomial coefficient} used to calculate the number of dis
   \binom{n}{k}\defeq\frac{n!}{(n-k)!k!} % \frac{\frac{n!}{(n-k)!}}{k!}=\frac{n!}{(n-k)!k!}
 \end{math}\end{center}
 
-\noindent The binomial coefficient is usually read \textit{n choose k}, but it's OK to read it as \textit{k chosen from n} etc.
-Since the factorial results in very large numbers even for relatively low input numbers, it is often impossible to calculate the binomial coefficient using the above formula, and several alternative methods for calculating the result of the binomial coefficient are available.
+\noindent The binomial coefficient is usually read \textit{n choose k}, but it's okay to read it as \textit{k chosen from n} etc.
+Since the factorial results in very large numbers even for relatively low input numbers, it is often practically impossible to calculate the binomial coefficient using the above formula, and several alternative methods for calculating it are available.
 They can be found on Wikipedia or in any book teaching applied maths.
 
 With this, we can now finally calculate how many ways there are of choosing 3 tea-first cups and 1 milk-first cup out of 8 cups in total where there are 4 tea-first and 4 milk-first cups.
 This is easy if we regard the 8 cups as two sets of 4 cups (milk-first and tea-first).
 Muriel Bristow thus chose 3 cups out of 4 correctly and 1 cup out of 4 incorrectly, hence:
 
-\begin{center}\begin{math}
+\begin{equation}
   \binom43\cdot\binom41=\frac{4!}{1!3!}\cdot\frac{4!}{3!1!}=\frac{24}{6}\cdot\frac{24}{6}=4\cdot 4=16
-\end{math}\end{center}
+  \label{eq:threefour}
+\end{equation}
 
 \noindent There are thus $16$ distinct sets of 3 correct and 1 incorrect cups.
 We already know that there are $70$ ways of choosing any 4 cups out of 8, and hence $16\div 70\approx 0.23$ is the frequentist probability of achieving such a result by chance.
@@ -390,9 +390,9 @@ Hence, we should add the number of possible configurations with four correct cup
 
 \noindent The probability of obtaining 3 or 4 correct cups by chance is thus $17\div 70\approx 0.24$.
 Again, in the light of this number, choosing $3$ or more correct cups is not at all an unexpected result.
-It provides no grounds to reject the hypothesis that Muriel Bristow is just guessing.%
+It provides no grounds whatsoever for rejecting the hypothesis that Muriel Bristow is just guessing.
 Incidentally, she allegedly chose all four cups correctly when the experiment was actually conducted.
-Do you find this impressive?
+So, do you find this impressive?
 
 What does this statistical anecdote show?
 In a first approximation,
@@ -410,9 +410,8 @@ There are two important aspects with respect to making inferences from unexpecte
 Can you be \textit{sure} that Muriel Bristow had the capability of discerning tea-first cups from milk-first cups just because in the real experiment, she pointed out the four correct cups?
 The answer is clearly negative because, well, $p\approx 0.014$ and not $p=0$.
 To illustrate, consider my grandfather on my father's side, Carl.
-Carl used to play the national lottery with a bunch of friends, and in 1962, the won the big prize (true story).
+Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize (true story).
 They guessed 6 numbers out of 49 correctly.
-Or did they?
 Would you take their win as evidence that they were prescient and could foresee the number that would be drawn?
 After all:
 
@@ -422,31 +421,192 @@ After all:
 \end{math}
 \end{center}
 
-Clearly, most readers would not make such an inference.
+Clearly, most readers would not make such an inference, regardless of how low the p value is.
 The interpretation of such a statistical result needs to be informed and made with great care.
-In this case, notice that we did not conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him.
-I could have told the same story about any random person I knew (a friend's girlfriend's uncle) if it so happened that that person won the lottery instead of my grandfather.
-If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and the low p value is completely meaningless.
-Interestingly, Carl and his friends also repeated the ``experiment'' over and over again, because they played the lottery every week for some ten years in total (roughly five hundred draws) without ever winning any considerable amount of money again.
+In this case, no known mechanism could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
+Also, notice that we did not conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him winning the lottery.
+I could have told the same story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
+If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and the low p value becomes utterly meaningless.
+Interestingly, Carl and his friends also repeated the ``experiment'' over and over again, playing the national lottery every week for roughly ten years in total (over five hundred draws) without ever winning any considerable amount of money ever again.
+This really makes it look like they were just guessing and got lucky once.
 Obviously, repeating experiments (so-called \Key{replication}) is a very good way to further test any inferences made from unexpected outcomes.
 
-In soft sciences, people are often content with $p<0.05$ to proceed with a substantive inference from an experiment.
+Astonishingly, researchers in soft sciences are often satisfied with $p<0.05$ in order to proceed with a substantive inference from an experiment.
 Such thresholds are often called the $\alpha$ level, although we prefer \Key{sig level}.
 Setting $sig\defeq 0.05$ means that researchers are satisfied to make an inference if the outcome of an experiment would only be expected in 1 out of 20 experiments under the assumption that there is nothing going on, \ie, that there really isn't any effect.
 While this may be justified in some cases, automatically assuming such a sig level is ill-advised and outright insane.
 We'll come back to this point again and again, but to show you that a chance of 1 out of 20 usually wouldn't give you any confidence when there is any important matter at stake, think about the old game show \textit{Let's Make a Deal}.
 In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and a dud called \textit{Zonk} behind the other two.
-Let's modify the rules:
-In the soft-sciences version of \textit{Let's Make a Deal} there are 20 doors, 19 of them hiding a prizes worth a significant fortune (grant money) but 1 hiding an automated turret which instantly kills the contestant if they choose that door.
+Let's modify the rules slightly:
+In the soft-sciences version of \textit{Let's Make a Deal} there are 20 doors.
+Behind 19 of them, there are prizes worth a significant fortune (grant money, which means money plus prestige), but 1 door is hiding an automated gun turret which instantly kills the contestant if they choose that door.
 Would you expect any sane person to participate in such a game show?
 Of course you wouldn't!
+People who -- given a choice -- wouldn't take any substantial risk in real life with a 1 in 20 chance are happy to bet the future of linguistics or social psychology on such a chance by setting $sig\defeq 0.05$.
+On the other hand, we have seen that even $p\approx 0.0000000715$ might be meaningless.
+Doing maths is easy, but making good inferences isn't.
+Therefore, two of the major themes in this book are that (i) you shouldn't take high risks in making inferences and (ii) there is no recipe-like procedure that leads to good inferences.%
+\footnote{Anyone who thinks they're a Bayesian and just shouted ``\textit{Yeah, except in Bayesian inference!}'' should stop reading and take a long, hard look in the mirror.}
 
-[blabla]
+In the next section, we will return to the corpus example from the Problem Statement and formalise the procedure described above in the form of the so-called Fisher Exact Test or just Fisher Test.
+You'll see that the logic of the Tea Tasting Experiment lies behind those omnipresent 2x2 tables that often pop up in the corpus literature, especially in research on collocations and collostructions \citep{StefanowitschGries2003,Evert2008}.
 
-\section{The Fisher Test}
+\section{Inference: Fisher's Exact Test}
+
+Our examples from the Problem Statement are all about comparing counts of events.
+How many tea-first cups were chosen correctly compared to the number of tea-first cups in the setup of the experiment, and the same for milk-first cups.
+The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as (or more extreme than) the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
+Such counts are customarily shown as \Key{contingency tables}, see Table~\ref{tab:contingency}.
+
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & 3 & 1 & \multicolumn{1}{c|}{\textbf{4}} \\
+  \cline{2-5}
+  & \textbf{Milk-First}    & 1 & 3 & \multicolumn{1}{c|}{\textbf{4}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \textbf{4} & \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{A typical 2x2 contingency table with row sums, column sums, and a grand total}
+  \label{tab:contingency}
+\end{table}
+
+A contingency table tabulates counts of events characterised by two variables, each having two or more discrete possible values.
+One variable is shown in columns, the other one in rows, and the table has the potential to show which values of the two variables co-occur very often or very rarely.
+In the case of the Tea Tasting Experiment, we tabulate numbers of cups (or events of choosing cups, to be more precise).
+In row 1, we put the 4 tea-first cups according to Muriel Bristow.
+In row 2, we put the 4 milk-first cups as assigned by her.
+The row sums in the last column show that there were indeed 4 cups for each condition.
+In the two columns, we count the real tea-first and milk-first cups.
+As you can see, of the three real tea-first cups, Muriel Bristow classified 3 as tea-first (cell 1,1) and 1 as milk-first (cell 2,1).%
+\footnote{In matrices and tables, it is customary to index cells first by rows, then by columns.
+Hence, cell 1,1 is the upper-left cell. Cell 2,1 is the lower-left cell.
+The upper-right and lower-right cells are indexed 1,2 and 2,2, respectively.}
+The opposite is true for the real milk-first cups.
+
+To calculate the p value for Fisher's Exact Test---which is exactly what we've been introducing in this chapter---we only need to consider either the rows or the columns and the corresponding sums.
+In Table~\ref{tab:fisherone}, the cells shaded in blue and the cells shaded in green suffice to calculate the probability of drawing 3 from 4 and independently 1 from 4, which corresponds exactly to the binomial coefficient calculated in Equation~\ref{eq:threefour}.
+
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 3 & 1 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{4}} \\
+  \cline{2-5}
+  & \textbf{Milk-First}    & 1 & 3 & \multicolumn{1}{c|}{\textbf{4}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \CellBlue \textbf{4} & \CellGreen \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{The same contingency table with the relevant components for Fisher's Exact Test highlighted}
+  \label{tab:fisherone}
+\end{table}
+
+As was shown above, we need to add the probability of obtaining a more extreme result, which is illustrated for completeness in Table~\ref{tab:fishertwo}.
+
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 4 & 0 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{4}} \\
+  \cline{2-5}
+  & \textbf{Milk-First}    & 0 & 4 & \multicolumn{1}{c|}{\textbf{4}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \CellBlue \textbf{4} & \CellGreen \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{The contingency table for the \textit{even more extreme result}}
+  \label{tab:fishertwo}
+\end{table}
+
+Finally, we turn to the corpus example from the Problem Statement.%
+\footnote{Be warned that people actually use the test like this, but that this is a slightly incorrect use.
+There will be ample discussion of this caveat throughout the book.}
+As we pointed out in Section~\ref{sec:unexpected}, the Problem Statement mentions 10 passives of the verb \textit{sleep}, but we need more information.
+Let's introduce that information and the argument that comes with it, roughly following the logic behind collostructional analysis.%
+\footnote{Paradoxically, we consider collostructional analysis to be suboptimal as an illustration of Fisherian logic of inference.
+However, as it used to be the most prominent use case of Fisher's Exact Test in linguistics, we use it to introduce the test and critique a specific use of it in the process.}
+Assume that we drew 90 active sentences containing \textit{sleep} in addition to the 10 passives.
+Furthermore, assume that the corpus contains 1,100 sentences in total, 890 of them active sentences, 210 passive sentences.
+The corresponding contingency table is shown in Table~\ref{tab:corpussleep}.
+
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Voice}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Active} & \textbf{Passive} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Verb}} & \textbf{\textit{sleep}} & \CellBlue 90 & \CellGreen 10 & \multicolumn{1}{c|}{\Dim\textbf{100}} \\
+  \cline{2-5}
+  & \textbf{Other}    & 800 & 200 & \multicolumn{1}{c|}{\textbf{1,000}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \CellBlue\textbf{890} & \CellGreen\textbf{210} & \multicolumn{1}{c|}{\Dim \textbf{1,100}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{A contingency table approximately as found in collostructional analysis}
+  \label{tab:corpussleep}
+\end{table}
+
+Descriptively, it is the case that \textit{sleep} occurs less frequently in the passive than all other verbs.
+Only $10\%$ of all occurrences of \textit{sleep} are passives, but $25\%$ of all other verbs are passives.
+Using the maths introduced in this chapter, we can attempt to quantify how unexpected this result is, and the story goes as follows.
+If we drew 100 sentences randomly from this corpus, what would be the frequentist probability of drawing exactly 90 active sentences and 10 passive sentences, given the overall distribution of voice in the corpus?
+Clearly, it would be:
+
+\begin{center}\begin{math}
+  \frac{\binom{890}{90}\cdot\binom{210}{10}}{\binom{1,100}{100}}\approx\frac{6.573\cdot 10^{141}}{1.423\cdot 10^{144}}\approx 0.005
+\end{math}\end{center}
+
+\noindent This probability is useful because \alert{we obtained the result by querying for all sentences containing \textit{sleep}, not by drawing random sentences}.
+Based on this, we can now inch our way towards making an inference about \textit{sleep}.
+Our theory states that there should be no or at least very few passives of verbs like \textit{sleep} (unaccusatives) compared to other verbs, many of which can be readily passivised (transitives, unergatives).
+If \textit{sleep} behaved like the average verb, a sample of sentences containing it would be expected to resemble a random sample from the corpus with respect to the number of actives and passives.
+The more extreme the distribution of verbal voice in the \textit{sleep} sample is, the more we are inclined to assume that \textit{sleep} does not behave like the rest of the verbs with respect to passivisation.
+This is actually a similar logic as in the Tea Tasting Experiment.
+An unexpected result under the assumption of mere guessing on Muriel Bristow's part is conceptually very similar to an unexpected result regarding the distribution of verbal voice in a corpus sample under the assumption that the sample is not in some way different from the rest of the corpus.
+The Fisherian type of the frequentist logic of inference is based on this kind of argument:
+Since it is very difficult to come up with quantitative evidence in favour of research hypotheses (see Chapter~\ref{sec:inference}), a \Key{Null Hypothesis} (or simply \textit{Null}, symbolised $H_0$) is constructed.
+The Null states in some way that \alert{the effect predicted by the theory is absent}.
+If the result obtained in the experiment has a very low frequentist probability under the assumption that the Null is true (\ie, it's an unexpected result), the experiment is assumed to lend some limited support for the theory.
+Unexpected results are not in any way taken as a proof of the theory or part of the theory, and it's obvious why.
+First, we never know whether a rare (unexpected) has occurred by chance, regardless of how unexpected it was \alert{before we conducted the experiment}.
+Our calculations are based on the realisation that it is not at all impossible to obtain unexpected results by chance.
+On the contrary, the p value quantifies the expectedness of the actual result under a Null (\ie, by chance).
+Second, take the abovementioned ``experiment'' regarding my grandfather's ESP capabilities with $p=0.0000000715$.
+It's practically irrelevant how low the p value is, most people will not take it as evidence that my grandfather or one of his friends could foresee the numbers drawn in next week's national lottery.
+Thus, the strength of the evidence depends on many factors, among them the design of the experiment and the p value.
+
+Let's keep this in mind and complete the maths.
+The value of $p=0.005$ calculated above is just the probability of obtaining exactly 10 passives and 90 actives under the informally stated \alert{$H_0$: The verb \textit{sleep} is passivised as often as all other verbs}.
+Since any more extreme (\ie, even lower) number of passives would be at least as good evidence against the Null, we should include them.
+Hence:
+
+\begin{center}\begin{math}
+  \frac{\binom{890}{90}\cdot\binom{210}{10}}{\binom{1,100}{100}}+\frac{\binom{890}{91}\cdot\binom{210}{9}}{\binom{1,100}{100}}+\dots+\frac{\binom{890}{100}\cdot\binom{210}{0}}{\binom{1,100}{100}}\approx 0.008
+\end{math}\end{center}
+
+\noindent This is indeed the p value as calculated in Fisher's Exact Test.
+
+[continue]
+
+% Probabilities of Independent Events
+
+\section{Probability Distributions}
 
 \section{Sample Size and Effect Size}
 
 \section{The Distribution of P-Values}
 
-\section{Probability Distributions}
+

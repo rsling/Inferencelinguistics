@@ -72,6 +72,8 @@ the.lightcols <- c("lightgreen", "lightblue", "lightred")
 <<child="localfontconfig.Rnw">>=
 @
 
+\include{chapters/Inference}
+
 <<child="chapters/Fisher.Rnw">>=
 @
 
