@@ -10,17 +10,18 @@ opts_knit$set(self.contained=FALSE)
 
 In this chapter, we introduce the notion of frequentist probability.
 It's the probability of a certain event under the assumption of pure randomness.
-The frequentist probability of rolling six pips with a fair die is $1\div 6$ (or roughly 0.17) before you roll the die.
+Pure randomness is not a very precise technical term, but we hope it gives the right impression.
+For example, frequentist probability of rolling six pips with a fair die is $1\div 6$ (or roughly 0.17) before you roll the die.
 This also implies that the proportion of rolls of a fair die showing six pips in a very long or endless sequence of rolls will be 0.17 (or 17\%).
 Notice that after rolling the die, it either shows six pips or it doesn't show six pips, and there is no longer a probability attached to the result.
 It becomes a fact.
-We apply this reasoning to lotteries, parlour games with self-proclaimed psychics, and corpus studies.
+We apply reasoning around frequentist probability to lotteries, parlour games with self-proclaimed psychics, and corpus studies.
 It is shown that unexpected outcomes under the assumption of pure randomness are those that have a low frequentist probability.
-In other words, those outcomes would be rare if we repeated the experiment over and over again, and if only pure randomness were in control of the outcomes (rather than some influencing factor of interest).
-To quantify these notions and make some careful inferences based on the quantification, we introduce several mathematical concepts.
+In other words, those outcomes would be rare if we repeated the experiment over and over again, and if only pure randomness were in control of the outcomes (rather than some influencing factor, such as the manipulation of a die).
+To quantify these notions and make some careful and limited scientific inferences based on the quantification, we introduce several mathematical concepts.
 The \alert{binominal coefficient} gives us the number of ways of choosing a specific number of elements from a set of elements regardless of their order and without replacement.
 The \alert{p value calculated in Fisher's Exact Test} is the frequentist probability of obtaining a certain results or a more extreme result in simple experiments involving two two-valued variables and counts of their instances.
-\alert{Probabilty distribution functions} are general functions to calculate (and plot) such probabilities for specific parameters.
+\alert{Probabilty distribution functions} are general functions to calculate (and plot) such probabilities that have specific mathematical properties.
 Finally, the \alert{effect size} is a measure of how strongly two variables interact.
 
 \Problem{If there's Nothing Going On \ldots}{%
@@ -422,7 +423,7 @@ the person does indeed have the ability in question, the effect predicted by a t
 We would be making a \Key{statistical inference} based on the outcome of the experiment.
 Since inference is a process fraught with peril, much more will have to be said about it, for example in Section~\ref{sec:inferencefisher}.
 
-However, a typical type of misunderstandings and ill ways of phrasing the mathematical results of frequentist statistics must be mentioned immediately.
+However, a typical type of misunderstandings that comes with ill ways of phrasing the mathematical results of frequentist statistics must be mentioned immediately.
 Some people have a tendency to say things like ``\textit{Because guessing three or more cups correctly only has a probability of 0.24, the probability that Muriel Bristow has the ability to detect tea-first cups is 1-0.24 or 0.76.}'' or ``\textit{We can be 76\% certain that she has the capability in question.}''
 This is all completely wrong!
 First, consider statements such as ``\textit{the probability that she has the ability in question is 0.76}'' and how nonsensical they are regardless of the specific number.
@@ -435,7 +436,8 @@ Honestly, please provide any sound definition of this notion!
 We consider this notion (sometimes also called a \textit{subjective probability} or similar) to be utterly undefined and above all irrelevant to science.
 However, we suggest you also give those people a chance who think the complete opposite.
 Google \textit{subjective Bayesianism}, read a few blogs, and then read \citet{Senn2011}.
-Everybody agrees, however, that the \alert{frequentist probabilities calculated in this book have nothing to do with being certain about anything to a quantifiable degree}.
+Everybody (including---I think---Baysians) agrees, however, that the \alert{frequentist probabilities calculated in this book have nothing to do with ``being certain'' about anything to a quantifiable degree}.
+They serve to \alert{test scientific claims} in order to slowly establish them as unrefuted in a piecemeal fashion.
 Please keep the following Big Point in mind when reading the next section, which is about inference.
 
 \Bigpoint{Unexpected Outcomes}{%
@@ -454,7 +456,8 @@ To illustrate, consider my grandfather on my father's side, Carl.
 Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize (true story).
 They guessed 6 numbers out of 49 correctly.
 Would you take their win as evidence that they were prescient and could foresee the number that would be drawn?
-After all:
+Even better, would you take it as evidence that extra-sensory perception (ESP) exists?
+After all, the p value is so bloody low:
 
 \begin{center}
 \begin{math}
@@ -464,39 +467,41 @@ After all:
 
 Clearly, most readers would not make such an inference, regardless of how low the p value is.
 The interpretation of such a statistical result needs to be informed and made with great care.
-In this case, no known mechanism could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
-Also, notice that we did not conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him winning the lottery.
-I could have told the same story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
+First of all, no known physical and\slash or cognitive mechanism that we know of could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
+Hypotheses about why ESP should be real simply don't exist.
+Also, notice that we did not, in fact, conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him winning the lottery.
+At some point I simply started calling it an experiment, probably without most people noticing.
+I could have told a similar true story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
 If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and a low p value becomes utterly meaningless.
 Interestingly, Carl and his friends also repeated the ``experiment'' over and over again, playing the national lottery every week for roughly ten years in total (over five hundred draws) without ever winning any considerable amount of money ever again.
 This really makes it look like they were just guessing numbers and got lucky exactly once.
 Obviously, repeating experiments (so-called \Key{replication}) is a very good way to further test any inferences made from unexpected outcomes.
 
-Astonishingly, researchers in soft sciences are often satisfied with $p<0.05$ in order to proceed with a substantive inference from an experiment.
+Astonishingly, researchers in soft sciences are often satisfied if $p<0.05$ in order to proceed with a substantive inference from an experiment.
 Such thresholds are often called the $\alpha$ level, although we prefer \Key{sig level}.
 Setting $sig\defeq 0.05$ means that researchers are satisfied to make an inference if the outcome of an experiment would only be expected in 1 out of 20 experiments under the assumption that there is nothing going on, \ie, that there really isn't any effect.
 While this may be justified in some cases, automatically assuming such a sig level is ill-advised and outright insane.
 We'll come back to this point again and again, but to show you that a chance of 1 out of 20 usually wouldn't give you much confidence when there is any important matter at stake, think about the old game show \textit{Let's Make a Deal}.
-In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and duds called \textit{Zonk} behind the other two.
+In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and duds called \textit{Zonk} or less impressive prizes behind the other two.
 Let's modify the rules slightly:
 In the soft-sciences version of \textit{Let's Make a Deal} there are 20 doors.
-Behind 19 of them, there are prizes worth a significant fortune (grant money, which means money plus prestige), but 1 door is hiding an automated gun turret which instantly kills the contestant if they choose that door.
+Behind 19 of them, there are prizes worth a significant fortune (grant money, which means money plus prestige), but one of the doors hides an automated gun turret which instantly kills the contestant if they choose that door.
 Would you expect any sane person to participate in such a game show?
 Of course you wouldn't!
-People who -- given a choice -- wouldn't take any substantial risk in real life with a 1 in 20 chance are happy to bet the future of linguistics or social psychology on such a chance by setting $sig\defeq 0.05$ (and not doing replication).
+People who---given a choice---wouldn't take any substantial risk in real life with a 1 in 20 chance are happy to bet the future of linguistics or social psychology on such a chance by setting $sig\defeq 0.05$ (and not doing replication).
 On the other hand, we have seen that even $p\approx 0.0000000715$ might be meaningless.
-Doing maths is easy, but making good inferences isn't.
+Clearly, doing maths is easy, but making good inferences isn't.
 Therefore, two of the major themes in this book are (i) that you shouldn't take unnecessarily high risks in making scientific inferences from data and (ii) that there is no recipe-like procedure that leads to good inferences.%
 \footnote{Anyone who thinks they're a Bayesian and just shouted ``\textit{Yeah, except in Bayesian inference!}'' should stop reading and take a long, hard look in the mirror.}
 
 In the next section, we will return to the corpus example from the Problem Statement and formalise the procedure described above in the form of the so-called Fisher Exact Test or just Fisher Test.
-You'll see that the logic of the Tea Tasting Experiment lies behind those omnipresent 2x2 tables that often pop up in the corpus literature, especially in research on collocations and collostructions \citep{StefanowitschGries2003,Evert2008}.
+You'll see that the logic of the Tea Tasting Experiment lies behind the omnipresent 2x2 tables that often pop up in the corpus literature, especially in research on collocations and collostructions \citep{StefanowitschGries2003,Evert2008}.
 
 \subsection{Fisher's Exact Test and Null Hypotheses}
 
 Our examples from the Problem Statement and the Tea Tasting Experiment are all about comparing counts of events.
-How many tea-first cups were chosen correctly relative to the number of tea-first cups in the set-up of the experiment, and the same for milk-first cups?
-The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as (or more extreme than) the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
+How often was a correct cup of tea chosen relative to the maximal number of events of choosing a cup of tea in the experiment?
+The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as or more extreme than the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
 Such counts are customarily summarised in \Key{contingency tables}, see Table~\ref{tab:contingency}.
 
 \begin{table}
@@ -513,17 +518,17 @@ Such counts are customarily summarised in \Key{contingency tables}, see Table~\r
   \multicolumn{2}{c|}{}  & \textbf{4} & \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
   \cline{3-5}
   \end{tabular}
-  \caption{A typical 2x2 contingency table with row sums, column sums, and a grand total}
+  \caption{A typical 2x2 contingency table for the Tea Tasting Experiment with row sums, column sums, and a grand total}
   \label{tab:contingency}
 \end{table}
 
 A contingency table tabulates counts of events characterised by two variables, each having two or more discrete possible values.
+Here, one variable (called \textit{Reality} in Table~\ref{tab:contingency}) characterises the event as \alert{involving a real tea-first or a milk-first cup}, and the other variable (called \textit{Bristow} in Table~\ref{tab:contingency}) characterises the event as \alert{involving a cup designated by Ms Bristow as a tea-first or a milk-first cup}.
 One variable is shown in columns, the other one in rows, and the table has the potential to show which values of the two variables co-occur very often or very rarely.
-In the case of the Tea Tasting Experiment, we tabulate numbers of cups (or events of choosing cups, to be more precise).
-In row 1, we put the 4 tea-first cups according to Muriel Bristow.
-In row 2, we put the 4 milk-first cups as assigned by her.
-The row sums in the last column show that there were indeed 4 cups for each condition.
-In the two columns, we count the real tea-first and milk-first cups.
+In row 1, we put the 4 events involving tea-first cups according to Muriel Bristow.
+In row 2, we put the 4 events involving milk-first cups as assigned by her.
+The row sums in the last column reflect the fact that there were indeed 4 events (and cups) for each condition.
+In the two columns, we count the event involving real tea-first and milk-first cups.
 As you can see, of the three real tea-first cups, Muriel Bristow classified 3 as tea-first (cell 1,1) and 1 as milk-first (cell 2,1).%
 \footnote{In matrices and tables, it is customary to index cells first by rows, then by columns.
 Hence, cell 1,1 is the upper-left cell. Cell 2,1 is the lower-left cell.
@@ -620,11 +625,11 @@ An unexpected result under the assumption of mere guessing on Muriel Bristow's p
 The Fisherian type of the frequentist logic of inference is based on this kind of argument:
 Since it is very difficult to come up with quantitative evidence in favour of research hypotheses (see Chapter~\ref{sec:inference}), a \Key{Null Hypothesis} (or simply \textit{Null}, symbolised $H_0$) is constructed.
 The Null states in some way that \alert{the effect predicted by the theory is absent}.
-If the result obtained in the experiment has a very low frequentist probability under the assumption that the Null is true (\ie, it's an unexpected result), the experiment is assumed to lend some limited support for the theory (or rather a minor hypothesis which is part of the theory).
+If the result obtained in the experiment has a very low frequentist probability under the assumption that the Null is true (\ie, it's an unexpected result), the experiment is assumed to lend some limited support for the theory (or rather for a minor hypothesis which is part of the theory).
 Unexpected results are not in any way taken as proof of the theory or a part of the theory, and it's obvious why.
 First, we never know whether a rare (unexpected) event has occurred by chance, regardless of how unexpected it was \alert{before we conducted the experiment}.
 Our calculations are based on the realisation that it is not at all impossible to obtain unexpected results by chance.
-On the contrary, the p value quantifies the expectedness of the actual result under a Null (\ie, by chance).
+On the contrary, the p value quantifies the expectedness of the actual result under a given Null (\ie, by chance).
 Second, take the abovementioned ``experiment'' regarding my grandfather's ESP capabilities with $p=0.0000000715$.
 It's practically irrelevant how low the p value is, most people will not take it as evidence that my grandfather or one of his friends could foresee the numbers drawn in next week's national lottery.
 Thus, the strength of the evidence depends on many factors, among them the design of the experiment and the p value.
@@ -638,11 +643,15 @@ Hence:
   \frac{\binom{890}{90}\cdot\binom{210}{10}}{\binom{1,100}{100}}+\frac{\binom{890}{91}\cdot\binom{210}{9}}{\binom{1,100}{100}}+\dots+\frac{\binom{890}{100}\cdot\binom{210}{0}}{\binom{1,100}{100}}\approx 0.008
 \end{math}\end{center}
 
-\noindent This is indeed the p value as calculated in Fisher's Exact Test.
+\noindent This is indeed a possible p value as calculated in Fisher's Exact Test.
+It's not the only possible p value, as we will show immediately.
 
-[continue]
+\subsubsection{The Direction of Hypotheses}
 
-% Probabilities of Independent Events
+Let's take stock.
+We've shown that the Tea Tasting Experiment can be analysed statistically with a vers simple logic.
+If Ms Bristow has no special tea-tasting capabilities, she would still guess certain numbers of cups correctly.
+
 
 \section{Probability Distributions}
 
