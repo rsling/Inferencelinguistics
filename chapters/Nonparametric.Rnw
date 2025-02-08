@@ -5,3 +5,23 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{Some Other Scenarios}
 \label{sec:nonparametric}
+
+
+
+\begin{center}
+\begin{align*}
+  \dbinom{1000}{100}&\approx 6.385\cdot 10^{139}\\[0.5\baselineskip]
+  \dbinom{1000}{10}&\approx 2.634\cdot 10^{23}
+\end{align*}
+\end{center}
+
+<<choose, fig.cap=paste0("Number of ways of choosing $k$ elements from $n=1000$ elements; Left: regular y-axis, Right: logarithmic y-axis"), echo=F, fig.pos="t", cache=F>>=
+  ks <- 1:1000
+  binoms <- choose(1000, ks)
+  par(mfrow=c(1,2))
+    p <- plot(binoms, bty="n", ylab = "Binomial coefficient", xlab = "k",
+              yaxt = "n", type = "l", lwd = the.lwd)
+    p <- plot(binoms, bty="n", ylab = "", xlab = "k",
+              yaxt = "n", type = "l", log = "y", lwd = the.lwd)
+  par(mfrow=c(1,1))
+@

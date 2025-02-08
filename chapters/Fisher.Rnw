@@ -21,12 +21,13 @@ In other words, those outcomes would be rare if we repeated the experiment over 
 To quantify these notions and make some careful and limited scientific inferences based on this quantification, we introduce several mathematical concepts.
 The \alert{binominal coefficient} is a way of calculating the number of ways of choosing a specific number of elements from a set of elements regardless of their order and without replacement.
 The \alert{p-value calculated in Fisher's Exact Test} is the frequentist probability of obtaining a certain result or a more extreme result in simple experiments involving two two-valued variables and counts of their instances.
-The \alert{effect size} for Fisher's Exact Test is a measure of how strongly two variables interact.
+The \alert{effect strength} for Fisher's Exact Test is a measure of how strongly two variables interact.
 Finally, \alert{probabilty distribution functions} are general functions to calculate (and plot) such probabilities that have specific mathematical properties.
 
 Readers should be warned that this chapter is a tad narrative and slow in order to create insight into the basic idea of frequentist inference.
 We consider this vital in order to remedy problems with frequentist practice (not with the frequentist philosophy).
 Take your time and be assured that we will up the pace in later chapters.
+Also, we promise that we will never talk about tea again in later chapters.
 
 \Problem{If there's Nothing Going On \ldots}{%
 Let's consider three rather simple questions:
@@ -68,7 +69,7 @@ Maybe the host or some other guest conspired with the psychic and gave them all 
 Example (iii) is much more intricate and, in a way, boring, which is why it only intrigues linguists.
 Some linguists would smirk at you and claim that they don't care about corpus examples because it was determined once and for all by a cherubic figure (who never laughs) that examples from corpora don't count for anything.
 Some linguists, on the other hand, would take the ten sentences as conclusive evidence that whatever random modification to their theory they came up with is provably correct, or that somebody else's theory is provably incorrect.%
-\footnote{\textit{Whenever I find even one example that contradicts a claim, I consider that claim refuted.} (an unnamed linguist, p.\,c.)}
+\footnote{\textit{Whenever I find even one example that contradicts a claim, I consider that claim refuted.} (an unnamed linguist, p.\,c.)\label{fn:jm}}
 What were your thoughts?
 We certainly hope that you don't belong to either of the aforementioned tribes of linguists and that you saw the parallels to the first two scenarios.
 Above all, quantitative considerations play a role, among others:
@@ -339,7 +340,7 @@ Hence, the groups of identical outcomes should each have a size of $4\cdot 3\cdo
 There are thus
 
 \begin{center}\begin{math}
-  \frac{8\cdot 7\cdot 6\cdot 5}{4\cdot 3\cdot 2\cdot 1}=\frac{1,680}{24}=70
+  \cfrac{8\cdot 7\cdot 6\cdot 5}{4\cdot 3\cdot 2\cdot 1}=\cfrac{1,680}{24}=70
 \end{math}\end{center}
 
 \noindent truly distinct sets of four cups to be chosen from among a set of eight cups.%
@@ -373,13 +374,13 @@ For two cups out of eight, we'd have calculated $8\cdot 7$ (two choices, then st
 In general and using $n$ as the variable encoding the number of items and $k$ as the variable encoding the number of items to choose, this can be expressed as
 
 \begin{center}\begin{math}
-  \frac{n!}{(n-k)!}
+  \cfrac{n!}{(n-k)!}
 \end{math}\end{center}
 
 \noindent To illustrate, we insert the concrete numbers from our example above:
 
 \begin{center}\begin{math}
-  \frac{8!}{(8-4)!}=\frac{8!}{4!}=\frac{8\cdot 7\cdot 6\cdot 5\cdot \stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}{\stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}=8\cdot 7\cdot 6\cdot 5
+  \cfrac{8!}{(8-4)!}=\cfrac{8!}{4!}=\cfrac{8\cdot 7\cdot 6\cdot 5\cdot \stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}{\stk{4}\cdot \stk{3}\cdot \stk{2}\cdot \stk{1}}=8\cdot 7\cdot 6\cdot 5
 \end{math}\end{center}
 
 \noindent To account for the decision paths that led to identical results, we divided this further by $4!$ because $k=4$ items can be arranged in $4\cdot 3\cdot 2\cdot 1$ ways.
@@ -387,7 +388,7 @@ Generally, we need to divide by $k!$
 This gives us the \Key{binomial coefficient} used to calculate the number of distinct sets of $k$ items from $n$ items without replacement and irrespective of their order:
 
 \begin{center}\begin{math}
-  \binom{n}{k}\defeq\frac{n!}{(n-k)!k!} % \frac{\frac{n!}{(n-k)!}}{k!}=\frac{n!}{(n-k)!k!}
+  \dbinom{n}{k}\defeq\cfrac{n!}{(n-k)!k!} % \cfrac{\cfrac{n!}{(n-k)!}}{k!}=\cfrac{n!}{(n-k)!k!}
 \end{math}\end{center}
 
 \noindent The binomial coefficient is usually read \textit{n choose k}, but it's okay to read it as \textit{k chosen from n} etc.
@@ -399,7 +400,7 @@ This is easy if we regard the 8 cups as two sets of 4 cups (milk-first and tea-f
 Muriel Bristow thus chose 3 cups out of 4 correctly and 1 cup out of 4 incorrectly, hence:
 
 \begin{equation}
-  \binom43\cdot\binom41=\frac{4!}{1!3!}\frac{4!}{3!1!}=\frac{24}{6}\cdot\frac{24}{6}=4\cdot 4=16
+  \dbinom43\dbinom41=\cfrac{4!}{1!3!}\cfrac{4!}{3!1!}=\cfrac{24}{6}\cdot\cfrac{24}{6}=4\cdot 4=16
   \label{eq:threefour}
 \end{equation}
 
@@ -413,7 +414,7 @@ In order to evaluate how unexpected a result with three correctly chosen cups is
 Hence, we should add the number of possible configurations with four correct cups, which is 1:
 
 \begin{center}\begin{math}
-  \binom44\binom40+\binom43\binom41=1\cdot 1+4\cdot 4=1+16=17
+  \dbinom44\dbinom40+\dbinom43\dbinom41=1\cdot 1+4\cdot 4=1+16=17
 \end{math}\end{center}
 
 \noindent The probability of obtaining 3 or 4 correct cups by chance is thus $17\div 70\approx 0.24$.
@@ -472,7 +473,7 @@ After all, the p-value is bloody low:
 
 \begin{center}
 \begin{math}
-  p=\frac{1}{\binom{49}{6}}=\frac{1}{13,983,816}\approx 0.0000000715
+  p=\cfrac{1}{\dbinom{49}{6}}=\cfrac{1}{13,983,816}\approx 0.0000000715
 \end{math}
 \end{center}
 
@@ -623,7 +624,7 @@ If we drew 100 sentences randomly from this corpus, what would be the frequentis
 Clearly, it would be:
 
 \begin{center}\begin{math}
-  \frac{\binom{890}{90}\binom{210}{10}}{\binom{1,100}{100}}\approx\frac{6.573\cdot 10^{141}}{1.423\cdot 10^{144}}\approx 0.005
+  \cfrac{\dbinom{890}{90}\dbinom{210}{10}}{\dbinom{1,100}{100}}\approx\cfrac{6.573\cdot 10^{141}}{1.423\cdot 10^{144}}\approx 0.005
 \end{math}\end{center}
 
 \noindent This probability is useful because \alert{we obtained the result by querying for all sentences containing \textit{sleep}, not by drawing random sentences}.
@@ -653,7 +654,7 @@ Hence:
 % sum(unlist(lapply(90:100, function(x) {(choose(890,x)*choose(210,100-x))/choose(1100,100)})))
 
 \begin{center}\begin{math}
-  \frac{\binom{890}{90}\binom{210}{10}}{\binom{1,100}{100}}+\frac{\binom{890}{91}\binom{210}{9}}{\binom{1,100}{100}}+\dots+\frac{\binom{890}{100}\binom{210}{0}}{\binom{1,100}{100}}\approx 0.008
+  \cfrac{\dbinom{890}{90}\dbinom{210}{10}}{\dbinom{1,100}{100}}+\cfrac{\dbinom{890}{91}\dbinom{210}{9}}{\dbinom{1,100}{100}}+\dots+\cfrac{\dbinom{890}{100}\dbinom{210}{0}}{\dbinom{1,100}{100}}\approx 0.008
 \end{math}\end{center}
 
 \noindent This is indeed a possible p-value as calculated in Fisher's Exact Test.
@@ -721,7 +722,7 @@ The p-value for Fisher's Exact Test can be calculated following the know well-es
 % sum(unlist(lapply(69:0, function (x) {(choose(869,x)*choose(231,100-x))/choose(1100,100)})))
 
 \begin{center}\begin{math}
-  \frac{\binom{869}{69}\binom{231}{31}}{\binom{1,100}{100}}+\frac{\binom{869}{68}\binom{231}{32}}{\binom{1,100}{100}}+\dots\frac{\binom{869}{0}\binom{231}{100}}{\binom{1,100}{100}}\approx 0.009
+  \cfrac{\dbinom{869}{69}\dbinom{231}{31}}{\dbinom{1,100}{100}}+\cfrac{\dbinom{869}{68}\dbinom{231}{32}}{\dbinom{1,100}{100}}+\dots+\cfrac{\dbinom{869}{0}\dbinom{231}{100}}{\dbinom{1,100}{100}}\approx 0.009
 \end{math}\end{center}
 
 \noindent Since we are limited by the corpus size of 1,100 and the fixed sample size of 100, we cannot reach exactly 0.008.
@@ -732,13 +733,13 @@ However, the directionality involved in formulating the Null is obviously inform
 Hence, it wouldn't be correct to think that Fisher's testing philosophy completely ignores substantive hypotheses.
 In Chapter~\ref{sec:powerseverity}, we'll turn to methods of directly supporting hypotheses within the Neyman-Pearson philosophy and Deborah Mayo's Severity approach to frequentist inference.
 
-\section{Sample Size and Effect Size}\label{sec:sampleeffectsize}
+\section{Sample Size and Effect Strength}\label{sec:sampleeffectsize}
 
 When we obtain a low p-value, we can assume that \alert{the Null is false or a rare event has occurred}.
 The Null usually states that some effect is absent, that there is nothing going on beyond random chance.
 We have already illustrated (using the soft-sciences version of \textit{Let's Make a Deal} and my grandfather's lottery win) that there cannot be a fixed threshold for what counts as rare.
 In this section, we examine how the size of the sample and the p-value are related.
-Then, we informally introduce the notion of the effect size, to which we will return repeatedly in later chapters, very crucially in Chapter~\ref{sec:powerseverity}.
+Then, we informally introduce the notion of the effect strength, to which we will return repeatedly in later chapters, very crucially in Chapter~\ref{sec:powerseverity}.
 
 Assume that Fisher and Ms Bristow, after fiercely discussing the theoretical foundations of her potential tea-tasting abilities after the first experiment (as one should), decide to repeat the experiment but with a much larger sample.
 This time, she agrees to taste 80 cups of tea, 40 of which are tea-first.
@@ -773,15 +774,106 @@ Promised!}
 
 \begin{center}
 \begin{math}
-  \frac{\binom{40}{30}\binom{40}{10}}{\binom{80}{40}}+\frac{\binom{40}{31}\binom{40}{9}}{\binom{80}{40}}+\dots+\frac{\binom{40}{40}\binom{40}{0}}{\binom{80}{40}}\approx 7.44\cdot 10^{-6}
+  \cfrac{\dbinom{40}{30}\dbinom{40}{10}}{\dbinom{80}{40}}+\cfrac{\dbinom{40}{31}\dbinom{40}{9}}{\dbinom{80}{40}}+\dots+\cfrac{\dbinom{40}{40}\dbinom{40}{0}}{\dbinom{80}{40}}\approx 7.44\cdot 10^{-6}
 \end{math}
 \end{center}
 
 \noindent Do you recognise the exponential notation?
 With a negative exponent of $-6$, it means that you have to move the point 6 digits to the left, hence $7.44\cdot 10^{-6}=0.00000744$.
 Although the rate of accuracy is the same, the p-value is much lower than the p-value of 0.24 corresponding to Table~\ref{tab:fisherone}.
+This should be an intuitively desirable result.
+If she's just guessing whether cups are tea-first or milk-first, this will show over time, \ie, with an increasing number of trials.
+An urn once again serves as a good example of this effect.
+Let's consider a situation where  someone claims that an urn at a funfair is unfair inasmuch as it does not contain the advertised number of winning lots.
+The showman claims there are 1,000 lots in the urn, 300 of them winners, but you suspect that there are much less winners.
+To test his claim that the urn contains 30\% winning lots, you agree to draw a sample of 10 lots.
+If you end up with 1 winning lot and 9 duds, it wouldn't be (again, intuitively) much evidence of anything because such a small sample is generally not trustworthy.
+If you drew a sample of 100 lots, however, and you ended up with 10 winners and 90 duds, the showman would be in trouble.%
+\footnote{An appropriate way to analyse this exact situation (the Binomial Test) will be demonstrated in Chapter~\ref{sec:nonparametric}.
+The overall topic of sample size and sample accuracy will be discussed in Chapter~\ref{sec:confidence}.}
+In the same vein, the Tea Tasting Marathon can be compared to the small-sample Tea Tasting Experiment.
+Since the p-value is interpreted as providing stronger evidence the smaller it is, it behaves as we'd intuitively think it should.
 
-\section{The Distribution of P-Values}\label{sec:pdist}
+One cautionary note is in order.
+An experiment is an attempt to find out something about the real world, to detect whether an effect is real.
+For example, we're curious whether Ms Bristow really has the ability in question or whether the corpus frequencies of certain verbs' voices are in line with our theories (and hence whether our theories are in line with reality).
+If we draw a larger sample, nothing changes about the real world.
+We simply \alert{increase our chances of detecting an effect} (indirectly, by rejecting the Null).
+We have to keep in mind that the p-value obtained in the experiment is just a particular result of us conducting the experiment, which is in essence a confrontation with chance.
+If there is no effect in the real world, \alert{each p-value has exactly the same chance of emerging as the result of our experiment before we actually conduct the experiment}, regardless of the sample size.%
+\footnote{For this to be provably true, certain conditions need to hold, as we will discuss in Chapter~\ref{sec:confidence}.}
+If this sounds weird and kind of wrong to you, please read on until Section~\ref{sec:pdist}.
+
+Alas, there is another catch, and it's one which becomes ever more important when moving on to realistic experiments from made up and toy scenarios like the Tea Tasting Experiment.
+Usually, we don't expect humans to be deterministic, and we don't expect human behaviour to be discrete.
+Even if Ms Bristow could detect tea-first cups, she probably had a non-zero error rate.
+In fact, this is why we need the type of analysis provided by Fisher's Exact Test in the first place.
+If she claimed she had perfect taste, we'd probably just test her with a single cup from time to time and wait for her first error, which would prove her claim wrong beyond doubt.
+Clearly, such proof would be much better than merely rejecting a Null, thus providing weak evidence in favour of a hypothesis, etc.
+Similarly, even if \textit{sleep} is an unaccusative verb, we expect it to pop up in the passive voice from time to time, either because we consider grammar to be probabilistic (many usage-based approaches), or because we attribute such occurrences to performance effects (typically generative and formal approaches with a psycholinguistic interest in processing).
+We don't take sides here because we don't have to.
+In any case, both corpora and controlled experiments are based on human behaviour such as linguistic output or reactions to linguistic input.
+This behaviour is never deterministic, and we cannot expect perfect results from humans.
+If we could, and if unaccusativity blocked passives strictly, we could just look for one example of any unaccusative verb in the passive voice in order to prove the underlying theory wrong (see Footnote~\ref{fn:jm}).
+
+Why is this important?
+For the penultimate time, think about Ms Bristow.
+If she could detect tea-first cups with 75\% accuracy, she had the ability of interest, except it wasn't perfect.
+The fictional corpus study about passives was introduced from the beginning with caveats regarding marginal contexts where even unaccusative verbs could be passivised, etc.
+Under many probabilistic\slash usage-based approaches, verbs are even regarded as unaccusative only to a certain degree, such that \textit{sleep} might less unaccusative than \textit{burst}, for example.
+Nobody expects to never ever find any unaccusative verb in the passive voice in the output of real speakers, and nobody expects to get unanimous and perfect rejection of all passives of unaccusative verbs in a rating experiment.
+Therefore, the effect (=~unaccusativity leads to reduced passivisation) has a certain \Key{effect strength}.
+The effect strength is a property of the real-world phenomenon we're trying to capture with our experiment.
+It is thus crucially different from the sample size, which is merely a property of our experiment.
+The sample size only affects our chances of measuring an effect that is real, but it doesn't make an effect real.
+In other words, it doesn't change the distribution of the potential p-values.
+The effect strength, on the other hand, changes the distribution of potential p-values.
+Again, Section~\ref{sec:pdist} will shed some more light on this, but it's highly important to understand the difference.
+A large effect is easier to detect per se.
+The better Ms Bristow's tea-first detection, the easier it is to detect in any experiment \alert{because a higher effect strength increases the probability of low p-values}.
+The more prototypical a verb's unaccusativity, the easier it is to recognise as an unaccusative verb in an experiment \alert{because a higher effect strength increases the probability of low p-values}.
+A \alert{larger sample just makes it easier to detect an effect if it is real}.
+
+Did we repeat the same statements several times in the previous paragraph?
+That was intentional, and we're going to repeat those statements in different form in subsequent chapters.
+Many practical introductions to statistics blur the distinction by simply stating that ``\textit{both a large sample size and a large effect strength make it easier to obtain a low p-value}''.
+This often gives the impression that it's legitimate to increase the sample size until we finally catch that pesky effect.
+We agree with even the most fanatic Bayesian that this is beyond evil.%
+\footnote{If you haven't guessed already, Bayesian statistics is a different approach to statistical inference.
+We praise many Bayesians for mercilessly exposing bad frequentist practice, and we definitely encourage you to look at Bayesianism.
+At the same time, we aren't convinced that it's the final solution to all problems of statistical inference.}
+Only a true understanding of frequentist inference helps in applying it correctly in our everyday research.
+Therefore, we now dive deeper into the nature of p-values.
+
+\section{The Distribution of P-Values (With Simulations)}\label{sec:pdist}
+
+Did you notice that we talked about \alert{the probability of obtaining a low p-value}?
+We agree that it might sound confusing to speak of the probability of obtaining a p-value, because the p-value feels like it should be a probability itself.
+However, the p-value is merely a metric that tells us \alert{what the probability of obtaining the result (that was actually obtained) was before we actually obtained it under the assumption that Null is true}.
+Argh!
+It's clearly not itself a probability.
+If anything, it \alert{was a hypothetical probability before we rolled the proverbial die}.
+
+To clarify this admittedly twisted notion, we resort to simulations.
+There are introductions based on and devoted to simulations (see \citealt{VasishthBroe2011} or even better and more advanced \citealt{CarseyHarden2014}), but we'll keep it short since we're not trying to teach you how to do simulations yourself.
+Modern computers are powerful machines, and they have very good random number generators.%
+\footnote{Here, ``good'' means that they approach true randomness very well without reconstructible patterns in the sequence of generated numbers.}
+Therefore, we can use them to simulate processes that generate data, where a process can be anything from Ms Bristow labelling cups of tea to verbs occurring in the active and passive voice.
+In the simulation, we have the luxury of controlling all numerical properties of a simulated real world.
+For example, we could set up a simulation that behaves like a tea-first detecting lady with a 75\% accuracy rate.
+Or we could set up a simulation of a corpus where all verbs have the same tendency to occur in the passive, or a corpus where \textit{sleep} has a tendency much below average to occur in the passive, but this tendency is even stronger for \textit{burst}, etc.
+Then, the simulation spits out any amount of data generated according to our specifications, and by analysing those data with statistical tests, it is possible to see how the tests perform in uncovering the true nature of the process generating the data, \ie, the true nature of reality.
+While simulations cannot be used to find out much about the actual real world, there are two advantages to this approach.
+First, the data are virtually free.
+Anyone who has ever conducted an experiment or a corpus study know that empirical work is tedious and expensive.
+It's much easier to generate simulated data with a few lines of code.
+Second, we never know what reality is like in doing real empirical work.
+Therefore, it is utterly useless to test or demonstrate properties of statistical methods.
+On the contrary, we rely on our statistical methods and our knowledge of them when doing empirical work in order to make valid inferences.
+Indeed, simulations are used to test the properties of our statistical tools, and they are used to demonstrate these properties in teaching statistics.
+In this book, they are used exclusively for demonstration.
+
+
 
 \section{Probability Distributions}\label{sec:hypergeometric}
 
