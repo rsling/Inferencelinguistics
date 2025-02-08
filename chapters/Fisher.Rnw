@@ -20,9 +20,9 @@ It is shown that unexpected outcomes under the assumption of pure randomness are
 In other words, those outcomes would be rare if we repeated the experiment over and over again, and if only pure randomness were in control of the outcomes (rather than some influencing factor, such as the manipulation of a die).
 To quantify these notions and make some careful and limited scientific inferences based on this quantification, we introduce several mathematical concepts.
 The \alert{binominal coefficient} is a way of calculating the number of ways of choosing a specific number of elements from a set of elements regardless of their order and without replacement.
-The \alert{p value calculated in Fisher's Exact Test} is the frequentist probability of obtaining a certain result or a more extreme result in simple experiments involving two two-valued variables and counts of their instances.
-\alert{Probabilty distribution functions} are general functions to calculate (and plot) such probabilities that have specific mathematical properties.
-Finally, the \alert{effect size} for Fisher's Exact Test is a measure of how strongly two variables interact.
+The \alert{p-value calculated in Fisher's Exact Test} is the frequentist probability of obtaining a certain result or a more extreme result in simple experiments involving two two-valued variables and counts of their instances.
+The \alert{effect size} for Fisher's Exact Test is a measure of how strongly two variables interact.
+Finally, \alert{probabilty distribution functions} are general functions to calculate (and plot) such probabilities that have specific mathematical properties.
 
 Readers should be warned that this chapter is a tad narrative and slow in order to create insight into the basic idea of frequentist inference.
 We consider this vital in order to remedy problems with frequentist practice (not with the frequentist philosophy).
@@ -457,17 +457,18 @@ A low probability of a specific outcome means that it would be rare if the exper
 
 \section{Inference With Fisher's Exact Test}\label{sec:inferencefisher}
 
-\subsection{P Values and Sig Levels}
+\subsection{P-Values and Sig Levels}
 
 There are two important aspects with respect to making inferences from unexpected outcomes.
 Can you be \textit{sure} that Muriel Bristow had the capability of discerning tea-first cups from milk-first cups just because in the real experiment, she pointed out 4 correct cups, not just 3 as in our mathematical illustration?
 The answer is clearly negative because, well, $p\approx 0.014$ and not $p=0$.
 To illustrate, consider my grandfather on my father's side, Carl.
-Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize (true story).
+Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize.
+(True story!)
 They guessed 6 numbers out of 49 correctly.
 Would you take their win as evidence that they were prescient and could foresee the number that would be drawn?
 Even better, would you take it as evidence that extra-sensory perception (ESP) exists?
-After all, the p value is bloody low:
+After all, the p-value is bloody low:
 
 \begin{center}
 \begin{math}
@@ -475,14 +476,14 @@ After all, the p value is bloody low:
 \end{math}
 \end{center}
 
-Clearly, most readers would not make such an inference, regardless of how low the p value is.
+Clearly, most readers would not make such an inference, regardless of how low the p-value is.
 The interpretation of a statistical result needs to be well-informed about the mechanism that brought about the result, and it must be made with great care.
 First of all, no known physical and\slash or cognitive mechanism that we know of could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
 Hypotheses about why ESP should be real simply don't exist.
 Also, notice that we did not, in fact, conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him winning the lottery.
 At some point I just started calling it an experiment, probably without most people noticing.
 I could have told a similar true story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
-If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and a low p value becomes utterly meaningless.
+If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and a low p-value becomes utterly meaningless.
 Interestingly, Carl and his friends repeated the ``experiment'' over and over again, playing the national lottery every week for roughly ten years in total (over five hundred draws) without ever winning any considerable amount of money ever again.
 This really makes it look like they were just guessing numbers and got lucky exactly once.
 Obviously, repeating experiments (so-called \Key{replication}) is a very good way of testing inferences made based on unexpected outcomes further.
@@ -545,7 +546,7 @@ Hence, cell 1,1 is the upper-left cell. Cell 2,1 is the lower-left cell.
 The upper-right and lower-right cells are indexed 1,2 and 2,2, respectively.}
 The opposite is true for the real milk-first cups.
 
-To calculate the p value for Fisher's Exact Test---which is exactly what we've been introducing in this chapter---we only need to consider either the rows or the columns and the corresponding sums.
+To calculate the p-value for Fisher's Exact Test---which is exactly what we've been introducing in this chapter---we only need to consider either the rows or the columns and the corresponding sums.
 In Table~\ref{tab:fisherone}, the cells shaded in blue and the cells shaded in green suffice to calculate the probability of drawing 3 from 4 and independently 1 from 4, which corresponds exactly to the binomial coefficient calculated in Equation~\ref{eq:threefour}.
 
 \begin{table}
@@ -639,34 +640,149 @@ If the result obtained in the experiment has a very low frequentist probability 
 Unexpected results are not in any way taken as proof of the theory or a part of the theory, and it's obvious why.
 First, we never know whether a rare (unexpected) event has occurred by chance, regardless of how unexpected it was \alert{before we conducted the experiment}.
 Our calculations are based on the realisation that it is not at all impossible to obtain unexpected results by chance.
-On the contrary, the p value quantifies the expectedness of the actual result under a given Null (\ie, by chance) with perfect precision.
+On the contrary, the p-value quantifies the expectedness of the actual result under a given Null (\ie, by chance) with perfect precision.
 Second, take the abovementioned ``experiment'' regarding my grandfather's ESP capabilities with $p=0.0000000715$.
-It's practically irrelevant how low the p value is, most people will not take it as evidence that my grandfather or one of his friends could foresee the numbers drawn in next week's national lottery.
-Thus, the strength of the evidence depends on many factors, among them the design of the experiment and the p value.
+It's practically irrelevant how low the p-value is, most people will not take it as evidence that my grandfather or one of his friends could foresee the numbers drawn in next week's national lottery.
+Thus, the strength of the evidence depends on many factors, among them the design of the experiment and the p-value.
 
 Let's keep this in mind and complete the maths.
 The value of $p=0.005$ calculated above is just the probability of obtaining exactly 10 passives and 90 actives under the informally stated \alert{$H_0$: The verb \textit{sleep} is passivised as often as all other verbs}.
 Since any more extreme (\ie, even lower) number of passives would be at least as good evidence against the Null, we should include them.
 Hence:
 
+% sum(unlist(lapply(90:100, function(x) {(choose(890,x)*choose(210,100-x))/choose(1100,100)})))
+
 \begin{center}\begin{math}
   \frac{\binom{890}{90}\binom{210}{10}}{\binom{1,100}{100}}+\frac{\binom{890}{91}\binom{210}{9}}{\binom{1,100}{100}}+\dots+\frac{\binom{890}{100}\binom{210}{0}}{\binom{1,100}{100}}\approx 0.008
 \end{math}\end{center}
 
-\noindent This is indeed a possible p value as calculated in Fisher's Exact Test.
-It's not the only possible p value, as we will show immediately.
+\noindent This is indeed a possible p-value as calculated in Fisher's Exact Test.
+It's not the only possible p-value, as we will show immediately.
 
-\subsubsection{The Direction of Hypotheses}
+\subsubsection{The Direction of the Null Hypothesis}
 
 Let's take stock.
-We've shown that the Tea Tasting Experiment can be analysed statistically with a vers simple logic.
-If Ms Bristow has no special tea-tasting capabilities, she would still guess certain numbers of cups correctly.
+We've shown that the Tea Tasting Experiment and other confrontations with chance can be analysed statistically with a very simple logic.
+If Ms Bristow has no special tea-tasting capabilities, she would still guess 3 or 4 cups correctly in 24\% of an infinite or at least very long sequence of trials.
+If \textit{sleep} did indeed behave like the totality of all other verbs with respect to passivisation in the fictional corpus described above, 100 instances of \textit{sleep}, randomly sampled from a corpus would still lead to just 10 or less passives in 0.8\% of an infinite or at least very long sequence of trials.
+If my grandfather and his friends weren't prescient, they'd still win the big prize in 0.00000715\%  of an infinite or at least very long sequence of draws.
 
+In the case of the corpus study, we had a specific substantive hypothesis generated by many theories of syntax and the lexicon in mind, namely that unaccusative verbs cannot be passivised or are at least very rarely passivised.
+Hence, we calculated the probability of obtaining a sample with as few or fewer passives of \textit{sleep} in order to weaken the Null and mildly support the family of hypotheses to which the substantive hypothesis belongs.%
+\footnote{Please review Chapter~\ref{sec:inference} if the exact wording of this sentence is less than crystal clear to you.}
+This means, however, that the Null couldn't have been \textit{The verb `sleep' passivises as often as the totality of all other verbs.}
+If this were the Null, then \alert{any strong deviation (of \textit{sleep}) from the overall distribution of passives would be sufficient to weaken it}.
+We'd have to take a result with, for example, 90 passives and 10 actives of \textit{sleep} (\ie, a strong deviation in the other direction) as equally good evidence against the Null as the result that was actually obtained.
+The test would be a \Key{two-sided test} because it tests for deviations to both sides.
+As we'll see in Section~\ref{sec:hypergeometric}, in this case we'd get $p\approx 0.016$.
 
-\section{Probability Distributions}
+Based on our substantive hypothesis, however, we were only interested in deviations into one direction, namely \alert{a lower relative number (proportion) of occurrences of \textit{sleep} in the passive voice compared to the overall proportion of active and passive voice in the corpus}.
+Hence, the actual Null was something like: \textit{The verb `sleep' passivises as often or less often than the totality of all other verbs verb.}
+The test was a \Key{single-sided test}, in this case a right-sided test (see Section~\ref{sec:hypergeometric}).
+If $q_{\textsc{passive}(\textit{sleep})}$ denotes the proportion of passives of \textit{sleep} and $q_{\textsc{passive}(\neg\textit{sleep})}$ denotes the proportion of passives of all the other verbs, then the mathematical formulation of the Null is:
 
-\section{Sample Size and Effect Size}
+\begin{center}
+\begin{math}
+  H_0: q_{\textsc{passive}(\textit{sleep})}\geq q_{\textsc{passive}(\neg\textit{sleep})}
+\end{math}
+\end{center}
 
-\section{The Distribution of P-Values}
+There might be verbs for which the same theory predicts that they passivise more often than the average verb.
+For example, \textit{arrest} could be such a verb, as it is not only transitive but also often used in reports of arrests with phrases like ``\textit{A man was arrested by the police}.''
+In order to test a Null based on this substantive hypothesis, we have to reverse the relation between the proportions:
 
+\begin{center}
+\begin{math}
+  H_0: q_{\textsc{passive}(\textit{arrest})}\leq q_{\textsc{passive}(\neg\textit{arrest})}
+\end{math}
+\end{center}
 
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Voice}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Active} & \textbf{Passive} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Verb}} & \textbf{\textit{arrest}} & \CellBlue 69 & \CellGreen 31 & \multicolumn{1}{c|}{\Dim\textbf{100}} \\
+  \cline{2-5}
+  & \textbf{Other}    & 800 & 200 & \multicolumn{1}{c|}{\textbf{1,000}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \CellBlue\textbf{869} & \CellGreen\textbf{231} & \multicolumn{1}{c|}{\Dim \textbf{1,100}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{The fictional result for the voice distribution of \textit{arrest}}
+  \label{tab:arrest}
+\end{table}
+
+\noindent In this case, a result as convincing as the result for \textit{sleep} is described numerically in Table~\ref{tab:arrest}, assuming there were also exactly 100 instances of \textit{arrest} overall.
+The p-value for Fisher's Exact Test can be calculated following the know well-established method as follows:
+
+% sum(unlist(lapply(69:0, function (x) {(choose(869,x)*choose(231,100-x))/choose(1100,100)})))
+
+\begin{center}\begin{math}
+  \frac{\binom{869}{69}\binom{231}{31}}{\binom{1,100}{100}}+\frac{\binom{869}{68}\binom{231}{32}}{\binom{1,100}{100}}+\dots\frac{\binom{869}{0}\binom{231}{100}}{\binom{1,100}{100}}\approx 0.009
+\end{math}\end{center}
+
+\noindent Since we are limited by the corpus size of 1,100 and the fixed sample size of 100, we cannot reach exactly 0.008.
+However, 0.009 is close enough.
+Such a result could be interpreted as weakening the Null which states that \textit{arrest} is passivised as often or more often than all other verbs.
+While we can't argue that a precise substantive hypothesis was directly supported, at least a global negation of such a hypothesis failed the test.
+However, the directionality involved in formulating the Null is obviously informed by the substantive hypothesis.
+Hence, it wouldn't be correct to think that Fisher's testing philosophy completely ignores substantive hypotheses.
+In Chapter~\ref{sec:powerseverity}, we'll turn to methods of directly supporting hypotheses within the Neyman-Pearson philosophy and Deborah Mayo's Severity approach to frequentist inference.
+
+\section{Sample Size and Effect Size}\label{sec:sampleeffectsize}
+
+When we obtain a low p-value, we can assume that \alert{the Null is false or a rare event has occurred}.
+The Null usually states that some effect is absent, that there is nothing going on beyond random chance.
+We have already illustrated (using the soft-sciences version of \textit{Let's Make a Deal} and my grandfather's lottery win) that there cannot be a fixed threshold for what counts as rare.
+In this section, we examine how the size of the sample and the p-value are related.
+Then, we informally introduce the notion of the effect size, to which we will return repeatedly in later chapters, very crucially in Chapter~\ref{sec:powerseverity}.
+
+Assume that Fisher and Ms Bristow, after fiercely discussing the theoretical foundations of her potential tea-tasting abilities after the first experiment (as one should), decide to repeat the experiment but with a much larger sample.
+This time, she agrees to taste 80 cups of tea, 40 of which are tea-first.
+After the Tea-Tasting Marathon, Fisher counts the successes and failures and aggregates the numbers in Table~\ref{tab:teamarathon}.
+
+\begin{table}
+  \begin{tabular}{|c|c|c|c|c}
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
+  \cline{3-4}
+  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
+  \hline
+  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 30 & 10 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{40}} \\
+  \cline{2-5}
+  & \textbf{Milk-First}    & 10 & 30 & \multicolumn{1}{c|}{\textbf{40}} \\
+  \hline
+  \multicolumn{2}{c|}{}  & \CellBlue \textbf{40} & \CellGreen \textbf{40} & \multicolumn{1}{c|}{\Dim \textbf{80}} \\
+  \cline{3-5}
+  \end{tabular}
+  \caption{Results of a Tea-Tasting Marathon}
+  \label{tab:teamarathon}
+\end{table}
+
+In this second experiment, the results are similar to those reported in Table~\ref{tab:fisherone} inasmuch as she guessed 75\% of the tea-first cups correctly, and she wrongly detected 25\% of the milk-first cups incorrectly as tea-first cups.
+However, if we calculate the frequentist probability of obtaining this result or an even better result without tea-tasting abilities by chance (the p-value), we get:%
+\footnote{Many of these calculations are virtually impossible to do by hand.
+We double-checked everything.
+Promised!}
+
+% fisher.test(matrix(c(3,1,1,3),2), alternative = "gr")
+% fisher.test(matrix(c(30,10,10,30),2), alternative = "gr")
+
+\begin{center}
+\begin{math}
+  \frac{\binom{40}{30}\binom{40}{10}}{\binom{80}{40}}+\frac{\binom{40}{31}\binom{40}{9}}{\binom{80}{40}}+\dots+\frac{\binom{40}{40}\binom{40}{0}}{\binom{80}{40}}\approx 7.44\cdot 10^{-6}
+\end{math}
+\end{center}
+
+\noindent Do you recognise the exponential notation?
+With a negative exponent of $-6$, it means that you have to move the point 6 digits to the left, hence $7.44\cdot 10^{-6}=0.00000744$.
+Although the rate of accuracy is the same, the p-value is much lower than the p-value of 0.24 corresponding to Table~\ref{tab:fisherone}.
+
+\section{The Distribution of P-Values}\label{sec:pdist}
+
+\section{Probability Distributions}\label{sec:hypergeometric}
+
+\section{Some Afterthoughts on Tests and Collostructions}
