@@ -1,6 +1,20 @@
 % !Rnw root = ../main.Rnw
 <<setupfisher, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
+
+set.seed(942)
+
+tea0 <- sample(rep(c(0,1),4))
+tea.exp <- sample(rep(c(0,1),4))
+
+sim.guess.n <- 1000
+sim.guess.p <- rep(0, sim.guess.n)
+sim.guess.s <- 1000
+for (i in 1:sim.guess.n) {
+  .tea <- sample(rep(c(0,1), sim.guess.s/2))
+  .exp <- sample(rep(c(0,1), sim.guess.s/2))
+  sim.guess.p[i] <- fisher.test(table(.tea, .exp), alternative = "gr")$p.value
+}
 @
 
 \chapter{Guessing and Counting}
@@ -516,23 +530,22 @@ How often was a correct cup of tea chosen relative to the maximal number of even
 The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as or more extreme than the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
 Such counts are customarily summarised in \Key{contingency tables}, see Table~\ref{tab:contingency}.
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & 3 & 1 & \multicolumn{1}{c|}{\textbf{4}} \\
-  \cline{2-5}
-  & \textbf{Milk-First}    & 1 & 3 & \multicolumn{1}{c|}{\textbf{4}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \textbf{4} & \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{A typical 2x2 contingency table for the Tea Tasting Experiment with row sums, column sums, and a grand total}
-  \label{tab:contingency}
-\end{table}
+<<contingency, echo=F, cache=F, out.width="85%", results="asis">>=
+  contingency.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
+  colnames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
+  rownames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
+
+  contingency.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "The contingency table for the \\textit{even more extreme result}",
+          label = "contingency") %>%
+    add_header_above(c(" ", "Reality"=2), bold = T) %>%
+    group_rows(group_label = c("Bristow"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(3, bold = T)
+@
 
 A contingency table tabulates counts of events characterised by two variables, each having two or more discrete possible values.
 Here, one variable (called \textit{Reality} in Table~\ref{tab:contingency}) characterises the event as \alert{involving a real tea-first or a milk-first cup}, and the other variable (called \textit{Bristow} in Table~\ref{tab:contingency}) characterises the event as \alert{involving a cup designated by Ms Bristow as a tea-first or a milk-first cup}.
@@ -550,43 +563,47 @@ The opposite is true for the real milk-first cups.
 To calculate the p-value for Fisher's Exact Test---which is exactly what we've been introducing in this chapter---we only need to consider either the rows or the columns and the corresponding sums.
 In Table~\ref{tab:fisherone}, the cells shaded in blue and the cells shaded in green suffice to calculate the probability of drawing 3 from 4 and independently 1 from 4, which corresponds exactly to the binomial coefficient calculated in Equation~\ref{eq:threefour}.
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 3 & 1 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{4}} \\
-  \cline{2-5}
-  & \textbf{Milk-First}    & 1 & 3 & \multicolumn{1}{c|}{\textbf{4}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \CellBlue \textbf{4} & \CellGreen \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{The same contingency table with the relevant components for Fisher's Exact Test highlighted}
-  \label{tab:fisherone}
-\end{table}
+<<fisherone, echo=F, cache=F, out.width="85%", results="asis">>=
+  fisherone.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
+  colnames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
+  rownames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
+
+  fisherone.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "The contingency table for the \\textit{even more extreme result}",
+          label = "fisherone") %>%
+    add_header_above(c(" ", "Reality"=2), bold = T) %>%
+    group_rows(group_label = c("Bristow"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(1,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray")) %>%
+    row_spec(3, bold = T,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
+@
 
 As was shown above, we need to add the probability of obtaining a more extreme result, which is illustrated for completeness in Table~\ref{tab:fishertwo}.
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 4 & 0 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{4}} \\
-  \cline{2-5}
-  & \textbf{Milk-First}    & 0 & 4 & \multicolumn{1}{c|}{\textbf{4}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \CellBlue \textbf{4} & \CellGreen \textbf{4} & \multicolumn{1}{c|}{\Dim \textbf{8}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{The contingency table for the \textit{even more extreme result}}
-  \label{tab:fishertwo}
-\end{table}
+<<fishertwo, echo=F, cache=F, out.width="85%", results="asis">>=
+  fishertwo.cont <- matrix(c(4, 0, 4, 0, 4, 4, 4, 4, 8), nrow = 3)
+  colnames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
+  rownames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
+
+  fishertwo.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "The contingency table for the \\textit{even more extreme result}",
+          label = "fishertwo") %>%
+    add_header_above(c(" ", "Reality"=2), bold = T) %>%
+    group_rows(group_label = c("Bristow"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(1,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray")) %>%
+    row_spec(3, bold = T,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
+@
 
 Finally, we turn to the corpus example from the Problem Statement.%
 \footnote{Be warned that people actually use the test like this, but that this is a slightly incorrect use.
@@ -599,23 +616,25 @@ Assume that we drew 90 active sentences containing \textit{sleep} in addition to
 Furthermore, assume that the corpus contains 1,100 sentences in total, 890 of them active sentences, 210 passive sentences.
 The corresponding contingency table is shown in Table~\ref{tab:corpussleep}.
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Voice}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Active} & \textbf{Passive} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Verb}} & \textbf{\textit{sleep}} & \CellBlue 90 & \CellGreen 10 & \multicolumn{1}{c|}{\Dim\textbf{100}} \\
-  \cline{2-5}
-  & \textbf{Other}    & 800 & 200 & \multicolumn{1}{c|}{\textbf{1,000}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \CellBlue\textbf{890} & \CellGreen\textbf{210} & \multicolumn{1}{c|}{\Dim \textbf{1,100}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{A contingency table approximately as found in collostructional analysis}
-  \label{tab:corpussleep}
-\end{table}
+<<corpussleep, echo=F, cache=F, out.width="85%", results="asis">>=
+  corpussleep.cont <- matrix(c(90, 800, 890, 10, 200, 210, 100, 1000, 1100), nrow = 3)
+  colnames(corpussleep.cont) <- c("Active", "Passive", "Sum")
+  rownames(corpussleep.cont) <- c("Sleep", "Other", "Sum")
+
+  corpussleep.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "A contingency table approximately as found in collostructional analysis",
+          label = "corpussleep") %>%
+    add_header_above(c(" ", "Voice"=2), bold = T) %>%
+    group_rows(group_label = c("Verb"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(1,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray")) %>%
+    row_spec(3, bold = T,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
+@
 
 Descriptively, it is the case that \textit{sleep} occurs less frequently in the passive than all other verbs.
 Only $10\%$ of all occurrences of \textit{sleep} are passives, but $20\%$ of all other verbs are passives.
@@ -698,23 +717,25 @@ In order to test a Null based on this substantive hypothesis, we have to reverse
 \end{math}
 \end{center}
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Voice}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Active} & \textbf{Passive} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Verb}} & \textbf{\textit{arrest}} & \CellBlue 69 & \CellGreen 31 & \multicolumn{1}{c|}{\Dim\textbf{100}} \\
-  \cline{2-5}
-  & \textbf{Other}    & 800 & 200 & \multicolumn{1}{c|}{\textbf{1,000}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \CellBlue\textbf{869} & \CellGreen\textbf{231} & \multicolumn{1}{c|}{\Dim \textbf{1,100}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{The fictional result for the voice distribution of \textit{arrest}}
-  \label{tab:arrest}
-\end{table}
+<<arrest, echo=F, cache=F, out.width="85%", results="asis">>=
+  arrest.cont <- matrix(c(69, 800, 869, 31, 200, 231, 100, 1000, 1100), nrow = 3)
+  colnames(arrest.cont) <- c("Active", "Passive", "Sum")
+  rownames(arrest.cont) <- c("Arrest", "Other", "Sum")
+
+  arrest.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "The fictional result for the voice distribution of \\textit{arrest}",
+          label = "arrest") %>%
+    add_header_above(c(" ", "Voice"=2), bold = T) %>%
+    group_rows(group_label = c("Verb"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(1,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray")) %>%
+    row_spec(3, bold = T,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
+@
 
 \noindent In this case, a result as convincing as the result for \textit{sleep} is described numerically in Table~\ref{tab:arrest}, assuming there were also exactly 100 instances of \textit{arrest} overall.
 The p-value for Fisher's Exact Test can be calculated following the know well-established method as follows:
@@ -745,23 +766,25 @@ Assume that Fisher and Ms Bristow, after fiercely discussing the theoretical fou
 This time, she agrees to taste 80 cups of tea, 40 of which are tea-first.
 After the Tea-Tasting Marathon, Fisher counts the successes and failures and aggregates the numbers in Table~\ref{tab:teamarathon}.
 
-\begin{table}
-  \begin{tabular}{|c|c|c|c|c}
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \multicolumn{2}{c|}{\textbf{Reality}}  & \\
-  \cline{3-4}
-  \multicolumn{2}{c|}{}  & \textbf{Tea-First} & \textbf{Milk-First} & \\
-  \hline
-  \multirow{2}{*}{\textbf{Bristow}} & \textbf{Tea-First}     & \CellBlue 30 & 10 \CellGreen & \multicolumn{1}{c|}{\Dim\textbf{40}} \\
-  \cline{2-5}
-  & \textbf{Milk-First}    & 10 & 30 & \multicolumn{1}{c|}{\textbf{40}} \\
-  \hline
-  \multicolumn{2}{c|}{}  & \CellBlue \textbf{40} & \CellGreen \textbf{40} & \multicolumn{1}{c|}{\Dim \textbf{80}} \\
-  \cline{3-5}
-  \end{tabular}
-  \caption{Results of a Tea-Tasting Marathon}
-  \label{tab:teamarathon}
-\end{table}
+<<teamarathon, echo=F, cache=F, out.width="85%", results="asis">>=
+  teamarathon.cont <- matrix(c(30, 10, 40, 10, 30, 40, 40, 40, 80), nrow = 3)
+  colnames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
+  rownames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
+
+  teamarathon.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "Contingency table of the Tea Tasting Marathon",
+          label = "teamarathon") %>%
+    add_header_above(c(" ", "Reality"=2), bold = T) %>%
+    group_rows(group_label = c("Bristow"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold=TRUE) %>%
+    row_spec(1,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray")) %>%
+    row_spec(3, bold = T,
+      background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
+@
 
 In this second experiment, the results are similar to those reported in Table~\ref{tab:fisherone} inasmuch as she guessed 75\% of the tea-first cups correctly, and she wrongly detected 25\% of the milk-first cups incorrectly as tea-first cups.
 However, if we calculate the frequentist probability of obtaining this result or an even better result without tea-tasting abilities by chance (the p-value), we get:%
@@ -836,7 +859,7 @@ A \alert{larger sample just makes it easier to detect an effect if it is real}.
 
 Did we repeat the same statements several times in the previous paragraph?
 That was intentional, and we're going to repeat those statements in different form in subsequent chapters.
-Many practical introductions to statistics blur the distinction by simply stating that ``\textit{both a large sample size and a large effect strength make it easier to obtain a low p-value}''.
+Many practical introductions to statistics blur the distinction by simply stating that ``\textit{both a large sample size and a high effect strength make it easier to obtain a low p-value}''.
 This often gives the impression that it's legitimate to increase the sample size until we finally catch that pesky effect.
 We agree with even the most fanatic Bayesian that this is beyond evil.%
 \footnote{If you haven't guessed already, Bayesian statistics is a different approach to statistical inference.
@@ -851,7 +874,8 @@ Did you notice that we talked about \alert{the probability of obtaining a low p-
 We agree that it might sound confusing to speak of the probability of obtaining a p-value, because the p-value feels like it should be a probability itself.
 However, the p-value is merely a metric that tells us \alert{what the probability of obtaining the result (that was actually obtained) was before we actually obtained it under the assumption that Null is true}.
 Argh!
-It's clearly not itself a probability.
+This statistics thing is harder than expected.
+A p-values clearly isn't a probability itself.
 If anything, it \alert{was a hypothetical probability before we rolled the proverbial die}.
 
 To clarify this admittedly twisted notion, we resort to simulations.
@@ -873,7 +897,59 @@ On the contrary, we rely on our statistical methods and our knowledge of them wh
 Indeed, simulations are used to test the properties of our statistical tools, and they are used to demonstrate these properties in teaching statistics.
 In this book, they are used exclusively for demonstration.
 
+Let's simulate a completely untalented tea-taster who really just guesses tea-first and milk-first with equal probability.%
+\footnote{When we present a simulation, all data are always generated by code with a random generator.
+The open-source code for the simulations is written in R, and it can be consulted as part of the Knitr sources for this book.}
+Furthermore, we simulate a classic Tea Tasting Experiment with four tea-first and four milk-first cups.
+Table~\ref{tab:teasim1} shows the raw results, and Table~\ref{tab:teasim1cont} shows the contingency table.
 
+<<teasim1, echo=F, cache=F, out.width="85%", results="asis">>=
+  teaexp1.raw <- rbind(ifelse(tea.exp==0, "Tea-First", "Milk-First"),
+                       ifelse(tea0==0, "Tea-First", "Milk-First"))
+  colnames(teaexp1.raw) <- paste0("Cup ", 1:8)
+  rownames(teaexp1.raw) <- c("Reality", "Guess")
+
+  teaexp1.raw %>%
+    kable(align = rep("c", 8), booktabs = T,
+          caption = "The simulated outcome of a Tea Tasting Experiment",
+          label = "teasim1") %>%
+    row_spec(0, bold=TRUE) %>%
+    column_spec(1, bold=TRUE) %>%
+    kable_styling(latex_options = "scale_down")
+@
+
+<<teasim1cont, echo=F, cache=F, out.width="85%", results="asis">>=
+  teaexp1.cont <- table(tea0, tea.exp) %>%
+    as.data.frame.matrix
+  teaexp1.cont <- cbind(teaexp1.cont, apply(teaexp1.cont, 1, sum))
+  colnames(teaexp1.cont) <- c("Tea-first", "Milk-first", "Sum")
+  teaexp1.cont <- rbind(teaexp1.cont, apply(teaexp1.cont, 2, sum))
+  rownames(teaexp1.cont) <- c("Tea-first", "Milk-first", "Sum")
+
+  teaexp1.cont %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "Contingency table for the above",
+          label = "teasim1cont") %>%
+    add_header_above(c(" ", "Reality"=2), bold = T) %>%
+    group_rows(group_label = c("Guess"), start_row = 1, end_row = 2) %>%
+    column_spec(4, bold = T) %>%
+    row_spec(0, bold = T) %>%
+    row_spec(3, bold = T)
+@
+
+\noindent In this single simulated experiment, the random guesser guessed 2 cups correctly and 6 incorrectly.
+Since the appropriate test is single-sided, the p-value is different from the one corresponding to Table~\ref{tab:fisherone}, which looks similar superficially.
+It's $\Sexpr{round(fisher.test(table(tea0, tea.exp), alternative = "gr")$p.value, 3)}$.
+Do you see why this is a desirable result?
+
+However, the purpose of running simulations is usually not to run them once but to run them very often.
+By looking at the results of a large number of so-called replications, we can check whether the claims made by the frequentist theory are true.
+Let's run
+
+% h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "P-Values")
+% text(h[["mids"]], rep(20, 10), labels = h[["counts"]])
+% axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 
 \section{Probability Distributions}\label{sec:hypergeometric}
 

@@ -39,6 +39,8 @@
 
 <<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 
+library(tidyverse)
+
 require(lattice)
 require(lme4)
 require(fmsb)
@@ -46,10 +48,11 @@ require(MuMIn)
 require(effects)
 require(beanplot)
 require(showtext)
-require(xtable)
 require(plyr)
 require(vcd)
 require(gridExtra)
+
+require(kableExtra)
 
 opts_knit$set(self.contained=FALSE)
 
