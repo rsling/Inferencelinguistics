@@ -230,7 +230,6 @@ In other words, we can calculate how many sample means would deviate by $\Sexpr{
 This is exactly parallel to the argument regarding the Tea Tasting experiment where we calculated how often we could expect certain outcomes anyway, even if the person performing the Tea Tasting task had no ability to detect which liquid was poured into the cup first.
 It gives us a very precise and well-defined measure of how surprising the obtained result would be were the Null true.
 
-
 <<z4, fig.cap=paste0("Distribution of sample means for mean µ and standard error S with obtained sample mean $\\bar{x}$ and corresponding z-value; area under the curve for results equal to or greater than $\\bar{x}$ is shaded"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
 
 z.minmax <- c(114, 126)

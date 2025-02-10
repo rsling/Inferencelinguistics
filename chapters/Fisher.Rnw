@@ -1107,7 +1107,6 @@ Intuitively, many practitioners see such a result and think something like this:
   Hence, the p-value should be high, and we can't reject the Null---which is correct.
   I've finally wrapped my mind around this testing thing.
   I'm going to finish my thesis now and do some serious empirical work!
-  (Wow, I feel so sophisticated.)
 \end{quote}
 
 \noindent Unfortunately, this is fundamentally incorrect, as we will demonstrate using simulations now.%
