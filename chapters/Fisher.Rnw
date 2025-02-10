@@ -1201,7 +1201,7 @@ The stronger the effect is, the more pronounced the tilt.
 With a large sample, the distribution of the p-values collapses close to 0 very quickly, which means that mechanical inferences based on pre-set sig-levels are almost always successful, even if the effect is barely above chance level.
 However, don't misunderstand this logic.
 Figure~\ref{fig:hist} showed that a large sample alone doesn't mean that we reach significance.
-However, Figure~\ref{fig:histbetter} showed that as soon as there is even the tiniest effect, a large sample has a very high chance of detecting it by allowing a rejection of the Null.%
+Then, Figure~\ref{fig:histbetter} showed that as soon as there is even the tiniest effect, a large sample has a very high chance of detecting it by allowing a rejection of the Null.%
 \footnote{The usual caveats apply when we use phrases like \textit{rejecting the Null} or \textit{detecting an effect}.
 Fisher's frequentist logic never delivers proof nor decisive evidence nor even straightforward support for the substantive hypothesis.}
 This is because Fisher's Exact Test was designed for small samples such as 8 cups, 4 types of wheat, etc.
