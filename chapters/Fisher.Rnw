@@ -174,7 +174,7 @@ The maths is slightly more complex for the Eurojackpot because you have to choos
 For the psychic guessing phone numbers, the idea is also the same once the number of phone numbers and the number of the digits per phone number has been determined.
 We will return to the third scenario (the corpus study) later, but we can apply a similar logic even to that example.
 
-\subsection{The Total Number of Possible Outcomes}
+\subsection{The Total Number of Possible Outcomes}\label{sec:numberoutcomes}
 
 In each of the scenarios, we need to know the number of potential outcomes in order to quantify how unexpected a single specific outcome is.
 The higher the number of overall possible outcomes, the more unexpected a specific outcome is.
@@ -416,32 +416,75 @@ Would this be a highly unexpected result?
 So unexpected maybe that you'd doubt that Muriel Bristow merely got lucky?
 Well, you tell me!
 
-\subsection{Interlude: Probability}
+\subsection{\Indepth\ Probability}
 
-Before we continue on to calculate the probability of outcomes that are not perfect---such as 3 correctly classified cups---let's stop and briefly reflect on the notion of \textit{probability}.
-Probability Theory is a complex field comprising complex formal aspects (the axiomatisation of the maths of probability) as well as philosophical aspects (the interpretation of the maths).
-There is neither just one unique axiomatisation nor one unique interpretation of the concept.
-We present one view that is not very technical but useful for practitioners who want to use statistical inference in the analysis of empirical data.
+Before we continue on to calculate the probability of outcomes that are not perfect---such as 3 correctly classified cups---let's stop and briefly reflect on the notion of \textit{probability} and informally introduce some terminology and some notation.
+If this section is too technical for some readers, we encourage them to skip to Section~\ref{sec:lessthanperfect} and maybe return later.
+Probability Theory is a complex field comprising formal aspects (the axiomatisation of the maths) as well as philosophical aspects (the interpretation of the maths).
+There is neither just one unique axiomatisation nor one unique interpretation of probability.
+We present one view (in a highly simplified form) that is useful for practitioners who want to use statistical inference in the analysis of empirical data.
 
-We only contemplate situations that are \Key{experiments} or that resemble experiments (like a lottery).
-An real and well-designed experiment is characterised by the fact that we know in advance what might happen.
-We just calculated the number of possible outcomes in a classical Tea Tasting Experiment (70), and we could list all possible outcomes on one or two pages of paper.
-This set of potential outcomes is called the \Key{sample space}, and it's an important property of a proper random experiment that the sample space be defined (although not necessarily enumerable).
+We only contemplate situations that are \Key{experiments} or resemble experiments (such as a lottery).
+A real and well-designed experiment is characterised by the fact that we know in advance what might happen.
+For example, we just calculated in Section~\ref{sec:numberoutcomes} the number of possible outcomes in a classical Tea Tasting Experiment (70).
+That was possible because the protocol of the experiment was defined exactly, such that we could even list all 70 possible outcomes on one or two pages of paper.
+This set of potential outcomes is called the \Key{sample space}, and it's an important property of a proper random experiment that the sample space must be defined (although not necessarily enumerable).
 Thus, the sample space is a theoretical construct that is fixed before the experiment is conducted.
 
-In a proper Tea Tasting Experiment, there is always a sequence of 4 events of choosing cups.
-If there aren't 4 such events, the experiment wasn't actually conducted properly---it failed.
-In a proper execution of the experiment, each of these events (such as choosing the blue tea-first cup in the first step) has a given \Key{probability}.
-The probability of the event is just what we introduced in the previous section:
-There are 8 possible events available for the first actual event, and none of these events has any special preference attached to it (if the person choosing the cups is just guessing).
-Hence, if we repeated the first step over and over again, each cup would be selected equally often.
-The notion of probability advocated in this book draws its interpretation from this concept of a hypothetically infinite sequence of repeated events.
-While it's hypothetical, it's very much useful and related to everyday experience.
+In a proper Tea Tasting Experiment, exactly 4 cups have to be chosen.
+If more or less cups are chosen, the experiment wasn't actually conducted properly---it failed.
+For the statistical analysis, selecting 4 cups counts as one single event or outcome.
+Each of the 70 distinct events in the sample space $\{E_1, \dots, E_{70}\}$ is assigned a \Key{probability}.
+Under the assumption that we're just guessing, none of these 70 outcomes is preferred, and we split the probability between them evenly, hence for each $E_i$, we get $Pr(E_i)=1\div 70\approx 0.014$, where $Pr(\cdot)$ is the \Key{probability function} that maps events onto their probability.
+What this means is that if we repeated the experiment over and over again, each possible configuration of 4 cups would be selected equally often.
+Hence, the notion of probability advocated in this book draws its interpretation from this concept of a hypothetically infinite sequence of repeated events.
+While it's hypothetical, it's still quite useful and related to everyday experience.
 It's the reason why you can't rely on a fair die to win any money in the long run.
-There is no way to predict the number of pips, each number has the same probability.
+There is no way to predict the number of pips because each number has the same probability.
 No matter which number you bet on, you'll lose in $5\div 6=0.83$ or 83\% of all rolls.
 
-While the probability of each event doesn't have to be equal as in the case of
+Continuing on a slightly more technical note, the \Key{event space} is the set of all possible subsets of the sample space.
+It contains singleton sets $\{E_i\}$ but also any other subset such as $\{E_i, E_j\}$ or $\{E_i, E_j, E_k\}$ (for $i,j,k\in\{1..70\}$).
+Interestingly, the probability for each of these subsets must be determinable before the experiment.
+For a singleton set such as $\{E_i\}$, the probability is just the probability of its single member.
+In the Tea Tasting Experiment, it's $Pr(E_i)=0.014$.
+The probability of a set such as $\{E_i, E_j\}$ is easy to determine.
+What is the probability that \textit{either} $E_i$ \textit{or} $E_j$ will occur?
+(Remember that $E_i$ and $E_j$ stand for one of 70 unique selections of 4 cups in the example.)
+It's the sum of the individual probabilities, just as your chances of winning a lottery double if you buy 2 lots instead of 1.
+Expressing \textit{or} for events as $\cup$ (the set intersection symbol), we get:
+
+\begin{center}
+\begin{math}
+  Pr(E_i\cup E_j)=Pr(E_i)+Pr(E_j)
+\end{math}
+\end{center}
+
+\noindent It's $0.028$ for any two outcomes in the Tea Tasting Experiment.
+An essential task in frequentist statistics is to determine the probability of a specific set from the event space.
+Immediately below, in Section~\ref{sec:lessthanperfect}, we'll determine the probability of the set containing all outcomes with three or more correctly chosen cups in order to determine how impressive Ms Bristow's performance was if she classified 3 cups correctly.
+
+The sample space (often denoted $\Omega$), the event space (often denoted $\mathcal{F}$), and the probabilities assigned to the set contained in the event space are key ingredients of probability theory.
+We have also introduced the notion of the probability of one \textit{or} ($\cup$) more events.
+There is one final notion we need to introduce, namely the probability of two independent events.
+The simplest example (once again) is a fair die.
+If you roll it once, one of six possible events\slash outcomes will occur, and each outcome has the same probability.
+For example, $Pr(\Dice{4})=1\div 6\approx 0.167$ (using the symbol \Dice{4} instead of some less intuitive $E_i$).
+If you roll the die again, there is no connection between the first and the second roll, and the probability is once again $Pr(\Dice{4})=1\div 6\approx 0.167$.
+However, what's the probability of any sequence of outcomes, such as 4 pips followed by 3 pips?
+It's the probability of one event \textit{and} (written with the set union symbol $\cap$) another independent event:y $\Dice{4}\cap\Dice{3}$, or more generally $E_i\cap E_j$).
+It's calculated by multiplication:
+
+\begin{center}
+\begin{math}
+  Pr(E_i\cap E_j)=Pr(E_i)\cdot Pr(E_j)
+\end{math}
+\end{center}
+
+\noindent Hence, $Pr(\Dice{4}\cap\Dice{3})=(1\div 6)\cdot(1\div 6)=1\div 36=0.028$.%
+\footnote{It's by pure accident that we ended up with two different result on one page which are numerically identical at 0.028.}
+This concludes our very short and informal introduction to some rudimentary elements of probability theory.
+When we add and multiply probabilities in the next section, you can verify that we do it according to the foundations laid out in this section.
 
 \subsection{The Number of Some Less Than Perfect Outcomes}\label{sec:lessthanperfect}
 
@@ -1100,6 +1143,7 @@ Please revise the calculations in Section~\ref{sec:tea}.
 The whole point was to count the possible outcomes of the experiment.
 (Remember how we got to the 70 different possible outcomes of Fisher's original experiment?)
 If there's nothing going on, each of these outcomes has the same chance of occurring, which also means that each p-value gets the same chance.
+It's explicitly not the case that we can expect high p-values if there is no effect.
 This point is mostly neglected in introductions for practitioners, and it's one of the most dangerously misunderstood points in applied frequentist statistics.
 At least some texts state that \textit{high p-values should not be interpreted as evidence against the substantive hypothesis}---or---\textit{high p-values should not be interpreted as evidence for the Null}.
 That's absolutely correct, but now you know why.
@@ -1256,13 +1300,14 @@ The two graphs in Figure~\ref{fig:hypergeom844} are examples of the \Key{Hyperge
 Since the outcomes $k$ are discrete counts, there is a specific probability for each outcome that can be calculated with arbitrary precision using the discrete \Key{density function} in Equation~\ref{eq:hypergeom}.%
 \footnote{The term \textit{density function} is a bit unfortunate as it applies more accurately to continuous distributions (see Chapter~\ref{sec:zandt}).
 Hence, the adjective \textit{discrete} should not be omitted.}
+
 Some terminological clarifications are in order.
 We used the term \Key{parameter} above to describe $N$, $K$, and $n$.
 Informally speaking, there is not one Hypergeometric Distribution but a large (infinite) class of distributions, one for each permutation of $N$, $K$, and $n$.
 The parameters define the concrete function and determine the exact shape of the curve for the admissible values of $k$, which is not itself a parameter.
 Furthermore, this distribution is \Key{discrete} because it give probabilities for discrete outcomes.
 After all, there cannot be an experiment where someone guesses 3.5 cups correctly.
-We'll encounter other distributions later that are quite different.
+We'll encounter other very much different distributions later.
 
 A necessary property of such functions is that the sum of the probabilities for all $k$ given a specific set of parameters is 1.
 Intuitively, this should indeed be a necessary property.
@@ -1308,7 +1353,7 @@ With Equation~\ref{eq:hypergeomex2}, we calculated the probability of achieving 
 Similarly, we calculated the probability of achieving 30 correctly and 10 incorrectly classified cups in the Tea Tasting Marathon with Equation~\ref{eq:tea803010} as $7.44\cdot 10^{-6}$.
 This is the value of the Hypergeometric cumulative distribution function with parameters $N=80$, $K=40$, and $n=40$ at $k=10$.%
 \footnote{Do you see why it is sufficient to look up the value at $k=1$ and $k=10$, respectively?
-Contemplate the graphs in Figure~\ref{fig:hypergeom844c} and think about single-sided tests.}
+Hint: Contemplate the graphs in Figure~\ref{fig:hypergeom844c} and think about single-sided tests.}
 
 We will demonstrate several such functions of probability distributions throughout the book.
 While knowledge of these function is not strictly necessary in order to understand applied frequentist statistics, it might come in handy.

@@ -37,6 +37,9 @@
 %  \include{chapters/Abbreviations}
 \mainmatter
 
+\widowpenalty10000
+\clubpenalty10000
+
 <<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 
 library(tidyverse)
