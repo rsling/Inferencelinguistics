@@ -1205,7 +1205,6 @@ Then, Figure~\ref{fig:histbetter} showed that as soon as there is even the tinie
 \footnote{The usual caveats apply when we use phrases like \textit{rejecting the Null} or \textit{detecting an effect}.
 Fisher's frequentist logic never delivers proof nor decisive evidence nor even straightforward support for the substantive hypothesis.}
 This is because Fisher's Exact Test was designed for small samples such as 8 cups, 4 types of wheat, etc.
-Also, the established sig-level of 0.05 was set for experiments with necessarily small samples.
 In analyses of corpus data with $n=1000$, $n=100000$ (or even $n=200$) Fisher's Exact Test (and virtually all other frequentist tests) have a much too high \Key{sensitivity}.
 A test's sensitivity is its capability of rejecting the Null when there is an effect, and it will be a major topic in Chapter~\ref{sec:powerseverity}.
 
@@ -1232,7 +1231,8 @@ In Section~\ref{sec:fisherexact} we claimed that our example application of Fish
 That's not exactly true, and we urge you to consult papers like \citet{Gries2014a,Gries2015b,Gries2022}, maybe also \citet{SchmidKuechenhoff2013,KuechenhoffSchmid2015}.
 You will discover that the design of such analyses is significantly different from our toy example.
 Most importantly, it was never the goal of collostructional analyses to arrive at scientific inferences via Fisher's logic of statistical inference.
-It was an exploratory method from the beginning, never an inferential method.%
+It was an exploratory method from the beginning, never an inferential method.
+The p-values were primarily used to rank lexemes, not to infer substantive hypotheses about individual lexemes.%
 \footnote{There was some erroneous talk of \textit{significant co-lexemes} and similar things in the early papers.
 We do not consider such quirks relevant as of today, especially as those papers are now twenty years old.}
 While it was a bad decision to use p-values from Fisher's Exact Test in collostructional analyses, it is now widely recognised that measures of effect strength are much more appropriate for the purpose.
