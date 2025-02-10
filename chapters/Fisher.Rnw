@@ -411,14 +411,37 @@ Put differently, there is a 1:70 chance of guessing the four cups by mere luck.
 In technical terms, the \Key{frequentist probability} of hitting the tea jackpot by uninformed guessing is $1\div 70\approx 0.014$.
 This probability is sometimes converted to a percentage, in this case $1.4\%$.%
 \footnote{From our perspective, this conversion to a percentage is not at all wrong inasmuch as $1.4\%$ of an endless sequence of tries would result in an immaculate result, even if the taster is really just guessing.
-However, in scientific contexts, probabilities are expressed properly as real values between 0 and 1, not as percentages.}
+However, in scientific contexts, probabilities are expressed properly as numbers between 0 and 1, not as percentages.}
 Would this be a highly unexpected result?
 So unexpected maybe that you'd doubt that Muriel Bristow merely got lucky?
 Well, you tell me!
 
 \subsection{Interlude: Probability}
 
-\textcolor{lightgray}{Is this necessary? Independent events; arithemtic with probabilities?}
+Before we continue on to calculate the probability of outcomes that are not perfect---such as 3 correctly classified cups---let's stop and briefly reflect on the notion of \textit{probability}.
+Probability Theory is a complex field comprising complex formal aspects (the axiomatisation of the maths of probability) as well as philosophical aspects (the interpretation of the maths).
+There is neither just one unique axiomatisation nor one unique interpretation of the concept.
+We present one view that is not very technical but useful for practitioners who want to use statistical inference in the analysis of empirical data.
+
+We only contemplate situations that are \Key{experiments} or that resemble experiments (like a lottery).
+An real and well-designed experiment is characterised by the fact that we know in advance what might happen.
+We just calculated the number of possible outcomes in a classical Tea Tasting Experiment (70), and we could list all possible outcomes on one or two pages of paper.
+This set of potential outcomes is called the \Key{sample space}, and it's an important property of a proper random experiment that the sample space be defined (although not necessarily enumerable).
+Thus, the sample space is a theoretical construct that is fixed before the experiment is conducted.
+
+In a proper Tea Tasting Experiment, there is always a sequence of 4 events of choosing cups.
+If there aren't 4 such events, the experiment wasn't actually conducted properly---it failed.
+In a proper execution of the experiment, each of these events (such as choosing the blue tea-first cup in the first step) has a given \Key{probability}.
+The probability of the event is just what we introduced in the previous section:
+There are 8 possible events available for the first actual event, and none of these events has any special preference attached to it (if the person choosing the cups is just guessing).
+Hence, if we repeated the first step over and over again, each cup would be selected equally often.
+The notion of probability advocated in this book draws its interpretation from this concept of a hypothetically infinite sequence of repeated events.
+While it's hypothetical, it's very much useful and related to everyday experience.
+It's the reason why you can't rely on a fair die to win any money in the long run.
+There is no way to predict the number of pips, each number has the same probability.
+No matter which number you bet on, you'll lose in $5\div 6=0.83$ or 83\% of all rolls.
+
+While the probability of each event doesn't have to be equal as in the case of
 
 \subsection{The Number of Some Less Than Perfect Outcomes}\label{sec:lessthanperfect}
 
