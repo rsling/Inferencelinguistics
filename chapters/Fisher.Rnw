@@ -763,9 +763,9 @@ As was shown above, we need to add the probability of obtaining a more extreme r
       background = c("white", the.lightcols[2], the.lightcols[1], "lightgray"))
 @
 
-Finally, we turn to the corpus example from the Problem Statement.%
-\footnote{Be warned that people actually use the test like this, but that this is a slightly incorrect use.
-There will be ample discussion of this caveat throughout the book.}
+Finally, we turn to the corpus example from the Problem Statement.
+%\footnote{Be warned that people actually use the test like this, but that this is a slightly incorrect use.
+%There will be ample discussion of this caveat throughout the book.}
 As we pointed out in Section~\ref{sec:unexpected}, the Problem Statement mentions 10 passives of the verb \textit{sleep}, but we need more information.
 Let's introduce that information and the argument that comes with it, roughly following the logic behind collostructional analysis.%
 \footnote{Paradoxically, we consider collostructional analysis to be suboptimal as an illustration of Fisherian logic of inference.
