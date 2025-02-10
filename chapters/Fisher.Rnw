@@ -146,7 +146,7 @@ Would the result still count as unexpected, regardless of any quantitative evalu
 It's a muddle!
 Therefore, we'll use a simple non-linguistic example in Section~\ref{sec:tea} to introduce some important statistical concepts that concern the numerical side of this muddle.
 The example is about tea, and it's extremely famous, so anyone interested in statistical inference should be aware of it, even if they're not in Tea Studies.
-Then, we'll return to the questions from the problem statement (except question [ii], which is deferred to the exercises.
+Then, we'll return to the questions from the problem statement (except question [ii], which is deferred to the exercises).
 
 \section{Tea and Milk}\label{sec:tea}
 
@@ -185,7 +185,7 @@ Therefore, Fisher devised an experiment to shed light on the substance of Bristo
 She was presented with eight cups, four tea-first cups and four milk-first cups.
 Otherwise, the cups were identical.
 Her task in the experiment was to find the four tea-first cups merely by tasting.
-Very much like winning a lottery after buying just a single lot, some outcomes of this experiment might surprise us by being relatively unexpected if Bristow didn't have the ability which she claims to have.
+Very much like winning a lottery after buying just a single lot, some outcomes of this experiment might surprise us by being relatively unexpected if Bristow didn't have the ability she claims to have.
 We still wouldn't consider it proven beyond all doubt that she does indeed have the ability if that happened.
 However, we'd at least not consider her claims of being a tea expert refuted if she guessed a surprising number of cups correctly.
 The question is: What's a surprising number?
@@ -406,7 +406,7 @@ So, how unexpected is her performance (3 cups detected correctly) given that the
 This would have been easier to quantify if she had guessed all 4 cups correctly.
 Clearly, there is only 1 such immaculate result.
 Had Ms Bristow chosen the green steaming cup instead of the green non-steaming cup, it would have been the immaculate guess.
-Obviously, by merely guessing (without any special sensory capability), Muriel Bristow would produce such a perfect result in 1 out of 70 runs if the experiment were repeated over and over again.
+Obviously, by merely guessing (without any special sensory ability), Muriel Bristow would produce such a perfect result in 1 out of 70 runs if the experiment were repeated over and over again.
 Put differently, there is a 1:70 chance of guessing the four cups by mere luck.
 In technical terms, the \Key{frequentist probability} of hitting the tea jackpot by uninformed guessing is $1\div 70\approx 0.014$.
 This probability is sometimes converted to a percentage, in this case $1.4\%$.%
@@ -414,11 +414,11 @@ This probability is sometimes converted to a percentage, in this case $1.4\%$.%
 However, in scientific contexts, probabilities are expressed properly as numbers between 0 and 1, not as percentages.}
 Would this be a highly unexpected result?
 So unexpected maybe that you'd doubt that Muriel Bristow merely got lucky?
-Well, you tell me!
+Well, you tell us!
 
 \subsection{\Indepth\ Probability}
 
-Before we continue on to calculate the probability of outcomes that are not perfect---such as 3 correctly classified cups---let's stop and briefly reflect on the notion of \textit{probability} and informally introduce some terminology and some notation.
+Before we continue on to calculate the probability of outcomes that are not perfect---such as 3 correctly classified cups---let's stop and briefly revise our notion of \textit{probability} and informally introduce some terminology and some notation.
 If this section is too technical for some readers, we encourage them to skip to Section~\ref{sec:lessthanperfect} and maybe return later.
 Probability Theory is a complex field comprising formal aspects (the axiomatisation of the maths) as well as philosophical aspects (the interpretation of the maths).
 There is neither just one unique axiomatisation nor one unique interpretation of probability.
@@ -472,7 +472,7 @@ If you roll it once, one of six possible events\slash outcomes will occur, and e
 For example, $Pr(\Dice{4})=1\div 6\approx 0.167$ (using the symbol \Dice{4} instead of some less intuitive $E_i$).
 If you roll the die again, there is no connection between the first and the second roll, and the probability is once again $Pr(\Dice{4})=1\div 6\approx 0.167$.
 However, what's the probability of any sequence of outcomes, such as 4 pips followed by 3 pips?
-It's the probability of one event \textit{and} (written with the set union symbol $\cap$) another independent event:y $\Dice{4}\cap\Dice{3}$, or more generally $E_i\cap E_j$).
+It's the probability of one event \textit{and} (written with the set union symbol $\cap$) another independent event: $\Dice{4}\cap\Dice{3}$, or more generally $E_i\cap E_j$.
 It's calculated by multiplication:
 
 \begin{center}
@@ -481,10 +481,12 @@ It's calculated by multiplication:
 \end{math}
 \end{center}
 
-\noindent Hence, $Pr(\Dice{4}\cap\Dice{3})=(1\div 6)\cdot(1\div 6)=1\div 36=0.028$.%
-\footnote{It's by pure accident that we ended up with two different result on one page which are numerically identical at 0.028.}
+\noindent Hence, $Pr(\Dice{4}\cap\Dice{3})=Pr(\Dice{4})\cdot Pr(\Dice{3})=(1\div 6)\cdot(1\div 6)=1\div 36=0.028$.%
+\footnote{It's by pure accident that we ended up with two different results on this page which are numerically identical at 0.028.}
+By the way, in all cases discussed so far, the probabilities were evenly distributed among the possible outcomes, which is called a \Key{uniformly random distribution}.
+This is not a necessary condition, and we'll encounter situations where it's not the case later in this book.
 This concludes our very short and informal introduction to some rudimentary elements of probability theory.
-When we add and multiply probabilities in the next section, you can verify that we do it according to the foundations laid out in this section.
+When we add and multiply probabilities in the next section, you can verify that we're doing it according to the foundations laid out in this section.
 
 \subsection{The Number of Some Less Than Perfect Outcomes}\label{sec:lessthanperfect}
 
@@ -579,7 +581,7 @@ The wrong story goes like this:
 \begin{quote}
   \itshape
   Because guessing three or more cups correctly only has a probability of 0.24, the probability that Muriel Bristow has the ability to detect tea-first cups is $1-0.24=0.76$.
-  We can be 76\% certain that she has the capability in question.
+  We can be 76\% certain that she has the ability in question.
 \end{quote}
 
 This is all completely wrong.
@@ -589,6 +591,8 @@ In reality, it's a fact that she either has the ability or she doesn't have it, 
 Probability only plays a role when there is a confrontation with chance, and before the proverbial dice are rolled.
 The probability we calculated above \alert{was} the probability of obtaining the result which we then actually obtained \alert{before we conducted the experiment} and \alert{under the assumption that there was no ability, effect, etc.\ at work but just pure randomness}.
 We frequently call this hypothetical absence of an effect the \alert{assumption that there's nothing going on}.
+
+\enlargethispage{4\baselineskip}
 
 Second, we'd like to ask you what it really means to be \textit{so-and-so percent certain of something}.
 We consider this notion (sometimes also called a \textit{subjective probability} or similar) to be undefined and above all irrelevant to science.
@@ -604,6 +608,8 @@ The outcome of an experiment is unexpected if it had a low probability before th
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability attached to it.
 A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
 
+\newpage
+
 \section{Inference With Fisher's Exact Test}\label{sec:inferencefisher}
 
 \subsection{P-Values and Sig-Levels}
@@ -617,18 +623,18 @@ The p-value is often used to make automatic inferences along the following lines
   There were 8 cups in total, 4 of them tea-first cups.
   Ms Bristow agreed to choose 4 cups to demonstrate that she can successfully detect tea-first cups.
   She detected 3 tea-first cups correctly, hence $p=0.24$.
-  Since this p-value is higher than the accepted \Key{significance threshold} of 0.05, we conclude that the experiment has produced no evidence that Ms Bristow has above-chance capabilities to detect tea-first cups.
+  Since this p-value is higher than the accepted \Key{significance threshold} of 0.05, we conclude that the experiment has produced no evidence that Ms Bristow has above-chance abilities to detect tea-first cups.
 \end{quote}
 
 \noindent The purpose of this section is to reconstruct and critique such inferences.%
 \footnote{By the way, if you're wondering why the accepted threshold should be 0.05, we cannot help you.
-It was a vague and careful suggestion by Ronald A.\ Fisher at some point, and it developed a life of its own.
+It was a vague and loose suggestion by Ronald A.\ Fisher, and it developed a life of its own.
 We don't recommend using it.}
 However, please keep in mind that \textit{p-value} is just another name for what we calculated in Section~\ref{sec:lessthanperfect} with Equation~\ref{eq:hypergeomex2}.
 The maths has been established, and this section is just about the interpretation of the resulting number.
 
 There are two important aspects with respect to making inferences from unexpected outcomes.
-Can we be \textit{sure} that Muriel Bristow had the capability of discerning tea-first cups from milk-first cups just because in the real experiment roughly 100 years ago, she pointed out 4 correct cups?
+Can we be \textit{sure} that Muriel Bristow had the ability of discerning tea-first cups from milk-first cups just because in the real experiment roughly 100 years ago, she pointed out 4 correct cups?
 The answer is clearly negative because, well, $p\approx 0.014$ and not $p=0$.
 To illustrate, consider my grandfather on my father's side, Carl.
 Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize.
@@ -648,7 +654,7 @@ Clearly, most readers would not make such an inference, regardless of how low th
 The interpretation of a statistical result needs to be well-informed about the mechanism that brought about the result, and it must be made with great care.
 First of all, no known physical and\slash or cognitive mechanism that we know of could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
 Hypotheses about why ESP should be real simply don't exist.
-Also, notice that we did not, in fact, conduct an experiment about my grandfather's ESP capabilities, but I merely told a story about him winning the lottery.
+Also, notice that we did not, in fact, conduct an experiment about my grandfather's ESP abilities, but I merely told a story about him winning the lottery.
 At some point I just started calling it an experiment, probably unnoticed by most readers.
 I could have told a similar true story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
 If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and a low p-value becomes utterly meaningless.
@@ -814,7 +820,7 @@ Unexpected results are not in any way taken as proof of the theory or a part of 
 First, we never know whether a rare (unexpected) event has occurred by chance, regardless of how unexpected it was \alert{before we conducted the experiment}.
 Our calculations are based on the realisation that it is not at all impossible to obtain unexpected results by chance.
 On the contrary, the p-value quantifies the probability of the actual result under a given Null (\ie, by chance) with perfect precision.
-Second, take the aforementioned pseudo-experiment regarding my grandfather's ESP capabilities with $p=0.0000000715$.
+Second, take the aforementioned pseudo-experiment regarding my grandfather's ESP abilities with $p=0.0000000715$.
 It's practically irrelevant how low the p-value is, most people will not take it as evidence that my grandfather or one of his friends could foresee the numbers drawn in next week's national lottery.
 Thus, the strength of the evidence depends on many factors, among them the design of the experiment and the p-value.
 
@@ -836,7 +842,7 @@ It's not the only possible p-value, as we will show immediately.
 
 Let's take stock.
 We've shown that the Tea Tasting Experiment and other confrontations with chance can be analysed statistically with a very simple logic.
-If Ms Bristow has no special tea-tasting capabilities, she would still guess 3 or 4 cups correctly in 24\% of an infinite or at least very long sequence of trials.
+If Ms Bristow has no special tea-tasting abilities, she would still guess 3 or 4 cups correctly in 24\% of an infinite or at least very long sequence of trials.
 If \textit{sleep} did indeed behave like the totality of all other verbs with respect to passivisation in the fictitious corpus described above, 100 instances of \textit{sleep}, randomly sampled from a corpus would still lead to just 10 or less passives in 0.8\% of an infinite or at least very long sequence of trials.
 If my grandfather and his friends weren't prescient, they'd still have won the big prize in 0.00000715\%  of an infinite or at least very long sequence of draws.
 
@@ -1186,7 +1192,7 @@ If the Null is not true, lower p-values are obtained with a higher chance than h
 However, we see that it's not irrelevant how well the participant performs the task, \ie, how large the effect is (see Section~\ref{sec:sampleeffectsize}).
 Even at an accuracy of 1\% above chance (51\%), \Sexpr{length(which(sim.fiftyone.p<0.05))} of \Sexpr{sim.better.s} p-values are already lower than 0.05.
 At an accuracy of 2\% above chance (52\%), it's already \Sexpr{length(which(sim.fiftytwo.p<0.05))} of \Sexpr{sim.better.s} p-values, and at 5\% above chance (55\%) it's an astonishing \Sexpr{length(which(sim.fiftyfive.p<0.05))}.
-If we applied $\text{sig}\defeq 0.05$ to test whether there is an effect, we'd almost be guaranteed to \textit{reach significance} (which is what people call it when they reach their pre-set sig-level) at 55\% accuracy, albeit the tea-tasting capabilities of the participant are middling (to say the least).
+If we applied $\text{sig}\defeq 0.05$ to test whether there is an effect, we'd almost be guaranteed to \textit{reach significance} (which is what people call it when they reach their pre-set sig-level) at 55\% accuracy, albeit the tea-tasting abilities of the participant are middling (to say the least).
 It's highly doubtful whether this would be good for anything except claiming victory or getting a paper published.
 It almost certainly wouldn't advance our knowledge.
 
