@@ -154,7 +154,8 @@ Then, we'll return to the questions from the problem statement (except question 
 
 What unites the examples in the Problem Statement is that they describe a confrontation with chance.
 Given this confrontation, you're asked \alert{what kind of a result would be unexpected under the assumption that there is nothing going on}:
-(i) you're not prescient, (ii) the psychic isn't actually a psychic, (iii) \textit{sleep} cannot be passivised.
+(i) you're not prescient, or (ii) the psychic isn't actually a psychic.
+Matters are more complex for the corpus example (iii), and we'll return to it later (for example in Section~\ref{sec:fisherexact}).
 In this section, we formalise the notion of \Key{unexpected outcome} in relation to such situations and experiments.
 
 First of all, an \textit{unexpected outcome} cannot be one which is deemed totally impossible.
@@ -437,7 +438,7 @@ For the statistical analysis, selecting 4 cups counts as one single event or out
 Each of the 70 distinct events in the sample space $\{E_1, \dots, E_{70}\}$ is assigned a \Key{probability}.
 Under the assumption that we're just guessing, none of these 70 outcomes is preferred, and we split the probability between them evenly, hence for each $E_i$, we get $Pr(E_i)=1\div 70\approx 0.014$, where $Pr(\cdot)$ is the \Key{probability function} that maps events onto their probability.
 What this means is that if we repeated the experiment over and over again by guessing, each possible configuration of 4 cups would be selected equally often.
-Hence, the notion of probability advocated in this book draws its interpretation from this concept of a hypothetically infinite sequence of repeated events.
+Hence, the notion of probability advocated in this book draws its interpretation from the concept of a hypothetically infinite sequence of repeated events.
 While it's hypothetical, it's still quite useful and related to everyday experience.
 It's the reason why you can't rely on a fair die to win any money in the long run.
 There is no way to predict the number of pips because each number has the same probability.
@@ -445,7 +446,7 @@ No matter which number you bet on, you'll lose in $5\div 6=0.83$ or 83\% of all 
 
 Continuing on a slightly more technical note, the so-called \Key{event space} is the set of all possible subsets of the sample space.
 It contains singleton sets $\{E_i\}$ but also any other subset such as $\{E_i, E_j\}$ or $\{E_i, E_j, E_k\}$ (for $i,j,k\in\{1..70\}$).
-Interestingly, the probability for each of these subsets must be determinable before the experiment.
+Crucially, the probability for each of these subsets must be determinable before the experiment.
 For a singleton set such as $\{E_i\}$, the probability is just the probability of its single member.
 In the Tea Tasting Experiment, it's $Pr(E_i)=0.014$.
 The probability of a set such as $\{E_i, E_j\}$ is easy to determine.
@@ -460,18 +461,18 @@ Expressing \textit{or} for events as $\cup$ (the set intersection symbol), we ge
 \end{math}
 \end{center}
 
-\noindent It's $0.028$ for any two outcomes in the Tea Tasting Experiment.
+\noindent It's $0.028$ for any two outcomes of the Tea Tasting Experiment.
 An essential task in frequentist statistics is to determine the probability of a specific set from the event space.
 Immediately below, in Section~\ref{sec:lessthanperfect}, we'll determine the probability of the set containing all outcomes with three or more correctly chosen cups in order to determine how impressive Ms Bristow's performance was if she classified 3 cups correctly.
 
-The sample space (often denoted $\Omega$), the event space (often denoted $\mathcal{F}$), and the probabilities assigned to the set contained in the event space are key ingredients of probability theory.
-We have also introduced the notion of the probability of one \textit{or} ($\cup$) more events.
-There is one final notion we need to introduce, namely the probability of two independent events.
+The sample space (often denoted $\Omega$), the event space (often denoted $\mathcal{F}$), and the probabilities assigned by the probability function $Pr$ to the sets contained in the event space are key ingredients of probability theory.
+Furthermore, we introduced the notion of the probability of one \textit{or} ($\cup$) more events.
+There is one final notion we need to introduce, namely the probability of two independent events to both occur.
 The simplest example (once again) is a fair die.
 If you roll it once, one of six possible events\slash outcomes will occur, and each outcome has the same probability.
 For example, $Pr(\Dice{4})=1\div 6\approx 0.167$ (using the symbol \Dice{4} instead of some less intuitive $E_i$).
 If you roll the die again, the first roll doesn't influence the second roll in any way, and the probability is once again $Pr(\Dice{4})=1\div 6\approx 0.167$.
-However, what's the probability of any sequence of outcomes, such as 4 pips followed by 3 pips?
+However, what's the probability of any sequence of outcomes, such as \textit{4 pips} followed by \textit{3 pips}?
 It's the probability of one event \textit{and} (written with the set union symbol $\cap$) another independent event: $\Dice{4}\cap\Dice{3}$, or more generally $E_i\cap E_j$.
 It's calculated by multiplication:
 
@@ -483,14 +484,14 @@ It's calculated by multiplication:
 
 \noindent Hence, $Pr(\Dice{4}\cap\Dice{3})=Pr(\Dice{4})\cdot Pr(\Dice{3})=(1\div 6)\cdot(1\div 6)=1\div 36=0.028$.%
 \footnote{It's by pure accident that we ended up with two different results in this section which are numerically identical at 0.028.}
-By the way, in all cases discussed so far, the probabilities were evenly distributed among the possible outcomes, which is called a \Key{uniformly random distribution}.
-This is not a necessary condition, and we'll encounter situations where it's not the case later in this book.
+By the way, in all cases discussed so far the probabilities were evenly distributed among the possible outcomes, which is called a \Key{uniform random distribution}.
+This is not a necessary condition, and we'll encounter situations where it doesn't hold later in this book.
 This concludes our very short and informal introduction to some rudimentary elements of probability theory.
 When we add and multiply probabilities in the next section, you can verify that we're doing it according to the foundations laid out in this section.
 
 \subsection{The Number of Some Less Than Perfect Outcomes}\label{sec:lessthanperfect}
 
-Before proceeding to delicate matters of scientific inference, let's calculate the probability of guessing 3 cups correctly and getting 1 wrong, as in the example.
+Before proceeding to delicate matters of scientific inference, let's calculate the probability of guessing 3 cups correctly and getting 1 wrong, as in our example from Section~\ref{sec:numberoutcomes}.
 To do that, we first introduce a convenient general notation for the maths of choosing $k$ items out of $n$.
 First, notice that in the calculations above we often multiplied a natural number with the next smaller natural number, then the next smaller number, and so on.
 For example, we calculated $4\cdot 3\cdot 2\cdot 1$.
@@ -538,7 +539,7 @@ We already know that there are 70 ways of choosing any 4 cups out of 8, and henc
   \label{eq:hypergeomex1}
 \end{equation}
 
-\noindent In the long run (repeating the experiment over and over again), even a random guesser would classify 3 cups correctly with a probability 0, 0.23, which corresponds to 23\% of all experiments.
+\noindent In the long run (repeating the experiment over and over again), even a random guesser would classify 3 cups correctly with a probability of 0.23, which corresponds to 23\% of all experiments.
 So, are 3 correct guesses a highly unexpected result?
 Not exactly, because in about a quarter ($23\%$) of an endless sequence of runs of such an experiment, anyone would reach this level of accuracy just by guessing.
 
@@ -547,17 +548,17 @@ In order to evaluate how unexpected a result with three correctly chosen cups is
 Hence, we should add the number of possible configurations with four correct cups, which is 1:
 
 \begin{center}\begin{math}
-  \dbinom44\dbinom40+\dbinom43\dbinom41=1\cdot 1+4\cdot 4=1+16=17
+  \dbinom43\dbinom41+\dbinom44\dbinom40=4\cdot 4+1\cdot 1=16+1=17
 \end{math}\end{center}
 
 \noindent The probability of obtaining 3 or 4 correct cups by chance is thus:
 
 \begin{equation}
-  \frac{\dbinom44\dbinom40+\dbinom43\dbinom41}{\dbinom84}=\cfrac{17}{70}\approx 0.24
+  \frac{\dbinom43\dbinom41+\dbinom44\dbinom40}{\dbinom84}=\cfrac{17}{70}\approx 0.24
   \label{eq:hypergeomex2}
 \end{equation}
 
-Again, in light of this number, choosing 3 cups correctly wouldn't be an unexpected result at all.
+But still, in light of this number, choosing 3 cups correctly wouldn't be an unexpected result at all.
 It would provide no grounds whatsoever for rejecting the hypothesis that Muriel Bristow is just guessing.
 Incidentally, she allegedly chose all four cups correctly when the experiment was actually conducted.
 Do you find this impressive?
@@ -575,7 +576,7 @@ Since inference is a process fraught with peril, much more will have to be said 
 
 However, a typical type of misunderstandings that comes with ill ways of phrasing the mathematical results of frequentist statistics must be mentioned immediately.
 This is the perfect time to mention it because it sounds absurd to most people at this stage.
-Once they've been taught statistics incorrectly, many people can't get this  misunderstanding out of their brains again.
+But once they've been taught statistics incorrectly, many people can't get this  misunderstanding out of their brains again.
 The wrong story goes like this:
 
 \begin{quote}
@@ -606,7 +607,7 @@ Please keep the following Big Point in mind when reading the next section, which
 \Bigpoint{Unexpected Outcomes}{%
 The outcome of an experiment is unexpected if it had a low probability before the experiment was conducted under the assumption that there's nothing going on.
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability attached to it.
-A low probability of a specific outcome means that it would be rare if the experiment were conducted very often.}
+A low probability of a specific outcome merely means that it would be rare if the experiment were conducted very often.}
 
 \newpage
 
@@ -631,7 +632,7 @@ The p-value is often used to make automatic inferences along the following lines
 It was a vague and loose suggestion by Ronald A.\ Fisher, and it developed a life of its own.
 We don't recommend using it.}
 However, please keep in mind that \textit{p-value} is just another name for what we calculated in Section~\ref{sec:lessthanperfect} with Equation~\ref{eq:hypergeomex2}.
-The maths has been established, and this section is about the interpretation of the resulting number.
+The maths has been established, and this section is about its interpretation.
 
 There are two important aspects with respect to making inferences from unexpected outcomes.
 Can we be \textit{sure} that Muriel Bristow had the ability of discerning tea-first cups from milk-first cups just because in the real experiment roughly 100 years ago, she pointed out 4 correct cups?
@@ -653,7 +654,7 @@ After all, the p-value is bloody low:
 Clearly, most readers would not make such an inference, regardless of how low the p-value is.
 The interpretation of a statistical result needs to be well-informed about the mechanism that brought about the result, and it must be made with great care.
 First of all, no known physical and\slash or cognitive mechanism that we know of could account for ESP, which is why most people don't even bother to run experiments investigating ESP.
-Hypotheses about why ESP should be real simply don't exist.
+Good hypotheses about why and how ESP should be real simply don't exist.
 Also, notice that we did not, in fact, conduct an experiment about my grandfather's ESP abilities, but I merely told a story about him winning the lottery.
 At some point I started calling it an experiment, probably unnoticed by most readers.
 I could have told a similar true story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
@@ -663,11 +664,12 @@ This really makes it look like they were just guessing numbers and got lucky exa
 Obviously, repeating experiments (so-called \Key{replication}) is a very good way of further testing inferences made based on unexpected outcomes.
 
 Astonishingly, researchers in soft sciences are often satisfied if $p<0.05$ in order to proceed to a substantive inference from an experiment.
+This is the ominous significance threshold mentioned at the beginning of this section.
 Such thresholds are often called the $\alpha$ level, although we prefer \Key{sig-level} (for \textit{significance level}).
 Setting $sig\defeq 0.05$ means that researchers are satisfied to make an inference if the outcome of an experiment would only be expected in 1 out of 20 experiments under the assumption that there is nothing going on, \ie, that there really isn't any effect.
 While this may be justified in some cases, automatically assuming such a sig-level is ill-advised and outright insane.
 We'll come back to this point again and again, but to show you that a chance of 1 out of 20 usually wouldn't give you much confidence when there is any important matter at stake, think about the old game show \textit{Let's Make a Deal}.
-In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and duds called \textit{Zonk} (or at least less impressive prizes) behind the other two.
+In that show, contestants regularly had to choose one door out of three, and there was a big prize behind one of the doors and duds called \textit{Zonk} (or at least much less impressive prizes) behind the other two.
 Let's modify the rules slightly:
 In the soft-sciences version of \textit{Let's Make a Deal} there are 20 doors.
 Behind 19 of them, there are prizes worth a significant fortune (grant money, which means money plus prestige), but one of the doors hides an automated gun turret which instantly kills the contestant if they choose that door.
@@ -678,7 +680,7 @@ On the other hand, we have seen that even $p\approx 0.0000000715$ might be meani
 Clearly, doing maths is easy, but making good inferences isn't.
 Therefore, two of the major themes in this book are (i) that you shouldn't take unnecessarily high risks in making scientific inferences from data and (ii) that there is no recipe-like procedure that leads to good inferences.
 
-In the next section, we will return to the corpus example from the Problem Statement and formalise the procedure described above in the form of Fisher's Exact Test or just Fisher Test.
+In the next section, we'll return to the corpus example from the Problem Statement and formalise the procedure described above in the form of Fisher's Exact Test or just Fisher Test.
 You'll see that the logic of the Tea Tasting Experiment lies behind the omnipresent 2x2 tables that often pop up in the corpus literature, especially in research on collocations and collostructions \citep{StefanowitschGries2003,Evert2008}.
 
 \subsection{Fisher's Exact Test and Null Hypotheses}\label{sec:fisherexact}
@@ -688,7 +690,7 @@ How many cups of tea were chosen correctly relative to the number of possible ev
 The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as or more extreme than the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
 Such counts are customarily summarised in \Key{contingency tables}, see Table~\ref{tab:contingency}.
 
-<<contingency, echo=F, cache=F, out.width="85%", results="asis">>=
+<<contingency, echo=F, cache=T, out.width="85%", results="asis">>=
   contingency.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
   colnames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -722,7 +724,7 @@ To calculate the p-value for Fisher's Exact Test---which is exactly what we've b
 the shaded cells in Table~\ref{tab:fisherone}.
 With those counts, we can calculate the probability of drawing 3 cups from a set of 4 and independently 1 cup from a different set of 4, which corresponds exactly to the binomial coefficient calculated in Equation~\ref{eq:threefour}.
 
-<<fisherone, echo=F, cache=F, out.width="85%", results="asis">>=
+<<fisherone, echo=F, cache=T, out.width="85%", results="asis">>=
   fisherone.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
   colnames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -744,7 +746,7 @@ With those counts, we can calculate the probability of drawing 3 cups from a set
 
 As was shown above, we need to add the probability of obtaining a more extreme result, which is illustrated for completeness in Table~\ref{tab:fishertwo}.
 
-<<fishertwo, echo=F, cache=F, out.width="85%", results="asis">>=
+<<fishertwo, echo=F, cache=T, out.width="85%", results="asis">>=
   fishertwo.cont <- matrix(c(4, 0, 4, 0, 4, 4, 4, 4, 8), nrow = 3)
   colnames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -775,7 +777,7 @@ Assume that we drew 90 active sentences containing \textit{sleep} in addition to
 Furthermore, assume that the corpus contains 1100 sentences in total, 890 of them active sentences, 210 passive sentences.
 The corresponding contingency table is shown in Table~\ref{tab:corpussleep}.
 
-<<corpussleep, echo=F, cache=F, out.width="85%", results="asis">>=
+<<corpussleep, echo=F, cache=T, out.width="85%", results="asis">>=
   corpussleep.cont <- matrix(c(90, 800, 890, 10, 200, 210, 100, 1000, 1100), nrow = 3)
   colnames(corpussleep.cont) <- c("Active", "Passive", "Sum")
   rownames(corpussleep.cont) <- c("Sleep", "Other", "Sum")
@@ -837,7 +839,7 @@ Hence:
 \end{math}\end{center}
 
 \noindent This is indeed the p-value as calculated in Fisher's Exact Test.
-It's not the only possible p-value, as we will show immediately.
+It's not the only possible p-value, as we'll show immediately.
 
 \subsubsection{The Direction of the Null Hypothesis}
 
@@ -876,7 +878,7 @@ In order to test a Null based on this substantive hypothesis, we have to reverse
 \end{math}
 \end{center}
 
-<<arrest, echo=F, cache=F, out.width="85%", results="asis">>=
+<<arrest, echo=F, cache=T, out.width="85%", results="asis">>=
   arrest.cont <- matrix(c(69, 800, 869, 31, 200, 231, 100, 1000, 1100), nrow = 3)
   colnames(arrest.cont) <- c("Active", "Passive", "Sum")
   rownames(arrest.cont) <- c("Arrest", "Other", "Sum")
@@ -919,13 +921,13 @@ When we obtain a low p-value, we can assume that \alert{the Null is false or a r
 The Null usually states that some effect is absent, that there is nothing going on beyond random chance.
 We have already illustrated (using the soft-sciences version of \textit{Let's Make a Deal} and my grandfather's lottery win) that there cannot be a fixed threshold for what counts as rare.
 In this section, we examine how the size of the sample and the p-value are related.
-Then, we informally introduce the notion of the effect strength, to which we will return repeatedly in later chapters, very crucially in Chapter~\ref{sec:powerseverity}.
+Then, we informally introduce the notion of the effect strength, to which we'll return repeatedly in later chapters, very crucially in Chapter~\ref{sec:powerseverity}.
 
 Assume that Fisher and Ms Bristow, after fiercely discussing (as one should) the theoretical foundations of her potential tea-tasting abilities that might have shown in the first experiment, decided to repeat the experiment but with a much larger sample.
 This time, she agrees to taste 80 cups of tea, 40 of which are tea-first.
 After the Tea Tasting Marathon, Fisher counts the successes and failures and aggregates the numbers in Table~\ref{tab:teamarathon}.
 
-<<teamarathon, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teamarathon, echo=F, cache=T, out.width="85%", results="asis">>=
   teamarathon.cont <- matrix(c(30, 10, 40, 10, 30, 40, 40, 40, 80), nrow = 3)
   colnames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -946,10 +948,7 @@ After the Tea Tasting Marathon, Fisher counts the successes and failures and agg
 @
 
 In this second experiment, the results are similar to those reported in Table~\ref{tab:fisherone} inasmuch as she guessed 75\% of the tea-first cups correctly.
-However, if we calculate the pre-experiment frequentist probability of obtaining this result or an even better result without tea-tasting abilities by chance (\ie, the p-value), we get:%
-\footnote{Many of these calculations are virtually impossible to do by hand.
-Don't worry:
-We made most of them using software and double-checked everything.}
+However, if we calculate the pre-experiment frequentist probability of obtaining this result or an even better result without tea-tasting abilities by chance (\ie, the p-value), we get:
 
 % fisher.test(matrix(c(3,1,1,3),2), alternative = "gr")
 % fisher.test(matrix(c(30,10,10,30),2), alternative = "gr")
@@ -991,7 +990,7 @@ In fact, this is why we need the type of analysis provided by Fisher's Exact Tes
 If she claimed she had infallible perfect taste, we'd probably just test her with a single cup from time to time and wait for her first error, which would prove her claim wrong beyond doubt.
 Anyone who misclassifies a single cup does not have truly perfect taste.
 Clearly, such proof would be much more satisfying than merely rejecting a Null (thus providing weak evidence in favour of a hypothesis, etc.).
-Alas, the world isn't like that.
+To everybody's chagrin, the world usually isn't as simple as that.
 Similarly, even if \textit{sleep} is an unaccusative verb, we expect it to pop up in the passive voice from time to time, either because we consider grammar to be probabilistic (as in many usage-based approaches), or because we attribute such occurrences to performance effects (as in generative and formal approaches with a psycholinguistic interest in processing).
 We don't take sides here because we don't have to.
 In any case, both corpora and controlled experiments are based on human behaviour such as linguistic output or reactions to linguistic input.
@@ -1066,7 +1065,7 @@ The open-source code for the simulations is written in R, and it can be consulte
 Based on this uninformed guesser, we simulate a classic Tea Tasting Experiment with four tea-first and four milk-first cups.
 Table~\ref{tab:teasim1} shows the raw results, and Table~\ref{tab:teasim1cont} shows the contingency table.
 
-<<teasim1, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teasim1, echo=F, cache=T, out.width="85%", results="asis">>=
   teaexp1.raw <- rbind(ifelse(tea.exp==0, "Tea-First", "Milk-First"),
                        ifelse(tea0==0, "Tea-First", "Milk-First"))
   colnames(teaexp1.raw) <- paste0("Cup ", 1:8)
@@ -1081,7 +1080,7 @@ Table~\ref{tab:teasim1} shows the raw results, and Table~\ref{tab:teasim1cont} s
     kable_styling(latex_options = "scale_down")
 @
 
-<<teasim1cont, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teasim1cont, echo=F, cache=T, out.width="85%", results="asis">>=
   teaexp1.cont <- table(tea0, tea.exp) %>%
     as.data.frame.matrix
   teaexp1.cont <- cbind(teaexp1.cont, apply(teaexp1.cont, 1, sum))
@@ -1128,7 +1127,7 @@ Let's run \Sexpr{sim.guess.n} simulations of the same experiment where the perso
 To make the properties of the test pop out more clearly, we also change the number of cups per experiment from 8 to \Sexpr{sim.guess.s}.
 Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.guess.s} cups individually, we aggregate them in a certain type of plot---a \Key{histogram}---in Figure~\ref{fig:hist}
 
-<<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "P-Values", main ="", border=F)
   text(h[["mids"]], h[["counts"]]-5, labels = h[["counts"]])
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
@@ -1136,7 +1135,7 @@ Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.gue
 
 A histogram shows how often certain values occur in a sample or a population.
 In this case, the values are p-values (on the x-axis).
-The height of the bars (y-axis) correspond linearly to the number of p-values that lie in the interval delimited by the respective bar.
+The height of the bars (y-axis) corresponds linearly to the number of p-values that lie in the interval delimited by the respective bar.
 For example, p-values between 0 and 0.1 were obtained in \Sexpr{h[["counts"]][1]} simulated experiments.
 P-Values between 0.1 and 0.2 were obtained in \Sexpr{h[["counts"]][2]} simulated experiments, and so on.
 Some fluctuations aside, it looks like all p-values have the same probability if there is no effect.%
@@ -1163,12 +1162,11 @@ If it is true, all p-values from 0 to 1 have the same probability.
 This is the reason why high p-values have no inferential interpretation and must not be taken as evidence for the Null and\slash or against the substantive hypothesis.}
 
 Let's see what happens with the p-values if the participant guesses tea-first cups slightly better than chance.
-We should warn you that the results might shock you, especially if you use corpora and statistical methods in your own work.
 Figure~\ref{fig:histbetter} shows the distributions of p-values for \Sexpr{sim.better.s} experiments with \Sexpr{sim.better.n} cups.
-The different panels plots the p-values for simulated participants with a varying tea-first detection accuray.
+The different panels plot the p-values for simulated participants with a varying tea-first detection accuray.
 In the upper-left panel, it's 51\%, in the upper-right 52\%, in the lower-left 55\%, and in the lower-right 70\%.
 
-<<histbetter, fig.cap=paste0("Histograms of p-values of ", sim.better.n, " simulated experiments with ", sim.better.s, " cups where the participant has increasing prediction accuracy (increasing from upper-left to lower-right); all y-axes are scaled to 1000 for better comparability"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<histbetter, fig.cap=paste0("Histograms of p-values of ", sim.better.n, " simulated experiments with ", sim.better.s, " cups where the participant has increasing prediction accuracy (increasing from upper-left to lower-right); all y-axes are scaled to 1000 for better comparability"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   par(mfrow=c(2,2))
   h <- hist(sim.fiftyone.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
             main = "51% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F)
@@ -1189,32 +1187,33 @@ In the upper-left panel, it's 51\%, in the upper-right 52\%, in the lower-left 5
   par(mfrow=c(1,1))
 @
 
-This, too, is an expected result.
-If the Null is not true, lower p-values are obtained with a higher chance than high p-values.
+This is an expected result.
+If the Null is not true, low p-values are obtained with a higher chance than high p-values.
 However, we see that it's not irrelevant how well the participant performs the task, \ie, how large the effect is (see Section~\ref{sec:sampleeffectsize}).
 Even at an accuracy of 1\% above chance (51\%), \Sexpr{length(which(sim.fiftyone.p<0.05))} of \Sexpr{sim.better.s} p-values are already lower than 0.05.
 At an accuracy of 2\% above chance (52\%), it's already \Sexpr{length(which(sim.fiftytwo.p<0.05))} of \Sexpr{sim.better.s} p-values, and at 5\% above chance (55\%) it's an astonishing \Sexpr{length(which(sim.fiftyfive.p<0.05))}.
-If we applied $\text{sig}\defeq 0.05$ to test whether there is an effect, we'd almost be guaranteed to \textit{reach significance} (which is what people call it when they reach their pre-set sig-level) at 55\% accuracy, albeit the tea-tasting abilities of the participant are middling (to say the least).
+If we applied $\text{sig}\defeq 0.05$ in order to test whether there is an effect, we'd almost be guaranteed to \textit{reach significance} (which is what people call it when they reach their pre-set sig-level) at 55\% accuracy, albeit the tea-tasting abilities of the participant are middling (to say the least).
 It's highly doubtful whether this would be good for anything except claiming victory or getting a paper published.
-It almost certainly wouldn't advance our knowledge.
+It almost certainly wouldn't advance our knowledge of the real world.
 
 What we've just shown is that the effect strength tilts the distribution of p-values towards 0.
 The stronger the effect is, the more pronounced the tilt.
-With a large sample, the distribution of the p-values collapses close to 0 very quickly, which means that mechanical inferences based on pre-set sig-levels are almost always successful, even if the effect is barely above chance level.
+Combined with a large sample, the distribution of the p-values collapses around 0 very easily, which means that mechanical inferences based on pre-set sig-levels are almost always successful, even if the effect is weak and barely above chance level.
 However, don't misunderstand this logic.
 Figure~\ref{fig:hist} showed that a large sample alone doesn't mean that we reach significance.
 Then, Figure~\ref{fig:histbetter} showed that as soon as there is even the tiniest effect, a large sample has a very high chance of detecting it by allowing a rejection of the Null.%
 \footnote{The usual caveats apply when we use phrases like \textit{rejecting the Null} or \textit{detecting an effect}.
 Fisher's frequentist logic never delivers proof nor decisive evidence nor even straightforward support for the substantive hypothesis.}
-This is because Fisher's Exact Test was designed for small samples such as 8 cups, 4 types of wheat, etc.
-In analyses of corpus data with $n=1000$, $n=100000$ (or even $n=200$) Fisher's Exact Test (and virtually all other frequentist tests) have a much too high \Key{sensitivity}.
+This is because Fisher's Exact Test was designed for small samples such as 8 cups, 5 different types of barley, etc.
+In analyses of large data sets like corpus data with $n=1000$, $n=100000$ (or even $n=200$) Fisher's Exact Test (and virtually all other frequentist tests applicable for the analysis of such data) have a much too high \Key{sensitivity}.
 A test's sensitivity is its capability of rejecting the Null when there is an effect, and it will be a major topic in Chapter~\ref{sec:powerseverity}.
+Also related is the introduction of the odds ratio in Chapter~\ref{sec:describing}, which serves as a measure of effect strength with Fisher's Exact Test.
 
 Why go through all the trouble to learn about frequentist inference when it's no good after all?
 (\dots\ we hear you scream.)
 Well, we don't know why you came here.
 Only you know what your research questions are, which sources of data you have available, what your previous expertise in data analysis an statistics is.
-If you've just found out that the methods discussed in this book aren't for you and that you're wasting your time, more power to you.
+If you've just found out that the methods discussed in this book aren't for you and that you're wasting your time, more power to you!
 However, please give us chance to convince you to read on.
 First, we've never said that the methods aren't any good per se.
 If you have to work with small samples out of necessity and you've come up with a good design for your study and you apply frequentist tests wisely, you will benefit from this book.
@@ -1231,14 +1230,14 @@ Our final remark in this section concerns such a case, namely a case where it's 
 If you're not a corpus linguist or if you have no interest in collostructional analyses, you can skip this paragraph.
 In Section~\ref{sec:fisherexact} we claimed that our example application of Fisher's Exact Test was similar to its use in research on collostructions.
 That's not exactly true, and we urge you to consult papers like \citet{Gries2014a,Gries2015b,Gries2022}, maybe also \citet{SchmidKuechenhoff2013,KuechenhoffSchmid2015}.
-You will discover that the design of such analyses is significantly different from our toy example.
+You will discover that the design of such analyses is different from our toy example.
 Most importantly, it was never the goal of collostructional analyses to arrive at scientific inferences via Fisher's logic of statistical inference.
 It was an exploratory method from the beginning, never an inferential method.
 The p-values were primarily used to rank lexemes, not to infer substantive hypotheses about individual lexemes.%
 \footnote{There was some erroneous talk of \textit{significant co-lexemes} and similar things in the early papers.
 We do not consider such quirks relevant as of today, especially as those papers are now twenty years old.}
 While it was a bad decision to use p-values from Fisher's Exact Test in collostructional analyses, it is now widely recognised that measures of effect strength are much more appropriate for the purpose.
-Also, discussions about the applicability of Fisher's Exact Test in situations where the marginal sums are not fixed (such as most corpus studies) are mostly moot.
+Also, possible discussions about the applicability of Fisher's Exact Test in situations where the marginal sums are not fixed (such as most corpus studies) are mostly moot.
 Virtually all alternative tests are even more sensitive, and we've seen that Fisher's Exact Test is oversensitive, if anything.
 With that clarification, we proceed to the very last section in this chapter, introducing the concept of probability distributions and their defining functions.
 
@@ -1250,11 +1249,11 @@ Here is what they are:
 In statistics, a variable is a measurement of some kind of property of events.
 In the experiments described in this chapter, the variable was always a count of a two-valued underlying variable like \alert{success and failure} or actives and passives.
 Other variables we'll encounter measure different things such as lengths or reaction times.
-The whole purpose of statistics is to find out and quantify the probabilities for certain values of those variables.
+The whole purpose of statistics is to quantify the frequentist probabilities of the values of those variables.
+For example:
 What's the probability of guessing $k$ cups correctly?
 What's the probability of encountering a sentence that is 6 words long?
-What's the probability of measuring a reaction time of 350 ms?
-And so on.
+What's the probability of measuring a reaction time of 350 ms or higher?
 
 Section~\ref{sec:tea} was devoted to deriving the maths that specify the probability of obtaining $k=3$ successes (correctly detected tea-first cups) when there are $K=4$ potential successes (tea-first cups on the table) and we have $n=4$ choices to make (cups to choose) from $N=8$ potential choices in total (the overall number of cups).
 This effort culminated in Equation~\ref{eq:hypergeomex2} on page~\pageref{eq:hypergeomex2}, repeated here for convenience:
@@ -1272,12 +1271,12 @@ This effort culminated in Equation~\ref{eq:hypergeomex2} on page~\pageref{eq:hyp
 
 Now, think about the design of experiments like the Tea Tasting Experiment:
 The three parameters $N$, $K$, and $n$ are fixed by the design, only the number of successes $k$ varies depending on the performance of the taster.
-If we plot the probabilities (y-axis) of all possible outcomes of $k$ successes (x-axis) while keeping $K$, $N$, and $n$ fixed, we get the graph in Figure~\ref{fig:hypergeom844} (left panel).
+If we plot the probabilities (y-axis) of all possible outcomes of $k$ successes (x-axis) while keeping $K$, $N$, and $n$ fixed at certain values, we get the graph in Figure~\ref{fig:hypergeom844} (left panel).
 We also provide the plot for the Tea Tasting Marathon from Section~\ref{sec:sampleeffectsize} (right panel).
 Notice that the gray lines are merely visual helper lines.
 As the distribution is discrete (see below), it does not define a curve.
 
-<<hypergeom844,  fig.cap=paste0("Probability density for k successes in Tea Tasting Experiments; the density function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=F>>=
+<<hypergeom844,  fig.cap=paste0("Probability density for k successes in Tea Tasting Experiments; the density function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=T>>=
   par(mfrow=c(1,2))
 
   ks <- 0:4
@@ -1305,26 +1304,26 @@ As the distribution is discrete (see below), it does not define a curve.
 
 The two graphs in Figure~\ref{fig:hypergeom844} are examples of the \Key{Hypergeometric Distribution}, the probability distribution that's the basis of Fisher's Exact Test.
 Since the outcomes $k$ are discrete counts, there is a defined probability for each outcome that can be calculated with arbitrary precision using the discrete \Key{density function} in Equation~\ref{eq:hypergeom}.%
-\footnote{The term \textit{density function} is a bit unfortunate as it applies more accurately to continuous distributions (see Chapter~\ref{sec:zandt}).
+\footnote{The term \textit{density function} is a bit unfortunate for thedistributions like the Hypergeometric Distribution as it applies more accurately to continuous distributions (see Chapter~\ref{sec:zandt}).
 Hence, the adjective \textit{discrete} should not be omitted.}
 
 Some terminological clarifications are in order.
 We used the term \Key{parameter} above to describe $N$, $K$, and $n$.
 Informally speaking, there is not one Hypergeometric Distribution but a large (infinite) class of distributions, one for each fixed permutation of $N$, $K$, and $n$.
-The parameters define the concrete function and determine the exact shape of the curve for the admissible values of $k$, which is not itself a parameter.
+Thus, the parameters define the concrete function and determine the exact shape of the curve for the admissible values of $k$, which is not itself a parameter.
 Furthermore, this distribution is \Key{discrete} because it give probabilities for discrete outcomes.
-After all, there cannot be an experiment where someone guesses 3.5 cups correctly.
+After all, there cannot be an experiment where someone guesses 3.5 cups or anything like that correctly.
 We'll encounter other very much different distributions later.
 
 A necessary property of such functions is that the sum of the probabilities for all $k$ given a specific set of parameters is 1.
 Intuitively, this should indeed be a necessary property.
-For each outcome (a number of successes), the function specifies a probability, and we can be absolutely certain that exactly one outcome will occur.
+For each outcome (a number of successes), the function specifies a probability, and we can be absolutely certain that exactly one outcome will occur if the experiment is conducted.
 For example, we can only achieve between 0 and 4 correctly classified cups in a classical Tea Tasting Experiment if the experiment is terminated properly (and neither 5 nor 100 nor -1, etc.).%
 \footnote{Notice that the distribution for given parameters $N$, $K$, and $n$ only describes properly terminated experiments set up according to those parameters.
 If the cat jumps onto the table in the middle of the experiment and breaks all cups, the Hypergeometric Distribution is no longer applicable.}
 The exact maths aside, as exactly one outcome has to occur, the probability of the union of the outcomes must be~1 (see Section~\ref{sec:probability}).
 
-<<hypergeom844c, fig.cap=paste0("Cumulative distribution function for k successes in Tea Tasting Experiments; the distribution function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=F>>=
+<<hypergeom844c, fig.cap=paste0("Cumulative distribution function for k successes in Tea Tasting Experiments; the distribution function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=T>>=
   par(mfrow=c(1,2))
 
   ks <- 0:4
@@ -1353,8 +1352,8 @@ The exact maths aside, as exactly one outcome has to occur, the probability of t
 Finally, for each (discrete or non-discrete) density function there is a \Key{cumulative distribution function}.
 It gives for each outcome $k$ the summed probabilities of all outcomes to its left and itself.
 Figure~\ref{fig:hypergeom844c} shows the two distributions corresponding to the densities in Figure~\ref{fig:hypergeom844}.%
-\footnote{Unfortunately, cumulative distribution functions are often much harder to disentangle mathematically, and we do not provide their mathematical formulations.
-They are all readily available on Wikipedia.}
+\footnote{Unfortunately, the maths of cumulative distribution functions are often much more complicated than that of the density function, and we do not provide their mathematical formulations.
+They can be found easily on Wikipedia.}
 The distribution function is highly useful in determining the \alert{probability of an outcome as extreme as or more extreme} for some $k$.
 With Equation~\ref{eq:hypergeomex2}, we calculated the probability of achieving 3 correctly classified cups and 1 incorrectly classified cup, and the result (\Sexpr{round(phyper(1, 4, 4, 4), 2)}) is the value of the hypergeometric cumulative distribution function with parameters $N=8$, $K=4$, and $n=4$ at $k=1$.
 Similarly, we calculated the probability of achieving 30 correctly and 10 incorrectly classified cups in the Tea Tasting Marathon with Equation~\ref{eq:tea803010} as $7.44\cdot 10^{-6}$.
@@ -1367,3 +1366,4 @@ While knowledge of these function is not strictly necessary in order to understa
 First, the proofs underlying frequentism (and Bayesianism, for that matter) make excessive reference to probability distributions.
 It's therefore helpful for anyone who wants to dig deeper and study more sophisticated text books after this one.
 Second, statistics programs such as R give us access to these functions, and it's much easier to use them with a minimal understanding of their workings.
+

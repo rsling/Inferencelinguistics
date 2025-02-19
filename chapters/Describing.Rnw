@@ -1,0 +1,32 @@
+% !Rnw root = ../main.Rnw
+<<setupdescribing, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+opts_knit$set(self.contained=FALSE)
+@
+
+\chapter{Describing Data}
+\label{sec:describing}
+
+\section*{Overview}
+
+This chapter is comparatively short.
+While normal statistics text books spend many pages on so-called \textit{descriptive statistics}, we focus on one major aspect, namely central tendency and above all variance.
+Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences is hard.
+We begin by briefly characterising different types of measurements often called \alert{levels of measurement}.
+Then, we discuss ways of finding the most characteristic measurements in a sample or a population by calculating the \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean}.
+Finally, we quantify how much single measurements deviate from the most characteristic measurements in the form of the \alert{variance} and the \alert{standard deviation}.
+Along the way, some types of plots are introduced which provide insight into the structure of data.
+These are \alert{raw data plots}, \alert{histograms}, \alert{boxplots}, \alert{density plots}, and \alert{violinplots}.
+
+\Problem{Show Me Your Sample!}{%
+Imagine you've collected some data.
+It might be any kind of data such as counts of forms from a corpus, acceptability judgements for relative clause constructions on a five-point-scale, word or sentence lengths, reaction times in milliseconds.
+Ultimately, you want to make an inference, but first you want to get an overview of your data set and explore it in order to see whether it roughly meets your expectations.
+Furthermore, you want to publish the results
+}
+
+\section{Measurements}
+
+\section{Populations, Samples and Typical Values}
+
+\section{Variance}
+

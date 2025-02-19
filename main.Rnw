@@ -1,6 +1,5 @@
-
 %
-% Use make only, no direct compilation.
+% Use `make' exclusively. Manual compilation is difficult.
 %
 % See localfontconfig.Rnw.template before compiling.
 %
