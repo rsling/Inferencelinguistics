@@ -482,9 +482,29 @@ It's calculated by multiplication:
 \end{math}
 \end{center}
 
-\noindent Hence, $Pr(\Dice{4}\cap\Dice{3})=Pr(\Dice{4})\cdot Pr(\Dice{3})=(1\div 6)\cdot(1\div 6)=1\div 36=0.028$.%
+\noindent Hence:%
 \footnote{It's by pure accident that we ended up with two different results in this section which are numerically identical at 0.028.}
+
+\begin{center}
+\begin{math}
+  Pr(\Dice{4}\cap\Dice{3})=Pr(\Dice{4})\cdot Pr(\Dice{3})=\cfrac16\cdot\cfrac16=\cfrac1{36}=0.028
+\end{math}
+\end{center}
+
+Above, we pointed out that from the view of probability theory and experiment design, the whole experiment is regarded as one event.
+However, this event can often be divided up into a series of sub-events.
+In the example, each act of choosing a cup is one such sub-event, which is how we introduced it in Section~\ref{sec:numberoutcomes}.
+The maths for calculating probabilities of such sequences of events is exactly the same as for sequences of experiments as long as the sub-events are \Key{independent events}.
+Independent events are those which don't influence each other's probability.
+If you roll a die twice, the number of pips you got in the first roll does not influence the second roll.
+But a speaker of any natural language uses a certain lexeme in a sentence, the probability of the same lexeme being used in the next sentence increases sharply.
+For example, a word such as \textit{antidisestablishmentarianism} has a shockingly low probability of ever occurring, even in British English.
+Once it has been used in a sequence of sentences, however, the probability that it's used again might rise to the levels of words like \textit{technicality} or \textit{opposition}.
+Clearly, the events are not independent as the first one influences the probabilities of the second one.
+Please keep this in mind throughout the book (and your career in linguistics).
+
 By the way, in all cases discussed so far the probabilities were evenly distributed among the possible outcomes, which is called a \Key{uniform random distribution}.
+A fair die has a uniform random distribution of the number of pips, whereas a manipulated die doesn't.
 This is not a necessary condition, and we'll encounter situations where it doesn't hold later in this book.
 This concludes our very short and informal introduction to some rudimentary elements of probability theory.
 When we add and multiply probabilities in the next section, you can verify that we're doing it according to the foundations laid out in this section.
@@ -593,8 +613,6 @@ Probability only plays a role when there is a confrontation with chance, and bef
 The probability we calculated above \alert{was} the probability of obtaining the result which we then actually obtained \alert{before we conducted the experiment} and \alert{under the assumption that there was no ability, effect, etc.\ at work but just pure randomness}.
 We frequently call this hypothetical absence of an effect the \alert{assumption that there's nothing going on}.
 
-\enlargethispage{4\baselineskip}
-
 Second, we'd like to ask you what it really means to be \textit{so-and-so percent certain of something}.
 We consider this notion (sometimes also called a \textit{subjective probability} or similar) to be undefined and above all irrelevant to science.
 Science is about how things really are and not about our subjective beliefs of how they are.
@@ -608,8 +626,6 @@ Please keep the following Big Point in mind when reading the next section, which
 The outcome of an experiment is unexpected if it had a low probability before the experiment was conducted under the assumption that there's nothing going on.
 After that, the outcome is a fact and doesn't have a meaningful frequentist probability attached to it.
 A low probability of a specific outcome merely means that it would be rare if the experiment were conducted very often.}
-
-\newpage
 
 \section{Inference With Fisher's Exact Test}\label{sec:inferencefisher}
 

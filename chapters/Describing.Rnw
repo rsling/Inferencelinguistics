@@ -3,30 +3,150 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Describing Data}
+\chapter{Summarising Data}
 \label{sec:describing}
 
 \section*{Overview}
 
+\enlargethispage{2\baselineskip}
+
 This chapter is comparatively short.
-While normal statistics text books spend many pages on so-called \textit{descriptive statistics}, we focus on one major aspect, namely central tendency and above all variance.
-Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences is hard.
-We begin by briefly characterising different types of measurements often called \alert{levels of measurement}.
-Then, we discuss ways of finding the most characteristic measurements in a sample or a population by calculating the \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean}.
+While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics}, we focus on one major aspect, namely the central tendency and above all the variance of measurements.
+Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences about virtually infinite populations based on finite or even small samples is hard.
+We begin by characterising different types of measurements often called \alert{levels of measurement}.
+We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean} for different types of measurements.
 Finally, we quantify how much single measurements deviate from the most characteristic measurements in the form of the \alert{variance} and the \alert{standard deviation}.
 Along the way, some types of plots are introduced which provide insight into the structure of data.
 These are \alert{raw data plots}, \alert{histograms}, \alert{boxplots}, \alert{density plots}, and \alert{violinplots}.
 
 \Problem{Show Me Your Sample!}{%
 Imagine you've collected some data.
-It might be any kind of data such as counts of forms from a corpus, acceptability judgements for relative clause constructions on a five-point-scale, word or sentence lengths, reaction times in milliseconds.
+It might be counts of words and constructions from a corpus, acceptability judgements for relative clause constructions on a five-point-scale, word or sentence lengths, reaction times in milliseconds.
 Ultimately, you want to make an inference, but first you want to get an overview of your data set and explore it in order to see whether it roughly meets your expectations.
-Furthermore, you want to publish the results
-}
+Furthermore, you want to publish the results and provide your readers with an overview of the results, as most of them will not look at your raw data.
+Besides all kinds of plots that aggregate your data visually, you might want to characterise your sample numerically.
+What's the best numerical characterisation for your kind of data.}
 
 \section{Measurements}
 
-\section{Populations, Samples and Typical Values}
+\subsection{Binary Measurements}\label{sec:binary}
 
-\section{Variance}
+If you go through a corpus of English and look at each noun, it could be a singular or a plural form.
+We use a paragraph from the Wikipedia article on Critical Rationalism as an example.%
+\footnote{Sourced from \url{https://en.wikipedia.org/wiki/Critical_rationalism} as of 19 February 2025.}
+
+\begin{quote}
+  \itshape Critical \alert{rationalists} hold that scientific \alert{theories} and any other \alert{claims} to \alert{knowledge} can and should be rationally criticized, and (if they have empirical \alert{content}) can and should be subjected to \alert{tests} which may falsify them. Thus \alert{claims} to \alert{knowledge} may be contrastingly and normatively evaluated. They are either falsifiable and thus empirical (in a very broad \alert{sense}), or not falsifiable and thus non-empirical.
+\end{quote}
+
+\noindent In such a case, the measurement consists of a sequence of two possible measurements: singular or plural.
+The sequence for the highlighted nouns in the sample is:
+
+\begin{center}
+  \itshape plural, plural, plural, singular, singular, plural, plural, singular, singular
+\end{center}
+
+A main point of this chapter is to introduce the lingo used to describe the properties of such observations in experimental design and statistics.
+A measurement in an experiment is always characterised by a well-defined \Key{variable}.
+A variable doesn't always take the form of a numerical measurement (although it can).
+In any case, it's a description of events.
+Turning to the example, if a noun occurs, the noun's grammatical number can be characterised at each event as either singular or plural, the two possible \Key{values} of the variable \textit{Number}.
+In other words, all events of noun occurrence in English fall into one of two number categories.
+
+How are the corresponding results best summarised numerically?
+Mathematically, one of the few things we can do with these occurrences is count them, which is exactly what we did with the variables \textit{Bristow} and \textit{Reality} in Chapter~\ref{sec:fisher}, both having the possible values \textit{tea-first} and \textit{milk-first} (\eg, Table~\ref{tab:teamarathon}).
+For completeness, we show the very obvious summarisation of these counts in tabular form (Table~\ref{tab:counts}).
+However, we have already shown the more complex type of contingency tables, where the co-occurrences of the values of two two-valued variables per event are tabulated.
+Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
+
+<<counts, echo=F, cache=T, out.width="85%", results="asis">>=
+  counts <- matrix(c(4,5), nrow = 1)
+  colnames(counts) <- c("Singular", "Plural")
+  rownames(counts) <- c("Count")
+
+  counts %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "A tabulation of counts of a binary variable",
+          label = "counts") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(0, bold=TRUE)
+@
+
+Obviously, the variable \textit{Number} is two-valued for languages without duals, trials, etc.\ such as English.
+It is called a \Key{binary variable}.
+In order to summarise binary data in a single numerical value, we can calculate a proportion, an operation which we assume is well-known (but see below for the general formula).
+The proportion of singular noun forms in the above sample is $4\div (4+5)=4\div 9\approx 0.4444$.
+Note that proportions always lie between 0 and 1.
+A \Key{percentage} is simply a proportion times 100, hence the percentage of singular forms is $0.4444\cdot 100=44.44\%$.
+As we'll demonstrate very clearly in Chapter~\ref{sec:confidence}, proportions and percentages are fine, but they can be meaningless if the \Key{sample size} is unknown.
+For binary variables, the sample size---symbolised as $n$---is simply the number of events, hence $n=9$ in the example.
+Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_i$ of a value of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_i$ (such as $q_{\text{singular}}\approx 0.44$):
+
+\begin{center}
+\begin{math}
+  c_i=q_i\cdot n
+\end{math}
+\end{center}
+
+\noindent This is because the general formula for calculating \Key{proportions} is:
+
+\begin{center}
+\begin{math}
+  q_i=\cfrac{c_i}n
+\end{math}
+\end{center}
+
+\noindent For the count of the other value $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
+Also, $q_j=(n-c_i)\div n$.
+This means that counts of a binary variable are exhaustively summarised by two numbers.
+Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we need to provide more than two numbers (provided it's two well-chosen numbers).
+Either we specify the sample size $n$ and at least one proportion or one count.
+Or we specify the raw counts for both values of the variable.
+Furthermore, not much is gained by converting counts to proportions, except that some people find proportions more intuitive.
+We point this out because aggregated numbers for other measurements (to be discussed below) serve a much stronger purpose and are much more informative.
+For counts of binary variables, any aggregation serves no or just a very limited purpose.
+
+Finally, we can ask what is the \Key{central tendency} of a binary variable.
+The term \textit{central} derives from more complex measurements (see Section~\ref{sec:ordinal} and below), and it's not very intuitive for binary measurements.
+It will become clearer as we progress through this chapter.
+In the binary case, the only measure of central tendency is its \Key{modal category}, which is the value that occurs more often than the other.
+If $c_i>c_j$, then $c_i$ is the modal category and vice versa.
+In general, the central tendency is important as the \Key{expected value} for a variable, and the mode of a binary variable is no exception.
+Without any further information, it's the value that we would predict for any occurrence of an event.
+If all you knew about English were the short paragraph from Wikipedia quoted above (annotated only for part-of-speech and number, with no information about the syntax, the meaning, the register, etc.), and you were asked to predict the number of the next noun in the text, any sane person would predict \textit{plural} because it appears to be the modal (more frequent) category based on the sample.
+However, we are aware that this would probably not lead to a prediction accuracy of 56\%.
+There are two reasons for this:
+First, producing English nouns is not a mere \textit{Number} lottery, and our analysis should respect this.
+Second, the sample is very small ($n=9$), a problem we'll deal with in Chapter~\ref{sec:confidence}.
+However, if we knew for sure that among the totality of English noun tokens, 5 out of 9 were in the plural, and you had to predict the number of a noun without information about the lexeme, syntactic context, or register of the text, you would predict plural.
+In this sense, it would be the \textit{expected value} or \textit{expectation}.
+
+The absolute minimal information about a binary variable is its mode, and sometimes the mode really is all that counts.
+While we can't think of a scientific experiment where the mode of a binary variable is a sufficient statistic, it is in final rounds of presidential elections in France.
+There are always two candidates in such elections, and the one who gets more votes than the other wins.
+The modal vote wins.
+
+<<binaryhist, fig.cap=paste0("Histogram of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  ex.number <- c(rep(0,4),rep(1,5))
+  h <- hist(ex.number, breaks = 2, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c("lightgray", the.lightcols[1]))
+  text(h[["mids"]], h[["counts"]]-0.5, labels = h[["counts"]])
+  axis(1, h[["mids"]], c("Singular", "Plural"), tick = F)
+@
+
+Finally, Figure~\ref{fig:binaryhist} shows a histogram of the sample of the \textit{Number} variable from the illustrative example discussed above.
+For the benefit of the reader, we have highlighted the mode in colour.
+This is about the only way to plot such results.
+We strictly recommend to label it with the raw counts, not proportions or percentages.
+Since the bars already provide a good visual impression of the proportions, the relevant numerical information to add are the counts.
+At the same time, we can't think of a situation where such a plot by itself isn't an insult to the reader.
+Looking at just two counts (except maybe very high counts in the millions and above), humans are able to grasp the relative magnitude of those counts easily without visualisation.
+
+\subsection{Multi-Valued Measurements}\label{sec:nominal}
+
+\subsection{Ordered Values}\label{sec:ordinal}
+
+\subsection{Numeric Measurements}\label{sec:numeric}
+
+\section{Populations, Samples, and Variance}
 
