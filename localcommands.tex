@@ -30,7 +30,7 @@
   , anchorcolor      = {lsMidWine}
   , citecolor        = {lsDarkGreenOne}
   , menucolor        = {lsMidDarkBlue}
-  , urlcolor         = {lsDarkOrange}
+  , urlcolor         = {lsMidDarkBlue}
 %    , filecolor       = {}
 %    , runcolor        = {}
 }
@@ -110,3 +110,15 @@
 
 
 \newcommand{\Dice}[1]{\raisebox{-1pt}{\epsdice{#1}}}
+
+\newcommand{\Sub}[1]{\ensuremath{_{\text{#1}}}}
+\newcommand{\Nom}{\Sub{Nom}}
+\newcommand{\Akk}{\Sub{Acc}}
+\newcommand{\Dat}{\Sub{Dat}}
+\newcommand{\Gen}{\Sub{Gen}}
+
+\newcommand{\xsample}{\ensuremath{\mathbf{x}}}
+\newcommand{\xcounts}{\ensuremath{\mathbf{c}}}
+\newcommand{\xmode}{\ensuremath{\widetilde{\xsample}}}
+\newcommand{\xmean}{\ensuremath{\widebar{\xsample}}}
+

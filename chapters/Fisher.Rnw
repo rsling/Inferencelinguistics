@@ -494,7 +494,7 @@ It's calculated by multiplication:
 Above, we pointed out that from the view of probability theory and experiment design, the whole experiment is regarded as one event.
 However, this event can often be divided up into a series of sub-events.
 In the example, each act of choosing a cup is one such sub-event, which is how we introduced it in Section~\ref{sec:numberoutcomes}.
-The maths for calculating probabilities of such sequences of events is exactly the same as for sequences of experiments as long as the sub-events are \Key{independent events}.
+The maths for calculating probabilities of such sequences of events is exactly the same as for sequences of experiments as long as the sub-events are \Key{independent events}.\label{abs:independent}
 Independent events are those which don't influence each other's probability.
 If you roll a die twice, the number of pips you got in the first roll does not influence the second roll.
 But a speaker of any natural language uses a certain lexeme in a sentence, the probability of the same lexeme being used in the next sentence increases sharply.

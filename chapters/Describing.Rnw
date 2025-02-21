@@ -33,7 +33,7 @@ What's the best numerical characterisation for your kind of data.}
 
 If you go through a corpus of English and look at each noun, it could be a singular or a plural form.
 We use a paragraph from the Wikipedia article on Critical Rationalism as an example.%
-\footnote{Sourced from \url{https://en.wikipedia.org/wiki/Critical_rationalism} as of 19 February 2025.}
+\footnote{Sourced from \url{https://en.wikipedia.org/wiki/Critical_rationalism} on 19 February 2025.}
 
 \begin{quote}
   \itshape Critical \alert{rationalists} hold that scientific \alert{theories} and any other \alert{claims} to \alert{knowledge} can and should be rationally criticized, and (if they have empirical \alert{content}) can and should be subjected to \alert{tests} which may falsify them. Thus \alert{claims} to \alert{knowledge} may be contrastingly and normatively evaluated. They are either falsifiable and thus empirical (in a very broad \alert{sense}), or not falsifiable and thus non-empirical.
@@ -91,11 +91,10 @@ Using the symbol $q$ for proportions (as $p$ is already taken and proportions ar
 
 \noindent This is because the general formula for calculating \Key{proportions} is:
 
-\begin{center}
-\begin{math}
+\begin{equation}
   q_i=\cfrac{c_i}n
-\end{math}
-\end{center}
+  \label{eq:proportion}
+\end{equation}
 
 \noindent For the count of the other value $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
 Also, $q_j=(n-c_i)\div n$.
@@ -113,30 +112,33 @@ It will become clearer as we progress through this chapter.
 In the binary case, the only measure of central tendency is its \Key{modal category}, which is the value that occurs more often than the other.
 If $c_i>c_j$, then $c_i$ is the modal category and vice versa.
 In general, the central tendency is important as the \Key{expected value} for a variable, and the mode of a binary variable is no exception.
-Without any further information, it's the value that we would predict for any occurrence of an event.
+Without any further information, it's the value that we would predict for any event.
 If all you knew about English were the short paragraph from Wikipedia quoted above (annotated only for part-of-speech and number, with no information about the syntax, the meaning, the register, etc.), and you were asked to predict the number of the next noun in the text, any sane person would predict \textit{plural} because it appears to be the modal (more frequent) category based on the sample.
 However, we are aware that this would probably not lead to a prediction accuracy of 56\%.
 There are two reasons for this:
-First, producing English nouns is not a mere \textit{Number} lottery, and our analysis should respect this.
+First, producing English nouns is not a mere lottery, and our analysis should respect this.
 Second, the sample is very small ($n=9$), a problem we'll deal with in Chapter~\ref{sec:confidence}.
 However, if we knew for sure that among the totality of English noun tokens, 5 out of 9 were in the plural, and you had to predict the number of a noun without information about the lexeme, syntactic context, or register of the text, you would predict plural.
-In this sense, it would be the \textit{expected value} or \textit{expectation}.
+In this sense, it would be the \textit{expected value} or \textit{expectation}.%
+\footnote{The difference between an expected value estimated from a sample and one that's true for the population is the subject of Chapter~\ref{sec:confidence}.}
 
 The absolute minimal information about a binary variable is its mode, and sometimes the mode really is all that counts.
 While we can't think of a scientific experiment where the mode of a binary variable is a sufficient statistic, it is in final rounds of presidential elections in France.
 There are always two candidates in such elections, and the one who gets more votes than the other wins.
 The modal vote wins.
 
-<<binaryhist, fig.cap=paste0("Histogram of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
-  ex.number <- c(rep(0,4),rep(1,5))
-  h <- hist(ex.number, breaks = 2, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c("lightgray", the.lightcols[1]))
-  text(h[["mids"]], h[["counts"]]-0.5, labels = h[["counts"]])
-  axis(1, h[["mids"]], c("Singular", "Plural"), tick = F)
+<<binaryhist, fig.cap=paste0("Histogram (or barplot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  ex.number <- c(4,5)
+  h <- barplot(ex.number, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c("lightgray", the.lightcols[1]), ylim=c(0, 6))
+  text(h[,1], ex.number+0.5, labels = ex.number)
+  axis(1, h[,1], c("Singular", "Plural"), tick = F)
 @
 
 Finally, Figure~\ref{fig:binaryhist} shows a histogram of the sample of the \textit{Number} variable from the illustrative example discussed above.
+A histogram for a variable with discrete values is often displayed with spaces between the bars, and it's often called a \Key{barplot} instead of a histogram.
+It's still just a special type of histogram.
 For the benefit of the reader, we have highlighted the mode in colour.
-This is about the only way to plot such results.
+This is the only reasonable way to plot such results.
 We strictly recommend to label it with the raw counts, not proportions or percentages.
 Since the bars already provide a good visual impression of the proportions, the relevant numerical information to add are the counts.
 At the same time, we can't think of a situation where such a plot by itself isn't an insult to the reader.
@@ -144,9 +146,100 @@ Looking at just two counts (except maybe very high counts in the millions and ab
 
 \subsection{Multi-Valued Measurements}\label{sec:nominal}
 
-\subsection{Ordered Values}\label{sec:ordinal}
+In this chapter, we continually progress from simple to more complex variables (\ie, measurements).
+After binary variables, the next more complex thing is simply a more general variant of binary variables.
+Let's have a look at a short paragraph from the German Wikipedia article about Critical Rationalism and annotate all lexical nouns with their grammatical case:%
+\footnote{Sourced from \url{https://de.wikipedia.org/wiki/Kritischer_Rationalismus} on 20 February 2025.}
+
+\begin{quote}
+  \itshape Der Realismus\Nom\ ist die dem subjektiven Idealismus\Dat\ widers\-prechende metaphysische Theorie\Nom, dass eine vom Menschen\Dat\ unabhängige Wirk\-lich\-keit\Nom\ existiert. Während der naive Realismus\Nom\ davon ausgeht, dass die Welt\Nom\ so ist, wie der Mensch\Nom\ sie wahr\-nimmt, vertritt der kri\-ti\-sche Realismus\Nom\ die Auffassung, dass Vorstellungen\Nom\ von ihr durch subjektive Elemente\Akk, die in der Wahrnehmung\Dat\ und im Denken\Dat\ liegen, mehr oder weniger stark beeinflusst werden. Weil die Sinne\Nom\ und die Ver\-arbei\-tungs\-pro\-zesse\Nom\ im Gehirn der angenommenen Außenwelt\Dat\ und der Vor\-stellung\Dat\ zwischen\-geschaltet sind, kann man auch vom indirekten Rea\-lis\-mus\Dat\ sprechen. Dieser Vermit\-tlungs\-vorgang\Nom\ schließt eine \textit{reine Wahr\-nehmung}\Nom\ aus, denn es kann sich um Täuschungen\Nom\ handeln.
+\end{quote}
+
+As you might have guessed from the labels, there are four grammatical cases in German: nominative, accusative, dative, and genitive.
+They occur at 13, 1, 7, and 0 noun events in the sample, respectively.
+Apparently, the variable \textit{Case} measuring grammatical case in German has four values which have no empirically significant order.
+Instead of the order nominative, accusative, dative, genitive, many grammars and text books order the four cases according to the Latin tradition: nominative, genitive, dative, accusative, which is perfectly fine, too.
+At this point, some linguists might object and point out that we should order them by increasing obliqueness or in a way such that syncretisms are analysed better (\eg, \citealt{Eisenberg2020a}).
+However, such ordering preferences are not empirical observables.
+They are theoretical results rather than measurements.
+We specifically chose this example in order to point out this difference.
+A variable which has more than two discrete values with no measurable ordering is called a \Key{nominal variable}.
+
+<<nominal, echo=F, cache=T, out.width="85%", results="asis">>=
+  counts <- matrix(c(13,1,7,0), nrow = 1)
+  colnames(counts) <- c("Nominative", "Accusative", "Dative", "Genitive")
+  rownames(counts) <- c("Count")
+
+  counts %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T,
+          caption = "A tabulation of counts of a binary variable",
+          label = "nominal") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(0, bold=TRUE)
+@
+
+Binary variables are really just the minimal case of a nominal variable.
+Not surprisingly, we can treat them essentially the same, for example by tabulating the counts as in Table~\ref{tab:nominal}.
+The only reasonable aggregations are conversion of raw counts to proportions as in Equation~\ref{eq:proportion} with $i\in\{1..m\}$ where $m$ is the number of different possible values of the variable.
+In the example, $m=4$.
+The \Key{mode} is just the most frequent value, much like in the binary case.
+In order to formalise the notion of the mode (and introduce some useful bits of mathematical notation along the way), let's name the results of the case counting example (\ie, the sample) \xsample\ and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
+
+\begin{center}
+  $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
+\end{center}
+
+It would be perfectly okay to disregard the order of the events because we (albeit incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
+In that respect, we could use a \alert{set} (which is always unordered) instead of a tuple, symbolised by curly brackets $\{\~\}$ instead of angled brackets.
+By definition, however, sets don't allow the same element to be added to them twice, which would clearly be inadequate for series of data points such as \xsample.
+Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
+Tuples are sometimes called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
+
+Let \xcounts\ denote the counts of the occurrences of the possible values in the sample.
+It's a mathematical representation of what's shown in Table~\ref{tab:nominal}.
+It's the label of each possible values, paired with the number of occurrences of that value.
+Assuming a function called $max(\cdot)$ that finds the \Key{maximum} value within such a structure and denoting the mode of any sample \xsample\ by \xmode, then:
+
+\begin{center}
+\begin{math}
+  \xmode=max(\xcounts)
+\end{math}
+\end{center}
+
+Don't worry, it's just some useful notation for rather trivial concepts.
+It means that the mode $\widetilde{\ }$ of the sample \xsample\ is obtained by counting the numbers of occurrences of the values of the measured variable, resulting in the table structure \xcounts.
+Then, we find the label corresponding to the highest value from that table, denoted $max(\xcounts)$.
+That's it.
+For the example, it's $\xmode=max(\xcounts)=\mathit{nominative}$ or, in words directly corresponding to the notation:
+The mode of the sample is the value occurring most often, namely \textit{nominative}.
+
+We leave it to the reader to calculate the proportions and percentages for each of the four grammatical cases in the sample.
+However, two histograms (or barplots) for the example are shown in Figure~\ref{fig:nominalhist}.
+Since there is no measurable order in grammatical cases, both plots are equivalent, and you could choose the one that you think is more adequate for your purpose.
+
+<<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-valued variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
+  par(mfrow=c(1,2))
+
+  ex.case <- c(13,1,7,0)
+  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.lightcols[1], "lightgray", "lightgray", "lightgray"), ylim = c(0, 14))
+  text(h[,1], ex.case+0.5, labels = ex.case)
+  axis(1, h[,1], c("Nom", "Acc", "Dat", "Gen"), tick = F)
+
+  ex.case <- c(13,7,1,0)
+  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.lightcols[1], "lightgray", "lightgray", "lightgray"), ylim = c(0, 14))
+  text(h[,1], ex.case+0.5, labels = ex.case)
+  axis(1, h[,1], c("Nom", "Dat", "Acc", "Gen"), tick = F)
+
+  par(mfrow=c(1,1))
+@
+
+\subsection{Ordered but Discrete Measurements}\label{sec:ordinal}
 
 \subsection{Numeric Measurements}\label{sec:numeric}
 
 \section{Populations, Samples, and Variance}
 
+% Introduce DGP.
+
+% Difference between proportions being more adequate for (infinite) populations than samples.
