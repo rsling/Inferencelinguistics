@@ -51,6 +51,7 @@ require(vcd)
 require(gridExtra)
 library(modnets)
 require(kableExtra)
+library(vioplot)
 
 opts_knit$set(self.contained=FALSE)
 
@@ -67,8 +68,8 @@ render_listings()
 
 the.lwd <- 3
 the.pchs <- c(20)
-the.cols <- c("darkgreen", "darkblue", "darkred")
-the.lightcols <- c("lightgreen", "lightblue", "lightred")
+the.cols <- c("darkgreen", "darkblue", "darkorange", "yellow")
+the.lightcols <- c("lightgreen", "lightblue", "orange", "lightyellow")
 @
 
 <<child="localfontconfig.Rnw">>=
