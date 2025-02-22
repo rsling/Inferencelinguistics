@@ -1177,7 +1177,7 @@ The null hypothesis states in some way, shape, or form that there is no effect.
 If it is true, all p-values from 0 to 1 have the same probability.
 This is the reason why high p-values have no inferential interpretation and must not be taken as evidence for the Null and\slash or against the substantive hypothesis.}
 
-Let's see what happens with the p-values if the participant guesses tea-first cups slightly better than chance.
+Let's see what happens with the p-values if the participant has the ability to guess tea-first cups with slightly better-than-chance accuracy.
 Figure~\ref{fig:histbetter} shows the distributions of p-values for \Sexpr{sim.better.s} experiments with \Sexpr{sim.better.n} cups.
 The different panels plot the p-values for simulated participants with a varying tea-first detection accuray.
 In the upper-left panel, it's 51\%, in the upper-right 52\%, in the lower-left 55\%, and in the lower-right 70\%.

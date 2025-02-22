@@ -11,7 +11,7 @@ opts_knit$set(self.contained=FALSE)
 \enlargethispage{2\baselineskip}
 
 This chapter is comparatively short.
-While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics}, we focus on one major aspect, namely the central tendency and above all the variance of measurements.
+While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics} and \textit{levels of measurement}, we focus on one major aspect, namely the central tendency and above all the variance of measurements.
 Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences about virtually infinite populations based on finite or even small samples is hard.
 We begin by characterising different types of measurements often called \alert{levels of measurement}.
 We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean} for different types of measurements.
@@ -50,13 +50,13 @@ A main point of this chapter is to introduce the lingo used to describe the prop
 A measurement in an experiment is always characterised by a well-defined \Key{variable}.
 A variable doesn't always take the form of a numerical measurement (although it can).
 In any case, it's a description of events.
-Turning to the example, if a noun occurs, the noun's grammatical number can be characterised at each event as either singular or plural, the two possible \Key{values} of the variable \textit{Number}.
+Turning to the example, if a noun occurs, the noun's grammatical number can be characterised at each event as either singular or plural, the two possible \alert{values} or \Key{levels} of the variable \textit{Number}.
 In other words, all events of noun occurrence in English fall into one of two number categories.
 
 How are the corresponding results best summarised numerically?
 Mathematically, one of the few things we can do with these occurrences is count them, which is exactly what we did with the variables \textit{Bristow} and \textit{Reality} in Chapter~\ref{sec:fisher}, both having the possible values \textit{tea-first} and \textit{milk-first} (\eg, Table~\ref{tab:teamarathon}).
 For completeness, we show the very obvious summarisation of these counts in tabular form (Table~\ref{tab:counts}).
-However, we have already shown the more complex type of contingency tables, where the co-occurrences of the values of two two-valued variables per event are tabulated.
+However, we have already shown the more complex type of contingency tables, where the co-occurrences of the levels of two two-level variables per event are tabulated.
 Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
 
 <<counts, echo=F, cache=T, out.width="85%", results="asis">>=
@@ -73,15 +73,15 @@ Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
     row_spec(0, bold=TRUE)
 @
 
-Obviously, the variable \textit{Number} is two-valued for languages without duals, trials, etc.\ such as English.
+Obviously, the variable \textit{Number} is two-level for languages without duals, trials, etc.\ such as English.
 It is called a \Key{binary variable}.
-In order to summarise binary data in a single numerical value, we can calculate a proportion, an operation which we assume is well-known (but see below for the general formula).
+In order to summarise binary data in a single number, we can calculate a proportion, an operation which we assume is well-known (but see below for the general formula).
 The proportion of singular noun forms in the above sample is $4\div (4+5)=4\div 9\approx 0.4444$.
 Note that proportions always lie between 0 and 1.
 A \Key{percentage} is simply a proportion times 100, hence the percentage of singular forms is $0.4444\cdot 100=44.44\%$.
 As we'll demonstrate very clearly in Chapter~\ref{sec:confidence}, proportions and percentages are fine, but they can be meaningless if the \Key{sample size} is unknown.
 For binary variables, the sample size---symbolised as $n$---is simply the number of events, hence $n=9$ in the example.
-Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_i$ of a value of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_i$ (such as $q_{\text{singular}}\approx 0.44$):
+Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_i$ of a level of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_i$ (such as $q_{\text{singular}}\approx 0.44$):
 
 \begin{center}
 \begin{math}
@@ -96,20 +96,22 @@ Using the symbol $q$ for proportions (as $p$ is already taken and proportions ar
   \label{eq:proportion}
 \end{equation}
 
-\noindent For the count of the other value $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
+\noindent For the count of the other level $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
 Also, $q_j=(n-c_i)\div n$.
 This means that counts of a binary variable are exhaustively summarised by two numbers.
 Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we need to provide more than two numbers (provided it's two well-chosen numbers).
 Either we specify the sample size $n$ and at least one proportion or one count.
-Or we specify the raw counts for both values of the variable.
+Or we specify the raw counts for both levels of the variable.
 Furthermore, not much is gained by converting counts to proportions, except that some people find proportions more intuitive.
 We point this out because aggregated numbers for other measurements (to be discussed below) serve a much stronger purpose and are much more informative.
 For counts of binary variables, any aggregation serves no or just a very limited purpose.
 
+\newpage
+
 Finally, we can ask what is the \Key{central tendency} of a binary variable.
 The term \textit{central} derives from more complex measurements (see Section~\ref{sec:ordinal} and below), and it's not very intuitive for binary measurements.
 It will become clearer as we progress through this chapter.
-In the binary case, the only measure of central tendency is its \Key{modal category}, which is the value that occurs more often than the other.
+In the binary case, the only measure of central tendency is its \Key{modal category}, which is the level that occurs more often than the other.
 If $c_i>c_j$, then $c_i$ is the modal category and vice versa.
 In general, the central tendency is important as the \Key{expected value} for a variable, and the mode of a binary variable is no exception.
 Without any further information, it's the value that we would predict for any event.
@@ -127,7 +129,7 @@ While we can't think of a scientific experiment where the mode of a binary varia
 There are always two candidates in such elections, and the one who gets more votes than the other wins.
 The modal vote wins.
 
-<<binaryhist, fig.cap=paste0("Histogram (or barplot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+<<binaryhist, fig.cap=paste0("Histogram (or bar plot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   ex.number <- c(4,5)
   h <- barplot(ex.number, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c("lightgray", the.lightcols[1]), ylim=c(0, 6))
   text(h[,1], ex.number+0.5, labels = ex.number)
@@ -135,7 +137,7 @@ The modal vote wins.
 @
 
 Finally, Figure~\ref{fig:binaryhist} shows a histogram of the sample of the \textit{Number} variable from the illustrative example discussed above.
-A histogram for a variable with discrete values is often displayed with spaces between the bars, and it's often called a \Key{barplot} instead of a histogram.
+A histogram for a variable with discrete levels is often displayed with spaces between the bars, and it's often called a \Key{bar plot} instead of a histogram.
 It's still just a special type of histogram.
 For the benefit of the reader, we have highlighted the mode in colour.
 This is the only reasonable way to plot such results.
@@ -157,13 +159,13 @@ Let's have a look at a short paragraph from the German Wikipedia article about C
 
 As you might have guessed from the labels, there are four grammatical cases in German: nominative, accusative, dative, and genitive.
 They occur at 13, 1, 7, and 0 noun events in the sample, respectively.
-Apparently, the variable \textit{Case} measuring grammatical case in German has four values which have no empirically significant order.
+Apparently, the variable \textit{Case} measuring grammatical case in German has four levels which have no empirically significant order.
 Instead of the order nominative, accusative, dative, genitive, many grammars and text books order the four cases according to the Latin tradition: nominative, genitive, dative, accusative, which is perfectly fine, too.
 At this point, some linguists might object and point out that we should order them by increasing obliqueness or in a way such that syncretisms are analysed better (\eg, \citealt{Eisenberg2020a}).
 However, such ordering preferences are not empirical observables.
 They are theoretical results rather than measurements.
 We specifically chose this example in order to point out this difference.
-A variable which has more than two discrete values with no measurable ordering is called a \Key{nominal variable}.
+A variable which has more than two discrete levels with no measurable ordering is called a \Key{nominal variable}.
 
 <<nominal, echo=F, cache=T, out.width="85%", results="asis">>=
   counts <- matrix(c(13,1,7,0), nrow = 1)
@@ -186,9 +188,9 @@ In the example, $m=4$.
 The \Key{mode} is just the most frequent value, much like in the binary case.
 In order to formalise the notion of the mode (and introduce some useful bits of mathematical notation along the way), let's name the results of the case counting example (\ie, the sample) \xsample\ and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
 
-\begin{center}
+\begin{quote}
   $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
-\end{center}
+\end{quote}
 
 It would be perfectly okay to disregard the order of the events because we (albeit incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
 In that respect, we could use a \alert{set} (which is always unordered) instead of a tuple, symbolised by curly brackets $\{\~\}$ instead of angled brackets.
@@ -196,10 +198,10 @@ By definition, however, sets don't allow the same element to be added to them tw
 Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
 Tuples are sometimes called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
 
-Let \xcounts\ denote the counts of the occurrences of the possible values in the sample.
+Let \xcounts\ denote the counts of the occurrences of the levels in the sample.
 It's a mathematical representation of what's shown in Table~\ref{tab:nominal}.
-It's the label of each possible values, paired with the number of occurrences of that value.
-Assuming a function called $max(\cdot)$ that finds the \Key{maximum} value within such a structure and denoting the mode of any sample \xsample\ by \xmode, then:
+It's the label of each level, paired with the number of occurrences of that level.
+Assuming a function called $max(\cdot)$ that finds the \Key{maximum} number within such a structure and denoting the mode of any sample \xsample\ by \xmode, then:
 
 \begin{center}
 \begin{math}
@@ -208,17 +210,17 @@ Assuming a function called $max(\cdot)$ that finds the \Key{maximum} value withi
 \end{center}
 
 Don't worry, it's just some useful notation for rather trivial concepts.
-It means that the mode $\widetilde{\ }$ of the sample \xsample\ is obtained by counting the numbers of occurrences of the values of the measured variable, resulting in the table structure \xcounts.
-Then, we find the label corresponding to the highest value from that table, denoted $max(\xcounts)$.
+It means that the mode $\dot{\xsample}$ of the sample \xsample\ is obtained by counting the numbers of occurrences of the levels of the measured variable, resulting in the table structure \xcounts.
+Then, we find the label corresponding to the highest number from that table, denoted $max(\xcounts)$.
 That's it.
 For the example, it's $\xmode=max(\xcounts)=\mathit{nominative}$ or, in words directly corresponding to the notation:
-The mode of the sample is the value occurring most often, namely \textit{nominative}.
+The mode of the sample is the level occurring most often, namely \textit{nominative}.
 
 We leave it to the reader to calculate the proportions and percentages for each of the four grammatical cases in the sample.
-However, two histograms (or barplots) for the example are shown in Figure~\ref{fig:nominalhist}.
+However, two histograms (or bar plots) for the example are shown in Figure~\ref{fig:nominalhist}.
 Since there is no measurable order in grammatical cases, both plots are equivalent, and you could choose the one that you think is more adequate for your purpose.
 
-<<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-valued variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
+<<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-level variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
   par(mfrow=c(1,2))
 
   ex.case <- c(13,1,7,0)
@@ -235,6 +237,99 @@ Since there is no measurable order in grammatical cases, both plots are equivale
 @
 
 \subsection{Ordered but Discrete Measurements}\label{sec:ordinal}
+
+<<ordinalsetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
+  set.seed(75)
+  levs <- rev(c("very high", "high", "medium", "low", "very low"))
+  ratings <- scale(rnorm(10, 100, sd = 25))
+  ratings <- ifelse(ratings >= 1.5, 5,
+                 ifelse(ratings >= 0.7, 4,
+                        ifelse(ratings >= 0, 3,
+                               ifelse(ratings >= -1, 2, 1))))
+  nice.rating <- factor(ratings)
+  levels(nice.rating) <- levs
+  ex.rating <- table(ratings)
+@
+
+Moving on to the next more complex type of measurement and variable, we use acceptability ratings as an example.
+Such ratings are often made on a scale with 5 or 7 points, for example \textit{very high}, \textit{high}, \textit{medium}, \textit{low}, \textit{very low}.
+For illustration purposes, assume that a rating experiment was conducted where participants were asked to rate the sentence: \textit{It's a mission to boldly go where no man has gone before.}
+The study had \Sexpr{length(ratings)} participants, hence $n=\Sexpr{length(ratings)}$.
+The raw data are, using \xsample\ again to denote the tuple of measurements:
+
+\begin{quote}\itshape
+  $\xsample=\langle$\Sexpr{paste0(as.character(nice.rating), collapse = ", ")}$\rangle$
+\end{quote}
+
+We hope that the difference between such a variable---let's call this one \textit{Rating}---and a nominal variable like \textit{Case} from Section~\ref{sec:nominal} is obvious.
+The ratings have an intrinsic order, and each level of the variable has a rank:
+\textit{very high} is higher than \textit{high}, \textit{high} is higher than \textit{medium}, and so forth.
+A variable like \textit{Rating} is called an \Key{ordinal variable}.
+All possible ways of aggregating nominal variables (including binary ones) apply to ordinal variables as well:
+counting and tabulation, calculation of the proportions or percentages of the different levels, the determination of the mode, and bar plots\slash histograms.
+The only difference is that tables and plots should respect the intrinsic order of the ordinal variable, as can be observed in Table~\ref{tab:ordinal} and Figure~\ref{fig:ordinalhist}.
+
+<<ordinal, echo=F, cache=T, out.width="85%", results="asis">>=
+  counts <- t(matrix(ex.rating))
+  colnames(counts) <- str_to_title(levs)
+  rownames(counts) <- c("Count")
+
+  counts %>%
+    as.data.frame.matrix %>%
+    kable(align = rep("c", 5), booktabs = T,
+          caption = "A tabulation of counts of a binary variable",
+          label = "ordinal") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(0, bold=TRUE)
+@
+
+<<ordinalhist, fig.cap=paste0("Histograms of counts of an ordinal five-level variable (acceptability ratings) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  h <- barplot(ex.rating, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, ylim = c(0, 6),
+               col = c(rep("gray", 2), the.lightcols[1], rep("gray", 2)))
+  text(h[,1], unname(ex.rating)+0.5, labels = unname(ex.rating))
+  axis(1, h[,1], str_to_title(levs), tick = F)
+@
+
+Thanks to the higher complexity of this variable (the intrinsic order of its levels), we have an additional measure of central tendency available.
+To find this measure called the \Key{median}, we first need to sort the raw measurements (not the tabulation of the counts) from the lowest rank to the highest rank, which is something we couldn't do with a nominal variable due to the lack of an intrinsic order of its levels.
+The ordered sample \xsample\prm\ looks like this:
+
+<<ratingsmedian, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
+  ratings.ordered <- factor(ratings)
+  levels(ratings.ordered) <- levs
+  ratings.ordered <- sort(ratings.ordered)
+@
+
+\begin{quote}\itshape
+  $\xsample\prm=\langle$\Sexpr{paste0(as.character(ratings.ordered), collapse = ", ")}$\rangle$
+\end{quote}
+
+Plotting these single observations from left to right on the x-axis and putting dots on the y-dimension corresponding to the respective ratings, we get Figure~\ref{fig:ordinalsort}, a \Key{raw data plot}.
+The gray line is just a helper line as measurements are, of course, discrete.
+The green dashed lines marks the middle point of the ordered sample in the sense that half the ordered sample lies to its left and the other half to its right.
+
+<<ordinalsort, fig.cap=paste0("Raw data points of a sorted sample of an ordinal value; the green line markes the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  p <- plot(as.numeric(ratings.ordered), xaxt = "n", xlab = "Sorted Data Points", yaxt = "n", ylab = "Level", main ="", ylim = c(1, 5), frame.plot = F)
+  axis(2, 1:5, levs, tick = T)
+  axis(1, 1:10, 1:10, tick = T)
+  lines(1:10, as.numeric(ratings.ordered), lwd = the.lwd, col = "lightgray")
+  points(1:10, as.numeric(ratings.ordered), pch = the.pchs[1], cex = 2)
+  lines(c(5.5, 5.5), c(1, 4.9), lty = 2, lwd = the.lwd, col = the.lightcols[1])
+@
+
+The value that lies in the middle of the ordered sample (marked by the coloured dashed line in Figure~\ref{fig:ordinalsort}) is the median.
+In the example, the median technically lies between two data points (the 5\Up{th} and the 6\Up{th} one) as $n=10$ is an even number.
+Fortunately, the data points to left and right of the median point have the same value, so we can say without further ado that $\xmedian=$\,\textit{medium}, where we denote the median of \xsample\ by \xmedian.
+If the median point lies between two data points with different values (such as \textit{low} and \textit{medium}), there is no clean way to name the median.
+One solution would be to say truthfully that the median lies between \textit{low} and \textit{medium} or thatit lies at \textit{low$+$} as in the American educational grading system (A$-$, B$+$, etc.).
+Another solution would be to convert the levels from \textit{very low} to \textit{very high} to the numbers between 1 and 5 and state that $\xmedian=2.5$.
+For ordinal scales, we strongly advise not to use the latter solution (conversion to numbers) as it creates a false impression (see Section~\ref{sec:numeric}).
+
+Starting with the median, we can get a clearer idea of why we speak of measure of central tendency.
+In a well-defined way, the median position is at the \textit{centre} of the sample.
+As the expected value of an ordinal variable, however, the mode is probably still the best metric.
+If \textit{medium} actually is the rating assigned most often, then guessing \textit{medium} would lead to the highest possible success rate.
+The median is still a very informative measure, and we'll see in the next section that it's very handy if combined with even more informative measures like the mean.
 
 \subsection{Numeric Measurements}\label{sec:numeric}
 

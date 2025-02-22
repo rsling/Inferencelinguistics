@@ -49,7 +49,7 @@ require(showtext)
 require(plyr)
 require(vcd)
 require(gridExtra)
-
+library(modnets)
 require(kableExtra)
 
 opts_knit$set(self.contained=FALSE)
@@ -66,6 +66,7 @@ opts_chunk$set(cache.path='cache/',
 render_listings()
 
 the.lwd <- 3
+the.pchs <- c(20)
 the.cols <- c("darkgreen", "darkblue", "darkred")
 the.lightcols <- c("lightgreen", "lightblue", "lightred")
 @
