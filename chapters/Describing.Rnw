@@ -192,11 +192,11 @@ In order to formalise the notion of the mode (and introduce some useful bits of 
   $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
 \end{quote}
 
-It would be perfectly okay to disregard the order of the events because we (albeit incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
-In that respect, we could use a \alert{set} (which is always unordered) instead of a tuple, symbolised by curly brackets $\{\~\}$ instead of angled brackets.
+It would be perfectly okay to disregard the order of the events because we (albeit often incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
+In that respect, we could use a \Key{set} (which is always unordered) instead of a tuple, symbolised by curly brackets $\{\~\}$ instead of angled brackets.
 By definition, however, sets don't allow the same element to be added to them twice, which would clearly be inadequate for series of data points such as \xsample.
 Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
-Tuples are sometimes called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
+Tuples are called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
 
 Let \xcounts\ denote the counts of the occurrences of the levels in the sample.
 It's a mathematical representation of what's shown in Table~\ref{tab:nominal}.
@@ -211,7 +211,7 @@ Assuming a function called $max(\cdot)$ that finds the \Key{maximum} number with
 
 Don't worry, it's just some useful notation for rather trivial concepts.
 It means that the mode $\dot{\xsample}$ of the sample \xsample\ is obtained by counting the numbers of occurrences of the levels of the measured variable, resulting in the table structure \xcounts.
-Then, we find the label corresponding to the highest number from that table, denoted $max(\xcounts)$.
+Then, we find the label corresponding to the highest number in that table, denoted $max(\xcounts)$.
 That's it.
 For the example, it's $\xmode=max(\xcounts)=\mathit{nominative}$ or, in words directly corresponding to the notation:
 The mode of the sample is the level occurring most often, namely \textit{nominative}.

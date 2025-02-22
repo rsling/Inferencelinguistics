@@ -463,7 +463,7 @@ Expressing \textit{or} for events as $\cup$ (the set intersection symbol), we ge
 
 \noindent It's $0.028$ for any two outcomes of the Tea Tasting Experiment.
 An essential task in frequentist statistics is to determine the probability of a specific set from the event space.
-Immediately below, in Section~\ref{sec:lessthanperfect}, we'll determine the probability of the set containing all outcomes with three or more correctly chosen cups in order to determine how impressive Ms Bristow's performance was if she classified 3 cups correctly.
+Immediately below, in Section~\ref{sec:lessthanperfect}, we'll determine the probability of the set containing all outcomes with three or more correctly chosen cups in order to determine how impressive Ms Bristow's performance were if she classified 3 cups correctly.
 
 The sample space (often denoted $\Omega$), the event space (often denoted $\mathcal{F}$), and the probabilities assigned by the probability function $Pr$ to the sets contained in the event space are key ingredients of probability theory.
 Furthermore, we introduced the notion of the probability of one \textit{or} ($\cup$) more events.
@@ -499,13 +499,13 @@ Independent events are those which don't influence each other's probability.
 If you roll a die twice, the number of pips you got in the first roll does not influence the second roll.
 But a speaker of any natural language uses a certain lexeme in a sentence, the probability of the same lexeme being used in the next sentence increases sharply.
 For example, a word such as \textit{antidisestablishmentarianism} has a shockingly low probability of ever occurring, even in British English.
-Once it has been used in a sequence of sentences, however, the probability that it's used again might rise to the levels of words like \textit{technicality} or \textit{opposition}.
+Once it has been used in a sequence of sentences, however, the probability that it's used again in the next sentence might rise to the levels of words like \textit{technicality} or \textit{opposition}.
 Clearly, the events are not independent as the first one influences the probabilities of the second one.
 Please keep this in mind throughout the book (and your career in linguistics).
 
 By the way, in all cases discussed so far the probabilities were evenly distributed among the possible outcomes, which is called a \Key{uniform random distribution}.
 A fair die has a uniform random distribution of the number of pips, whereas a manipulated die doesn't.
-This is not a necessary condition, and we'll encounter situations where it doesn't hold later in this book.
+A uniform random distribution is by no means a necessity nor particularly typical, and we'll encounter many cases where other probability distributions are applicable later in this book.
 This concludes our very short and informal introduction to some rudimentary elements of probability theory.
 When we add and multiply probabilities in the next section, you can verify that we're doing it according to the foundations laid out in this section.
 
