@@ -159,14 +159,14 @@ Matters are more complex for the corpus example (iii), and we'll return to it la
 In this section, we formalise the notion of \Key{unexpected outcome} in relation to such situations and experiments.
 
 First of all, an \textit{unexpected outcome} cannot be one which is deemed totally impossible.
-If you saw no chance of winning the lottery, you wouldn't play it.
-If you absolutely knew for certain that your psychic friend couldn't guess phone numbers, you wouldn't humiliate them and ask them to guess numbers at your party, except maybe if there were others who didn't know for certain that the psychic didn't have the ability in question.
+If it were impossible to win the lottery, you wouldn't play it.
+If it had already been established (for example at previous parties) that your psychic friend couldn't guess phone numbers, you wouldn't humiliate them and ask them to guess numbers at your party.
 Finally, if it were established beyond reasonable doubt that \textit{sleep} cannot be passivised, you wouldn't bother to do a corpus search for passivised forms of that verb.
 Clearly, unexpected outcomes are not miracles where everything we know about the world is up for debate.
 
 What we usually mean when we deem an outcome \textit{unexpected} is that it had a very slim chance---a low probability---of occurring before we made it occur.
 Mathematically, the most straightforward case is the one with the urn at the funfair.
-If there are a thousand lots in the urn, one of them is a win, all the others are duds, and you draw exactly one, most people have an intuitive understanding that you have a chance of one in a thousand (or 1:1000) to win.
+If there are a thousand lots in the urn, one of them is a win, all the others are duds, and you draw exactly one, most people have an intuitive understanding that you have a \textit{chance of one in a thousand} (or 1:1000) to win.
 Usually, it is also understood that this means that if you played this game over and over again, you would end up winning in one of a thousand rounds on average.
 (Playing the game over and over again, each time with a fresh urn of one thousand lots, not gradually emptying one and the same urn, of course.)
 That's why playing it once and winning is unexpected or surprising:
@@ -197,7 +197,7 @@ However, it provides the maths upon which we need to base our answer.
 Remember that Muriel Bristow has to choose four cups out of eight, and we first need to calculate how many distinct sets of fours cups out of eight she could potentially choose, without even considering whether she chose the right ones.
 Let's do it.
 In Figure~\ref{fig:cupsall}, we illustrate the 8 cups.%
-\footnote{We switch to writing numerals using arabic numbers for clarity.}
+\footnote{We switch to writing numerals using arabic numbers for clarity, even if that violates one or two style guides.}
 While they would all look exactly the same in the real experiment, we've made it easier to follow the argument by showing the tea-first cups with steam and the milk-first ones without steam.
 Furthermore, we've coloured the cups to make them identifiable individually.
 There is one gray, one red, one blue, and one green cup for each of the conditions (milk-first or tea-first).

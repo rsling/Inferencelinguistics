@@ -27,7 +27,7 @@ Furthermore, you want to publish the results and provide your readers with an ov
 Besides all kinds of plots that aggregate your data visually, you might want to characterise your sample numerically.
 What's the best numerical characterisation for your kind of data.}
 
-\section{Measurements}
+\section{Central Tendency and Typical Values}
 
 \subsection{Binary Measurements}\label{sec:binary}
 
@@ -496,7 +496,7 @@ It's particularly embarrassing if you first notice the resulting discrepancies w
 
   numsum %>%
     as.data.frame.matrix %>%
-    kable(align = "c", booktabs = T, linesep = "",
+    kable(align = "r", booktabs = T, linesep = "",
           caption = "Summary of a numeric variable with n=10",
           label = "numericsummary") %>%
     column_spec(1, bold = T) %>%
@@ -517,7 +517,7 @@ Table~\ref{tab:numericsummaryx} shows the same for a very similar sample but wit
 
   numsumx %>%
     as.data.frame.matrix %>%
-    kable(align = "c", booktabs = T, linesep = "",
+    kable(align = "r", booktabs = T, linesep = "",
           caption = "Summary of a numeric variable with n=100",
           label = "numericsummaryx") %>%
     column_spec(1, bold = T) %>%
@@ -538,9 +538,6 @@ Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and
   qii <- which.min(abs(densplo$x - summary(potsx)[3]))
   qiii <- which.min(abs(densplo$x - summary(potsx)[5]))
   plot(densplo, xlab = "Milliseconds", main ="",  bty ="n", ylim = c(0, 0.012), lwd = 1)
-  #lines(rep(densplo$x[qi], 2), c(0, densplo$y[qi]), lwd = the.lwd, col = the.lightcols[1])
-  #lines(rep(densplo$x[qiii], 2), c(0, densplo$y[qiii]), lwd = the.lwd, col = the.lightcols[1])
-  #lines(rep(densplo$x[qii], 2), c(0, densplo$y[qii]), lwd = the.lwd, col = the.lightcols[2])
   lines(densplo, lwd = the.lwd, col= "darkgray")
   par(mfrow = c(1,1))
 @ %
@@ -585,7 +582,7 @@ However, before using density plots one should do some research as to which spec
   vioplot(potsx, frame.plot = F, add = F, xlab = "", xaxt = "n", #side = "right", horizontal = T,
           col = the.lightcols[4], colMed = the.cols[2],
           rectCol = the.lightcols[2], lineCol = the.lightcols[4])
-  par(mfrow=c(1,1), mar = rep(5, 4))
+  par(mfrow=c(1,1), mar = rep(4, 4))
 @
 
 We need the above information about density estimates to understand another type of useful plot.
@@ -627,32 +624,170 @@ Strangely enough, nobody ever asked us any persistent questions.
 
 \section{Populations, Samples, and Variance}
 
-\subsection{Populations and samples}
+\subsection{Populations and Samples}
 \label{sub:populationssamples}
 
 % Introduce DGP.
-% Difference between proportions being more adequate for (infinite) populations than samples.
+% Proportions being more adequate or "natural" for (infinite) populations than samples.
 
-\subsection{Variance}
+\subsection{Homogeneity}
+
+<<variancesetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
+  set.seed(47)
+  potsy <- c(potsy1 <- round(rnorm(50, 200, sd = 45), 0),
+             potsy2 <- round(rnorm(50, 300, sd = 45), 0)) %>% sort
+@
+
+\subsubsection{Why Homogeneity Matters}
+
+So far, we've discussed how to summarise the central tendency of a sample and how to plot it.
+We've also argued that the same measures that we use to describe samples also describe populations.
+As we'll discover throughout the book, it's equally important to quantify how homogeneous the values from a sample or a population are.
+Let's illustrate the specific kind of homogeneity with two samples.
+One is the larger sample of reaction times from Section~\ref{sec:numeric} (called \xsample\ here), the other one is a sample that is superficially similar (called \ysample).
+Compare the summary of both samples in Table~\ref{tab:varxandy}.
+
+<<varxandy, echo=F, cache=T, out.width="85%", results="asis">>=
+  numsumxy <- matrix(
+    round(c(summary(potsx), length(potsx), summary(potsy), length(potsy)), 0),
+    nrow = 7)
+  rownames(numsumxy) <- c("Minimum", "First Quartile", "Median", "Mean", "Third Quartile", "Maximum", "Sample size")
+  colnames(numsumxy) <- c("x", "y")
+
+  numsumxy %>%
+    as.data.frame.matrix %>%
+    kable(align = "rr", booktabs = T, linesep = "",
+          caption = "Summary of two numeric samples with n=100",
+          label = "varxandy") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(0, bold=TRUE)
+@
 
 
-\subsection{Dummy Section}
+<<xyhist, fig.cap=paste0("Histograms of two samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
+  par(mfrow = c(1,2), mar = c(2, 3, 2, 2))
+  h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(50,400))
+  h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(50,400))
+  par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
+@ %
+
+<<xydens, fig.cap=paste0("Density plots of two samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
+  par(mfrow = c(1,2))
+
+  densplo1 <- density(potsx)
+  qi <- which.min(abs(densplo1$x - summary(potsx)[2]))
+  qii <- which.min(abs(densplo1$x - summary(potsx)[3]))
+  qiii <- which.min(abs(densplo1$x - summary(potsx)[5]))
+  plot(densplo1, xlab = "Milliseconds", main ="",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  lines(densplo1, lwd = the.lwd, col= "darkgray")
+
+  densplo2 <- density(potsy)
+  qi <- which.min(abs(densplo2$x - summary(potsy)[2]))
+  qii <- which.min(abs(densplo2$x - summary(potsy)[3]))
+  qiii <- which.min(abs(densplo2$x - summary(potsy)[5]))
+  plot(densplo2, xlab = "Milliseconds", main ="",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  lines(densplo2, lwd = the.lwd, col= "darkgray")
+
+  par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
+@ %
+
+\subsection{Calculating Variance and Standard Deviation}
+
+In order to illustrate the calculation of the variance, we return to the smaller sample from Section~\ref{sec:numeric} and call it \xsample.
+We repeat the raw data here for convenience:
+
+\begin{quote} \itshape
+  $\xsample=\langle$\Sexpr{paste0(pots, collapse = ", ")}\,$\rangle$
+\end{quote}
+
+Its mean is \Sexpr{round(mean(pots, 0))}.
+As we've argued that the variance is related to the distances of the individual points around the mean, we begin by plotting the data points (x-axis) and their measured reaction times (y-axis) in Figure~\ref{fig:meandist}.
+We also add the mean as a horizontal line plus lines measuring the distance from the mean to the individual data points (using colour to differentiate between negative and positive distances).
+
+<<meandist, fig.cap=paste0("Raw data plot of a sample with n=100; distances to mean plotted as vertical lines"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
+  .mean <- round(mean(pots), 0)
+  axis(1, 1:10, 1:10, tick = T)
+  .devnull <- lapply(1:10, function(i) {
+    .diff <- pots[i]-mean(pots)
+    lines(c(i, i), c(pots[i], .mean), lwd = the.lwd,
+          col = ifelse(.diff < 0, the.lightcols[3], the.lightcols[1]))
+  })
+  lines(c(1, 10), rep(round(mean(pots, 0)), 2), lty = 1, lwd = the.lwd+1, col = the.lightcols[2])
+  points(1:10, pots, pch = the.pchs[1], cex = 2)
+@
+
+Obviously, 5 data points deviate negatively from the mean, and 5 deviate in the positive direction.
+The way to calculate those distances is $x_i-\xsample$ for each point $x_i$
+Table~\ref{tab:xdistances} show the results.
+
+<<xdistances, echo=F, cache=T, out.width="85%", results="asis">>=
+  distxy <- matrix(
+    c(pots, paste0(pots, "-", round(.mean, 0)), round(pots-.mean, 0)),
+    nrow = 10)
+  rownames(distxy) <- paste0("Data point ", 1:10)
+  colnames(distxy) <- c("Measurement", "Calculation", "Distance")
+
+  distxy %>%
+    as.data.frame.matrix %>%
+    kable(align = "rr", booktabs = T, linesep = "",
+          caption = "Distances of individual data points to the mean (rounded to integers)",
+          label = "xdistances") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(0, bold=TRUE)
+@
+
+Simply adding those numbers wouldn't be very helpful.
+Do you see why?
+The problem is that negative and positive deviations cancel each other out.
+
+\begin{center}
+  \begin{math}
+    \sum\limits_{i=1}^{n}(x_i-\cfrac{\sum\limits_{i=1}^{n}x_i}{n})=0
+  \end{math}
+\end{center}
+
+It would be best to make all values positive.
+One option would be to take the \Key{absolute} value, which is achieved by discarding the sign.
+While this is an option, another one is more appropriate for many further calculations in statistics.
+We san also square the distances.
+This makes their absolute value much bigger, but it also means that negative signs cancel out.
+If we then sum up the squared distances, we get a squared value of the total deviation of the data points from the mean.
+It's called the \Key{sum of squares}, and we abbreviate it as $SQ$.%
+\footnote{This is the abbreviation of German \textit{Summe der Quadrate}, but you can also read it as \textit{Sum of sQuares}.
+We feel more comfortable with this abbreviation than with \textit{SS}, which is often used in English.}
 
 \begin{equation}
-  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})}{n-1}
+  \sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2
+  \label{eq:sq}
+\end{equation}
+
+While the $SQ$ is the \textit{total} (summed) squared deviation from the mean, we're rather looking for the average deviation per data point.
+We can get there by dividing $SQ$ by $n$, which gives us the so-called sample \Key{variance} of \xsample\ denoted by $s^2(\xsample)$ in function notation or simply $s^2$ if it's clear that we're talking about one sample only.
+There is a minor catch:
+We're going to use the variance from a sample as an estimate of the variance in the corresponding population.
+Statisticians have found out that small samples tend to underestimate the variance of the population and that the best practical remedy is to divide by $n-1$ instead of $n$.
+The larger $n$, the smaller the effect of this correction.
+Hence, the sample variance is customarily computed as:
+
+\begin{equation}
+  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ}{n-1}
   \label{eq:variance}
 \end{equation}
+
+In order to arrive at the \textit{average deviation of the data points from the mean} instead of the \textit{average squared deviation of the data points from the mean}, we need to reverse the upscaling effect of squaring the distances when calculating $SQ$.
+We can do this by taking the square root of the variance $s^2$.
+The result is called the \Key{standard deviation}, denoted $s(\xsample)$ in function notation or simply $s$:
 
 \begin{equation}
   s(\xsample)=\sqrt{s^2}
   \label{eq:stdev}
 \end{equation}
 
-\begin{equation}
-  SQ(\xsample)=\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})
-  \label{eq:sq}
-\end{equation}
 
+
+
+\subsection{Dummy Section}
 
 \begin{table}
   \caption{\label{tab:summaries}Adequate statistics and plots for summarising types of variables}
