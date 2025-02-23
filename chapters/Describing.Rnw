@@ -83,7 +83,7 @@ Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
 
   counts %>%
     as.data.frame.matrix %>%
-    kable(align = c("c", "c"), booktabs = T,
+    kable(align = c("c", "c"), booktabs = T, linesep = "",
           caption = "A tabulation of counts of a binary variable",
           label = "counts") %>%
     column_spec(1, bold = T) %>%
@@ -196,7 +196,7 @@ A variable which has more than two discrete levels with no measurable ordering i
 
   counts %>%
     as.data.frame.matrix %>%
-    kable(align = c("c", "c"), booktabs = T,
+    kable(align = c("c", "c"), booktabs = T, linesep = "",
           caption = "A tabulation of counts of a nominal (four-level) variable",
           label = "nominal") %>%
     column_spec(1, bold = T) %>%
@@ -267,7 +267,7 @@ The only difference is that tables and plots should respect the intrinsic order 
 
   counts %>%
     as.data.frame.matrix %>%
-    kable(align = rep("c", 5), booktabs = T,
+    kable(align = rep("c", 5), booktabs = T, linesep = "",
           caption = "A tabulation of counts of a binary variable",
           label = "ordinal") %>%
     column_spec(1, bold = T) %>%
@@ -440,6 +440,7 @@ The general equation to calculate the mean \xmean\ of a tuple \xsample\ is thus:
 
 \begin{equation}
   \xmean=\cfrac{\sum\limits_{i=1}^{n}x_i}{n}
+  \label{eq:mean}
 \end{equation}
 
 \noindent As abbreviated variants of the sum operator, we allow the following to denote the sum of all values from \xsample.
@@ -495,7 +496,7 @@ It's particularly embarrassing if you first notice the resulting discrepancies w
 
   numsum %>%
     as.data.frame.matrix %>%
-    kable(align = "c", booktabs = T,
+    kable(align = "c", booktabs = T, linesep = "",
           caption = "Summary of a numeric variable with n=10",
           label = "numericsummary") %>%
     column_spec(1, bold = T) %>%
@@ -516,7 +517,7 @@ Table~\ref{tab:numericsummaryx} shows the same for a very similar sample but wit
 
   numsumx %>%
     as.data.frame.matrix %>%
-    kable(align = "c", booktabs = T,
+    kable(align = "c", booktabs = T, linesep = "",
           caption = "Summary of a numeric variable with n=100",
           label = "numericsummaryx") %>%
     column_spec(1, bold = T) %>%
@@ -581,7 +582,7 @@ However, before using density plots one should do some research as to which spec
   par(mfrow=c(1,2), mar=c(2,5,1,0))
   boxplot(potsx, frame = F, ylab = "Milliseconds", col = the.lightcols[2],
           notch = T, pch = the.pchs[1], medcol = the.cols[2])
-  vioplot(potsx, frame.plot = F, add = F, xlab = "", xaxt = "n", #side = "right",
+  vioplot(potsx, frame.plot = F, add = F, xlab = "", xaxt = "n", #side = "right", horizontal = T,
           col = the.lightcols[4], colMed = the.cols[2],
           rectCol = the.lightcols[2], lineCol = the.lightcols[4])
   par(mfrow=c(1,1), mar = rep(5, 4))
@@ -608,7 +609,7 @@ It is definitely useful when the sample is very irregular and has a bumpy distri
 Under such circumstances, the quartiles and the mean tend to create an impression of homogeneity and cleanliness that is unwarranted.
 
 However, both box plots and violin plots are not \textit{innocent} in the sense that there isn't one natural way to plot them.
-You are already doing data analysis when using these plots, even if it just feels like naturally passing a data set to a software function or clicking on a button in an interface.
+When you use these plots, you're already doing data analysis.
 Even quartiles---as we mentioned above---can be calculated in different ways, and the decision of what counts as an outlier definitely isn't an automatic one.
 Some box plots use larger or smaller intervals than $\pm 1.5\cdot IQR$ for the whiskers, which increases or decreases the number of data points plotted as outliers.
 Maybe that's warranted for some data sets, but maybe it hides properties of the data set that you and your readers should be aware of.
@@ -626,6 +627,48 @@ Strangely enough, nobody ever asked us any persistent questions.
 
 \section{Populations, Samples, and Variance}
 
-% Introduce DGP.
+\subsection{Populations and samples}
+\label{sub:populationssamples}
 
+% Introduce DGP.
 % Difference between proportions being more adequate for (infinite) populations than samples.
+
+\subsection{Variance}
+
+
+\subsection{Dummy Section}
+
+\begin{equation}
+  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})}{n-1}
+  \label{eq:variance}
+\end{equation}
+
+\begin{equation}
+  s(\xsample)=\sqrt{s^2}
+  \label{eq:stdev}
+\end{equation}
+
+\begin{equation}
+  SQ(\xsample)=\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})
+  \label{eq:sq}
+\end{equation}
+
+
+\begin{table}
+  \caption{\label{tab:summaries}Adequate statistics and plots for summarising types of variables}
+  \centering
+  \resizebox{\textwidth}{!}{\begin{tabular}{lccccc}
+    \toprule
+                                   &                 & \multicolumn{3}{c}{\textbf{Discrete}}                 & \textbf{Continuous} \\\cmidrule{3-5}
+                                   & \textbf{Symbol} & \textbf{Binary} & \textbf{Nominal} & \textbf{Ordinal} & \textbf{Numeric} \\
+    \midrule
+    \textbf{Sample Size}           & $n$                    & \multicolumn{4}{c}{\Dim number of data points} \\
+    \textbf{Median}                & $\widetilde{\xsample}$ & \multicolumn{4}{c}{\CellBlue middle value of sorted sample} \\
+    \textbf{Mode}                  & $\dot{\xsample}$       & \multicolumn{3}{c}{\Dim most frequent value} & \CellGreen density maximum \\
+    \textbf{Mean}                  & $\bar{\xsample}$       & \multicolumn{3}{c}{\CellBlue ---} & \Dim Equation~\ref{eq:mean} \\
+    \textbf{Variance}              & $s^2$                  & \multicolumn{3}{c}{\Dim ---} & \CellGreen Equation~\ref{eq:variance} \\
+    \textbf{Standard Deviation}    & $s$                    & \multicolumn{3}{c}{\CellBlue ---} & \Dim Equation~\ref{eq:stdev} \\
+    \textbf{Plot}                  &                        & \multicolumn{3}{c}{\Dim bar plot} & \CellGreen histogram, density plot \\
+    \bottomrule
+  \end{tabular}}
+\end{table}
