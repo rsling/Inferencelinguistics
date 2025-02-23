@@ -1141,7 +1141,7 @@ The true purpose of running simulations is not to run them once but to run them 
 By looking at the results of a large number of so-called replications, we can check whether the claims made by the frequentist theory are true.
 Let's run \Sexpr{sim.guess.n} simulations of the same experiment where the person is just guessing.
 To make the properties of the test pop out more clearly, we also change the number of cups per experiment from 8 to \Sexpr{sim.guess.s}.
-Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.guess.s} cups individually, we aggregate them in a certain type of plot---a \Key{histogram}---in Figure~\ref{fig:hist}
+Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.guess.s} cups individually, we aggregate them in a certain type of plot---a \Key{histogram}---in Figure~\ref{fig:hist}.
 
 <<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "P-Values", main ="", border=F)

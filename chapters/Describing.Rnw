@@ -17,7 +17,7 @@ We begin by characterising different types of measurements often called \alert{l
 We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean} for different types of measurements.
 Finally, we quantify how much single measurements deviate from the most characteristic measurements in the form of the \alert{variance} and the \alert{standard deviation}.
 Along the way, some types of plots are introduced which provide insight into the structure of data.
-These are \alert{raw data plots}, \alert{histograms}, \alert{boxplots}, \alert{density plots}, and \alert{violinplots}.
+These are \alert{raw data plots}, \alert{histograms}, \alert{box plots}, \alert{density plots}, and \alert{violinplots}.
 
 \Problem{Show Me Your Sample!}{%
 Imagine you've collected some data.
@@ -49,11 +49,11 @@ The sequence for the highlighted nouns in the sample is:
 A main point of this chapter is to introduce the lingo used to describe the properties of such observations in experimental design and statistics.
 A measurement in an experiment is always characterised by a well-defined \Key{variable}.
 A variable doesn't always take the form of a numerical measurement (although it can).
-In any case, it's a description of events.
-Turning to the example, if a noun occurs, the noun's grammatical number can be characterised at each event as either singular or plural, the two possible \alert{values} or \Key{levels} of the variable \textit{Number}.
-In other words, all events of noun occurrence in English fall into one of two number categories.
+In any case, it's a description of some property of events.
+Turning to the example, if a noun occurs, the noun's grammatical number can be characterised as either singular or plural, the two possible \alert{values} or \Key{levels} of the variable \textit{Number}.
+In other words, all events of noun occurrence in English fall into one of two categories: singular or plural.
 
-How are the corresponding results best summarised numerically?
+How are the corresponding results best summarised?
 Mathematically, one of the few things we can do with these occurrences is count them, which is exactly what we did with the variables \textit{Bristow} and \textit{Reality} in Chapter~\ref{sec:fisher}, both having the possible values \textit{tea-first} and \textit{milk-first} (\eg, Table~\ref{tab:teamarathon}).
 For completeness, we show the very obvious summarisation of these counts in tabular form (Table~\ref{tab:counts}).
 However, we have already shown the more complex type of contingency tables, where the co-occurrences of the levels of two two-level variables per event are tabulated.
@@ -74,11 +74,12 @@ Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
 @
 
 Obviously, the variable \textit{Number} is two-level for languages without duals, trials, etc.\ such as English.
-It is called a \Key{binary variable}.
+It is called a \Key{binary variable} or \textit{dichotomous variable}.
 In order to summarise binary data in a single number, we can calculate a proportion, an operation which we assume is well-known (but see below for the general formula).
 The proportion of singular noun forms in the above sample is $4\div (4+5)=4\div 9\approx 0.4444$.
 Note that proportions always lie between 0 and 1.
 A \Key{percentage} is simply a proportion times 100, hence the percentage of singular forms is $0.4444\cdot 100=44.44\%$.
+Consequently, a percentage always lies between 0 and 100.
 As we'll demonstrate very clearly in Chapter~\ref{sec:confidence}, proportions and percentages are fine, but they can be meaningless if the \Key{sample size} is unknown.
 For binary variables, the sample size---symbolised as $n$---is simply the number of events, hence $n=9$ in the example.
 Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_i$ of a level of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_i$ (such as $q_{\text{singular}}\approx 0.44$):
@@ -99,7 +100,7 @@ Using the symbol $q$ for proportions (as $p$ is already taken and proportions ar
 \noindent For the count of the other level $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
 Also, $q_j=(n-c_i)\div n$.
 This means that counts of a binary variable are exhaustively summarised by two numbers.
-Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we need to provide more than two numbers (provided it's two well-chosen numbers).
+Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we absolutely need to provide more than two numbers (provided it's two well-chosen numbers).
 Either we specify the sample size $n$ and at least one proportion or one count.
 Or we specify the raw counts for both levels of the variable.
 Furthermore, not much is gained by converting counts to proportions, except that some people find proportions more intuitive.
@@ -109,23 +110,24 @@ For counts of binary variables, any aggregation serves no or just a very limited
 \newpage
 
 Finally, we can ask what is the \Key{central tendency} of a binary variable.
+The purpose of finding the central tendency is to find a typical value in some sense.
 The term \textit{central} derives from more complex measurements (see Section~\ref{sec:ordinal} and below), and it's not very intuitive for binary measurements.
 It will become clearer as we progress through this chapter.
-In the binary case, the only measure of central tendency is its \Key{modal category}, which is the level that occurs more often than the other.
+In the binary case, the only measure of central tendency is its modal category or just \Key{mode}, which is the level that occurs more often than the other.
 If $c_i>c_j$, then $c_i$ is the modal category and vice versa.
-In general, the central tendency is important as the \Key{expected value} for a variable, and the mode of a binary variable is no exception.
+In general, the central tendency is important as the \Key{expected value} of a variable, and the mode of a binary variable is no exception.
 Without any further information, it's the value that we would predict for any event.
-If all you knew about English were the short paragraph from Wikipedia quoted above (annotated only for part-of-speech and number, with no information about the syntax, the meaning, the register, etc.), and you were asked to predict the number of the next noun in the text, any sane person would predict \textit{plural} because it appears to be the modal (more frequent) category based on the sample.
+If all you knew about English were the short paragraph from Wikipedia quoted above (annotated only for part-of-speech and number, with no information about the syntax, the meaning, the register, etc.), and you were asked to predict the number of the next noun in the text, any sane person would predict \textit{plural} because it appears to be the modal (\ie, more frequent) category judging from the sample.
 However, we are aware that this would probably not lead to a prediction accuracy of 56\%.
 There are two reasons for this:
-First, producing English nouns is not a mere lottery, and our analysis should respect this.
+First, producing English nouns is not a mere lottery, and our analysis should reflect this.
 Second, the sample is very small ($n=9$), a problem we'll deal with in Chapter~\ref{sec:confidence}.
-However, if we knew for sure that among the totality of English noun tokens, 5 out of 9 were in the plural, and you had to predict the number of a noun without information about the lexeme, syntactic context, or register of the text, you would predict plural.
+However, if we knew for sure that among the totality of English noun tokens, 5 out of 9 were in the plural, and you had to predict the number of a noun without information about the lexeme, syntactic context, or register of the text, we would always predict plural and be right in 56\% of all cases in the long run.
 In this sense, it would be the \textit{expected value} or \textit{expectation}.%
 \footnote{The difference between an expected value estimated from a sample and one that's true for the population is the subject of Chapter~\ref{sec:confidence}.}
 
 The absolute minimal information about a binary variable is its mode, and sometimes the mode really is all that counts.
-While we can't think of a scientific experiment where the mode of a binary variable is a sufficient statistic, it is in final rounds of presidential elections in France.
+While we can't think of a scientific experiment where the mode of a binary variable is a sufficient statistic, it is in presidential run-off votes in France.
 There are always two candidates in such elections, and the one who gets more votes than the other wins.
 The modal vote wins.
 
@@ -137,11 +139,11 @@ The modal vote wins.
 @
 
 Finally, Figure~\ref{fig:binaryhist} shows a histogram of the sample of the \textit{Number} variable from the illustrative example discussed above.
-A histogram for a variable with discrete levels is often displayed with spaces between the bars, and it's often called a \Key{bar plot} instead of a histogram.
+A histogram for a variable with discrete levels is usually displayed with spaces between the bars (compare Figure~\ref{fig:hist} against this), and it's often called a \Key{bar plot} instead of a histogram.
 It's still just a special type of histogram.
 For the benefit of the reader, we have highlighted the mode in colour.
 This is the only reasonable way to plot such results.
-We strictly recommend to label it with the raw counts, not proportions or percentages.
+We strictly recommend to label the individual bars with the raw counts, not proportions or percentages.
 Since the bars already provide a good visual impression of the proportions, the relevant numerical information to add are the counts.
 At the same time, we can't think of a situation where such a plot by itself isn't an insult to the reader.
 Looking at just two counts (except maybe very high counts in the millions and above), humans are able to grasp the relative magnitude of those counts easily without visualisation.
@@ -149,7 +151,7 @@ Looking at just two counts (except maybe very high counts in the millions and ab
 \subsection{Multi-Valued Measurements}\label{sec:nominal}
 
 In this chapter, we continually progress from simple to more complex variables (\ie, measurements).
-After binary variables, the next more complex thing is simply a more general variant of binary variables.
+After binary variables, the next more complex thing is simply a more general variant of a binary variable.
 Let's have a look at a short paragraph from the German Wikipedia article about Critical Rationalism and annotate all lexical nouns with their grammatical case:%
 \footnote{Sourced from \url{https://de.wikipedia.org/wiki/Kritischer_Rationalismus} on 20 February 2025.}
 
@@ -157,7 +159,7 @@ Let's have a look at a short paragraph from the German Wikipedia article about C
   \itshape Der Realismus\Nom\ ist die dem subjektiven Idealismus\Dat\ widers\-prechende metaphysische Theorie\Nom, dass eine vom Menschen\Dat\ unabhängige Wirk\-lich\-keit\Nom\ existiert. Während der naive Realismus\Nom\ davon ausgeht, dass die Welt\Nom\ so ist, wie der Mensch\Nom\ sie wahr\-nimmt, vertritt der kri\-ti\-sche Realismus\Nom\ die Auffassung, dass Vorstellungen\Nom\ von ihr durch subjektive Elemente\Akk, die in der Wahrnehmung\Dat\ und im Denken\Dat\ liegen, mehr oder weniger stark beeinflusst werden. Weil die Sinne\Nom\ und die Ver\-arbei\-tungs\-pro\-zesse\Nom\ im Gehirn der angenommenen Außenwelt\Dat\ und der Vor\-stellung\Dat\ zwischen\-geschaltet sind, kann man auch vom indirekten Rea\-lis\-mus\Dat\ sprechen. Dieser Vermit\-tlungs\-vorgang\Nom\ schließt eine \textit{reine Wahr\-nehmung}\Nom\ aus, denn es kann sich um Täuschungen\Nom\ handeln.
 \end{quote}
 
-As you might have guessed from the labels, there are four grammatical cases in German: nominative, accusative, dative, and genitive.
+There are four grammatical cases in German: nominative, accusative, dative, and genitive.
 They occur at 13, 1, 7, and 0 noun events in the sample, respectively.
 Apparently, the variable \textit{Case} measuring grammatical case in German has four levels which have no empirically significant order.
 Instead of the order nominative, accusative, dative, genitive, many grammars and text books order the four cases according to the Latin tradition: nominative, genitive, dative, accusative, which is perfectly fine, too.
@@ -175,7 +177,7 @@ A variable which has more than two discrete levels with no measurable ordering i
   counts %>%
     as.data.frame.matrix %>%
     kable(align = c("c", "c"), booktabs = T,
-          caption = "A tabulation of counts of a binary variable",
+          caption = "A tabulation of counts of a nominal (four-level) variable",
           label = "nominal") %>%
     column_spec(1, bold = T) %>%
     row_spec(0, bold=TRUE)
@@ -185,36 +187,22 @@ Binary variables are really just the minimal case of a nominal variable.
 Not surprisingly, we can treat them essentially the same, for example by tabulating the counts as in Table~\ref{tab:nominal}.
 The only reasonable aggregations are conversion of raw counts to proportions as in Equation~\ref{eq:proportion} with $i\in\{1..m\}$ where $m$ is the number of different possible values of the variable.
 In the example, $m=4$.
-The \Key{mode} is just the most frequent value, much like in the binary case.
-In order to formalise the notion of the mode (and introduce some useful bits of mathematical notation along the way), let's name the results of the case counting example (\ie, the sample) \xsample\ and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
+The \Key{mode} is just the most frequent value, much like in the binary case, and we would like to point out rather informally what the necessary steps to find it are.
+Let's name the results of the case counting example (\ie, the sample) \xsample\ and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
 
 \begin{quote}
   $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
 \end{quote}
 
 It would be perfectly okay to disregard the order of the events because we (albeit often incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
-In that respect, we could use a \Key{set} (which is always unordered) instead of a tuple, symbolised by curly brackets $\{\~\}$ instead of angled brackets.
+In that respect, we could use a \Key{set} (which is unordered by definition) instead of a tuple, symbolised by curly brackets $\{~\}$ instead of angled brackets.
 By definition, however, sets don't allow the same element to be added to them twice, which would clearly be inadequate for series of data points such as \xsample.
 Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
 Tuples are called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
-
-Let \xcounts\ denote the counts of the occurrences of the levels in the sample.
-It's a mathematical representation of what's shown in Table~\ref{tab:nominal}.
-It's the label of each level, paired with the number of occurrences of that level.
-Assuming a function called $max(\cdot)$ that finds the \Key{maximum} number within such a structure and denoting the mode of any sample \xsample\ by \xmode, then:
-
-\begin{center}
-\begin{math}
-  \xmode=max(\xcounts)
-\end{math}
-\end{center}
-
-Don't worry, it's just some useful notation for rather trivial concepts.
-It means that the mode $\dot{\xsample}$ of the sample \xsample\ is obtained by counting the numbers of occurrences of the levels of the measured variable, resulting in the table structure \xcounts.
-Then, we find the label corresponding to the highest number in that table, denoted $max(\xcounts)$.
-That's it.
-For the example, it's $\xmode=max(\xcounts)=\mathit{nominative}$ or, in words directly corresponding to the notation:
-The mode of the sample is the level occurring most often, namely \textit{nominative}.
+We need to convert \xsample\ into a structure that provides the counts for each level.
+The resulting structure should be something like Table~\ref{tab:nominal}, a mapping from the levels of the variable to their counts.
+Then, we need a function that goes through the table, finds the \Key{maximum} value among the counts and retrieves the corresponding label.
+While this might sound trivial, these are the steps that your statistics software must go through in order to find what you're looking for.
 
 We leave it to the reader to calculate the proportions and percentages for each of the four grammatical cases in the sample.
 However, two histograms (or bar plots) for the example are shown in Figure~\ref{fig:nominalhist}.
@@ -266,7 +254,7 @@ The ratings have an intrinsic order, and each level of the variable has a rank:
 \textit{very high} is higher than \textit{high}, \textit{high} is higher than \textit{medium}, and so forth.
 A variable like \textit{Rating} is called an \Key{ordinal variable}.
 All possible ways of aggregating nominal variables (including binary ones) apply to ordinal variables as well:
-counting and tabulation, calculation of the proportions or percentages of the different levels, the determination of the mode, and bar plots\slash histograms.
+counting and tabulation, calculation of the proportions or percentages of the different levels, the determination of the mode, and bar plots (histograms).
 The only difference is that tables and plots should respect the intrinsic order of the ordinal variable, as can be observed in Table~\ref{tab:ordinal} and Figure~\ref{fig:ordinalhist}.
 
 <<ordinal, echo=F, cache=T, out.width="85%", results="asis">>=
@@ -291,7 +279,7 @@ The only difference is that tables and plots should respect the intrinsic order 
 @
 
 Thanks to the higher complexity of this variable (the intrinsic order of its levels), we have an additional measure of central tendency available.
-To find this measure called the \Key{median}, we first need to sort the raw measurements (not the tabulation of the counts) from the lowest rank to the highest rank, which is something we couldn't do with a nominal variable due to the lack of an intrinsic order of its levels.
+To find this measure called the \textit{median}, we first need to sort the raw measurements (not the tabulation of the counts) from the lowest rank to the highest rank, which is something we couldn't do with a nominal variable due to the lack of an intrinsic order of its levels.
 The ordered sample \xsample\prm\ looks like this:
 
 <<ratingsmedian, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
@@ -305,8 +293,8 @@ The ordered sample \xsample\prm\ looks like this:
 \end{quote}
 
 Plotting these single observations from left to right on the x-axis and putting dots on the y-dimension corresponding to the respective ratings, we get Figure~\ref{fig:ordinalsort}, a \Key{raw data plot}.
-The gray line is just a helper line as the measurements are, of course, discrete.
-The coloured lines marks the middle point of the ordered sample in the sense that half the ordered sample lies to its left and the other half to its right.
+The gray line is just a helper line for better visual orientation.
+The coloured line marks the middle point of the ordered sample in the sense that half the ordered sample lies to its left and the other half to its right.
 
 <<ordinalsort, fig.cap=paste0("Raw data plot of a sorted sample of an ordinal value; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(as.numeric(ratings.ordered), xaxt = "n", xlab = "Sorted Data Points", yaxt = "n", ylab = "Level", main ="", ylim = c(1, 5), frame.plot = F)
@@ -320,11 +308,11 @@ The coloured lines marks the middle point of the ordered sample in the sense tha
   axis(1, 1:10, 1:10, tick = T)
 @
 
-The value that lies in the middle of the ordered sample (marked by the coloured line in Figure~\ref{fig:ordinalsort}) is the median.
+The value that lies in the middle of the ordered sample (marked by the coloured line in Figure~\ref{fig:ordinalsort}) is the \Key{median}.
 In the example, the median technically lies between two data points (the 5\Up{th} and the 6\Up{th} one) as $n=10$ is an even number.
-Fortunately, the data points to left and right of the median point have the same value, so we can say without further ado that $\xmedian=$\,\textit{medium}, where we denote the median of \xsample\ by \xmedian.
-If the median point lies between two data points with different values (such as \textit{low} and \textit{medium}), there is no clean way to name the median.
-One solution would be to say truthfully that the median lies between \textit{low} and \textit{medium} or thatit lies at \textit{low$+$} as in the American educational grading system (A$-$, B$+$, etc.).
+Fortunately, the data points to left and right of the median point have the same rating value, so we can say without further ado that $\xmedian=$\,\textit{medium}, where we denote the median of \xsample\ by \xmedian.
+If, on the other hand, the median point lied between two data points with different values (such as \textit{low} and \textit{medium}), there is no clean way to name the median.
+One solution would be to say truthfully that the median lies between \textit{low} and \textit{medium} or that it lies at \textit{low$+$} (as in the American educational grading system with A$-$, B$+$, etc.).
 Another solution would be to convert the levels from \textit{very low} to \textit{very high} to the numbers between 1 and 5 and state that $\xmedian=2.5$.
 For ordinal scales, we strongly advise against the latter solution (conversion to numbers) as it creates the false impression that the ranks correspond to numerical values (see Section~\ref{sec:numeric}).
 
@@ -332,11 +320,12 @@ Starting with the median, we can get a clearer idea of why we speak of measure o
 In a well-defined way, the median position is at the \textit{centre} of the sample.
 As the expected value of an ordinal variable, however, the mode is probably still the best metric.
 If \textit{medium} actually is the rating assigned most often, then guessing \textit{medium} would lead to the highest possible success rate.
-The median is still a very informative measure, and we'll see in the next section that it's very handy if combined with even more informative measures like the mean.
+However, median is of course an informative measure, and we'll see in the next section that it's very handy if combined with even more informative measures like the mean.
 
 We've got one final word of warning before moving on to numeric measurements in the next section.
-Rating scales with 5, 7, 12, or any number of levels are often called \Key{Likert scales} in research papers, text books, and so on, often smugly pointing out that the correct pronunciation is [ˈlɪkət] (or some transatlantic variant) and not [ˈlʌ͡ɪkət].
-For example, the Wikipedia article on ordinal data states incorrectly:%
+Rating scales with 5, 7, 12, or any number of levels are often called \Key{Likert scales} in research papers, text books, and so on.
+Authors often use the opportunity to point out rather smugly that the correct pronunciation is [ˈlɪkət] (or some transatlantic variant) and not [ˈlʌ͡ɪkət].
+For example, the Wikipedia article on ordinal data states incorrectly (after providing the correct IPA transcription of the name):%
 \footnote{Sourced from \url{https://en.wikipedia.org/wiki/Ordinal_data} on 22 February 2025.}
 
 \begin{quote}\itshape
@@ -345,7 +334,7 @@ For example, the Wikipedia article on ordinal data states incorrectly:%
   for example, the survey question ``Is your general health poor, reasonable, good, or excellent?'' may have those answers coded respectively as 1, 2, 3, and 4.
 \end{quote}
 
-\noindent While people are most likely correct in pointing out that the pronunciation of the name is [ˈlɪkət], it is not true that any 5-point-scale is a Likert scale.
+\noindent It is not true that any 5-point-scale is a Likert scale.
 A Likert scale is a complex psychometric construct invented by a person called Likert and operationalised through a set of responses to Likert items.
 The responses are measured on a 5-point agreement scale, but they are aggregated into the underlying Likert scale.
 Since the Likert scale cannot be measured but is merely reconstructed from measured responses, we recommend to avoid the phrase \textit{Likert scale} entirely and just call 5-point scales \textit{5-point scales}, etc.
@@ -381,9 +370,9 @@ It cannot (and need not) be determined whether \textit{good} is twice or three t
 
 Mathematically speaking, \Key{numeric variables} allow us to use standard arithmetic (adding, subtracting, multiplying, dividing), which we cannot do with any of the less complex variables.
 Sometimes, a distinction is made within the numeric measurements:
-Variables on a \Key{ratio scale} are those with a defined zero measurement, and no measurement below 0 exists.
+Variables on a \Key{ratio scale} are those with a defined zero measurement where no measurement below 0 exists.
 Reaction times or word lengths are good examples as it's impossible to measure negative reaction times or words that are $-1$ phonemes or graphemes long.
-The other type of numeric variable is measured on a so-called \Key{interval scale}, which does not have a zero-floor and allows measurements towards negative infinity.
+The other type of numeric variable is measured on a so-called \Key{interval scale}, which does not have a zero floor and allows measurements towards negative infinity.
 As such scales never occur in linguistics (and, we think, most empirical sciences) and the distinctions between ratio and interval scales can otherwise be safely neglected, we simply speak of numeric variables.
 
 Regarding the central tendency of numeric measurements and the applicable plots, numeric measurements offer many more options and introduce some complications.
@@ -414,12 +403,12 @@ It is obtained by adding all measurements and dividing them by the number of mea
   \end{math}
 \end{center}
 
-\noindent The mean is virtually identical to the median.
+\noindent In this example, the mean is virtually identical to the median.
 This is typical of symmetric samples.
 If you look at Figure~\ref{fig:numericraw}, the data points are arranged almost along a straight line from the lower left to the upper right, and the sample is symmetric in this sense.
 We'll encounter cases where the mean and the median are not the same.
 
-There is a convenient notation that we need to provide the general definition of the mean.
+There is a convenient notation used in the general definition of the mean.
 It's the \Key{sum operator} $\Sigma$, which is used like this:
 
 \begin{center}
@@ -432,7 +421,7 @@ It's the \Key{sum operator} $\Sigma$, which is used like this:
 The symbol $x$ is used to denote individual values from the tuple \xsample, \ie, the measurements from the experiment.
 The index $i$ is a counter and tells us which concrete $x_i$ we pull from \xsample.
 The limits of the sum operator use these symbols to go through the whole tuple \xsample.
-Starting from $i=1$ (the lower limit) and counting all the way up to $n$ or rather $i=n$ (the upper limit), it sums up all $x_i$.
+Starting from $i=1$ (the lower limit) and counting all the way up to $n$ (the upper limit), it sums up all $x_i$.
 Since $x_1$ is the first element of the tuple and $x_n$ ($x_10$ in the example), all values from \xsample\ are added up.
 Writing the general form of the sum operator more explicitly, we get:
 
@@ -442,7 +431,6 @@ Writing the general form of the sum operator more explicitly, we get:
   \end{math}
 \end{center}
 
-That's it.
 We'll encounter sum operators with more complex expressions than $x_i$, but the logic remains the same.
 It's really just the instruction to add some numbers.
 The general equation to calculate the mean \xmean\ of a tuple \xsample\ is thus:
@@ -469,8 +457,8 @@ Either the upper limit $n$ is implied (second variant), or we just pass the symb
 \end{center}
 
 The mean and the median are quite informative measures of the central tendency.
-In fact, we're now going extend the concept of the median slightly, and we're going to re-introduce the mode for numeric variables, which we glossed over at the beginning of this section.
-Figure~\ref{fig:numericrawq} repeats Figure~\ref{fig:numericraw} with some adde additional vertical lines.
+Finally, we'll now generalise the concept of the median, and we'll re-introduce the mode for numeric variables (which we glossed over at the beginning of this section).
+Figure~\ref{fig:numericrawq} repeats Figure~\ref{fig:numericraw} with some additional vertical lines.
 
 <<numericrawq, fig.cap=paste0("Raw data plot of a sorted sample of a numeric variable; the coloured lines mark the position of the median, the lower and upper quartile, as well as the minimum and the maximum"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
@@ -488,8 +476,8 @@ The lines mark the aforementioned generalisations of the median.
 Going outward from the median, the lines at data point 3 and 8 define the lower and upper \Key{quartile}.
 With the median, they split the sorted sample in four parts called the first (lower), second, third, and fourth (upper) quartile.
 For numeric samples, it's also informative to inform readers about the minimal and maximal value, which are also marked in the plot.
-Contrary to an ordinal variable, a numeric variable does not have a pre-defined minimal and maximal value.
-Table~\ref{tab:numericsummary} shows all the information discussed so far to summarise a numeric variable.%
+Contrary to an ordinal variable, a numeric variable does not have a pre-defined minimal and maximal value such as \textit{very low} and \textit{very high}.
+Table~\ref{tab:numericsummary} shows all the information discussed so far that can be used to summarise a numeric variable.%
 \footnote{Notice that statistics software packages don't always calculate the quartiles in the same naïve way we did.
 There is a number of algorithms available that adjusts the quartiles based on the overall distribution of values in the sample.
 Please consider the documentation.
@@ -533,8 +521,8 @@ Table~\ref{tab:numericsummaryx} shows the same for a very similar sample but wit
 @
 
 The summary characterised a sample of 100 values in 7 values, which is much more economical than just showing all 100 values.
-Also, most humans can't process 100 raw values and get an idea of what the tendencies and trends in the data are.
-A histogramm as in Figure~\ref{fig:numhist} (left panel) is a helpful companion to the table.
+Also, most humans aren't very good at processing 100 raw values and get an idea of what the tendencies and trends in the data are.
+A histogram as in Figure~\ref{fig:numhist} (left panel) is a helpful companion to the table.
 Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and the individual bars represent counts of occurrences of values from a certain range:%
 <<numhist, fig.cap=paste0("Histogram of a sample of a numeric variable with n=100 and a corresponding density plot based on an estimated probability density function"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
   par(mfrow = c(1,2))
@@ -553,37 +541,36 @@ Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and
   par(mfrow = c(1,1))
 @ %
 the first bar counts the values that lie between \Sexpr{h$breaks[1]}~ms and \Sexpr{h$breaks[2]}~ms, and so on.
-Such histograms are plotted without spaces between the bars, unlike the bar plots used for discrete variables.
+Histograms of continuous variables are plotted without spaces between the bars, unlike the bar plots used for discrete variables.
 
 Another plot with a similar informative value is shown in the right panel of Figure~\ref{fig:numhist}.
 It shows an estimated density function for the sample.
 Probability density functions were introduced in Section~\ref{sec:hypergeometric} for a known \Key{theoretical probability distribution}, namely the Hypergeometric Distribution.
-While the plot is very similar, there are major differences between the plots of the Hypergeometric Distribution and Figure~\ref{fig:numhist}.
+While the plots look conceptually very similar, there are major differences between the plots of the Hypergeometric Distribution and Figure~\ref{fig:numhist}.
 First, the Hypergeometric Distribution is the distribution of a discrete variable ($k$ successes), and the estimate in Figure~\ref{fig:numhist} is for a continuous variable.
-While $k$ in \textit{$k$ successes} is always an integer and there is no such thing as 3.84 successes, time measured in milliseconds can in principle be measured with arbitrary precision.
+While $k$ in \textit{$k$ successes} is always an integer and there is no such thing as 3.84 successes, time can in principle be measured with arbitrary precision.
 Second, Figure~\ref{fig:numhist} shows an \Key{empirical distribution}.
 In other words, it's just a curve guessed from a set of measurements, while the Hypergeometric Distribution is a mathematically well-defined known distribution.%
 \footnote{Chapter~\ref{sec:confidence} deals with this difference in some detail.}
-We could have obtained an empirical probability density estimate in Chapter~\ref{sec:fisher} by running a lot of experiments with fixed parameters $N$, $K$, and $n$.
 
-However, it's still a probability density function.
+However, Figure~\ref{fig:numhist} is still a plot of a probability density function.
 Instead of the individual values adding up to 1 (as with discrete distributions), the area under the curve (the integral of the density function on the interval from $-\infty$ to $+\infty$) is 1.
 When a statistics software estimates such a curve, it applies a process of inter- and extrapolation from the measured values in order to arrive at a smooth curve, which is also rescaled in order to fulfil the requirement that the area under it is 1.
 Once such a function has been determined, it is possible to look up the hypothetical proportion (equivalent to the estimated probability) of some value, even if that precise value was not in the original sample.
 For example, a measurement of \Sexpr{round(densplo$x[82], 2)}~ms occurs in a hypothetical proportion of \Sexpr{format(round(densplo$y[82], 5), scientific = F)} of all cases (\ie, has the estimated probability of \Sexpr{format(round(densplo$y[82], 5), scientific = F)}).%
 \footnote{While such a statement is not false, it blurs one peculiar property of any continuous probability density function.
-As the x-axis is densely populated by real numbers, for each specific point value the probability is 0.
-This is necessarily so because a point on the curve has no width, and integrating a function on a point always results in 0.
-Technically, we consequently refer to probabilities of an interval of values.
+As the x-axis is densely populated with real numbers, for each specific point value the probability is 0.
+This is necessarily so because a point on the curve has no width, and integrating a function on a point always results in 0 as an area with a width of 0 also has a size of 0.
+Technically, we're therefore always talking about probabilities of an interval of values.
 In the example \Sexpr{format(round(densplo$y[82], 5), scientific = F)} is thus the probability of some interval around \Sexpr{round(densplo$x[82], 2)}~ms.
-In practice, this distinction doesn't play a huge role too often.}
+In practice, this distinction doesn't play a huge role very often.}
 Finally, the density estimate allows us to define the \Key{mode} of a numeric variable.
 It's simply the maximum of the curve (or an interval around that point).
 In the example, the highest probability density is around \Sexpr{round(densplo$x[which(densplo$y==max(densplo$y))], 0)}, and it's \Sexpr{round(densplo$y[which(densplo$y==max(densplo$y))], 4)}.
 In this almost perfectly symmetric sample, the mean, the median, and the mode are apparently very close to each other.
 
 Whether a plot of the density estimate is more informative than a histogram depends on the type of data and the research question.
-Having the two plots side by side should reveal that they contain virtually the same information.
+Having the two plots side by side in Figure~\ref{fig:numhist} should reveal that they contain virtually the same information.
 However, before using density plots one should do some research as to which specific method the chosen piece of software uses in order to check whether it delievers the desired result.%
 \footnote{Look under \textit{smoother}, \textit{smoothing}, or \textit{kernel}.}
 
@@ -597,17 +584,17 @@ However, before using density plots one should do some research as to which spec
   par(mfrow=c(1,1), mar = rep(5, 4))
 @
 
-We need the knowledge about density estimates just introduced to understand another type of useful plot.
+We need the above information about density estimates to understand another type of useful plot.
 Figure~\ref{fig:boxplot} shows a box plot (left) and a violin plot (right) of the 100 measurements of milliseconds.
-The \Key{boxplot}---more specifically a box-and-whiskers plot---summarises the distribution of values in sample vertically, and it contains information roughly equivalent to Table~\ref{tab:numericsummaryx}.
+A \Key{box plot}---more specifically a box-and-whiskers plot---summarises the distribution of values in sample vertically, and it contains information roughly equivalent to Table~\ref{tab:numericsummaryx}.
 The line in the middle is at the median position (here \Sexpr{numsumx[3]}), and the box around it spans the range from the first quartile (here \Sexpr{numsumx[2]}) to the third quartile (here \Sexpr{numsumx[5]}).
-While the box shows in which range the central half of the sample values lie, the whiskers are an attempt to show the range in which most of the sample values lie.
+While the box shows in which range the central half of the sample values lie, the whiskers are supposed to show the range in which most of the sample values lie.
 It's usually based on the \Key{inter-quartile range} or IQR.
 The IQR is the distance between the third and the first quartile (here $\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]}=\Sexpr{numsumx[5]-numsumx[2]}$).
 The IQR is multiplied by 1.5 and subtracted from the first quartile (hence $\Sexpr{numsumx[2]}-(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[2]-(numsumx[5]-numsumx[2])*1.5}$) as well as added to the third quartile (hence $\Sexpr{numsumx[5]}+(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[5]+(numsumx[5]-numsumx[2])*1.5}$) to define the lower and upper bound for the whiskers interval.
 The concrete length of the whiskers goes up to the closest data points within this interval.
-Finally, the dots show individual data points that lie outside of even the whiskers.
-The idea behind a boxplot is to give an straightforward visual impression of where the centre of the sample, the middle 50\%, and the majority of the data points lie, and how many data points are so-called \Key{outliers} far away from the majority range.
+Finally, the dots show individual data points that lie outside of the whiskers interval.
+The idea behind a box plot is to give a straightforward visual impression of where the centre of the sample, the middle 50\%, and the majority of the data points lie, and how many data points are so-called \Key{outliers} far away from the majority range.
 
 The violin plot is very similar.
 The dot denotes the median, the box the middle two quartiles, and the body adds a density estimate around those.
@@ -617,22 +604,22 @@ There are variants which also add whiskers, outliers, and other information.}
 It is definitely useful when the sample is very irregular and has a bumpy distribution.
 Under such circumstances, the quartiles and the mean tend to create an impression of homogeneity and cleanliness that is unwarranted.
 
-However, both box plots and violin plots are not \textit{innocent} in the sense that there is not one natural way to configure them.
+However, both box plots and violin plots are not \textit{innocent} in the sense that there isn't one natural way to plot them.
 You are already doing data analysis when using these plots, even if it just feels like naturally passing a data set to a software function or clicking on a button in an interface.
 Even quartiles---as we mentioned above---can be calculated in different ways, and the decision of what counts as an outlier definitely isn't an automatic one.
 Some box plots use larger or smaller intervals than $\pm 1.5\cdot IQR$ for the whiskers, which increases or decreases the number of data points plotted as outliers.
-Maybe that's warranted for some data sets, maybe it hides properties of the data set that you and your readers should be aware of.
+Maybe that's warranted for some data sets, but maybe it hides properties of the data set that you and your readers should be aware of.
 In violin plots, different algorithms used for the density estimate can change the appearance of the plot significantly.
 Furthermore, symmetric violin plots could be criticised for visually doubling the area under the curve.
 This can lead readers to overestimate the central areas and underestimate the marginal areas.
-While many people seem to be enthusiastic about violin plots, at least some of the authors now have very lukewarm feelings about them.
+While many people seem to be enthusiastic about violin plots, at least some of us have very lukewarm feelings about them.
 
 All in all, we advise anyone to use such plots carefully and wisely.
 Always do the appropriate research to find out what your statistics package actually does when creating the plots.
 When reading and critiquing published research, always ask whether you understand what was plotted and whether the authors are sufficiently transparent about their plotting methods.
-Above all, next time somebody shows you a plot that aggregates data in any way ask persistent questions, especially if you get the feeling there is relevant information missing regarding the genesis of the plots.
-To our embarrassment, we have (in the now distant past) also fallen into the trap of presenting graphics that we didn't fully understand, and we now know that these graphics were suboptimal and potentially misleading.
-Funnily enough, nobody ever asked persistent questions.
+Above all, next time somebody shows you a plot that aggregates data in any way, ask persistent questions, especially if you get the feeling there is relevant information missing regarding the genesis of the plots.
+To our embarrassment, we have (in the distant past) also fallen into the trap of presenting graphics that we didn't fully understand, and we now know that these graphics were suboptimal and potentially misleading.
+Strangely enough, nobody ever asked us any persistent questions.
 
 \section{Populations, Samples, and Variance}
 
