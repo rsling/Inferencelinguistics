@@ -52,9 +52,26 @@ A variable doesn't always take the form of a numerical measurement (although it 
 In any case, it's a description of some property of events.
 Turning to the example, if a noun occurs, the noun's grammatical number can be characterised as either singular or plural, the two possible \alert{values} or \Key{levels} of the variable \textit{Number}.
 In other words, all events of noun occurrence in English fall into one of two categories: singular or plural.
+We need some type of formal representation for a series of measurements of such values.
+We name it \xsample\ in boldprint and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
+
+\begin{quote}
+  $\xsample=\langle$\textit{plural, plural, plural, singular, singular, plural, plural, singular, singular}$\rangle$
+\end{quote}
+
+A tuple is a set-theoretic structure that (i)~has an order, (ii)~allows for the same element to occur more than once.
+Think of it as a list of items where the same item can appear as many times as necessary.
+It would be perfectly okay to disregard the order of the events because we (albeit often incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
+From that perspective, we could use a \Key{set} (which is unordered by definition) instead of a tuple, symbolised by curly brackets $\{~\}$ instead of angled brackets $\langle~\rangle$.
+By definition, however, sets don't allow the same element to be added to them twice, which would clearly be inadequate for series of data points such as \xsample.
+We call the individual measurements in \xsample\ $x_i$, where $i$ is an \Key{index variable} that takes on integer values.
+The first element in \xsample\ is denoted $x_1$, the second element $x_2$, and the last element is always $x_n$, where $n$ is the sample size.
+In our example, $n=9$ and hence $x_9$ is the last element in \xsample.
+Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
+Tuples are called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++ or Ada, etc.
 
 How are the corresponding results best summarised?
-Mathematically, one of the few things we can do with these occurrences is count them, which is exactly what we did with the variables \textit{Bristow} and \textit{Reality} in Chapter~\ref{sec:fisher}, both having the possible values \textit{tea-first} and \textit{milk-first} (\eg, Table~\ref{tab:teamarathon}).
+Mathematically, one of the few things we can do with these occurrences is to count them, which is exactly what we did with the variables \textit{Bristow} and \textit{Reality} in Chapter~\ref{sec:fisher}, both having the possible values \textit{tea-first} and \textit{milk-first} (\eg, Table~\ref{tab:teamarathon}).
 For completeness, we show the very obvious summarisation of these counts in tabular form (Table~\ref{tab:counts}).
 However, we have already shown the more complex type of contingency tables, where the co-occurrences of the levels of two two-level variables per event are tabulated.
 Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
@@ -81,55 +98,50 @@ Note that proportions always lie between 0 and 1.
 A \Key{percentage} is simply a proportion times 100, hence the percentage of singular forms is $0.4444\cdot 100=44.44\%$.
 Consequently, a percentage always lies between 0 and 100.
 As we'll demonstrate very clearly in Chapter~\ref{sec:confidence}, proportions and percentages are fine, but they can be meaningless if the \Key{sample size} is unknown.
-For binary variables, the sample size---symbolised as $n$---is simply the number of events, hence $n=9$ in the example.
-Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_i$ of a level of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_i$ (such as $q_{\text{singular}}\approx 0.44$):
+For binary variables, the sample size $n$ is simply the number of events, hence $n=9$ in the example.
+Using the symbol $q$ for proportions (as $p$ is already taken and proportions are always a kind of \textit{quotient}), it should be obvious that for any count $c_l$ of a level $l$ of a binary variable (such as $c_{\text{singular}}=4$ for \textit{singular} in the example) and it's corresponding proportion $q_l$ (such as $q_{\text{singular}}\approx 0.44$):
 
 \begin{center}
 \begin{math}
-  c_i=q_i\cdot n
+  c_l=q_l\cdot n
 \end{math}
 \end{center}
 
 \noindent This is because the general formula for calculating \Key{proportions} is:
 
 \begin{equation}
-  q_i=\cfrac{c_i}n
+  q_l=\cfrac{c_l}n
   \label{eq:proportion}
 \end{equation}
 
-\noindent For the count of the other level $c_j$ and its corresponding proportion $q_j$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_j=(1-q_i)\cdot n$.
-Also, $q_j=(n-c_i)\div n$.
+\noindent For the count of the other level $c_m$ and its corresponding proportion $q_m$ ($c_{\text{plural}}=5$ and $q_{\text{plural}}\approx 0.56$ in the example), then, necessarily $c_m=(1-q_l)\cdot n$.
+Also, $q_m=(n-c_l)\div n$.
 This means that counts of a binary variable are exhaustively summarised by two numbers.
-Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we absolutely need to provide more than two numbers (provided it's two well-chosen numbers).
+Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we absolutely need to provide more than two numbers (provided it's two well-chosen numbers).%
+\footnote{However, we would like to point out that providing the absolute minimum information is not always the nicest thing to do to your readers.
+Usually, the more relevant information you provide in your publications, the bettr it is for the reader.}
 Either we specify the sample size $n$ and at least one proportion or one count.
 Or we specify the raw counts for both levels of the variable.
 Furthermore, not much is gained by converting counts to proportions, except that some people find proportions more intuitive.
 We point this out because aggregated numbers for other measurements (to be discussed below) serve a much stronger purpose and are much more informative.
 For counts of binary variables, any aggregation serves no or just a very limited purpose.
 
-\newpage
-
 Finally, we can ask what is the \Key{central tendency} of a binary variable.
 The purpose of finding the central tendency is to find a typical value in some sense.
 The term \textit{central} derives from more complex measurements (see Section~\ref{sec:ordinal} and below), and it's not very intuitive for binary measurements.
 It will become clearer as we progress through this chapter.
 In the binary case, the only measure of central tendency is its modal category or just \Key{mode}, which is the level that occurs more often than the other.
-If $c_i>c_j$, then $c_i$ is the modal category and vice versa.
+If $c_l>c_m$, then $c_l$ is the modal category and vice versa.
 In general, the central tendency is important as the \Key{expected value} of a variable, and the mode of a binary variable is no exception.
 Without any further information, it's the value that we would predict for any event.
 If all you knew about English were the short paragraph from Wikipedia quoted above (annotated only for part-of-speech and number, with no information about the syntax, the meaning, the register, etc.), and you were asked to predict the number of the next noun in the text, any sane person would predict \textit{plural} because it appears to be the modal (\ie, more frequent) category judging from the sample.
-However, we are aware that this would probably not lead to a prediction accuracy of 56\%.
+Having much more information about the English language, we are aware that this would probably not lead to a prediction accuracy of 56\% in real life.
 There are two reasons for this:
 First, producing English nouns is not a mere lottery, and our analysis should reflect this.
-Second, the sample is very small ($n=9$), a problem we'll deal with in Chapter~\ref{sec:confidence}.
+Second, the sample is very small ($n=9$) and from a very specific type of text, problems we'll deal with in Chapter~\ref{sec:confidence} and throughout the book.
 However, if we knew for sure that among the totality of English noun tokens, 5 out of 9 were in the plural, and you had to predict the number of a noun without information about the lexeme, syntactic context, or register of the text, we would always predict plural and be right in 56\% of all cases in the long run.
 In this sense, it would be the \textit{expected value} or \textit{expectation}.%
 \footnote{The difference between an expected value estimated from a sample and one that's true for the population is the subject of Chapter~\ref{sec:confidence}.}
-
-The absolute minimal information about a binary variable is its mode, and sometimes the mode really is all that counts.
-While we can't think of a scientific experiment where the mode of a binary variable is a sufficient statistic, it is in presidential run-off votes in France.
-There are always two candidates in such elections, and the one who gets more votes than the other wins.
-The modal vote wins.
 
 <<binaryhist, fig.cap=paste0("Histogram (or bar plot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   ex.number <- c(4,5)
@@ -139,12 +151,12 @@ The modal vote wins.
 @
 
 Finally, Figure~\ref{fig:binaryhist} shows a histogram of the sample of the \textit{Number} variable from the illustrative example discussed above.
-A histogram for a variable with discrete levels is usually displayed with spaces between the bars (compare Figure~\ref{fig:hist} against this), and it's often called a \Key{bar plot} instead of a histogram.
+A histogram for a variable with discrete levels is usually displayed with spaces between the bars (compare Figure~\ref{fig:hist}, where there isn't any space between the bars), and it's often called a \Key{bar plot} instead of a histogram.
 It's still just a special type of histogram.
 For the benefit of the reader, we have highlighted the mode in colour.
 This is the only reasonable way to plot such results.
 We strictly recommend to label the individual bars with the raw counts, not proportions or percentages.
-Since the bars already provide a good visual impression of the proportions, the relevant numerical information to add are the counts.
+Since the bars already provide a good visual impression of the proportions, the relevant numerical information are the counts.
 At the same time, we can't think of a situation where such a plot by itself isn't an insult to the reader.
 Looking at just two counts (except maybe very high counts in the millions and above), humans are able to grasp the relative magnitude of those counts easily without visualisation.
 
@@ -161,7 +173,15 @@ Let's have a look at a short paragraph from the German Wikipedia article about C
 
 There are four grammatical cases in German: nominative, accusative, dative, and genitive.
 They occur at 13, 1, 7, and 0 noun events in the sample, respectively.
-Apparently, the variable \textit{Case} measuring grammatical case in German has four levels which have no empirically significant order.
+The sample of measurements looks as follows:%
+\footnote{We reuse the symbol \xsample\ for any tuple containing measurements from an experiment.
+If we need to talk about more than one such tuple, we call the others \ysample\ and \zsample.}
+
+\begin{quote}
+  $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
+\end{quote}
+
+The variable \textit{Case} measuring grammatical case in German has four levels which have no empirically significant order.
 Instead of the order nominative, accusative, dative, genitive, many grammars and text books order the four cases according to the Latin tradition: nominative, genitive, dative, accusative, which is perfectly fine, too.
 At this point, some linguists might object and point out that we should order them by increasing obliqueness or in a way such that syncretisms are analysed better (\eg, \citealt{Eisenberg2020a}).
 However, such ordering preferences are not empirical observables.
@@ -185,27 +205,10 @@ A variable which has more than two discrete levels with no measurable ordering i
 
 Binary variables are really just the minimal case of a nominal variable.
 Not surprisingly, we can treat them essentially the same, for example by tabulating the counts as in Table~\ref{tab:nominal}.
-The only reasonable aggregations are conversion of raw counts to proportions as in Equation~\ref{eq:proportion} with $i\in\{1..m\}$ where $m$ is the number of different possible values of the variable.
-In the example, $m=4$.
-The \Key{mode} is just the most frequent value, much like in the binary case, and we would like to point out rather informally what the necessary steps to find it are.
-Let's name the results of the case counting example (\ie, the sample) \xsample\ and regard it as a \Key{tuple}, customarily specified in angled brackets $\langle~\rangle$:
-
-\begin{quote}
-  $\xsample=\langle$\textit{nominative, dative, nominative, dative, nominative, nominative, nominative, nominative, nominative, nominative, accusative, dative, dative, nominative, nominative, dative, dative, dative, nominative, nominative, nominative}$\rangle$
-\end{quote}
-
-It would be perfectly okay to disregard the order of the events because we (albeit often incorrectly, see page~\pageref{abs:independent}) assume that the events are independent.
-In that respect, we could use a \Key{set} (which is unordered by definition) instead of a tuple, symbolised by curly brackets $\{~\}$ instead of angled brackets.
-By definition, however, sets don't allow the same element to be added to them twice, which would clearly be inadequate for series of data points such as \xsample.
-Without digging any deeper into the murky waters of set theory and adjacent areas, we leave it at that.
-Tuples are called \textit{lists} in Python, \textit{vectors} in R, \textit{arrays} in more substantive programming languages like C++, etc.
-We need to convert \xsample\ into a structure that provides the counts for each level.
-The resulting structure should be something like Table~\ref{tab:nominal}, a mapping from the levels of the variable to their counts.
-Then, we need a function that goes through the table, finds the \Key{maximum} value among the counts and retrieves the corresponding label.
-While this might sound trivial, these are the steps that your statistics software must go through in order to find what you're looking for.
-
-We leave it to the reader to calculate the proportions and percentages for each of the four grammatical cases in the sample.
-However, two histograms (or bar plots) for the example are shown in Figure~\ref{fig:nominalhist}.
+The only reasonable aggregations are conversion of raw counts to proportions as in Equation~\ref{eq:proportion}.
+The \Key{mode} is just the most frequent value, much like in the binary case, and we consider it trivial to find it for smaller samples.
+We leave it to the reader to find the mode and calculate the proportions and percentages for each of the four grammatical cases in the sample.
+Two histograms (more specifically bar plots) for the example are shown in Figure~\ref{fig:nominalhist}.
 Since there is no measurable order in grammatical cases, both plots are equivalent, and you could choose the one that you think is more adequate for your purpose.
 
 <<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-level variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
@@ -350,7 +353,7 @@ Since the Likert scale cannot be measured but is merely reconstructed from measu
 Finally, we turn to numeric measurements.
 As an example, we use fictitious EEG measurements from an impressive cap-and-cable experiment.
 We made peoples brains react to split infinitives and measured some negative or positive change in some potential in milliseconds.
-The 10 measurements ($n=10$) in our now familier tuple \xsample\ are as follows:%
+The 10 measurements ($n=10$) in our now familiar tuple \xsample\ are as follows:%
 \footnote{Yes, we reuse the symbol \xsample\ every time.
 In real data analysis, one should always use fresh and informative names, of course.
 Never call real data \xsample, \ysample, etc.}
