@@ -283,7 +283,7 @@ The only difference is that tables and plots should respect the intrinsic order 
 
 Thanks to the higher complexity of this variable (the intrinsic order of its levels), we have an additional measure of central tendency available.
 To find this measure called the \textit{median}, we first need to sort the raw measurements (not the tabulation of the counts) from the lowest rank to the highest rank, which is something we couldn't do with a nominal variable due to the lack of an intrinsic order of its levels.
-The ordered sample \xsample\prm\ looks like this:
+The sorted sample \xsample\prm\ looks like this:
 
 <<ratingsmedian, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   ratings.ordered <- factor(ratings)
@@ -592,12 +592,12 @@ The line in the middle is at the median position (here \Sexpr{numsumx[3]}), and 
 While the box shows in which range the central half of the sample values lie, the whiskers are supposed to show the range in which most of the sample values lie.
 It's usually based on the \Key{inter-quartile range} or IQR.
 The IQR is the distance between the third and the first quartile (here $\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]}=\Sexpr{numsumx[5]-numsumx[2]}$).
-The IQR is multiplied by 1.5 and subtracted from the first quartile (hence $\Sexpr{numsumx[2]}-(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[2]-(numsumx[5]-numsumx[2])*1.5}$) as well as added to the third quartile (hence $\Sexpr{numsumx[5]}+(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[5]+(numsumx[5]-numsumx[2])*1.5}$) to define the lower and upper bound for the whiskers interval.
+The IQR is multiplied by 1.5 and subtracted from the first quartile (hence $\Sexpr{numsumx[2]}-(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[2]-(numsumx[5]-numsumx[2])*1.5}$) as well as added to the third quartile (hence $\Sexpr{numsumx[5]}+(\Sexpr{numsumx[5]}-\Sexpr{numsumx[2]})\cdot 1.5=\Sexpr{numsumx[5]+(numsumx[5]-numsumx[2])*1.5}$) to define the lower and upper bound of  the whiskers interval.
 The concrete length of the whiskers goes up to the closest data points within this interval.
 Finally, the dots show individual data points that lie outside of the whiskers interval.
 The idea behind a box plot is to give a straightforward visual impression of where the centre of the sample, the middle 50\%, and the majority of the data points lie, and how many data points are so-called \Key{outliers} far away from the majority range.
 
-The violin plot is very similar.
+The violin plot is similar but offers additional information.
 The dot denotes the median, the box the middle two quartiles, and the body adds a density estimate around those.
 Arguably, this provides more detailed information than a box-and-whiskers plot.%
 \footnote{This is the most basic version of a violin plot.
@@ -723,27 +723,27 @@ Table~\ref{tab:xdistances} show the results.
 
 <<xdistances, echo=F, cache=T, out.width="85%", results="asis">>=
   distxy <- matrix(
-    c(pots, paste0(pots, "-", round(.mean, 0)), round(pots-.mean, 0)),
+    c(pots, paste0("$", pots, "-", round(.mean, 0), "=", round(pots-.mean, 0), "$")),
     nrow = 10)
   rownames(distxy) <- paste0("Data point ", 1:10)
-  colnames(distxy) <- c("Measurement", "Calculation", "Distance")
+  colnames(distxy) <- c("Measurement", "Distance")
 
   distxy %>%
     as.data.frame.matrix %>%
-    kable(align = "rr", booktabs = T, linesep = "",
+    kable(align = "cl", booktabs = T, linesep = "",
           caption = "Distances of individual data points to the mean (rounded to integers)",
-          label = "xdistances") %>%
+          label = "xdistances", escape = F) %>%
     column_spec(1, bold = T) %>%
     row_spec(0, bold=TRUE)
 @
 
-Simply adding those numbers wouldn't be very helpful.
+Simply adding those distances wouldn't be very helpful.
 Do you see why?
-The problem is that negative and positive deviations cancel each other out.
+The problem is that negative and positive deviations cancel each other out:
 
 \begin{center}
   \begin{math}
-    \sum\limits_{i=1}^{n}(x_i-\cfrac{\sum\limits_{i=1}^{n}x_i}{n})=0
+    \sum\limits_{i=1}^{n}(x_i-\cfrac{\sum\limits_{j=1}^{n}x_j}{n})=0
   \end{math}
 \end{center}
 
@@ -762,7 +762,7 @@ We feel more comfortable with this abbreviation than with \textit{SS}, which is 
   \label{eq:sq}
 \end{equation}
 
-While the $SQ$ is the \textit{total} (summed) squared deviation from the mean, we're rather looking for the average deviation per data point.
+While the $SQ$ is the \textit{total} (summed) squared deviation from the mean, we're rather looking for the \textit{average} deviation per data point.
 We can get there by dividing $SQ$ by $n$, which gives us the so-called sample \Key{variance} of \xsample\ denoted by $s^2(\xsample)$ in function notation or simply $s^2$ if it's clear that we're talking about one sample only.
 There is a minor catch:
 We're going to use the variance from a sample as an estimate of the variance in the corresponding population.
