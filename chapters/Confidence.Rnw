@@ -3,12 +3,35 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Sampling Accuracy and Confidence}
+\chapter{Sampling Accuracy}
 \label{sec:confidence}
 
 \section*{Overview}
 
-\Problem{How Reliable Is Your Sample?}{Perfect, as usual!}
+\Problem{How Reliable Is Your Sample?}{%
+Have you ever tried Haribo Berries?
+They come in packs containing two delicious flavours: raspberry and blackberry.
+The two flavours are clearly distinct, and you should really prefer blackberry flavour.
+However, many people feel that there are on average less blackberries than raspberries per pack.
+Before complaining to Haribo, you decide to take a sample and buy a pack containing 100g.
+You count them and find that there are 18 raspberries and 12 blackberries.
+Hm.
+Is this a precise estimate of the average distribution of berries?
+You consider buying a 3kg pack and count the 900 berries in it.
+But how much better would your estimate be compared to the 100g bag?
+Would it be 30 times better?
+What does this even mean?
+
+Later that day (feeling a tad queasy because you've destroyed the evidence), you go back to ``the lab'' to do a self-paced reading experiment in order to find out the average per-word reading speed of adult Japanese speakers in a pre-study.
+It's an exploratory study, and you don't have a hypothesis for the average.
+Of the 30 invited participants, 4 show up, each reading 10 words.
+After weighting for word-length, it took them a mean 100ms per word.
+A colleague from the theory department pops over for a coffee, looks at the results, and recommends increasing your sample to get a better estimate.
+She says you should have at least 100 participants read 1000 words each.
+How much better would your estimate be?
+Would it be 2500 times better?
+What does this even mean?
+}
 
 \section{Sampling From a Population}
 
