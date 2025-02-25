@@ -110,6 +110,7 @@ the.lightcols <- c("lightgreen", "lightblue", "orange", "lightyellow")
 <<child="chapters/Mixed.Rnw">>=
 @
 
+\include{chapters/Appendix}
 
 \input{localseealso.tex}
 \input{backmatter.tex}

@@ -200,7 +200,7 @@ In Figure~\ref{fig:cupsall}, we illustrate the 8 cups.%
 \footnote{We switch to writing numerals using arabic numbers for clarity, even if that violates one or two style guides.}
 While they would all look exactly the same in the real experiment, we've made it easier to follow the argument by showing the tea-first cups with steam and the milk-first ones without steam.
 Furthermore, we've coloured the cups to make them identifiable individually.
-There is one gray, one red, one blue, and one green cup for each of the conditions (milk-first or tea-first).
+There is one grey, one red, one blue, and one green cup for each of the conditions (milk-first or tea-first).
 Again, in the real experiment, cups should have the exact same physical properties.
 
 \begin{figure}
@@ -234,7 +234,7 @@ Again, in the real experiment, cups should have the exact same physical properti
 \end{figure}
 
 Before choosing her first cup, Ms Bristow obviously has 8 choices.
-She could pick the red steaming cup, the gray steaming cup, the gray non-steaming cup, etc.
+She could pick the red steaming cup, the grey steaming cup, the grey non-steaming cup, etc.
 Figure~\ref{fig:cupselect1} shows the situation after an arbitrary first cup was chosen.
 
 \begin{figure}
@@ -377,11 +377,11 @@ As we mentioned in Footnote~\ref{fn:catch}, there's a catch.
 \label{fig:cupselect4}
 \end{figure}
 
-First, she chose the blue steaming cup, then the gray steaming cup, then the red steaming cup, and finally the the green non-steaming cup.
+First, she chose the blue steaming cup, then the grey steaming cup, then the red steaming cup, and finally the the green non-steaming cup.
 But is this really the only way to arrive at the same result?
 In the first step, she had 8 options, and she chose the blue steaming cup, leaving her with 7 choices, etc.
 She could have chosen the red steaming one and still arrived at the same end result via a different path.
-For example, she could have chosen the red steaming cup first, then the gray steaming cup, followed by the blue steaming one, and finally the green non-steaming one.
+For example, she could have chosen the red steaming cup first, then the grey steaming cup, followed by the blue steaming one, and finally the green non-steaming one.
 Put in quantitative terms, there are groups within the set of 1680 decision chains that yield identical results, at least if the order in which the cups were selected is irrelevant.
 And for the purpose of this experiment, the order is indeed irrelevant.
 
@@ -1289,7 +1289,7 @@ Now, think about the design of experiments like the Tea Tasting Experiment:
 The three parameters $N$, $K$, and $n$ are fixed by the design, only the number of successes $k$ varies depending on the performance of the taster.
 If we plot the probabilities (y-axis) of all possible outcomes of $k$ successes (x-axis) while keeping $K$, $N$, and $n$ fixed at certain values, we get the graph in Figure~\ref{fig:hypergeom844} (left panel).
 We also provide the plot for the Tea Tasting Marathon from Section~\ref{sec:sampleeffectsize} (right panel).
-Notice that the gray lines are merely visual helper lines.
+Notice that the grey lines are merely visual helper lines.
 As the distribution is discrete (see below), it does not define a curve.
 
 <<hypergeom844,  fig.cap=paste0("Probability density for k successes in Tea Tasting Experiments; the density function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=T>>=

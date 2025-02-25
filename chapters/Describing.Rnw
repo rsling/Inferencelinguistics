@@ -14,7 +14,7 @@ This chapter is comparatively short.
 While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics} and \textit{levels of measurement}, we focus on one major aspect, namely the central tendency and above all the variance of measurements.
 Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences about virtually infinite populations based on finite or even small samples is hard.
 We begin by characterising different types of measurements often called \alert{levels of measurement}.
-We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, or the \alert{mean} for different types of measurements.
+We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, and the \alert{mean} for different types of measurements.
 Finally, we quantify how much single measurements deviate from the most characteristic measurements in the form of the \alert{variance} and the \alert{standard deviation}.
 Along the way, some types of plots are introduced which provide insight into the structure of data.
 These are \alert{raw data plots}, \alert{histograms}, \alert{box plots}, \alert{density plots}, and \alert{violinplots}.
@@ -27,7 +27,7 @@ Furthermore, you want to publish the results and provide your readers with an ov
 Besides all kinds of plots that aggregate your data visually, you might want to characterise your sample numerically.
 What's the best numerical characterisation for your kind of data.}
 
-\section{Central Tendency and Typical Values}
+\section{Central Tendency and Typical Values}\label{sec:centraltendency}
 
 \subsection{Binary Measurements}\label{sec:binary}
 
@@ -296,7 +296,7 @@ The sorted sample \xsample\prm\ looks like this:
 \end{quote}
 
 Plotting these single observations from left to right on the x-axis and putting dots on the y-dimension corresponding to the respective ratings, we get Figure~\ref{fig:ordinalsort}, a \Key{raw data plot}.
-The gray line is just a helper line for better visual orientation.
+The grey line is just a helper line for better visual orientation.
 The coloured line marks the middle point of the ordered sample in the sense that half the ordered sample lies to its left and the other half to its right.
 
 <<ordinalsort, fig.cap=paste0("Raw data plot of a sorted sample of an ordinal value; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
@@ -500,6 +500,7 @@ It's particularly embarrassing if you first notice the resulting discrepancies w
           caption = "Summary of a numeric variable with n=10",
           label = "numericsummary") %>%
     column_spec(1, bold = T) %>%
+    row_spec(6, extra_latex_after = "\\midrule") %>%
     row_spec(0, bold=TRUE)
 @
 
@@ -521,6 +522,7 @@ Table~\ref{tab:numericsummaryx} shows the same for a very similar sample but wit
           caption = "Summary of a numeric variable with n=100",
           label = "numericsummaryx") %>%
     column_spec(1, bold = T) %>%
+    row_spec(6, extra_latex_after = "\\midrule") %>%
     row_spec(0, bold=TRUE)
 @
 
@@ -627,10 +629,29 @@ Strangely enough, nobody ever asked us any persistent questions.
 \subsection{Populations and Samples}
 \label{sub:populationssamples}
 
-% Introduce DGP.
-% Proportions being more adequate or "natural" for (infinite) populations than samples.
+In Section~\ref{sec:centraltendency} we introduced statistics for the central tendency in a sample.
+Before we move on to discussing the spread of a sample and it variance, we need to mention an important point regarding samples and their populations.
+As we explained in Chapter~\ref{sec:inference}, the goal of scientific statistical inference is to find out something about a population based on a small sample from that population.
+The population is the totality of the objects of the type in which we've got some scientific interest.
+It can be anything from all galaxies in the Laniakea Supercluster to all adult Tories in Buckinghamshire to all sentences of contemporary German.
+Often, the population is itself a proxy for some bigger research question.
+Observations of galaxies in the Laniakea Supercluster might be used to test a theory of gravity, a study of Buckinghamshire Tories could be used to test a theory from Social Psychology, and maybe a close examination of all sentences of German will reveal how the brain processes Split Mood Phrases (SplitMP).
 
-\subsection{Homogeneity}
+While we illustrate statistics such as the mean using small samples in this book, they are all defined for populations, too.
+At least conceptually, for each variable that describes a property of all objects in the population we can calculate the applicable central tendency, the variance (see immediately below), and so forth.
+The galaxies in Laniakea have a mean total mass, Buckinghamshire Tories have a mean income, and German sentences have a mean length in phonemes, words, or what not.
+Why is everything so sample-centric in this chapter, then?
+First, it's much easier to do exercises where you have to calculate the mean of 10 values rather than the mean of infinitely many (or even hundreds of thousands) values.
+Second, we don't know all values.
+The whole point of statistical inference is to generalise from a relatively small sample to a population, simply because we can't look at every single object in the population.
+
+The story should go like this:
+Our theory makes a prediction about some parameter of a population (say, German sentences in a certain register have a mean length o $6.8$ words), and we try to test this prediction with a sample.
+However, for this logic to apply, population values must have that parameter (such as a mean) in the first place.
+Keep this in mind whenever we introduce any statistic for a sample.
+The same statistics should always be defined (as a parameter) for the population as well.
+
+\subsection{Spread and Shape of a Distribution}
 
 <<variancesetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   set.seed(47)
@@ -638,12 +659,10 @@ Strangely enough, nobody ever asked us any persistent questions.
              potsy2 <- round(rnorm(50, 300, sd = 45), 0)) %>% sort
 @
 
-\subsubsection{Why Homogeneity Matters}
-
 So far, we've discussed how to summarise the central tendency of a sample and how to plot it.
 We've also argued that the same measures that we use to describe samples also describe populations.
-As we'll discover throughout the book, it's equally important to quantify how homogeneous the values from a sample or a population are.
-Let's illustrate the specific kind of homogeneity with two samples.
+As we'll discover throughout the book, it's equally important to quantify how spread out the values from a sample or a population are.
+Let's illustrate this using two samples.
 One is the larger sample of reaction times from Section~\ref{sec:numeric} (called \xsample\ here), the other one is a sample that is superficially similar (called \ysample).
 Compare the summary of both samples in Table~\ref{tab:varxandy}.
 
@@ -660,38 +679,53 @@ Compare the summary of both samples in Table~\ref{tab:varxandy}.
           caption = "Summary of two numeric samples with n=100",
           label = "varxandy") %>%
     column_spec(1, bold = T) %>%
+    row_spec(6, extra_latex_after = "\\midrule") %>%
     row_spec(0, bold=TRUE)
 @
 
+The two samples look similar in some ways.
+The means are almost identical (\Sexpr{numsumxy[4,1]} and \Sexpr{numsumxy[4,2]}) and the medians are also close (\Sexpr{numsumxy[3,1]} and \Sexpr{numsumxy[3,2]}).
+However, the minima and maxima as well as the first and third quartiles paint an interesting picture.
+The extremes appear to be spreading out much more in sample \ysample\ (ranging from \Sexpr{numsumxy[1,2]} to \Sexpr{numsumxy[6,2]}) compared to sample \xsample\ (ranging from \Sexpr{numsumxy[1,1]} to \Sexpr{numsumxy[6,1]}).
+This tendency is also visible with the first and third quartiles, which are much further apart in sample \xsample\ (ranging from \Sexpr{numsumxy[2,2]} to \Sexpr{numsumxy[5,2]}) than in sample \xsample\ (ranging from \Sexpr{numsumxy[2,1]} to \Sexpr{numsumxy[5,1]}).
+These numbers indicate that the values of the sample are on average somewhat farther away from the mean in \ysample.
+The \Key{spread} of \ysample\ is larger than the spread of \xsample.
+Both a histogram and a density plot should be used to corroborate this and to find out what the shapes of the distributions are.
+Figure~\ref{fig:xyhist} shows both types of plots for both samples.
 
-<<xyhist, fig.cap=paste0("Histograms of two samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
-  par(mfrow = c(1,2), mar = c(2, 3, 2, 2))
-  h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(50,400))
-  h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(50,400))
-  par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
-@ %
-
-<<xydens, fig.cap=paste0("Density plots of two samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
-  par(mfrow = c(1,2))
+<<xyhist, fig.cap=paste0("Histograms and density plots of two different samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
+  par(mfrow = c(2,2), mar = c(2, 3, 2, 2))
+  h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500))
+  h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500))
 
   densplo1 <- density(potsx)
   qi <- which.min(abs(densplo1$x - summary(potsx)[2]))
   qii <- which.min(abs(densplo1$x - summary(potsx)[3]))
   qiii <- which.min(abs(densplo1$x - summary(potsx)[5]))
-  plot(densplo1, xlab = "Milliseconds", main ="",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  plot(densplo1, xlab = "Milliseconds", main ="x",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
   lines(densplo1, lwd = the.lwd, col= "darkgray")
 
   densplo2 <- density(potsy)
   qi <- which.min(abs(densplo2$x - summary(potsy)[2]))
   qii <- which.min(abs(densplo2$x - summary(potsy)[3]))
   qiii <- which.min(abs(densplo2$x - summary(potsy)[5]))
-  plot(densplo2, xlab = "Milliseconds", main ="",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  plot(densplo2, xlab = "Milliseconds", main ="y",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
   lines(densplo2, lwd = the.lwd, col= "darkgray")
 
   par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 @ %
 
-\subsection{Calculating Variance and Standard Deviation}
+While the distribution of \xsample\ quickly rises and falls in on neat spike, the distribution of \ysample\ rises more slowly, then drops again, only to rise again.
+By the way, notice the effect of the density estimator:
+It averages over larger intervals.
+The second spike around 350, which is clearly visible in the histogram, is so narrow that the averaging going on in the density estimate caps it significantly.
+However, in both types of plots it looks like \ysample\ has two local maxima, which accounts for the larger spread.
+Handling data that are distributed thusly requires much more care compared to data that looks like \xsample, and we'll return to this later in the book.
+
+As we've already pointed out, the data points in \ysample\ are \alert{on average farther away from the mean} than the ones in \xsample, although the means of both samples is virtually the same.
+While the specific shapes of the distributions can't be summarised in one handy statistic, we have one statistic for the overall spread of a sample: the \textit{variance} (and the \textit{standard deviation} derived from it).
+
+\subsection{Quantifiying Variance}
 
 In order to illustrate the calculation of the variance, we return to the smaller sample from Section~\ref{sec:numeric} and call it \xsample.
 We repeat the raw data here for convenience:
@@ -719,7 +753,9 @@ We also add the mean as a horizontal line plus lines measuring the distance from
 
 Obviously, 5 data points deviate negatively from the mean, and 5 deviate in the positive direction.
 The way to calculate those distances is $x_i-\xsample$ for each point $x_i$
-Table~\ref{tab:xdistances} show the results.
+Table~\ref{tab:xdistances} show the results.%
+\footnote{The mean is actually $\xmean=\Sexpr{mean(pots)}$.
+We took the liberty of rounding it to an integer for clarity.}
 
 <<xdistances, echo=F, cache=T, out.width="85%", results="asis">>=
   distxy <- matrix(
@@ -743,22 +779,21 @@ The problem is that negative and positive deviations cancel each other out:
 
 \begin{center}
   \begin{math}
-    \sum\limits_{i=1}^{n}(x_i-\cfrac{\sum\limits_{j=1}^{n}x_j}{n})=0
+    \sum\limits_{i=1}^{n}(x_i-\xmean)=\sum\limits_{i=1}^{n}(x_i-\cfrac{\sum\limits_{j=1}^{n}x_j}{n})=0
   \end{math}
 \end{center}
 
 It would be best to make all values positive.
-One option would be to take the \Key{absolute} value, which is achieved by discarding the sign.
-While this is an option, another one is more appropriate for many further calculations in statistics.
-We san also square the distances.
+One option would be to take the \Key{absolute} value, which is achieved by discarding the minus sign.
+While this is an option, another one is more appropriate for many further calculations in statistics: taking the square of the distance.
 This makes their absolute value much bigger, but it also means that negative signs cancel out.
 If we then sum up the squared distances, we get a squared value of the total deviation of the data points from the mean.
-It's called the \Key{sum of squares}, and we abbreviate it as $SQ$.%
+It's called the \Key{sum of squares}, and we abbreviate it as $SQ(\xsample)$ in function notation or simply $SQ$.%
 \footnote{This is the abbreviation of German \textit{Summe der Quadrate}, but you can also read it as \textit{Sum of sQuares}.
 We feel more comfortable with this abbreviation than with \textit{SS}, which is often used in English.}
 
 \begin{equation}
-  \sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2
+  SQ(\xsample)=\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2
   \label{eq:sq}
 \end{equation}
 
@@ -767,12 +802,17 @@ We can get there by dividing $SQ$ by $n$, which gives us the so-called sample \K
 There is a minor catch:
 We're going to use the variance from a sample as an estimate of the variance in the corresponding population.
 Statisticians have found out that small samples tend to underestimate the variance of the population and that the best practical remedy is to divide by $n-1$ instead of $n$.
-The larger $n$, the smaller the effect of this correction.
-Hence, the sample variance is customarily computed as:
+The larger $n$, the smaller the effect of this correction, and for populations, the correction is by definition unnecessary.
+Thus, the sample variance is customarily computed as according to Equation~\ref{eq:variance} and the population variance (denoted $\sigma^2$ with a population size of $N$ and a mean of $\mu$) is understood to be given by Equation~{eq:variancepop}.
 
 \begin{equation}
-  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ}{n-1}
+  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ(\xsample)}{n-1}
   \label{eq:variance}
+\end{equation}
+
+\begin{equation}
+  \sigma^2=\cfrac{\sum\limits_{i=1}^{N}(x_i-\mu)^2}{N}
+  \label{eq:variancepop}
 \end{equation}
 
 In order to arrive at the \textit{average deviation of the data points from the mean} instead of the \textit{average squared deviation of the data points from the mean}, we need to reverse the upscaling effect of squaring the distances when calculating $SQ$.
@@ -784,10 +824,66 @@ The result is called the \Key{standard deviation}, denoted $s(\xsample)$ in func
   \label{eq:stdev}
 \end{equation}
 
+Let's do it for the small sample \xsample, based on the distances to the mean from Table~\ref{tab:xdistances}.
+First, we calculate $SQ(\xsample)$:
 
+\small
 
+\begin{center}
+  \begin{math}
+    SQ(\xsample)=%
+    \Sexpr{paste("(", round(pots-.mean, 0), collapse = ")^2+")})^2=\Sexpr{paste((round(pots-.mean, 0))^2, collapse = "+")}=\Sexpr{format(sum((round(pots-.mean, 0))^2), scientific = F)}
+  \end{math}
+\end{center}
 
-\subsection{Dummy Section}
+\normalsize
+
+\noindent Then, we need to divide $SQ$ by $n-1$ to calculate the variance $s^2$:
+
+\begin{center}
+  \begin{math}
+    s^2(\xsample)=\cfrac{\Sexpr{format(sum((round(pots-.mean, 0))^2), scientific = F)}}{\Sexpr{length(pots)-1}}=\Sexpr{round(var(pots), 1)}
+  \end{math}
+\end{center}
+
+\noindent And finally, we take the square root to calculate the standard deviation:
+
+\begin{center}
+  \begin{math}
+    s(\xsample)=\sqrt{\Sexpr{round(var(pots), 1)}}=\Sexpr{round(sqrt(round(var(pots), 1)),1)}
+  \end{math}
+\end{center}
+
+The same could be done for the large \xsample\ from introduced with Table~\ref{tab:numericsummaryx}, but manually calculating the variance for any sample larger than 10 data points is really tedious (as you'll experience when working on the exercises).
+Hence, we did it using software, and Table~\ref{tab:varxandyvar} summarises the larger \xsample\ and \ysample\ for you, including variance and standard deviation.
+Finally, Table~\ref{tab:summaries} provides an overview of the statistics that we've introduced in this chapter and to which types of measurements they apply.
+In the next chapter, we build upon these statistics and discuss the relation between populations and samples in more detail.
+The ultimate goal is a flexible and general approach to statistical inference based on samples in later chapters.
+
+<<varxandyvar, echo=F, cache=T, out.width="85%", results="asis">>=
+  numsumxy <- matrix(
+    c(formatC(as.numeric(round(summary(potsx), 0), format="d")),
+      round(var(potsx), 1),
+      round(sd(potsx), 1),
+      formatC(as.numeric(length(potsx), format="d")),
+      formatC(as.numeric(round(summary(potsy), 0), format="d")),
+      round(var(potsy),1),
+      round(sd(potsy),1),
+      formatC(as.numeric(length(potsy)), format="d")),
+    nrow = 9)
+  rownames(numsumxy) <- c("Minimum", "First Quartile", "Median", "Mean", "Third Quartile", "Maximum", "Variance", "Standard Deviation", "Sample size")
+  colnames(numsumxy) <- c("x", "y")
+
+  numsumxy %>%
+    as.data.frame.matrix %>%
+    kable(align = "rr", booktabs = T, linesep = "",
+          caption = "Summary of two numeric samples with n=100 including variance and standard deviation",
+          label = "varxandyvar") %>%
+    column_spec(1, bold = T) %>%
+    row_spec(6, extra_latex_after = "\\midrule") %>%
+    row_spec(8, extra_latex_after = "\\midrule") %>%
+    row_spec(0, bold=TRUE)
+@
 
 \begin{table}
   \caption{\label{tab:summaries}Adequate statistics and plots for summarising types of variables}

@@ -6,4 +6,15 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Sampling Accuracy and Confidence}
 \label{sec:confidence}
 
+\section*{Overview}
+
+\Problem{How Reliable Is Your Sample?}{Perfect, as usual!}
+
+\section{Sampling From a Population}
+
+% DGP here!
+
+\section{Variance of Success Rates and Means}
+
+\section{Sampling Intervals}
 
