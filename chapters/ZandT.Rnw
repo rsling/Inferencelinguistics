@@ -4,7 +4,7 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Inferences About Means}
+\chapter{Inferences About Means [old version]}
 \label{sec:zandt}
 
 \section{Population Means and Sample Means}

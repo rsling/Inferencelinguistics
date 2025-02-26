@@ -627,7 +627,7 @@ Strangely enough, nobody ever asked us any persistent questions.
 \section{Populations, Samples, and Variance}
 
 \subsection{Populations and Samples}
-\label{sub:populationssamples}
+\label{sec:populationssamples}
 
 In Section~\ref{sec:centraltendency} we introduced statistics for the central tendency in a sample.
 Before we move on to discussing the spread of a sample and it variance, we need to mention an important point regarding samples and their populations.

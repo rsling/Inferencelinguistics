@@ -1,6 +1,51 @@
 % !Rnw root = ../main.Rnw
 <<setupconfidence, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
+
+set.seed(524)
+
+### Binary variable ###
+
+rt.mean <- 120
+rt.sd <- 20
+rt.reps <- 100
+
+rts <- function(n) {
+  .t <- rnorm(n, rt.mean, rt.sd)
+  mean(.t)
+}
+
+rt.sims <- list()
+rt.ns <- c(1,2,3,4,5,10,20,50,100,1000,2000,5000,10000)
+
+for (n in rt.ns) {
+  .sample <- unname(unlist(lapply(1:rt.reps, function(x) {rts(n)})))
+  rt.sims[[as.character(n)]] <- .sample
+}
+
+# Single sample for illu plot.
+.normsample <- rnorm(100, rt.mean, rt.sd)
+
+### Numeric variable ###
+
+berry.prob <- 0.3
+berry.reps <- 100
+
+berries <- function(n) {
+  .t <- rbinom(n, size = 1., prob = berry.prob)
+  .t <- length(which(.t == 1))
+  .t/n
+}
+
+berry.sims <- list()
+berry.ns <- c(1,2,3,4,5,10,20,50,100,1000,2000,5000,10000)
+
+for (n in berry.ns) {
+  .sample <- unname(unlist(lapply(1:berry.reps, function(x) {berries(n)})))
+  berry.sims[[as.character(n)]] <- .sample
+}
+
+
 @
 
 \chapter{Sampling Accuracy}
@@ -16,16 +61,16 @@ However, many people feel that there are on average less blackberries than raspb
 Before complaining to Haribo, you decide to take a sample and buy a pack containing 100g.
 You count them and find that there are 18 raspberries and 12 blackberries.
 Hm.
-Is this a precise estimate of the average distribution of berries?
-You consider buying a 3kg pack and count the 900 berries in it.
-But how much better would your estimate be compared to the 100g bag?
+Is this a precise estimate of the distribution of berries in the average pack?
+You consider buying a 3kg pack and counting the 900 berries in it.
+But how much better would the resulting estimate be compared to the 100g bag?
 Would it be 30 times better?
 What does this even mean?
 
 Later that day (feeling a tad queasy because you've destroyed the evidence), you go back to ``the lab'' to do a self-paced reading experiment in order to find out the average per-word reading speed of adult Japanese speakers in a pre-study.
 It's an exploratory study, and you don't have a hypothesis for the average.
 Of the 30 invited participants, 4 show up, each reading 10 words.
-After weighting for word-length, it took them a mean 100ms per word.
+Adjusted for word-length, it took them a mean 100ms per word.
 A colleague from the theory department pops over for a coffee, looks at the results, and recommends increasing your sample to get a better estimate.
 She says you should have at least 100 participants read 1000 words each.
 How much better would your estimate be?
@@ -35,9 +80,303 @@ What does this even mean?
 
 \section{Sampling From a Population}
 
-% DGP here!
+\subsection{Data Generating Processes}
 
-\section{Variance of Success Rates and Means}
+Before we discuss sampling accuracy, we need to clarify what we mean by a population.
+In Section~\ref{sec:populationssamples} we colloquially compared three populations: (i)~all galaxies in the Laniakea Supercluster, (ii)~all adult Tories in Buckinghamshire, and (iii)~all sentences of contemporary German.
+Clearly, these are very different in type and count.
+There are (according to Wikipedia) roughly 100,000 galaxies in Laniakea.
+The population in Buckinghamshire is roughly 850,000, and it's a very conservative county.
+Let's estimate 70\% of the population are Tory supporters.%
+\footnote{According to the Buckinghamshire Council website, there are 105 conservative councillors, 15 are independent, 15 are liberal democrats, 6 belong to Labour, and 5 have other affiliations as of 25 February 2025.
+That's approximately 70\% Tories.
+However, given the British voting system, the council is a bad estimator of the composition of the electorate in terms of political affiliation.
+(\url{https://buckinghamshire.moderngov.co.uk/mgMemberIndex.aspx})}
+The population of Tory supporters in Buckinghamshire probably consists of some 400,000 to 450,000 humans (having subtracted 20\% of the total population to account for minors and apolitical people).
+How many \textit{sentences of contemporary German} are there?
+That's a much more difficult question.
+What counts as German?
+What counts as a sentence?
+Do sentences spoken and written by L2 learners count?
+How advanced do these L2 learners have to be?
+Is CEFR level B2 good enough, or do we require C1?
+These questions can't be answered in a statistics text book.%
+\footnote{They should have been answered by linguists (at least those who rely on empirical data) before they started to do research on German per se (as opposed to research on the linguistic behaviour of samples of German-speaking subjects).
+If you're a corpus linguist who believes that your corpus of choice \textit{represents} a population, you should have a very good answer to these questions.
+In this respect, the most important property of works such as \citet{Biber1993} is that they're over 30 years old.}
+What matters is that none of these populations is static.
+Over the lifespan of the universe, the number of galaxies in Laniakea went from 0 to 100,000, and it will return to 0.
+Galaxies form or are drawn into superclusters all the time, and galaxies are torn apart and will eventually fall apart (in layman's terms) in the distant future.
+People in Buckinghamshire are born and die, and people change their political affiliation all the time.
+German sentences are produced at a breathtaking rate, and even the population of speakers of German changes every minute.
+If the population really mattered as a fixed construct of a well-defined (even if unknown) size, we'd have to repeat all empirical work every day, second, or even millisecond.
 
-\section{Sampling Intervals}
+While it's sometimes stressed that the population needs to be infinite or at least significantly larger than the sample, we see this rarely ever playing an important role in empirical science.
+What's more, the whole idea of a fixed and huge population from which we draw a sample is not very helpful.
+Why does any linguist draw a sample of German sentences?
+In the post-structuralist era, it's not because we want to find out properties of a massive collection of sentences but because we're interested in the mechanism that generates such sentences.
+It doesn't matter which model of grammar a linguist believes in:
+When they look at a sample of sentences they ask what is the grammar like that produces such sentences, be it a formal or a cognitive concept of grammar.
+Hence, we consider it much more appropriate and intuitive to speak of the \Key{data-generating process} (DGP) rather than the population.
+The process can be conceived of as cognitive, social, or even purely formal.
+In fact, our simulations (see Section~\ref{sec:pdist}) simulate exactly such processes.
+Since any scientifically interesting process can, in principle, generate ever new data points, the population of those data points is conceptually infinite.
 
+In this chapter, we ask a very crucial question.
+How reliable is a sample in representing the DGP (or, in old-school terms, the population)?
+Imagine English speakers were programmed (through cognitive constraints) to produce only 2\% passives of \textit{sleep}.
+In this case, the true parameter with which the DGP was set up is 2\% (a proportion of 0.02).
+How well can you expect to approximate this percentage\slash proportion with a sample of size $n=1$, $n=10$, $n=100$, and so on?
+Do you see how this question is related to the logic of testing introduced in Chapter~\ref{sec:fisher}?
+However, this chapter is not about testing but rather about the \Key{estimation} a parameter of the population from a sample.
+In order to get there, we need to talk about the distribution of results in repeated experiments in relation to true values of the DGP.
+We'll use the results from this chapter to develop a general framework for inferential testing in Chapter~\ref{sec:zandt}.
+
+\subsection{Processes and Populations}
+
+\subsection{Sampling Berries: One, Two, Three, Many}
+
+We begin with a simulation of a known situation.
+As explained in Section~\ref{sec:pdist}, this is never the case in actual empirical work.
+We do empirical research to find out what reality is like, precisely because we don't know what it's like.
+However, simulating a known reality allows us to explore and illustrate what happens in actual empirical work.
+Hence, we now simulate a berry-generating Haribo process thatproduces blackberries at a rate of $\Sexpr{berry.prob}$ (or $\Sexpr{berry.prob*100}$\%).
+In the long run, bags of Haribo Berries produced by this process should contain a proportion of $q\Sub{blackberry}=\Sexpr{berry.prob}$ on average.
+That does not mean, however, that \textit{each} bag will contain \textit{exactly} $\Sexpr{berry.prob*100}$\% blackberries.
+Also, we expect larger samples to better approximate the true proportion of blackberries.
+We've been re-iterating this point and variations of it throughout the previous chapters.
+
+The simulated process allows us to pretend that we have a machine that randomly fills bags with berries from a production line that produces $\Sexpr{berry.prob*100}$\% blackberries and $\Sexpr{(1-berry.prob)*100}$\% raspberries.
+We call each such bag a \textit{simulation run} or a \Key{replication}.
+In Figure~\ref{fig:berryone}, we plot the results for \Sexpr{berry.reps} replications at a sample size of $n=1$.
+Each dot represents one bag containing a single berry filled by a machine that produces $\Sexpr{berry.prob*100}$\% blackberries by design.
+We plot the proportion of blackberries in the sample.
+As a sample of 1 berry contains either a blackberry or a raspberry and nothing else, the proportion of blackberries can only be either 0 or 1.
+
+<<berryone, fig.cap=paste0("Proportions measured in 100 replications at n=1 with a true proportion of 0.3"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  p <- plot(unlist(berry.sims["1"]),
+            pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(0,1),
+            xaxt = "n", bty = "n", ylab = "Proportion of Blackberries",
+            xlab = "Individual Simulated Samples at n=1"
+            )
+  lines(c(0,100), rep(berry.prob, 2), col = the.lightcols[2], lwd = the.lwd)
+  points(unlist(berry.sims["1"]),
+            pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+  text(x = 70, y = 0.35, paste0("True proportion: ", berry.prob), col = the.cols[2])
+@
+
+That's \Sexpr{length(which(unlist(berry.sims["1"])==0))} samples of size $n=1$ containing no blackberry (proportion $q=0$) and \Sexpr{berry.reps-length(which(unlist(berry.sims["1"])==0))} containing a blackberry (proportion $q=1$).
+The individual samples do the best they can to approximate the true proportion of $\Sexpr{berry.prob}$, but at $n=1$, the options are limited.
+In this extreme case, however, the \textit{proportion of samples} where there was a blackberry (\Sexpr{(berry.reps-length(which(unlist(berry.sims["1"])==0)))/berry.reps}) approximates the true value reasonably well.
+
+We now increase the sample size step by step.
+At each increment, we simulate \Sexpr{berry.reps} replications and plot the proportion of blackberries per replication in Figure~\ref{fig:berrythreetoten}.
+
+<<berrythreetoten, fig.cap=paste0("Proportions measured in 100 replications at n=3, n=4, n=5, and n=10 with a true proportion of 0.3"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  par(mfrow=c(2,2), mar = c(2,2,2,2))
+  for (i in c(3,4,5,10)) {
+    p <- plot(unlist(berry.sims[as.character(i)]),
+              pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(0,1),
+              xaxt = "n", bty = "n", ylab = "",
+              xlab = "", main = paste0("n=", i)
+              )
+    lines(c(0,100), rep(berry.prob, 2), col = the.lightcols[2], lwd = the.lwd)
+    points(unlist(berry.sims[as.character(i)]),
+              pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+  }
+ par.defaults()
+@
+
+We don't need to analyse these results numerically.
+It should be immediately obvious that the samples approximate the true value more reliably.
+With very small samples (up to $n=5$ in this example), results are still very limited in their possible outcomes, and it's impossible to hit the true proportion of \Sexpr{berry.prob} precisely.
+But most of the samples drift towards the best approximation possible.
+(Keep in mind that each dot represents ons sample at the respective sample size.)
+With $n=10$, the sample proportions start to form a clearly distinguishable cloud around the true value.
+Let's see what happens with samples of substantial size in Figure~\ref{fig:berrybig}.
+
+<<berrybig, fig.cap=paste0("Proportions measured in 100 replications at n=20, n=50, n=100, and n=1000 with a true proportion of 0.3"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  par(mfrow=c(2,2), mar = c(2,2,2,2))
+  for (i in c(20, 50, 100, 1000)) {
+    p <- plot(unlist(berry.sims[as.character(i)]),
+              pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(0,1),
+              xaxt = "n", bty = "n", ylab = "",
+              xlab = "", main = paste0("n=", i)
+              )
+    lines(c(0,100), rep(berry.prob, 2), col = the.lightcols[2], lwd = the.lwd)
+    points(unlist(berry.sims[as.character(i)]),
+              pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+  }
+ par.defaults()
+@
+
+While it's not at all impossible to sample 0 or 1000 blackberries if the true proportion of blackberries is \Sexpr{berry.prob}, such a result becomes extremely rare event at this sample size.
+We see in the lower-right panel of Figure~\ref{fig:berrybig} that even results lower than 0.2 or higher than 0.4 are so rare that none occurred in the $\Sexpr{berry.reps}$ replications.
+For a binary (or nominal or ordinal) variable, larger samples approximate the true proportion more reliably.
+In the next section, we try the same with a numeric variable.
+
+\subsection{Sampling Milliseconds: One, Two, Three, Many}
+
+We now turn to the per-word reading speed from the Problem Statement.
+Before we run the simulation, we have to set the parameters that define the simulated reality.
+Let's assume that the real word-length-adjusted reading speed is at $\mu=\Sexpr{rt.mean}$ (in milliseconds) per word, and the standard deviation is $\sigma=\Sexpr{rt.sd}$.
+With the simulations, we can now ask what will the outcomes be if we take many samples of size $n=1$, $n=2$, etc.
+First take a look at Figure~\ref{fig:rts}.
+
+<<rts, fig.cap=paste0("Raw data plot of a single random sample with n=100 from a DGP that has μ=", rt.mean, " and σ=", rt.sd), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+# par(mfrow=c(2,1), mar = c(4,3,4,2))
+#
+# rt.minmax <- c(40, 200)
+# rt.dnorm <- function(x) {dnorm(x, mean = rt.mean, sd = rt.sd)}
+#
+# plot(x = seq(rt.minmax[1], rt.minmax[2], 0.1),
+#      y = rt.dnorm(seq(rt.minmax[1], rt.minmax[2], 0.1)),
+#      type = "l", lwd = 0.5, col = "darkgray", main = "Probability Density",
+#      bty="n", xaxt="n", yaxt = "n", xlab = "Value (in ms)", ylab = "Density",
+#      xlim = c(rt.minmax[1], rt.minmax[2])
+# )
+# axis(1, at = seq(rt.minmax[1], rt.minmax[2], 20))
+# lines(x = c(rt.mean, rt.mean), y = c(0, rt.dnorm(rt.mean)),
+#       lwd = the.lwd, col = the.lightcols[2])
+# lines(x = c(rt.mean-rt.sd, rt.mean-rt.sd), y = c(0, rt.dnorm(rt.mean-rt.sd)),
+#       lwd = the.lwd, col = the.lightcols[1])
+# lines(x = c(rt.mean+rt.sd, rt.mean+rt.sd), y = c(0, rt.dnorm(rt.mean+rt.sd)),
+#       lwd = the.lwd, col = the.lightcols[1])
+# lines(x = seq(rt.minmax[1], rt.minmax[2], 0.1),
+#      y = rt.dnorm(seq(rt.minmax[1], rt.minmax[2], 0.1)),
+#      lwd = the.lwd, col = "darkgray"
+#      )
+#
+# text(x = rt.mean+5, y = rt.dnorm(rt.mean)/2, labels = "μ", col = the.cols[2])
+# text(x = (rt.mean-rt.sd)+7.5, y = rt.dnorm(rt.mean-rt.sd)/3, labels = "μ-σ",
+#      col = the.cols[1])
+# text(x = (rt.mean+rt.sd)+7.5, y = rt.dnorm(rt.mean+rt.sd)/3, labels = "μ+σ",
+#      col = the.cols[1])
+
+p <- plot(.normsample,
+          pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(60,170),
+          xaxt = "n", bty = "n",
+          xlab = "Individual data points", main = "",
+          ylab = "Value (in ms)"
+          )
+lines(c(0,100), rep(rt.mean, 2), col = the.lightcols[2], lwd = the.lwd)
+points(.normsample,
+          pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+@
+
+It shows a single sample with $n=100$ generated by a DGP that is set to $\mu=\Sexpr{rt.mean}$ and $\sigma=\Sexpr{rt.sd}$.
+The dots are single data points.
+Values close to $\mu=\Sexpr{rt.mean}$ have the highest probability (and hence the highest frequency in repeated sampling).
+The average deviation of the values is at $\mu-\sigma=\Sexpr{rt.mean-rt.sd}$ and at $\mu+\sigma=\Sexpr{rt.mean+rt.sd}$.
+Since this is just the average deviation, we do not expect there to be a higher number of measurements around these two points, of course.
+They're just the centre points of the negative and positive deviations, respectively.
+Figure~\ref{fig:rtsmall} shows what happens in \Sexpr{rt.reps} simulated samples at sizes of $n=1$, $n=3$, $n=5$, and $n=10$.
+
+<<rtsmall, fig.cap=paste0("Means measured in 100 replications at n=1, n=3, n=5, and n=10 with a true mean of σ=120 and a true standard deviation of μ=20"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  par(mfrow=c(2,2), mar = c(2,2,2,2))
+  for (i in c(1,3,5,10)) {
+    p <- plot(unlist(rt.sims[as.character(i)]),
+              pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(60,160),
+              xaxt = "n", bty = "n", ylab = "",
+              xlab = "", main = paste0("n=", i)
+              )
+    lines(c(0,100), rep(rt.mean, 2), col = the.lightcols[2], lwd = the.lwd)
+    points(unlist(rt.sims[as.character(i)]),
+              pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+  }
+ par.defaults()
+@
+
+We see a very similar effect as in the case of the binary variable.
+At a sample size of $n=1$, the mean is virtually identical to a single sampled value.
+Therefore, the distribution of sample means in the upper left panel of Figure~\ref{fig:rtsmall} looks like a distribution of individual data points in Figure~\ref{fig:rts}.%
+\footnote{Keep in mind: The dots in Figure~\ref{fig:rts} represent individual data points.
+The dots in Figure~\ref{fig:rtsmall} represent individual sample means calculated from samples (of different sizes per panel).}
+The larger the sample, the closer the sample means move (on average) towards the real value as the variance between single data points plays an ever smaller role.
+This trend continues with much larger samples, see Figure~\ref{fig:rtsbig}.
+
+<<rtsbig, fig.cap=paste0("Means measured in 100 replications at n=20, n=50, n=100, and n=1000 with a true mean of σ=120 and a true standard deviation of μ=20"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  par(mfrow=c(2,2), mar = c(2,2,2,2))
+  for (i in c(20, 50, 100, 1000)) {
+    p <- plot(unlist(rt.sims[as.character(i)]),
+              pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(60,160),
+              xaxt = "n", bty = "n", ylab = "",
+              xlab = "", main = paste0("n=", i)
+              )
+    lines(c(0,100), rep(rt.mean, 2), col = the.lightcols[2], lwd = the.lwd)
+    points(unlist(rt.sims[as.character(i)]),
+              pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+  }
+ par.defaults()
+@
+
+Why did we begin with samples of size $n=1$?
+After all, it's a ridiculous sample size.
+We did it because it allowed us to illustrate how a sample approximates parameters like the mean increasingly better than a single measurement.
+A single value (equivalently a sample with $n=1$) approximates a parameter of the DGP with a certain reliability, and the reliability is higher the lower the variance in the DGP is.
+The variance determines how far single data points bounce around the actual parameter, so with larger variance comes higher uncertainty.
+However, the more such single data points you have in your sample, the more the bouncing around averages out.
+It's still possible to draw a very extreme sample, but the probability of drawing such a sample gets lower and lower with larger samples.
+
+We hope that our illustration was intuitive enough and laid the foundations for the statistics introduced in Section~\ref{sec:variancesamplemeans} and \ref{sec:variabilitysampleproportions}.
+The way we introduced the idea of sampling variation---we hope---has made it clear that it's a frequentist concept.
+If we took a lot of samples (100 in the examples above), then we'd see the patterns that we saw in the plots.
+Nothing can be known for certain or with a quantifiable reliability from a single sample.
+Please keep this in mind.
+The Statistics Wars were fought about misunderstandings of this simple fact (see Chapter~\ref{sec:powerseverity}).
+
+\Bigpoint{Sample Size in Parameter Estimation}{%
+When we use a sample to estimate a population parameter, we can rely on some simple facts about variance and sample size.
+A larger variance in the data-generating process (DGP) makes estimates less accurate.
+On the other hand, larger samples average over the variance that makes the individual data points bounce around the true parameter.
+Hence, parameter estimates from larger samples have a better chance of estimating the true parameter more accurately.
+However, no amount of quantifiable certainty about the true parameter can ever be gained from any sample!
+}
+
+\section{Variance of Sample Means}\label{sec:variancesamplemeans}
+
+\subsection{Sampling Intervals for Normal Numeric Measurements}
+
+\begin{equation}
+   \ssigma_{\mu}=\sqrt{\cfrac{\sigma^2}{n}}
+   \label{eq:semean}
+\end{equation}
+
+\begin{equation}
+  \confint_{\mu}=\mu\pm z\cdot\ssigma_{\mu}
+  \label{eq:confintmean}
+\end{equation}
+
+\subsection{\Indepth\ The Normal Distribution}
+
+\begin{equation}
+  c\cdot e^{-\cfrac{(x - \mu)^2}{2\sigma^2}}
+  \label{eq:normal}
+\end{equation}
+
+\begin{equation}
+  c=\frac{1}{\sqrt{2\pi\sigma^2}}
+  \label{eq:normalscaler}
+\end{equation}
+
+\section{Variability of Sample Proportions}\label{sec:variabilitysampleproportions}
+
+\subsection{Sampling Intervals for Binary Measurements}
+
+\begin{equation}
+   \ssigma_{\rho}=\sqrt{\cfrac{\rho\cdot(1-\rho)}{n}}
+   \label{eq:seprop}
+\end{equation}
+
+\begin{equation}
+  \confint_{\rho}=\rho\pm z\cdot\ssigma_{\rho}
+  \label{eq:confintprop}
+\end{equation}
+
+\subsection{\Indepth\ The Binomial Distribution}
+
+\begin{equation}
+  \binom{n}{k} p^k q^{n-k}
+  \label{eq:binomial}
+\end{equation}
