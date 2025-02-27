@@ -25,3 +25,26 @@ opts_knit$set(self.contained=FALSE)
               yaxt = "n", type = "l", log = "y", lwd = the.lwd)
   par(mfrow=c(1,1))
 @
+
+
+
+\subsection{\Indepth\ The Binomial Distribution}
+
+\begin{equation}
+  \binom{n}{k} p^k q^{n-k}
+  \label{eq:binomial}
+\end{equation}
+
+
+\subsection{\Indepth\ The $χ^2$ Distribution}
+
+
+\begin{equation}
+  x^{\frac{k}{2-1}}e^{-\frac{x}{1}}
+  \label{eq:chisquared}
+\end{equation}
+
+\begin{equation}
+  \cfrac{1}{2^{\frac{k}{2}}\Gamma(\frac{k}{2})}
+  \label{eq:chisquaredscaler}
+\end{equation}

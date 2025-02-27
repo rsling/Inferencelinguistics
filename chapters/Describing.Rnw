@@ -332,7 +332,7 @@ For example, the Wikipedia article on ordinal data states incorrectly (after pro
 \footnote{Sourced from \url{https://en.wikipedia.org/wiki/Ordinal_data} on 22 February 2025.}
 
 \begin{quote}\itshape
-  A well-known example of ordinal data is the Likert scale. {\normalfont [\dots]}
+  \Argh A well-known example of ordinal data is the Likert scale. {\normalfont [\dots]}
   Examples of ordinal data are often found in questionnaires:
   for example, the survey question ``Is your general health poor, reasonable, good, or excellent?'' may have those answers coded respectively as 1, 2, 3, and 4.
 \end{quote}
@@ -725,7 +725,7 @@ Handling data that are distributed thusly requires much more care compared to da
 As we've already pointed out, the data points in \ysample\ are \alert{on average farther away from the mean} than the ones in \xsample, although the means of both samples is virtually the same.
 While the specific shapes of the distributions can't be summarised in one handy statistic, we have one statistic for the overall spread of a sample: the \textit{variance} (and the \textit{standard deviation} derived from it).
 
-\subsection{Quantifiying Variance}
+\subsection{Quantifiying Variance}\label{sec:quantifyvariance}
 
 In order to illustrate the calculation of the variance, we return to the smaller sample from Section~\ref{sec:numeric} and call it \xsample.
 We repeat the raw data here for convenience:
@@ -824,6 +824,8 @@ The result is called the \Key{standard deviation}, denoted $s(\xsample)$ in func
   \label{eq:stdev}
 \end{equation}
 
+It is customary to switch between variance and standard deviation as the information conveyed by them is equivalent.
+Most people will probably call the overall phenomenon \textit{variance}, but \textit{standard deviation} is the measure more frequently used in calculations.
 Let's do it for the small sample \xsample, based on the distances to the mean from Table~\ref{tab:xdistances}.
 First, we calculate $SQ(\xsample)$:
 

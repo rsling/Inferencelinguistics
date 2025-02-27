@@ -601,7 +601,7 @@ The wrong story goes like this:
 
 \begin{quote}
   \itshape
-  Because guessing three or more cups correctly only has a probability of 0.24, the probability that Muriel Bristow has the ability to detect tea-first cups is $1-0.24=0.76$.
+  \Argh Because guessing three or more cups correctly has a probability of only 0.24, the probability that Muriel Bristow has the ability to detect tea-first cups is $1-0.24=0.76$.
   We can be 76\% certain that she has the ability in question.
 \end{quote}
 
@@ -629,7 +629,7 @@ A low probability of a specific outcome merely means that it would be rare if th
 
 \section{Inference With Fisher's Exact Test}\label{sec:inferencefisher}
 
-\subsection{P-Values and Sig-Levels}
+\subsection{P-Values and Sig-Levels}\label{sec:pandsig}
 
 The frequentist probability that a certain experimental result had before it was actually obtained (when calculated after the experiment) is often called a \Key{p-value}.
 In a Tea Tasting Experiment with 8 cups, 4 tea-first cups, and 3 correctly detected tea-first cups, we can calculate $p=0.24$ with Equation~\ref{eq:hypergeomex2}.
@@ -653,8 +653,8 @@ The maths has been established, and this section is about its interpretation.
 There are two important aspects with respect to making inferences from unexpected outcomes.
 Can we be \textit{sure} that Muriel Bristow had the ability of discerning tea-first cups from milk-first cups just because in the real experiment roughly 100 years ago, she pointed out 4 correct cups?
 The answer is clearly negative because, well, $p\approx 0.014$ and not $p=0$.
-To illustrate, consider my grandfather on my father's side, Carl.
-Carl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize.
+To illustrate, consider my grandfather on my father's side, Karl.
+Karl used to play the German national lottery with a bunch of friends, and in 1962, they won the big prize.
 (True story!)
 They guessed 6 numbers out of 49 correctly.
 Would you take their win as evidence that they were prescient and could foresee the number that would be drawn?
@@ -675,7 +675,7 @@ Also, notice that we did not, in fact, conduct an experiment about my grandfathe
 At some point I started calling it an experiment, probably unnoticed by most readers.
 I could have told a similar true story about any random person I knew (a friend's girlfriend's uncle or whomever) if it so happened that that person won the lottery at some arbitrary point in the past instead of my grandfather.
 If you allow yourself to look anywhere for evidence of something, you're bound to find it somewhere, and a low p-value becomes utterly meaningless.
-Interestingly, Carl and his friends repeated the pseudo-experiment over and over again, playing the national lottery every week for roughly ten years in total (over five hundred draws) without ever winning any considerable amount of money again.
+Interestingly, Karl and his friends repeated the pseudo-experiment over and over again, playing the national lottery every week for roughly ten years in total (over five hundred draws) without ever winning any considerable amount of money again.
 This really makes it look like they were just guessing numbers and got lucky exactly once.
 Obviously, repeating experiments (so-called \Key{replication}) is a very good way of further testing inferences made based on unexpected outcomes.
 
@@ -1124,7 +1124,7 @@ Intuitively, many practitioners see such a result and think something like this:
 
 \begin{quote}
   \itshape
-  Yay!
+  \Argh Yay!
   I totally get this result!
   After all, the person is just guessing, which means that there is no effect.
   Hence, the p-value should be high, and we can't reject the Null---which is correct.

@@ -5,3 +5,6 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{Modelling Linear Relationships}
 \label{sec:modellinglinearrelationships}
+
+
+\section{\Indepth\ The Equivalence of the ANOVA and the Linear Model}

@@ -53,6 +53,7 @@ library(modnets)
 require(kableExtra)
 library(vioplot)
 library(scales)
+library(colorspace)
 
 opts_knit$set(self.contained=FALSE)
 
@@ -76,6 +77,29 @@ par.defaults <- function(){
   par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
 }
 
+# Get value closest to given value.
+which.closest <- function(x, v) {
+  which.min(abs(v - x))
+}
+
+# Shade an area under a curve with xs and ys provided.
+shade <- function(x, y, from, to, col, border = F) {
+  .xstart <- which.closest(from, x)
+  .xend   <- which.closest(to, x)
+
+  .xcoords <- c(
+    x[.xstart:.xend],
+    x[.xend],
+    x[.xend:.xstart],
+    x[.xstart]
+    )
+  .ycoords <- c(
+    rep(min(y), length(.xstart:.xend)+1),
+    y[.xend:.xstart],
+    min(y)
+    )
+  polygon(x = .xcoords, y = .ycoords, col = col, border = border)
+}
 @
 
 <<child="localfontconfig.Rnw">>=

@@ -5,3 +5,16 @@ opts_knit$set(self.contained=FALSE)
 
 \chapter{Differences in Means and Variances}
 \label{sec:anova}
+
+\subsection{\Indepth\ The F Distribution}
+
+\begin{equation}
+  \sqrt{\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x+d_2)^{d_1+d_2}}}
+  \label{eq:f}
+\end{equation}
+
+\begin{equation}
+  \frac{1}{x\,\mathrm{B}\!\left(\frac{d_1}{2},\frac{d_2}{2}\right)}
+  \label{eq:fscaler}
+\end{equation}
+

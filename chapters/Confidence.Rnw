@@ -48,7 +48,7 @@ for (n in berry.ns) {
 
 @
 
-\chapter{Sampling Accuracy}
+\chapter{Sampling Accuracy and Parameter Estimation}
 \label{sec:confidence}
 
 \section*{Overview}
@@ -71,7 +71,7 @@ Later that day (feeling a tad queasy because you've destroyed the evidence), you
 It's an exploratory study, and you don't have a hypothesis for the average.
 Of the 30 invited participants, 4 show up, each reading 10 words.
 Adjusted for word-length, it took them a mean 100ms per word.
-A colleague from the theory department pops over for a coffee, looks at the results, and recommends increasing your sample to get a better estimate.
+A colleague from the theory department pops over for a coffee, looks at the results, and recommends increasing your sample size to get a better estimate.
 She says you should have at least 100 participants read 1000 words each.
 How much better would your estimate be?
 Would it be 2500 times better?
@@ -132,15 +132,13 @@ However, this chapter is not about testing but rather about the \Key{estimation}
 In order to get there, we need to talk about the distribution of results in repeated experiments in relation to true values of the DGP.
 We'll use the results from this chapter to develop a general framework for inferential testing in Chapter~\ref{sec:zandt}.
 
-\subsection{Processes and Populations}
-
 \subsection{Sampling Berries: One, Two, Three, Many}
 
 We begin with a simulation of a known situation.
 As explained in Section~\ref{sec:pdist}, this is never the case in actual empirical work.
 We do empirical research to find out what reality is like, precisely because we don't know what it's like.
 However, simulating a known reality allows us to explore and illustrate what happens in actual empirical work.
-Hence, we now simulate a berry-generating Haribo process thatproduces blackberries at a rate of $\Sexpr{berry.prob}$ (or $\Sexpr{berry.prob*100}$\%).
+Hence, we now simulate a berry-generating Haribo process that produces blackberries at a rate of $\Sexpr{berry.prob}$ (or $\Sexpr{berry.prob*100}$\%).
 In the long run, bags of Haribo Berries produced by this process should contain a proportion of $q\Sub{blackberry}=\Sexpr{berry.prob}$ on average.
 That does not mean, however, that \textit{each} bag will contain \textit{exactly} $\Sexpr{berry.prob*100}$\% blackberries.
 Also, we expect larger samples to better approximate the true proportion of blackberries.
@@ -215,7 +213,7 @@ We see in the lower-right panel of Figure~\ref{fig:berrybig} that even results l
 For a binary (or nominal or ordinal) variable, larger samples approximate the true proportion more reliably.
 In the next section, we try the same with a numeric variable.
 
-\subsection{Sampling Milliseconds: One, Two, Three, Many}
+\subsection{Sampling Milliseconds: One, Two, Three, Many}\label{sec:milli}
 
 We now turn to the per-word reading speed from the Problem Statement.
 Before we run the simulation, we have to set the parameters that define the simulated reality.
@@ -338,17 +336,455 @@ However, no amount of quantifiable certainty about the true parameter can ever b
 
 \subsection{Sampling Intervals for Normal Numeric Measurements}
 
+\subsubsection{The Variance of Sample Means}
+
+Now we know that each increment in sample size counteracts the variance that's inherent in the data points.
+In other words, samples have (on average, \ie, under repeated sampling) the same or less variance than the raw data points.
+They only have the same variance if $n=1$, and even with $n=2$, the variance already decreases.
+As it happens, we can express this mathematically and at the same time very intuitively for means like so:
+
+\begin{center}
+  \begin{math}
+    \text{variance of sample means at sample size }n=\cfrac{s^2}{n}
+  \end{math}
+\end{center}
+
+The variance of the sample means is the variance of the individual measurements $s^2$ divided by the sample size $n$.
+Hence, when the variance among the individual measurements goes up, the variance among the sample means goes up.
+On the other hand, when the sample size goes up, the variance among the sample means goes down.%
+\footnote{Notice that, from this angle, we can answer \textit{yes} to the questions from the Problem Statement asking something like:
+\textit{Would a sample 10 times larger be 10 times more accurate?}}
+In order to get the \textit{average deviation of sample means from the true mean at sample size $n$}, we need to take the square root.
+In Section~\ref{sec:quantifyvariance}, we did the same to calculate the standard deviation from the variance.
+The result is called the \Key{standard error} of the mean $\ssigma_{\mu}$.
+It's simply the standard deviation of sample means at a given sample size $n$ and given the variance among the individual data points $s^2$.
+The formula in Equation~\ref{eq:semean} is often expressed by the equivalent Equation~\ref{eq:semeanalt}, but we consider the first variant more transparent and easier to memorise.
+
 \begin{equation}
    \ssigma_{\mu}=\sqrt{\cfrac{\sigma^2}{n}}
    \label{eq:semean}
 \end{equation}
 
 \begin{equation}
-  \confint_{\mu}=\mu\pm z\cdot\ssigma_{\mu}
+   \ssigma_{\mu}=\cfrac{\sigma}{\sqrt{n}}
+   \label{eq:semeanalt}
+\end{equation}
+
+We have omitted one important detail.
+The above is only perfectly true for data that follow the \Key{Normal Distribution} or \Key{Gaussian Distribution}.
+A normally distributed random variable has a characteristic probability density function.
+It has two parameters: the mean $\mu$ and the standard deviation $\sigma$.
+Figure~\ref{fig:normal} shows a plot of the normal probability density with $\mu=0$ and $\sigma=1$.
+
+<<normal, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=0 and σ=1"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+normal.mu <- 0
+normal.sigma <- 1
+normal.minmax <- c(-3, 3)
+normal.dnorm <- function(x) {
+  dnorm(x, mean = normal.mu, sd = normal.sigma)
+}
+
+plot(x = seq(normal.minmax[1], normal.minmax[2], 0.1),
+     y = normal.dnorm(seq(normal.minmax[1], normal.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd,
+     bty="n", ylab = "Probability Density", xlab = "Value (x)",
+     xlim = normal.minmax, col = "white"
+)
+lines(x = c(normal.mu, normal.mu), y = c(0, normal.dnorm(normal.mu)),
+      lwd = the.lwd, col = the.lightcols[2])
+lines(x = c(normal.mu-normal.sigma, normal.mu-normal.sigma), y = c(0, normal.dnorm(normal.mu-normal.sigma)),
+      lwd = the.lwd, col = the.lightcols[1])
+lines(x = c(normal.mu+normal.sigma, normal.mu+normal.sigma), y = c(0, normal.dnorm(normal.mu+normal.sigma)),
+      lwd = the.lwd, col = the.lightcols[1])
+lines(x = seq(normal.minmax[1], normal.minmax[2], 0.1),
+     y = normal.dnorm(seq(normal.minmax[1], normal.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd, col = "darkgray"
+)
+text(x = normal.mu+0.2, y = normal.dnorm(normal.mu)/2, labels = "μ", col = the.cols[2])
+text(x = (normal.mu-normal.sigma)+0.3, y = normal.dnorm(normal.mu-normal.sigma)/3, labels = "μ-σ",
+     col = the.cols[1])
+text(x = (normal.mu+normal.sigma)+0.3, y = normal.dnorm(normal.mu+normal.sigma)/3, labels = "μ+σ",
+     col = the.cols[1])
+@
+
+You've probably seen the Normal Distribution before with the characteristic bell-shaped curve of its density function.
+Not only do many numeric measurements in nature follow this distribution, it also pops up in an almost creepy way in a family of fundamental proofs in statistics, the so-called \textit{Central Limit Theorem} (which has a lot to do with what we're in the middle of introducing here).
+Be that as it may, for samples from normally distributed data, the simple formula for the standard error of the mean given above is provably correct.
+Notice that the density curve is fully defined once the mean and the standard deviation are given (see also the in-depth Section~\ref{sec:gaussian}).
+This means that we can calculate the probability for each value of $x$ (or rather each interval on the x-axis).
+For example, we can calculate the probability of $x\ge 1$, written: $Pr(x\ge 1)$.
+As the area under any probability density curve is 1, $Pr(x\ge 1)$ is the integral of the normal density from 1 to infinity.
+Piece of cake.
+Let's have that piece of cake now (step by step) and call it the Sampling Interval.
+
+<<rtsnormal, fig.cap=paste0("Density of a normal distribution with μ=", rt.mean, " and σ=", rt.sd), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+rt.minmax <- c(60, 180)
+rts.dnorm <- function(x) {
+  dnorm(x, mean = rt.mean, sd = rt.sd)
+}
+rts.stderr <- function(x, n) {
+  dnorm(x, mean = rt.mean, sd = rt.sd/sqrt(n))
+}
+
+plot(x = seq(rt.minmax[1], rt.minmax[2], 0.1), ylim = c(0, 0.1),
+     y = rts.dnorm(seq(rt.minmax[1], rt.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd, yaxt="n",
+     bty="n", ylab = "", xlab = "Value (x)",
+     xlim = rt.minmax, col = "white"
+)
+lines(x = seq(rt.minmax[1], rt.minmax[2], 0.1),
+     y = rts.dnorm(seq(rt.minmax[1], rt.minmax[2], 0.1)),
+     type = "l", lwd = the.lwd, col = "darkgray"
+)
+
+# StdErrs
+
+.c <- 0
+for (n in c(2, 10, 20)) {
+  lines(x = seq(rt.minmax[1], rt.minmax[2], 0.1),
+       y = rts.stderr(seq(rt.minmax[1], rt.minmax[2], 0.1), n),
+       type = "l", lwd = the.lwd, col = darken(the.lightcols[2], .c)
+  )
+  .c <- .c + 0.2
+}
+
+legend("topleft", legend = c("Data", "Means at n=2", "Means at n=10", "Means at n=20"), lwd = the.lwd, bty = "n",
+       col = c("darkgray", the.lightcols[2], darken(the.lightcols[2], 0.2), darken(the.lightcols[2], 0.4))
+)
+@
+
+First, Figure~\ref{fig:rtsnormal} shows the theoretical normal density plot of the reading times in milliseconds as introduced in Section~\ref{sec:milli}.%
+\footnote{In denisty plots, we omit y axis labels whenever possible as they are rarely interpreted directly.}
+We've added three density functions for the distributions of means at sample sizes 2, 10, and 20.
+With larger samples, the probability mass piles up around the mean very quickly, and the normal curve narrows sharply.
+This graph illustrates again what we've shown before:
+The sample means are centred around the true mean, and they become better and better estimators of the mean with increasing sample size.
+
+Let's focus on one of those curves, the density function of the means at $n=10$.
+It's shown in Figure~\ref{fig:meandensten}.
+In addition, the centre area under the curve that spans from the mean $1SE$ to the left and to the right ($\mu\pm 1SE$) is shaded in blue.
+The are covering $\mu\pm 2SE$ is shaded in green.
+As the Normal Distribution has known mathematical properties and we know the real mean and the real standard deviation, we can calculate the shaded areas.
+The blue area is approximately $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}$, \ie, $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1.01, 0, 1, T), 2)*100}$\% of the whole area under the curve.
+The green area (plus the blue area) is approximately $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$, \ie, $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)*100}$\%.
+
+<<meandensten, fig.cap=paste0("Density of the distribution of the means at n=20 with μ=", rt.mean, " and σ=", rt.sd, "; are at μ±σ is highlighted"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+rt.se <- rt.sd/sqrt(20)
+
+rtm.minmax <- c(105, 135)
+.xs <- seq(rtm.minmax[1], rtm.minmax[2], 0.1)
+.ys <- rts.stderr(seq(rtm.minmax[1], rtm.minmax[2], 0.1), 20)
+plot(x = .xs, y = .ys,
+     type = "l", lwd = the.lwd, yaxt="n",
+     bty="n", ylab = "", xlab = "Value (x)",
+     xlim = rtm.minmax, col = "white"
+)
+shade(.xs, .ys, rt.mean-2*rt.se, rt.mean+2*rt.se,
+      col = lighten(the.lightcols[1], 0.5),
+      border = darken(the.lightcols[1], 0.4)
+      )
+shade(.xs, .ys, rt.mean-rt.se, rt.mean+rt.se,
+      col = lighten(the.lightcols[2], 0.5),
+      border = darken(the.lightcols[2], 0.4)
+      )
+text(120, 0.025, "μ±1SE", col = darken(the.lightcols[2], 0.6))
+text(113.5, 0.01, "μ±2SE", col = darken(the.lightcols[2], 0.6))
+lines(x = .xs, y = .ys,
+     type = "l", lwd = the.lwd, col = darken(the.lightcols[2], 0.4)
+)
+@
+
+How is this useful?
+Think about what it means in terms of probability.
+It means that we know for sure that (i)~if the true mean of a variable is $\mu$, (ii)~its true standard deviation is $\sigma$, and (iii)~we draw a sample with $n$, then the probability that the mean of any sample lies in the interval $\mu\pm 1SE$ is $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1.01, 0, 1, T), 2)}$.
+Similarly, the probability that the mean of any sample lies in the interval $\mu\pm 2SE$ is $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$.
+The frequentist interpretation consistently equates the probability of an event occurring with the long-run proportion it has in repeated repetitions.
+In our notation for probabilities from Section~\ref{sec:probability}, for any sample mean \xmean:
+
+\begin{center}
+  \begin{math}
+    Pr(\mu-SE_{\mu}\leq\xmean\leq\mu+SE_{\mu})\approx\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}
+  \end{math}
+\end{center}
+
+\begin{center}
+  \begin{math}
+    Pr(\mu-2SE_{\mu}\leq\xmean\leq\mu+2SE_{\mu})\approx\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}
+  \end{math}
+\end{center}
+
+The standard error is sometimes also just called $\sigma$ as it is a kind of standard deviation.
+We find it best to distinguish clearly between the standard deviation of primary data points $\sigma$ and the standard deviation of sample means, the standard error of the mean $\ssigma_{\mu}$.
+
+\subsubsection{Theoretical Sampling Intervals}
+
+Given that we can calculate the probability of outcomes that lie within a certain interval, we can also ask the inverse question:
+\textit{How many standard errors into each direction (from the mean) define the central 90\%, 95\%, 99\%, etc. sample means under long-run repetition?}
+That number of standard errors is often called the \Key{z-value} or just $z$.
+One can use the a function (called the \textit{quantile function} of the Normal Distribution) for calculating the z-value, but pre-calculated tables usually suffice.
+Table~\ref{tab:ztable} is a very sparse example of such a table.
+
+<<ztable, echo=F, cache=T, out.width="85%", results="asis">>=
+  ps <- c(0.5,0.8,0.9,0.95,0.99)
+  zs <- abs(round(qnorm((1-ps)/2, 0, 1), 2))
+  ztable <- data.frame(Pr = ps, Z=zs)
+
+  ztable %>%
+    as.data.frame.matrix %>%
+    kable(align = c("c", "c"), booktabs = T, linesep = "",
+          caption = "Z-Values for some Probabilities",
+          label = "ztable") %>%
+    row_spec(0, bold=TRUE)
+@
+
+Let's go through this again.
+Table~\ref{tab:ztable} tells us that 50\% of samples of a normally distributed variable lie within a range around the mean that is 0.67 standard errors wide on both sides of the mean.
+Remember that the standard error itself depends only on the variance in the data and the sample size.
+80\% of all samples lie within $\mu-1.28$ standard errors and $\mu+1.28$ standard errors, and so on.
+This is formalised in the notion of the \Key{sampling interval} for the mean $\confint_{\mu}$, where $z_Q$ stands for the z-value for a given probability\slash proportion $q$ as illustrated in Table~\ref{tab:ztable}:
+
+\begin{equation}
+  \confint_{\mu}=\mu\pm z_q\cdot\ssigma_{\mu}
   \label{eq:confintmean}
 \end{equation}
 
-\subsection{\Indepth\ The Normal Distribution}
+<<cisims, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+
+  set.seed(78)
+  # Function for confint simulations.
+  ci.sim <- function(n = 100, mu = 0, sigma = 1, z = 1.96, reps = 100) {
+    .results <- list()
+    for (.i in 1:reps) {
+      .sim <- rnorm(n, mu, sigma)
+      .var <- var(.sim)
+      .mu <- mean(.sim)
+      .se <- sqrt(.var/n)
+      .lo <- .mu-(.se*z)
+      .hi <- .mu+(.se*z)
+      .in <- ifelse(mu >= .lo & mu <= .hi, TRUE, FALSE)
+      .results[[.i]] <- list(
+        "var" = .var,
+        "mu" = .mu,
+        "se" = .se,
+        "low" = .lo,
+        "hi" = .hi,
+        "in" = .in
+      )
+    }
+    .results
+  }
+
+  n.ci <- 20
+  z.ci <- 1.96
+  reps.ci <- 1000
+  ci.sims <- ci.sim(n.ci, rt.mean, rt.sd, z.ci, reps.ci)
+
+  # Get coverage
+  cov.ci <- unlist(ci.sims, recursive = F)
+  cov.ci <- unname(unlist(cov.ci[which(names(cov.ci)=="in")]))
+  cov.ci <- length(which(cov.ci == TRUE))
+@
+
+\subsubsection{Empirical Sampling Intervals}
+
+But wait!
+In normal empirical work, we don't know the true mean and the true standard deviation.
+Some readers might have noticed this very early on and gotten frustrated because it appeared as if sampling intervals were a purely theoretical thing without practical use.
+This is not the case, and the argument will finally bring us back to the frequentist logic of inference.
+What we do in real life is this:
+We calculate a sampling interval based on the statistics of our concrete empirical sample.
+That is, we use \xmean\ instead of $\mu$ and $s(\xsample)$ instead of $\sigma$.
+After all, $\mu$ and $\sigma$ are unknown.
+The calculations are the same, only the symbols change:
+
+\begin{center}
+  \begin{math}
+   \ssigma_{\xmean}=\sqrt{\cfrac{s^2(\xsample)}{n}}
+  \end{math}
+\end{center}
+
+\begin{center}
+  \begin{math}
+    \confint_{\xmean}=\xmean\pm z_q\cdot\ssigma_{\xmean}
+  \end{math}
+\end{center}
+
+Then, as the inverse of the theoretical sampling interval, the empirical sampling interval contains the true value with the proportion ($q$) corresponding to $z_q$.
+We simulated this.
+We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the distribution of reading times.
+Then, we used the samples to calculate the empirical sampling intervals exclusively based on each sample.
+Figure~\ref{fig:cisim} shows the true mean and all those empirical sampling intervals.
+The ones that don't include the true mean are coloured orange.
+
+<<cisim, fig.cap=paste0("Empirical sampling intervals from ", reps.ci ," simulated samples; ones that don't contain the true mean marked in orange; μ=", rt.mean, ", σ=", rt.sd, ", z=", z.ci, ", n=", n.ci), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+  par(mar=c(1,2,1,1))
+  ylim.ci <- c(90, 150)
+  plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
+       xaxt = "n", bty = "n", xlab = "", ylab = "")
+  lines(c(0, reps.ci), c(rt.mean, rt.mean), col = the.lightcols[2], lwd = the.lwd)
+  for (i in 1:length(ci.sims)) {
+    .col <- ifelse(ci.sims[[i]][["in"]], alpha(the.cols[1], 0.4), alpha(the.cols[3], 0.9))
+    lines(c(i, i), c(ci.sims[[i]][["low"]], ci.sims[[i]][["hi"]]), col = .col)
+  }
+@
+
+The number of empirical sampling intervals in these \Sexpr{reps.ci} replications was \Sexpr{cov.ci}, \ie, \Sexpr{round(cov.ci/reps.ci*100, 1)}\%.
+This is called the \Key{coverage}, and it's very close to the expected---or rather \textit{requested}---value of 95\%.
+We say \textit{requested} because in deciding to calculate the intervals for a proportion of $q=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical sampling intervals should contain the true mean.
+We've now called it a \textit{proportion}, but think about it again in terms of \textit{probability}.
+It's the frequentist probability of drawing a sample whose empirical sampling interval contains the true mean before we actually draw the sample.
+Once it has been drawn, the empirical sampling interval either contains the true mean or it doesn't, but that's a fact and has no probability attached to it.
+
+The term \textit{sampling interval} is our invention.
+It's usually called the \Key{confidence interval}.
+However, there are so many misinterpretations attached to this term that we decided to avoid it.
+A sampling interval with $q=0.95$ is called the \textit{95\% confidence interval} (and similar for other values of $q$).
+A very wrong way of interpreting an empirical sampling interval then goes like this:
+
+\begin{quote} \itshape
+  \Argh The 95\% confidence interval for the mean contains the true mean with 95\% certainty.
+  (That means we can be 95\% sure that it contains the true mean.)
+\end{quote}
+
+What's this even supposed to mean?
+Next time you hear someone say something like this about a frequentist sampling interval, ask them what it means to be \textit{95\% certain of something}.
+What it really means is that before taking the sample, there was a probability of 0.95 to draw a sample that contains the true mean (given the chosen $n$ and $z=1.96$).
+Now, all we know is that the interval either contains the true mean or a rare event occurred.
+Please go back to Section~\ref{sec:pandsig} to convince yourself that an event with a probability of 0.05 is not that rare after all.
+
+\subsubsection{Varying Z and N}
+
+We use sampling intervals to get an estimate of the true mean with a known probability of being wrong.
+If we set $z=1.96$, we will estimate 95\% of all intervals correctly in the long run.
+Setting $z=2.58$ gives us even better chances of getting the estimate right.
+So why don't we always set $z=5$ or something really high?
+Look at Figure~\ref{fig:cisim}.
+If we increased $z$, the samples themselves wouldn't change.
+However, we'd require that more intervals should include the true mean, and the only way to do that is to make the intervals wider.
+This leads to a higher rate of correct estimates, but the estimates become more imprecise.
+
+First, let's calculate empirical sampling intervals with $z=1.96$ and $z=2.58$, before looking at some more illustrative plots.
+A random replications of the simulation led to the following statistics:
+$\xmean=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}$ and $s^2(\xsample)=\Sexpr{round(ci.sims[[333]][["var"]], 2)}$.
+The $\ssigma_{\mu}$ is calculated as follows:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\xmean}=\sqrt{\cfrac{\Sexpr{round(ci.sims[[333]][["var"]], 2)}}{\Sexpr{n.ci}}}=\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}
+  \end{math}
+\end{center}
+
+The 95\% sampling interval (\ie, $z=1.96$) and the 99\% sampling interval (\ie, $z=2.58$) are:
+
+\begin{center}
+  \begin{math}
+    SI_{\xmean,0.95}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 1.96\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
+  \end{math}
+
+  \begin{math}
+    SI_{\xmean,0.99}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 2.58\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
+  \end{math}
+\end{center}
+
+The interval is roughly 6ms larger for the added 4\% success rate.
+For a more comprehensive impression of the effect of manipulating $z$ and the effect of the sample size $n$, we provide Figure~\ref{fig:fourcisims}.
+
+<<fourcisims, fig.cap=paste0("Simulations of empirical sampling intervals for different z and n with 100 replications each"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+
+  par(mfrow = c(2,2), mar=c(1,2,3,1))
+
+  set.seed(92)
+  n.ci <- 20
+  z.ci <- 1.96
+  reps.ci <- 100
+
+  ci.sims <- ci.sim(n.ci, rt.mean, rt.sd, z.ci, reps.ci)
+  cov.ci <- unlist(ci.sims, recursive = F)
+  cov.ci <- unname(unlist(cov.ci[which(names(cov.ci)=="in")]))
+  cov.ci <- length(which(cov.ci == TRUE))
+
+  ylim.ci <- c(100, 140)
+  plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
+       xaxt = "n", bty = "n", xlab = "", ylab = "", main = paste0("n=", n.ci, " z=", z.ci, "\nCoverage ", cov.ci, "%"))
+  lines(c(0, reps.ci), c(rt.mean, rt.mean), col = the.lightcols[2], lwd = the.lwd)
+  for (i in 1:length(ci.sims)) {
+    .col <- ifelse(ci.sims[[i]][["in"]], alpha(the.cols[1], 0.4), alpha(the.cols[3], 0.9))
+    lines(c(i, i), c(ci.sims[[i]][["low"]], ci.sims[[i]][["hi"]]), col = .col, lwd = the.lwd)
+  }
+
+  n.ci <- 100
+
+  # Duplicated code!!!
+  ci.sims <- ci.sim(n.ci, rt.mean, rt.sd, z.ci, reps.ci)
+  cov.ci <- unlist(ci.sims, recursive = F)
+  cov.ci <- unname(unlist(cov.ci[which(names(cov.ci)=="in")]))
+  cov.ci <- length(which(cov.ci == TRUE))
+  plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
+       xaxt = "n", bty = "n", xlab = "", ylab = "", main = paste0("n=", n.ci, " z=", z.ci, "\nCoverage ", cov.ci, "%"))
+  lines(c(0, reps.ci), c(rt.mean, rt.mean), col = the.lightcols[2], lwd = the.lwd)
+  for (i in 1:length(ci.sims)) {
+    .col <- ifelse(ci.sims[[i]][["in"]], alpha(the.cols[1], 0.4), alpha(the.cols[3], 0.9))
+    lines(c(i, i), c(ci.sims[[i]][["low"]], ci.sims[[i]][["hi"]]), col = .col, lwd = the.lwd)
+  }
+
+  n.ci <- 20
+  z.ci <- 2.58
+
+  # Duplicated code!!!
+  ci.sims <- ci.sim(n.ci, rt.mean, rt.sd, z.ci, reps.ci)
+  cov.ci <- unlist(ci.sims, recursive = F)
+  cov.ci <- unname(unlist(cov.ci[which(names(cov.ci)=="in")]))
+  cov.ci <- length(which(cov.ci == TRUE))
+  plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
+       xaxt = "n", bty = "n", xlab = "", ylab = "", main = paste0("n=", n.ci, " z=", z.ci, "\nCoverage ", cov.ci, "%"))
+  lines(c(0, reps.ci), c(rt.mean, rt.mean), col = the.lightcols[2], lwd = the.lwd)
+  for (i in 1:length(ci.sims)) {
+    .col <- ifelse(ci.sims[[i]][["in"]], alpha(the.cols[1], 0.4), alpha(the.cols[3], 0.9))
+    lines(c(i, i), c(ci.sims[[i]][["low"]], ci.sims[[i]][["hi"]]), col = .col, lwd = the.lwd)
+  }
+
+  n.ci <- 100
+
+  # Duplicated code!!!
+  ci.sims <- ci.sim(n.ci, rt.mean, rt.sd, z.ci, reps.ci)
+  cov.ci <- unlist(ci.sims, recursive = F)
+  cov.ci <- unname(unlist(cov.ci[which(names(cov.ci)=="in")]))
+  cov.ci <- length(which(cov.ci == TRUE))
+  plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
+       xaxt = "n", bty = "n", xlab = "", ylab = "", main = paste0("n=", n.ci, " z=", z.ci, "\nCoverage ", cov.ci, "%"))
+  lines(c(0, reps.ci), c(rt.mean, rt.mean), col = the.lightcols[2], lwd = the.lwd)
+  for (i in 1:length(ci.sims)) {
+    .col <- ifelse(ci.sims[[i]][["in"]], alpha(the.cols[1], 0.4), alpha(the.cols[3], 0.9))
+    lines(c(i, i), c(ci.sims[[i]][["low"]], ci.sims[[i]][["hi"]]), col = .col, lwd = the.lwd)
+  }
+
+  par.defaults()
+@
+
+As expected, a larger $n$ makes the intervals smaller because it makes the standard error smaller (see Section~\ref{sec:milli}).
+A larger $z$, on the other hand, make the intervals larger because we require that the probability of the interval including the true mean be higher.
+The fact that the coverage does not always land exactly at 95\% or 99\% is not surprising.
+A perfect match between the theoretical expectation and the empirical reality is guaranteed only in the limit, \ie, if we take infinitely many samples.
+After a short discussion of the Normal Distribution, we will briefly demonstrate how sampling intervals for proportions work.
+The idea is essentially the same.
+
+\Bigpoint{Interpretation of Sampling Intervals}{%
+A sampling interval for the mean is an attempt to estimate the true mean.
+It provides an interval which covers the true mean with a specified frequentist pre-sample probability.
+For example, a 95\% sampling interval ($q=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
+Once it is drawn, it either includes the true mean, or a (relatively) rare event has occurred.
+If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% sampling interval).
+This lowers the error rate in the long run and makes the estimation \textit{safer}.
+A safer estimates increase the size of the intervals and makes it less \textit{precise} (larger intervals).
+Changing the sample size does not change the safety of the estimate.
+Hence, if \textit{both a precise and a safe} estimation is required, one should increase $q$ and also increase the sample size $n$.
+Finally, sampling intervals (also called confidence intervals) have nothing to do with specifying the degree of certainty that the true mean falls within the interval.
+}
+
+\subsection{\Indepth\ The Normal Distribution}\label{sec:gaussian}
 
 \begin{equation}
   c\cdot e^{-\cfrac{(x - \mu)^2}{2\sigma^2}}
@@ -360,9 +796,7 @@ However, no amount of quantifiable certainty about the true parameter can ever b
   \label{eq:normalscaler}
 \end{equation}
 
-\section{Variability of Sample Proportions}\label{sec:variabilitysampleproportions}
-
-\subsection{Sampling Intervals for Binary Measurements}
+\section{Sampling Intervals for Binary Measurements}\label{sec:variabilitysampleproportions}
 
 \begin{equation}
    \ssigma_{\rho}=\sqrt{\cfrac{\rho\cdot(1-\rho)}{n}}
@@ -372,11 +806,4 @@ However, no amount of quantifiable certainty about the true parameter can ever b
 \begin{equation}
   \confint_{\rho}=\rho\pm z\cdot\ssigma_{\rho}
   \label{eq:confintprop}
-\end{equation}
-
-\subsection{\Indepth\ The Binomial Distribution}
-
-\begin{equation}
-  \binom{n}{k} p^k q^{n-k}
-  \label{eq:binomial}
 \end{equation}
