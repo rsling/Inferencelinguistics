@@ -535,7 +535,7 @@ Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and
 
   h <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 25))
 
-  densplo <- density(potsx)
+  densplo <- density(potsx, kernel = "cosine")
   qi <- which.min(abs(densplo$x - summary(potsx)[2]))
   qii <- which.min(abs(densplo$x - summary(potsx)[3]))
   qiii <- which.min(abs(densplo$x - summary(potsx)[5]))
@@ -560,13 +560,14 @@ However, Figure~\ref{fig:numhist} is still a plot of a probability density funct
 Instead of the individual values adding up to 1 (as with discrete distributions), the area under the curve (the integral of the density function on the interval from $-\infty$ to $+\infty$) is 1.
 When a statistics software estimates such a curve, it applies a process of inter- and extrapolation from the measured values in order to arrive at a smooth curve, which is also rescaled in order to fulfil the requirement that the area under it is 1.
 Once such a function has been determined, it is possible to look up the hypothetical proportion (equivalent to the estimated probability) of some value, even if that precise value was not in the original sample.
-For example, a measurement of \Sexpr{round(densplo$x[82], 2)}~ms occurs in a hypothetical proportion of \Sexpr{format(round(densplo$y[82], 5), scientific = F)} of all cases (\ie, has the estimated probability of \Sexpr{format(round(densplo$y[82], 5), scientific = F)}).%
-\footnote{While such a statement is not false, it blurs one peculiar property of any continuous probability density function.
-As the x-axis is densely populated with real numbers, for each specific point value the probability is 0.
-This is necessarily so because a point on the curve has no width, and integrating a function on a point always results in 0 as an area with a width of 0 also has a size of 0.
-Technically, we're therefore always talking about probabilities of an interval of values.
-In the example \Sexpr{format(round(densplo$y[82], 5), scientific = F)} is thus the probability of some interval around \Sexpr{round(densplo$x[82], 2)}~ms.
-In practice, this distinction doesn't play a huge role very often.}
+For example, a measurement of \Sexpr{round(densplo$x[82], 2)}~ms occurs in a hypothetical proportion of \Sexpr{format(round(densplo$y[82], 5), scientific = F)} of all cases (\ie, has the estimated probability of \Sexpr{format(round(densplo$y[82], 5), scientific = F)}).
+%
+%\footnote{While such a statement is not false, it blurs one peculiar property of any continuous probability density function.
+%As the x-axis is densely populated with real numbers, for each specific point value the probability is 0.
+%This is necessarily so because a point on the curve has no width, and integrating a function on a point always results in 0 as an area with a %width of 0 also has a size of 0.
+%Technically, we're therefore always talking about probabilities of an interval of values.
+%n the example \Sexpr{format(round(densplo$y[82], 5), scientific = F)} is thus the probability of some interval around \Sexpr{round(densplo$x[82], 2)}~ms.
+%In practice, this distinction doesn't play a huge role very often.}
 Finally, the density estimate allows us to define the \Key{mode} of a numeric variable.
 It's simply the maximum of the curve (or an interval around that point).
 In the example, the highest probability density is around \Sexpr{round(densplo$x[which(densplo$y==max(densplo$y))], 0)}, and it's \Sexpr{round(densplo$y[which(densplo$y==max(densplo$y))], 4)}.
@@ -698,14 +699,14 @@ Figure~\ref{fig:xyhist} shows both types of plots for both samples.
   h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500))
   h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500))
 
-  densplo1 <- density(potsx)
+  densplo1 <- density(potsx, kernel = "cosine")
   qi <- which.min(abs(densplo1$x - summary(potsx)[2]))
   qii <- which.min(abs(densplo1$x - summary(potsx)[3]))
   qiii <- which.min(abs(densplo1$x - summary(potsx)[5]))
   plot(densplo1, xlab = "Milliseconds", main ="x",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
   lines(densplo1, lwd = the.lwd, col= "darkgray")
 
-  densplo2 <- density(potsy)
+  densplo2 <- density(potsy, kernel = "cosine")
   qi <- which.min(abs(densplo2$x - summary(potsy)[2]))
   qii <- which.min(abs(densplo2$x - summary(potsy)[3]))
   qiii <- which.min(abs(densplo2$x - summary(potsy)[5]))

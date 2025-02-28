@@ -13,7 +13,7 @@
 %  , modfonts
 %  , colorlinks
 %  , showindex
-%  , draftmode
+  , draftmode
 %  , tblseight
 		  ]{langscibook}
 

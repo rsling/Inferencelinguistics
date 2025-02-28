@@ -274,7 +274,7 @@ Had she chosen the red steaming cup instead in the first step, she'd now be conf
 That means that after picking another cup (Figure~\ref{fig:cupselect2}), she has already decided on one specific choice from among $8\cdot 7=56$ possible choices.%
 \footnote{This is not exactly true.
 There's a catch to which we'll return presently.
-Do you remember from grammar school maths what it is?\label{fn:catch}}
+Do you remember from secondary school maths what it is?\label{fn:catch}}
 Put differently, she has taken 1 out of 56 possible decision paths to choose 2 out of 8 cups.
 
 \begin{figure}

@@ -329,12 +329,12 @@ When we use a sample to estimate a population parameter, we can rely on some sim
 A larger variance in the data-generating process (DGP) makes estimates less accurate.
 On the other hand, larger samples average over the variance that makes the individual data points bounce around the true parameter.
 Hence, parameter estimates from larger samples have a better chance of estimating the true parameter more accurately.
-However, no amount of quantifiable certainty about the true parameter can ever be gained from any sample!
+However, no amount of quantifiable certainty about the true parameter can ever be gained from a sample!
 }
 
 \section{Variance of Sample Means}\label{sec:variancesamplemeans}
 
-\subsection{Sampling Intervals for Normal Numeric Measurements}
+\subsection{Error Intervals for Normal Numeric Measurements}
 
 \subsubsection{The Variance of Sample Means}
 
@@ -369,6 +369,14 @@ The formula in Equation~\ref{eq:semean} is often expressed by the equivalent Equ
    \ssigma_{\mu}=\cfrac{\sigma}{\sqrt{n}}
    \label{eq:semeanalt}
 \end{equation}
+
+For example, the fictitious distribution of reading times with $\mu=120$ and $\sigma=20$ has the following standard error $\ssigma_{\mu}$ for samples of size $n=16$:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\mu}=\frac{20}{\sqrt{16}}=\frac{20}{4}=5
+  \end{math}
+\end{center}
 
 We have omitted one important detail.
 The above is only perfectly true for data that follow the \Key{Normal Distribution} or \Key{Gaussian Distribution}.
@@ -408,15 +416,16 @@ text(x = (normal.mu+normal.sigma)+0.3, y = normal.dnorm(normal.mu+normal.sigma)/
      col = the.cols[1])
 @
 
-You've probably seen the Normal Distribution before with the characteristic bell-shaped curve of its density function.
-Not only do many numeric measurements in nature follow this distribution, it also pops up in an almost creepy way in a family of fundamental proofs in statistics, the so-called \textit{Central Limit Theorem} (which has a lot to do with what we're in the middle of introducing here).
+You've probably seen the Normal Distribution before with the characteristic bell-shaped curve of its density function.%
+\footnote{See Section~\ref{sec:gaussian} for a slightly more in-depth look at the Normal Distribution.}
+Not only do many numeric measurements in nature follow this distribution, it also pops up in an almost creepy way in a family of fundamental proofs in statistics, the so-called \textit{Central Limit Theorem} (which has a lot to do with what we're in the middle of introducing at the moment).
 Be that as it may, for samples from normally distributed data, the simple formula for the standard error of the mean given above is provably correct.
 Notice that the density curve is fully defined once the mean and the standard deviation are given (see also the in-depth Section~\ref{sec:gaussian}).
-This means that we can calculate the probability for each value of $x$ (or rather each interval on the x-axis).
+This means that we can calculate the probability for each value of $x$ or each interval of $x$.
 For example, we can calculate the probability of $x\ge 1$, written: $Pr(x\ge 1)$.
 As the area under any probability density curve is 1, $Pr(x\ge 1)$ is the integral of the normal density from 1 to infinity.
 Piece of cake.
-Let's have that piece of cake now (step by step) and call it the Sampling Interval.
+Let's have that piece of cake now (step by step) and call it the Error Interval.
 
 <<rtsnormal, fig.cap=paste0("Density of a normal distribution with μ=", rt.mean, " and σ=", rt.sd), echo=F, out.width="85%", fig.pos="t", cache=F>>=
 
@@ -456,7 +465,7 @@ legend("topleft", legend = c("Data", "Means at n=2", "Means at n=10", "Means at 
 @
 
 First, Figure~\ref{fig:rtsnormal} shows the theoretical normal density plot of the reading times in milliseconds as introduced in Section~\ref{sec:milli}.%
-\footnote{In denisty plots, we omit y axis labels whenever possible as they are rarely interpreted directly.}
+\footnote{In density plots, we omit y axis labels whenever possible as they are rarely interpreted directly.}
 We've added three density functions for the distributions of means at sample sizes 2, 10, and 20.
 With larger samples, the probability mass piles up around the mean very quickly, and the normal curve narrows sharply.
 This graph illustrates again what we've shown before:
@@ -501,7 +510,7 @@ How is this useful?
 Think about what it means in terms of probability.
 It means that we know for sure that (i)~if the true mean of a variable is $\mu$, (ii)~its true standard deviation is $\sigma$, and (iii)~we draw a sample with $n$, then the probability that the mean of any sample lies in the interval $\mu\pm 1SE$ is $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1.01, 0, 1, T), 2)}$.
 Similarly, the probability that the mean of any sample lies in the interval $\mu\pm 2SE$ is $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$.
-The frequentist interpretation consistently equates the probability of an event occurring with the long-run proportion it has in repeated repetitions.
+The frequentist interpretation consistently equates the probability of an event occurring with its long-run proportion among repeated repetitions.
 In our notation for probabilities from Section~\ref{sec:probability}, for any sample mean \xmean:
 
 \begin{center}
@@ -519,7 +528,7 @@ In our notation for probabilities from Section~\ref{sec:probability}, for any sa
 The standard error is sometimes also just called $\sigma$ as it is a kind of standard deviation.
 We find it best to distinguish clearly between the standard deviation of primary data points $\sigma$ and the standard deviation of sample means, the standard error of the mean $\ssigma_{\mu}$.
 
-\subsubsection{Theoretical Sampling Intervals}
+\subsubsection{Theoretical Error Intervals}
 
 Given that we can calculate the probability of outcomes that lie within a certain interval, we can also ask the inverse question:
 \textit{How many standard errors into each direction (from the mean) define the central 90\%, 95\%, 99\%, etc. sample means under long-run repetition?}
@@ -543,11 +552,12 @@ Table~\ref{tab:ztable} is a very sparse example of such a table.
 Let's go through this again.
 Table~\ref{tab:ztable} tells us that 50\% of samples of a normally distributed variable lie within a range around the mean that is 0.67 standard errors wide on both sides of the mean.
 Remember that the standard error itself depends only on the variance in the data and the sample size.
-80\% of all samples lie within $\mu-1.28$ standard errors and $\mu+1.28$ standard errors, and so on.
-This is formalised in the notion of the \Key{sampling interval} for the mean $\confint_{\mu}$, where $z_Q$ stands for the z-value for a given probability\slash proportion $q$ as illustrated in Table~\ref{tab:ztable}:
+Furthermore, 80\% of all samples lie between $\mu-1.28$ standard errors and $\mu+1.28$ standard errors, and so on.
+This is formalised in the notion of the \Key{error interval} for the mean $\confint_{\mu}$, where $z_a$ stands for the z-value for a given probability\slash proportion $a$ as illustrated in Table~\ref{tab:ztable}:%
+\footnote{We use $a$ because all other variables are taken.}
 
 \begin{equation}
-  \confint_{\mu}=\mu\pm z_q\cdot\ssigma_{\mu}
+  \confint_{\mu}=\mu\pm z_a\cdot\ssigma_{\mu}
   \label{eq:confintmean}
 \end{equation}
 
@@ -588,14 +598,22 @@ This is formalised in the notion of the \Key{sampling interval} for the mean $\c
   cov.ci <- length(which(cov.ci == TRUE))
 @
 
-\subsubsection{Empirical Sampling Intervals}
+Continuing with the reading time example, we can take the $\ssigma_{\mu}$ calculated above and the mean of $\mu=120$ to find the error interval with $a=0.95$:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\mu}=120\pm 1.96\cdot 5=120\pm 9.8=\langle 110.2, 129.8\rangle
+  \end{math}
+\end{center}
+
+\subsubsection{Empirical Error Intervals}
 
 But wait!
 In normal empirical work, we don't know the true mean and the true standard deviation.
-Some readers might have noticed this very early on and gotten frustrated because it appeared as if sampling intervals were a purely theoretical thing without practical use.
+Some readers might have noticed this very early on and gotten frustrated because it appeared as if error intervals were a purely theoretical thing without practical use.
 This is not the case, and the argument will finally bring us back to the frequentist logic of inference.
 What we do in real life is this:
-We calculate a sampling interval based on the statistics of our concrete empirical sample.
+We calculate an error interval based on the statistics of our concrete empirical sample.
 That is, we use \xmean\ instead of $\mu$ and $s(\xsample)$ instead of $\sigma$.
 After all, $\mu$ and $\sigma$ are unknown.
 The calculations are the same, only the symbols change:
@@ -608,18 +626,23 @@ The calculations are the same, only the symbols change:
 
 \begin{center}
   \begin{math}
-    \confint_{\xmean}=\xmean\pm z_q\cdot\ssigma_{\xmean}
+    \confint_{\xmean}=\xmean\pm z_a\cdot\ssigma_{\xmean}
   \end{math}
 \end{center}
 
-Then, as the inverse of the theoretical sampling interval, the empirical sampling interval contains the true value with the proportion ($q$) corresponding to $z_q$.
-We simulated this.
+Then, as the inverse of the theoretical error interval, the empirical error interval will contain the true value in $a$ of all cases (as  $z_a$ corresponds to $a$).
+Hence, we don't already have to know the truth but still use error intervals.
+To make absolutely clear, what an error interval is, we have simulated it.
 We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the distribution of reading times.
-Then, we used the samples to calculate the empirical sampling intervals exclusively based on each sample.
-Figure~\ref{fig:cisim} shows the true mean and all those empirical sampling intervals.
+Then, we used the samples to calculate the empirical error intervals exclusively based on each sample.
+Think about it:
+We used the simulations of a known population to generate samples, then we took the samples and calculated the error interval \textit{as if we didn't know the population} to see whether the error interval works as we think it should do.
+It's not as good as a mathematical proof, but it relly helps in understanding what statistics is about.
+
+Figure~\ref{fig:cisim} shows the true mean and all those empirical error intervals.
 The ones that don't include the true mean are coloured orange.
 
-<<cisim, fig.cap=paste0("Empirical sampling intervals from ", reps.ci ," simulated samples; ones that don't contain the true mean marked in orange; μ=", rt.mean, ", σ=", rt.sd, ", z=", z.ci, ", n=", n.ci), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+<<cisim, fig.cap=paste0("Empirical error intervals from ", reps.ci ," simulated samples; ones that don't contain the true mean marked in orange; μ=", rt.mean, ", σ=", rt.sd, ", z=", z.ci, ", n=", n.ci), echo=F, out.width="85%", fig.pos="t", cache=F>>=
   par(mar=c(1,2,1,1))
   ylim.ci <- c(90, 150)
   plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
@@ -631,18 +654,18 @@ The ones that don't include the true mean are coloured orange.
   }
 @
 
-The number of empirical sampling intervals in these \Sexpr{reps.ci} replications was \Sexpr{cov.ci}, \ie, \Sexpr{round(cov.ci/reps.ci*100, 1)}\%.
+The number of empirical error intervals in these \Sexpr{reps.ci} replications that did include the true mean was \Sexpr{cov.ci}, \ie, \Sexpr{round(cov.ci/reps.ci*100, 1)}\%.
 This is called the \Key{coverage}, and it's very close to the expected---or rather \textit{requested}---value of 95\%.
-We say \textit{requested} because in deciding to calculate the intervals for a proportion of $q=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical sampling intervals should contain the true mean.
+We say \textit{requested} because in deciding to calculate the intervals for a proportion of $a=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical error intervals should contain the true mean.
 We've now called it a \textit{proportion}, but think about it again in terms of \textit{probability}.
-It's the frequentist probability of drawing a sample whose empirical sampling interval contains the true mean before we actually draw the sample.
-Once it has been drawn, the empirical sampling interval either contains the true mean or it doesn't, but that's a fact and has no probability attached to it.
+It's the frequentist probability of drawing a sample whose empirical error interval contains the true mean before we actually draw the sample.
+Once it has been drawn, the empirical error interval either contains the true mean or it doesn't, but that's a fact and has no probability attached to it.
 
-The term \textit{sampling interval} is our invention.
+The term \textit{error interval} is our invention.
 It's usually called the \Key{confidence interval}.
 However, there are so many misinterpretations attached to this term that we decided to avoid it.
-A sampling interval with $q=0.95$ is called the \textit{95\% confidence interval} (and similar for other values of $q$).
-A very wrong way of interpreting an empirical sampling interval then goes like this:
+A error interval with $a=0.95$ is called the \textit{95\% confidence interval} (and similar for other values of $a$).
+A very wrong way of interpreting an empirical error interval then goes like this:
 
 \begin{quote} \itshape
   \Argh The 95\% confidence interval for the mean contains the true mean with 95\% certainty.
@@ -650,23 +673,27 @@ A very wrong way of interpreting an empirical sampling interval then goes like t
 \end{quote}
 
 What's this even supposed to mean?
-Next time you hear someone say something like this about a frequentist sampling interval, ask them what it means to be \textit{95\% certain of something}.
+Next time you hear someone say something like this about a frequentist error interval, ask them what it means to be \textit{95\% certain of something}.
 What it really means is that before taking the sample, there was a probability of 0.95 to draw a sample that contains the true mean (given the chosen $n$ and $z=1.96$).
 Now, all we know is that the interval either contains the true mean or a rare event occurred.
 Please go back to Section~\ref{sec:pandsig} to convince yourself that an event with a probability of 0.05 is not that rare after all.
 
 \subsubsection{Varying Z and N}
 
-We use sampling intervals to get an estimate of the true mean with a known probability of being wrong.
+We use error intervals to get an estimate of the true mean with a known probability of being wrong.
+We call this the \Key{safety of an estimate}:
+The lower the error probability, the safer the estimate.
 If we set $z=1.96$, we will estimate 95\% of all intervals correctly in the long run.
 Setting $z=2.58$ gives us even better chances of getting the estimate right.
 So why don't we always set $z=5$ or something really high?
 Look at Figure~\ref{fig:cisim}.
 If we increased $z$, the samples themselves wouldn't change.
 However, we'd require that more intervals should include the true mean, and the only way to do that is to make the intervals wider.
-This leads to a higher rate of correct estimates, but the estimates become more imprecise.
+This leads to a higher rate of correct estimates, but the estimates' \Key{precision} decreases.
+We call precision the narrowness of the error interval:
+The narrower the interval, the higher the precision.
 
-First, let's calculate empirical sampling intervals with $z=1.96$ and $z=2.58$, before looking at some more illustrative plots.
+First, let's calculate empirical error intervals with $z=1.96$ and $z=2.58$, before looking at some more illustrative plots.
 A random replications of the simulation led to the following statistics:
 $\xmean=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}$ and $s^2(\xsample)=\Sexpr{round(ci.sims[[333]][["var"]], 2)}$.
 The $\ssigma_{\mu}$ is calculated as follows:
@@ -677,22 +704,22 @@ The $\ssigma_{\mu}$ is calculated as follows:
   \end{math}
 \end{center}
 
-The 95\% sampling interval (\ie, $z=1.96$) and the 99\% sampling interval (\ie, $z=2.58$) are:
+The 95\% error interval (\ie, $z=1.96$) and the 99\% error interval (\ie, $z=2.58$) are:
 
 \begin{center}
   \begin{math}
-    SI_{\xmean,0.95}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 1.96\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
+    EI_{\xmean,0.95}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 1.96\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+1.96*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
   \end{math}
 
   \begin{math}
-    SI_{\xmean,0.99}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 2.58\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
+    EI_{\xmean,0.99}=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}\pm 2.58\cdot\Sexpr{round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2)}=\langle\Sexpr{round(round(ci.sims[[333]][["mu"]], 2)-2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)}, \Sexpr{round(round(ci.sims[[333]][["mu"]], 2)+2.58*round(sqrt(round(ci.sims[[333]][["var"]], 2)/n.ci), 2), 2)} \rangle
   \end{math}
 \end{center}
 
 The interval is roughly 6ms larger for the added 4\% success rate.
 For a more comprehensive impression of the effect of manipulating $z$ and the effect of the sample size $n$, we provide Figure~\ref{fig:fourcisims}.
 
-<<fourcisims, fig.cap=paste0("Simulations of empirical sampling intervals for different z and n with 100 replications each"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+<<fourcisims, fig.cap=paste0("Simulations of empirical error intervals for different z and n with 100 replications each"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
 
   par(mfrow = c(2,2), mar=c(1,2,3,1))
 
@@ -764,46 +791,338 @@ For a more comprehensive impression of the effect of manipulating $z$ and the ef
   par.defaults()
 @
 
-As expected, a larger $n$ makes the intervals smaller because it makes the standard error smaller (see Section~\ref{sec:milli}).
-A larger $z$, on the other hand, make the intervals larger because we require that the probability of the interval including the true mean be higher.
-The fact that the coverage does not always land exactly at 95\% or 99\% is not surprising.
+As expected, a larger $n$ makes the intervals smaller (increased precision) because it makes the standard error smaller (see Section~\ref{sec:milli}).
+A larger $z$, on the other hand, make the intervals larger because we require that the probability of the interval including the true mean be higher (increased safety).
+By the way, the fact that the coverage does not always land exactly at 95\% or 99\% is not surprising.
 A perfect match between the theoretical expectation and the empirical reality is guaranteed only in the limit, \ie, if we take infinitely many samples.
-After a short discussion of the Normal Distribution, we will briefly demonstrate how sampling intervals for proportions work.
-The idea is essentially the same.
+In the remainder of the chapter, we will introduce error intervals for proportions before returning briefly to the Normal Distribution in the in-depth Section~\ref{sec:gaussian}).
 
-\Bigpoint{Interpretation of Sampling Intervals}{%
-A sampling interval for the mean is an attempt to estimate the true mean.
+\Bigpoint{Interpretation of Error Intervals}{%
+An error interval for the mean is an attempt to estimate the true mean.
 It provides an interval which covers the true mean with a specified frequentist pre-sample probability.
-For example, a 95\% sampling interval ($q=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
+For example, a 95\% error interval ($q=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
 Once it is drawn, it either includes the true mean, or a (relatively) rare event has occurred.
-If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% sampling interval).
+If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% error interval).
 This lowers the error rate in the long run and makes the estimation \textit{safer}.
 A safer estimates increase the size of the intervals and makes it less \textit{precise} (larger intervals).
 Changing the sample size does not change the safety of the estimate.
 Hence, if \textit{both a precise and a safe} estimation is required, one should increase $q$ and also increase the sample size $n$.
-Finally, sampling intervals (also called confidence intervals) have nothing to do with specifying the degree of certainty that the true mean falls within the interval.
+Finally, error intervals (also called confidence intervals) have nothing to do with specifying the degree of certainty that the true mean falls within the interval.
 }
 
-\subsection{\Indepth\ The Normal Distribution}\label{sec:gaussian}
+\section{Error Intervals for Binary Measurements}\label{sec:variabilitysampleproportions}
 
-\begin{equation}
-  c\cdot e^{-\cfrac{(x - \mu)^2}{2\sigma^2}}
-  \label{eq:normal}
-\end{equation}
+The idea behind error intervals for proportions is essentially the same as for means.
+Look back at Figures~\ref{fig:berryone}, \ref{fig:berrythreetoten}, and~\ref{fig:berrybig}.
+The distribution of the proportions from samples with very low sample size show obvious banding and look irregular.
+However, at least starting with $n=20$, the plots look very similar to the plots of means in Figure~\ref{fig:rtsmall} and Figure~\ref{fig:rtsbig}.
+Compare the density plots in Figure~\ref{fig:histcompare}.
+Keep in mind:
+These are plots of the distribution of proportion and means calculated from a lot of (simulated) samples, not plots of raw individual measurements.
 
-\begin{equation}
-  c=\frac{1}{\sqrt{2\pi\sigma^2}}
-  \label{eq:normalscaler}
-\end{equation}
+<<histcompare, fig.cap=paste0("Histograms of 1000 proportions measured in samples (left) and 1000 sample means (right) at the same sample sizes"), echo=F, out.width="100%", fig.pos="t", cache=F>>=
+  par(mfrow=c(3,2), mar=c(5,5,1.5,1))
 
-\section{Sampling Intervals for Binary Measurements}\label{sec:variabilitysampleproportions}
+  plot(density(unlist(berry.sims["5"]), kernel = "cosine"),
+       main = "n=5", xlab = "", ylab = "Density", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[2]], xlim=c(-0.25, 1))
+  plot(density(unlist(rt.sims["5"]), kernel = "cosine"),
+       main = "n=5", xlab = "", ylab = "", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[1]], xlim=c(90, 150))
 
-\begin{equation}
-   \ssigma_{\rho}=\sqrt{\cfrac{\rho\cdot(1-\rho)}{n}}
-   \label{eq:seprop}
-\end{equation}
+  plot(density(unlist(berry.sims["10"]), kernel = "cosine"),
+       main = "n=10", xlab = "", ylab = "Density", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[2]], xlim=c(-0.25, 1))
+  plot(density(unlist(rt.sims["10"]), kernel = "cosine"),
+       main = "n=10", xlab = "", ylab = "", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[1]], xlim=c(90, 150))
+
+  plot(density(unlist(berry.sims["20"]), kernel = "cosine"),
+       main = "n=20", xlab = "Proportions", ylab = "Density", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[2]], xlim=c(-0.25, 1))
+  plot(density(unlist(rt.sims["20"]), kernel = "cosine"),
+       main = "n=20", xlab = "Means", ylab = "", bty="n", yaxt = "n",
+       lwd = the.lwd, col = the.lightcols[[1]], xlim=c(90, 150))
+
+  par.defaults()
+@
+
+The distributions still look bumpy at $n=20$, but that is expected.
+Most importantly, however, there is virtually not distinction between the distributions proportions at $n=20$, even though the proportions reflect counts of a discrete variable and the means derive from a continuous numerical variable.
+It was also shown beyond such impressionistic comparisons that the sampling distributions of proportions is reasonably well approximated by a normal distribution.
+Hence, we can use the normal error interval we introduced for the mean $\mu$ for proportions as well.
+The theoretical error interval for the population proportion $\rho$ is:
 
 \begin{equation}
   \confint_{\rho}=\rho\pm z\cdot\ssigma_{\rho}
   \label{eq:confintprop}
 \end{equation}
+
+\noindent Again, the empirical error interval based on a single sample is the same, except for a single sample proportion $q$ instead of the population proportion $\rho$:
+
+\begin{equation}
+  \confint_{q}=q\pm z\cdot\ssigma_{q}
+  \label{eq:confintpropemp}
+\end{equation}
+
+But what are $\ssigma_{\rho}$ and $\ssigma_p$?
+The raw data points do not have a normal variance associated with them.
+They are binary, either and or, 0 or 1.
+We need a measure for the sample proportions that is not directly derived from variance in the data points.%
+\footnote{Of course, real statisticians have conducted proofs and done all the proper maths.
+We skip all of this and try to make things easy to grasp intuitively.}
+We expect the standard error for proportions to be smaller for larger samples (see Figure~\ref{fig:histcompare}).
+Hence, we probably divide by $n$.
+
+Additionally, consider that proportions range from 0 to 1 and consider at which values between 0 and 1 the variance in proportions might be higher.
+Again, we use lots of simulated samples for illustration, see Figure~\ref{fig:propdist}.
+
+<<propdist, fig.cap=paste0("Proportions from samples with n=20 with different true population proportions ρ"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  par(mfrow=c(1,2))
+  berry.prob <- 0.1
+  n <- 20
+  berry.reps <- 1000
+  .sample <- unname(unlist(lapply(1:berry.reps, function(x) {berries(n)})))
+  plot(.sample, pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(0,1),
+       xaxt = "n", bty = "n", ylab = "Proportion",
+       xlab = "Individual Samples", main = "ρ=0.1 and ρ=0.9")
+  points(.sample,
+         pch = 19, col = alpha(the.cols[1], 0.4), cex = 1.5)
+
+  berry.prob <- 0.9
+  .sample <- unname(unlist(lapply(1:berry.reps, function(x) {berries(n)})))
+  points(.sample,
+         pch = 19, col = alpha(the.cols[2], 0.4), cex = 1.5)
+
+  berry.prob <- 0.5
+  .sample <- unname(unlist(lapply(1:berry.reps, function(x) {berries(n)})))
+  plot(.sample, pch = 19, col = alpha("white", 0), cex = 1.5, ylim=c(0,1),
+       xaxt = "n", bty = "n", ylab = "Proportion",
+       xlab = "Individual Samples", main = "ρ=0.5")
+  points(.sample,
+         pch = 19, col = alpha(the.cols[3], 0.4), cex = 1.5)
+
+  par.defaults()
+@
+
+We hope you noticed what's going on there.
+At $\rho=0.5$, the sample proportion deviates from the true propoertion into the negative and the positive direction.
+The farther towards 0 or 1 the true proportion is moved, the more restricted the possible variation is in one of the two directions.
+As proportions can't be negative or larger than 1, the variance in the sample proportions hits a ceiling of 1 and a floor of 0.
+Hence, the variance is largest at $\rho=0.5$ and smallest at $\rho=0$ and $\rho=1$.
+
+The standard error for proportions $\ssigma_{\rho}$ (theoretical) and $\ssigma_q$ (empirical) reflects this:
+
+\begin{equation}
+  \ssigma_{\rho}=\sqrt{\cfrac{\rho\cdot(1-\rho)}{n}}
+  \label{eq:seprop}
+\end{equation}
+
+\begin{equation}
+  \ssigma_{q}=\sqrt{\cfrac{q\cdot(1-q)}{n}}
+  \label{eq:sepropemp}
+\end{equation}
+
+We multiply the proportion $\rho$ by $1-\rho$ (or $q$ by $q-1$).
+Do you see why that is appropriate (at least what's below the square root)?
+The simplest illustration is the comparison between, for example, $0.9\cdot 0.1=0.09$ compared to the much larger $0.5\cdot 0.5=0.25$.
+
+Figure~\ref{fig:qnotq} illustrates it for all values of $\rho$ or $q$.
+Multiplying $\rho$ by $1-\rho$ (or $q$ by $q-1$) gives us exactly what we need:
+a function that starts at the function value 0 for the input 0, then increases as we move towards 0.5 (with a function value of 0.25).
+Then, the function value returns to 0 as we move towards the input value 1.
+
+<<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis)"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  .qnotq <- seq(0, 1, 0.01)
+  plot(.qnotq, .qnotq*(1-.qnotq), type = "l", lwd = the.lwd,
+       col = the.lightcols[[2]], bty = "n", ylab = "q⋅(1-q)", xlab = "q")
+@
+
+Therefore, the width of the confidence intervals has the characteristics observable in Figure~\ref{fig:cioverview}.
+It's largest for centre values and very narrow for extreme proportions.
+This concludes our discussion of estimation and sample variance.
+There is one final word of warning:
+The error interval discussed here is the so-called \Key{Wald interval} (named after Abraham Wald).
+It's very simple and it has some suboptimal properties due to its relying on the distribution of sample proportions being \textit{approximately normal}.
+For example, close to the extremes, the intervals can extend to minimally below 0 and above 1, which is nonsensical for proportions.%
+\footnote{However, anyone who thinks that this (of all things) is a strong argument against frequentism has no idea what they're talking about.}
+In general, it's not very exact.
+There are other frequentist alternatives available which are more exact but less suitable for a conceptual introduction like ours.
+If you ever have to calculate error intervals for proportions, look for the \Key{Wilson score interval} or our favourite, the \Key{Clopper-Pearson interval}.
+The idea behind all of them is the same, the alternatives just use different maths.
+
+<<cioverview, fig.cap=paste0("Width of error intervals for proportions at three sample sizes, three safety levels, and for proportions from 0 to 1"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+  ci.prop <- function(p = 0.5, n = 100, sig = 0.95, width = T) {
+    .se <- sqrt((p*(1-p)/n))
+    .z <- qnorm((1-sig)/2, lower.tail = F)
+    if (width) 2 * .se * .z
+    else .se * .z
+  }
+  ci.80.10 <- function(p) ci.prop(p = p, n = 10, sig = 0.8)
+  ci.80.100 <- function(p) ci.prop(p = p, n = 100, sig = 0.8)
+  ci.80.1000 <- function(p) ci.prop(p = p, n = 1000, sig = 0.8)
+
+  par(mfrow=c(1,3))
+
+  plot(ci.80.10(seq(0, 1, 0.01)), type = "l", col = the.lightcols[1], lwd = 3,
+       main = "80%", ylim = c(0, 1), bty = "n", xaxt = "n", cex = 1.2,
+       cex.axis = 1.2, cex.main = 1.2, cex.lab = 1.2, xlab = "", ylab = "")
+  axis(1, at = seq(1, 101, 10), labels = seq(0, 1, 0.1), cex = 1.2,
+       cex.axis = 1.2, las = 2)
+  lines(ci.80.100(seq(0, 1, 0.01)), col = the.lightcols[2], lwd = 3, lty = 1)
+  lines(ci.80.1000(seq(0, 1, 0.01)), col = the.lightcols[3], lwd = 3, lty = 1)
+  legend("topleft", legend = c("n=10", "n=100", "n=1000"), lwd = 3, col = the.lightcols,
+         bty = "n", cex = 1.2)
+
+  ci.95.10 <- function(p) ci.prop(p = p, n = 10)
+  ci.95.100 <- function(p) ci.prop(p = p, n = 100)
+  ci.95.1000 <- function(p) ci.prop(p = p, n = 1000)
+  plot(ci.95.10(seq(0, 1, 0.01)), ty = "l", col = the.lightcols[1], lwd = 3,
+       main = "95%", ylim = c(0, 0.9), bty = "n", cex = 1.2, cex.axis = 1.2,
+       cex.main = 1.2, cex.lab = 1.2, yaxt = "n", xaxt = "n", xlab = "",
+       ylab = "")
+  axis(1, at = seq(1, 101, 10), labels = seq(0, 1, 0.1), cex = 1.2,
+       cex.axis = 1.2, las = 2)
+  mtext("Proportion", side = 1, line = 4)
+  lines(ci.95.100(seq(0, 1, 0.01)), col = the.lightcols[2], lwd = 3, lty = 1)
+  lines(ci.95.1000(seq(0, 1, 0.01)), col = the.lightcols[3], lwd = 3, lty = 1)
+
+  ci.99.10 <- function(p) ci.prop(p = p, n = 10, sig = 0.99)
+  ci.99.100 <- function(p) ci.prop(p = p, n = 100, sig = 0.99)
+  ci.99.1000 <- function(p) ci.prop(p = p, n = 1000, sig = 0.99)
+  plot(ci.99.10(seq(0, 1, 0.01)), ty = "l", col = the.lightcols[1], lwd = 3,
+       main = "99%", ylim = c(0, 0.9), bty = "n", cex = 1.2, cex.axis = 1.2,
+       cex.main = 1.2, cex.lab = 1.2, yaxt = "n", xaxt = "n", ylab = "",
+       xlab = "")
+  axis(1, at = seq(1, 101, 10), labels = seq(0, 1, 0.1), cex = 1.2,
+       cex.axis = 1.2, las = 2)
+  lines(ci.99.100(seq(0, 1, 0.01)), col = the.lightcols[2], lwd = 3, lty = 1)
+  lines(ci.99.1000(seq(0, 1, 0.01)), col = the.lightcols[3], lwd = 3, lty = 1)
+@
+
+
+\section{\Indepth\ The Normal Distribution}\label{sec:gaussian}
+
+In this short section, we show the density function of the Normal Distribution as an added bonus for the curious.
+The purpose isn't to turn you into mathematicians or to prove anything.
+We just would like to show you that sometimes intimidating functions and equations can be understood almost intuitively with minimal effort in taking them apart.
+This is the general density function of the Normal Distribution:
+
+\begin{equation}
+  \frac{1}{\sqrt{2\pi\sigma^2}}\cdot e^{-\frac{(x - \mu)^2}{2\sigma^2}}
+  \label{eq:normal}
+\end{equation}
+
+<<plotnormalone, fig.cap=paste0("Dissecting the density function of the Normal Distribution"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+  mmu <- 120
+  ssigma <- 20
+
+  par.defaults()
+
+  par(mar=c(2,3,2,2))
+
+  par(mfrow=c(2,2))
+
+  xs <- seq(-300, 300, 0.01)
+
+  plot(xs, xs^2, type = "l",
+       xlim = c(-20, 20), ylim = c(0, 200), bty ="n", xlab = "x", ylab = "",
+       main = "(1)",
+       lwd = the.lwd, col = the.lightcols[2])
+  plot(xs, exp(-xs^2), type = "l",
+       xlim = c(-3, 3), ylim = c(0, 1), bty ="n", xlab = "", ylab = "",
+       lwd = the.lwd, col = the.lightcols[1],
+       main = "(2)")
+  plot(xs, exp(-(xs^2/(2*ssigma^2))), type = "l",
+       xlim = c(-80, 80), ylim = c(0, 1), bty ="n", xlab = "", ylab = "",
+       lwd = the.lwd, col = the.lightcols[2], xaxt = "n",
+       main = "(3)")
+  axis(1, seq(-80, 80, 20), seq(-80, 80, 20))
+  plot(xs, exp(-((xs-mmu)^2/(2*ssigma^2))), type = "l",
+       xlim = c(40, 200), ylim = c(0, 1), bty ="n", xlab = "", ylab = "",
+       lwd = the.lwd, col = the.lightcols[1], xaxt = "n",
+       main = "(4)")
+  axis(1, seq(40, 200, 20), seq(40, 200, 20))
+
+  par.defaults()
+@
+
+Remember that $\mu$ and $\sigma$ are parameters.
+They define the precise shape of the distribution, but they do not vary with the actual input values $x$.
+Imagine a parametrisation for a given sampling distribution of means---which, as we've shown follows a Normal Distribution---, where $\mu=120$ and $\sigma=\ssigma_{\mu}=20$ as in our example above.
+These parameters determine the centre x-value (mean) and slope (standard deviation) of the distribution, but the input values correspond to means for which the density function gives us the probability.
+As $x$ does not occur in the first multiplicand, it is a constant in the parametrised function, and we ignore it for the time being.
+We're left with:
+
+\begin{center}
+  \begin{math}
+    e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+  \end{math}
+\end{center}
+
+This is an exponential function, a function with the Euler number ($e\approx 2.72$) as its base and \textit{something} in the exponent.
+In this case, this \textit{something} is first and foremost $x^2$, which gives us a simple parabola, see Figure~\ref{fig:plotnormalone} panel~(1):
+
+\begin{center}
+  \begin{math}
+    \text{(1)\ }x^2
+  \end{math}
+\end{center}
+
+The exponential function changes its shape (making it flatter around its minimum), and $e^{-x^2}$ is just the reciprocal of $e^{x^2}$, which means it inverts the curve, which will then also be squashed between 0 and 1.
+We get something the shape of which already looks exactly like a normal density function, see Figure~\ref{fig:plotnormalone} panel~(2).
+
+\begin{center}
+  \begin{math}
+    \text{(2)\ }e^{-x^2}
+  \end{math}
+\end{center}
+
+Dividing the exponent by $2\sigma^2$, which is twice the variance, simply scales the curve horizontally.
+It spreads it out with increasing variance.
+Figure~\ref{fig:plotnormalone} panel (3) is exactly the same as Figure~\ref{fig:plotnormalone} panel~(2), except the x-axis is scaled up:
+
+\begin{center}
+  \begin{math}
+    \text{(3)\ }e^{-\frac{x^2}{2\sigma^2}}
+  \end{math}
+\end{center}
+
+<<plotnormaltwo, fig.cap=paste0("Dissecting the density function of the Normal Distribution; final version"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+  par(mfrow=c(1,1))
+  plot(xs, (1/sqrt(2*pi*ssigma^2)) * 1/exp((xs-mmu)^2 / (2*ssigma^2)), type = "l",
+       xlim = c(60, 180), ylim = c(0, 0.02), bty ="n", xlab = "", ylab = "",
+       main = "",
+       lwd = the.lwd, col = the.lightcols[2])
+  par.defaults()
+@
+
+Subtracting $\mu$ from the numerator in the exponent just centres it around the mean $\mu$.
+This happens independently of the exponential function.
+Try removing the exponential, and it will still move the curve (which would still look like a scaled parabola by itself).
+Figure~\ref{fig:plotnormalone} panel~(4) corresponds to
+
+\begin{center}
+  \begin{math}
+    \text{(4)\ }e^{\frac{(x-\mu)^2}{2\sigma^2}}
+  \end{math}
+\end{center}
+
+It's still exactly the same as Figure~\ref{fig:plotnormalone} panel~(2), just scaled on both axes and moved horizontally.
+Finally, the denominator of the constant term is equivalent to the area under the curve plotted in Figure~\ref{fig:plotnormalone} panel~(4):
+
+\begin{center}
+  \begin{math}
+    \frac{1}{\sqrt{2\pi\sigma^2}}
+  \end{math}
+\end{center}
+
+Hence, its reciprocal as a constant factor scales the function again to ensure that the area under its curve is 1, which is a requirement for any probability density function, see Figure~\ref{fig:plotnormaltwo}.
+That's it.
+It's not rocket science to wrap one's mind around why the function looks the way it does and how the parameters $\mu$ and $\sigma$ shape the curve.
+It's indeed rocket science to come up with (\ie, invent) useful probability distributions, work out their properties, and show why they have something to do with how the world works.
+To dig at least a bit deeper while still being entertained, two videos by Grant Sanderson (3Blue1Brown) are highly recommended:
+\url{https://youtu.be/zeJD6dqJ5lo} and \url{https://youtu.be/cy8r7WSuT1I}.
+For non-mathematicians, that's already quite sophisticated material.
+
+
