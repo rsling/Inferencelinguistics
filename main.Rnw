@@ -66,12 +66,16 @@ opts_chunk$set(cache.path='cache/',
 	             tidy=FALSE,
                formatR.arrow = TRUE)
 
-render_listings()
+# render_listings()
 
-the.lwd <- 3
+the.lwd <- 4
 the.pchs <- c(20)
-the.cols <- c("darkgreen", "darkblue", "darkred", "yellow")
-the.lightcols <- c(lighten(the.cols[1], 0.5), "lightblue", lighten(the.cols[3], 0.25), "lightyellow")
+the.cols <- c("seagreen", "dodgerblue3", "sienna3", "gold1")
+the.lightcols <- c(lighten(the.cols[1], 0.75), lighten(the.cols[2], 0.75), lighten(the.cols[3], 0.5), lighten(the.cols[4], 0.5))
+
+the.lightgray <- "lightgray"
+the.midgray <- "darkgray"
+the.darkgray <- darken("darkgray", 0.5)
 
 par.defaults <- function(){
   par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
