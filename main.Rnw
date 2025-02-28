@@ -70,8 +70,8 @@ render_listings()
 
 the.lwd <- 3
 the.pchs <- c(20)
-the.cols <- c("darkgreen", "darkblue", "darkorange", "yellow")
-the.lightcols <- c(alpha(the.cols[1], 0.5), "lightblue", alpha(the.cols[3], 0.5), "lightyellow")
+the.cols <- c("darkgreen", "darkblue", "darkred", "yellow")
+the.lightcols <- c(lighten(the.cols[1], 0.5), "lightblue", lighten(the.cols[3], 0.25), "lightyellow")
 
 par.defaults <- function(){
   par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))

@@ -640,9 +640,9 @@ We used the simulations of a known population to generate samples, then we took 
 It's not as good as a mathematical proof, but it relly helps in understanding what statistics is about.
 
 Figure~\ref{fig:cisim} shows the true mean and all those empirical error intervals.
-The ones that don't include the true mean are coloured orange.
+The ones that don't include the true mean are coloured red.
 
-<<cisim, fig.cap=paste0("Empirical error intervals from ", reps.ci ," simulated samples; ones that don't contain the true mean marked in orange; μ=", rt.mean, ", σ=", rt.sd, ", z=", z.ci, ", n=", n.ci), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+<<cisim, fig.cap=paste0("Empirical error intervals from ", reps.ci ," simulated samples; ones that don't contain the true mean marked in red; μ=", rt.mean, ", σ=", rt.sd, ", z=", z.ci, ", n=", n.ci), echo=F, out.width="85%", fig.pos="t", cache=F>>=
   par(mar=c(1,2,1,1))
   ylim.ci <- c(90, 150)
   plot(0, xlim=c(0, reps.ci), ylim = ylim.ci, col = "white",
@@ -931,11 +931,17 @@ Figure~\ref{fig:qnotq} illustrates it for all values of $\rho$ or $q$.
 Multiplying $\rho$ by $1-\rho$ (or $q$ by $q-1$) gives us exactly what we need:
 a function that starts at the function value 0 for the input 0, then increases as we move towards 0.5 (with a function value of 0.25).
 Then, the function value returns to 0 as we move towards the input value 1.
+The square root conserves this principle property.
 
-<<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis)"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
+<<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis) and its square root"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   .qnotq <- seq(0, 1, 0.01)
-  plot(.qnotq, .qnotq*(1-.qnotq), type = "l", lwd = the.lwd,
-       col = the.lightcols[[2]], bty = "n", ylab = "q⋅(1-q)", xlab = "q")
+  plot(.qnotq, .qnotq*(1-.qnotq), type = "l", lwd = the.lwd, ylim = c(0, 0.55),
+       col = the.lightcols[[2]], bty = "n", ylab = "", xlab = "q (or ρ)")
+  lines(.qnotq, sqrt(.qnotq*(1-.qnotq)), type = "l", lwd = the.lwd,
+       col = the.lightcols[[1]], bty = "n", ylab = "q⋅(1-q)", xlab = "q")
+  legend("topleft", legend = c("q⋅(1-q)", "√[q⋅(1-q)]"), bty = "n",
+         col = c(the.lightcols[[2]], the.lightcols[[1]]),
+         lwd = the.lwd)
 @
 
 Therefore, the width of the confidence intervals has the characteristics observable in Figure~\ref{fig:cioverview}.
@@ -1093,6 +1099,17 @@ Figure~\ref{fig:plotnormalone} panel (3) is exactly the same as Figure~\ref{fig:
   plot(xs, (1/sqrt(2*pi*ssigma^2)) * 1/exp((xs-mmu)^2 / (2*ssigma^2)), type = "l",
        xlim = c(60, 180), ylim = c(0, 0.02), bty ="n", xlab = "", ylab = "",
        main = "",
+       lwd = 0.5, col = the.lightcols[2])
+  arrows(125, 0.005, 150, 0.005, 0.075, col = the.lightcols[3], lwd = the.lwd, code = 3)
+  arrows(115, 0.005, 90, 0.005, 0.075, col = the.lightcols[3], lwd = the.lwd, code = 3)
+  text(137.5, 0.0055, "σ", col = the.lightcols[3], 0.5)
+  text(102.5, 0.0055, "σ", col = the.lightcols[3], 0.5)
+
+  lines(c(120, 120), c(0, 0.0199), col = the.lightcols[1], lwd = the.lwd)
+  arrows(60, 0, 115, 0, 0.075, col = the.lightcols[1], lwd = the.lwd)
+  text(90, 0.0005, "μ", col = the.lightcols[1], 0.5)
+
+  lines(xs, (1/sqrt(2*pi*ssigma^2)) * 1/exp((xs-mmu)^2 / (2*ssigma^2)),
        lwd = the.lwd, col = the.lightcols[2])
   par.defaults()
 @

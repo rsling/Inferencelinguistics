@@ -576,7 +576,8 @@ In this almost perfectly symmetric sample, the mean, the median, and the mode ar
 Whether a plot of the density estimate is more informative than a histogram depends on the type of data and the research question.
 Having the two plots side by side in Figure~\ref{fig:numhist} should reveal that they contain virtually the same information.
 However, before using density plots one should do some research as to which specific method the chosen piece of software uses in order to check whether it delievers the desired result.%
-\footnote{Look under \textit{smoother}, \textit{smoothing}, or \textit{kernel}.}
+\footnote{Look under \textit{smoother}, \textit{smoothing}, or \textit{kernel}.
+We use a cosine kernel by default.}
 
 <<boxplot, fig.cap=paste0("A box plot and a violin plot for a numeric sample with n=100"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   par(mfrow=c(1,2), mar=c(2,5,1,0))
