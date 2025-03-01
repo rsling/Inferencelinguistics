@@ -1,5 +1,5 @@
 % !Rnw root = ../main.Rnw
-<<setupdescribing, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+<<setupdescribing, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
 @
 
@@ -10,10 +10,17 @@ opts_knit$set(self.contained=FALSE)
 
 \enlargethispage{2\baselineskip}
 
-This chapter is comparatively short.
-While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics} and \textit{levels of measurement}, we focus on one major aspect, namely the central tendency and above all the variance of measurements.
-Variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences about virtually infinite populations based on finite or even small samples is hard.
-We begin by characterising different types of measurements often called \alert{levels of measurement}.
+Chapter~\ref{sec:fisher} introduced the logic of frequentist inference using the relatively simple Fisher Exact Test as an example.
+In order to extend the same logic to other use cases and develop more advanced versions of the same logic, we need to take a step back in this Chapter.
+Many other tests will require knowledge of measures of central tendency like the mean (or average) and the variance.
+Variance is a statistic that quantifies how strongly single values deviate from the mean.
+It helps us to deal with a central reason we need inferential statistics in the first place:
+Not all measured values are the same.
+People don't all have the same weight, sentences don't all have the same length, etc.
+Hence, variance is one of the most crucial concepts in statistics, and it's one of the reasons that making inferences about virtually infinite populations based on finite or even small samples is hard.
+
+While many statistics text books make a huge brouhaha about so-called \textit{descriptive statistics} and \textit{levels of measurement}, we focus those two core concepts (the central tendency and the variance of measurements).
+We begin by characterising different types of measurements (which are often called \alert{levels of measurement}).
 We discuss ways of finding the most characteristic measurements in a sample or a population by finding the \alert{mode}, \alert{median}, \alert{quartiles} and \alert{percentiles}, and the \alert{mean} for different types of measurements.
 Finally, we quantify how much single measurements deviate from the most characteristic measurements in the form of the \alert{variance} and the \alert{standard deviation}.
 Along the way, some types of plots are introduced which provide insight into the structure of data.
@@ -76,7 +83,7 @@ For completeness, we show the very obvious summarisation of these counts in tabu
 However, we have already shown the more complex type of contingency tables, where the co-occurrences of the levels of two two-level variables per event are tabulated.
 Hence, Table~\ref{tab:counts} should seem quite unsophisticated to most readers.
 
-<<counts, echo=F, cache=F, out.width="85%", results="asis">>=
+<<counts, echo=F, cache=T, out.width="85%", results="asis">>=
   counts <- matrix(c(4,5), nrow = 1)
   colnames(counts) <- c("Singular", "Plural")
   rownames(counts) <- c("Count")
@@ -143,7 +150,7 @@ However, if we knew for sure that among the totality of English noun tokens, 5 o
 In this sense, it would be the \textit{expected value} or \textit{expectation}.%
 \footnote{The difference between an expected value estimated from a sample and one that's true for the population is the subject of Chapter~\ref{sec:confidence}.}
 
-<<binaryhist, fig.cap=paste0("Histogram (or bar plot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<binaryhist, fig.cap=paste0("Histogram (or bar plot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   ex.number <- c(4,5)
   h <- barplot(ex.number, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.midgray, the.lightcols[2]), ylim=c(0, 6))
   text(h[,1], ex.number+0.5, labels = ex.number)
@@ -189,7 +196,7 @@ They are theoretical results rather than measurements.
 We specifically chose this example in order to point out this difference.
 A variable which has more than two discrete levels with no measurable ordering is called a \Key{nominal variable}.
 
-<<nominal, echo=F, cache=F, out.width="85%", results="asis">>=
+<<nominal, echo=F, cache=T, out.width="85%", results="asis">>=
   counts <- matrix(c(13,1,7,0), nrow = 1)
   colnames(counts) <- c("Nominative", "Accusative", "Dative", "Genitive")
   rownames(counts) <- c("Count")
@@ -211,7 +218,7 @@ We leave it to the reader to find the mode and calculate the proportions and per
 Two histograms (more specifically bar plots) for the example are shown in Figure~\ref{fig:nominalhist}.
 Since there is no measurable order in grammatical cases, both plots are equivalent, and you could choose the one that you think is more adequate for your purpose.
 
-<<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-level variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<nominalhist, fig.cap=paste0("Two equivalent histograms of counts of a nominal four-level variable (grammatical case in German) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
   par(mfrow=c(1,2))
 
   ex.case <- c(13,1,7,0)
@@ -229,7 +236,7 @@ Since there is no measurable order in grammatical cases, both plots are equivale
 
 \subsection{Ordered but Discrete Measurements}\label{sec:ordinal}
 
-<<ordinalsetup, cache=F, echo=FALSE, include=FALSE, results='asis'>>=
+<<ordinalsetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   set.seed(75)
   levs <- rev(c("very high", "high", "medium", "low", "very low"))
   ratings <- scale(rnorm(10, 100, sd = 25))
@@ -260,7 +267,7 @@ All possible ways of aggregating nominal variables (including binary ones) apply
 counting and tabulation, calculation of the proportions or percentages of the different levels, the determination of the mode, and bar plots (histograms).
 The only difference is that tables and plots should respect the intrinsic order of the ordinal variable, as can be observed in Table~\ref{tab:ordinal} and Figure~\ref{fig:ordinalhist}.
 
-<<ordinal, echo=F, cache=F, out.width="85%", results="asis">>=
+<<ordinal, echo=F, cache=T, out.width="85%", results="asis">>=
   counts <- t(matrix(ex.rating))
   colnames(counts) <- str_to_title(levs)
   rownames(counts) <- c("Count")
@@ -274,7 +281,7 @@ The only difference is that tables and plots should respect the intrinsic order 
     row_spec(0, bold=TRUE)
 @
 
-<<ordinalhist, fig.cap=paste0("Histograms of counts of an ordinal five-level variable (acceptability ratings) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<ordinalhist, fig.cap=paste0("Histograms of counts of an ordinal five-level variable (acceptability ratings) with the mode highlighted in colour"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   h <- barplot(ex.rating, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, ylim = c(0, 6),
                col = c(rep(the.midgray, 2), the.lightcols[2], rep(the.midgray, 2)))
   text(h[,1], unname(ex.rating)+0.5, labels = unname(ex.rating))
@@ -285,7 +292,7 @@ Thanks to the higher complexity of this variable (the intrinsic order of its lev
 To find this measure called the \textit{median}, we first need to sort the raw measurements (not the tabulation of the counts) from the lowest rank to the highest rank, which is something we couldn't do with a nominal variable due to the lack of an intrinsic order of its levels.
 The sorted sample \xsample\prm\ looks like this:
 
-<<ratingsmedian, cache=F, echo=FALSE, include=FALSE, results='asis'>>=
+<<ratingsmedian, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   ratings.ordered <- factor(ratings)
   levels(ratings.ordered) <- levs
   ratings.ordered <- sort(ratings.ordered)
@@ -299,7 +306,7 @@ Plotting these single observations from left to right on the x-axis and putting 
 The grey line is just a helper line for better visual orientation.
 The coloured line marks the middle point of the ordered sample in the sense that half the ordered sample lies to its left and the other half to its right.
 
-<<ordinalsort, fig.cap=paste0("Raw data plot of a sorted sample of an ordinal value; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<ordinalsort, fig.cap=paste0("Raw data plot of a sorted sample of an ordinal value; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(as.numeric(ratings.ordered), xaxt = "n", xlab = "Sorted Data Points", yaxt = "n", ylab = "Level", main ="", ylim = c(1, 5), frame.plot = F)
 
   lines(c(5.5, 5.5), c(1, 3), lty = 1, lwd = the.lwd, col = the.cols[2])
@@ -344,7 +351,7 @@ Since the Likert scale cannot be measured but is merely reconstructed from measu
 
 \subsection{Numeric Measurements}\label{sec:numeric}
 
-<<numericsetup, cache=F, echo=FALSE, include=FALSE, results='asis'>>=
+<<numericsetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   set.seed(2893)
   pots <- round(rnorm(10, 250, sd = 78), 0) %>% sort
   potsx <- round(rnorm(100, 250, sd = 38), 0) %>% sort
@@ -381,7 +388,7 @@ As such scales never occur in linguistics (and, we think, most empirical science
 Regarding the central tendency of numeric measurements and the applicable plots, numeric measurements offer many more options and introduce some complications.
 Let's begin with a raw data plot of the sorted sample in Figure~\ref{fig:numericraw}.
 
-<<numericraw, fig.cap=paste0("Raw data plot of a sorted sample of a numeric variable; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<numericraw, fig.cap=paste0("Raw data plot of a sorted sample of a numeric variable; the coloured line marks the position of the median"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
   axis(1, 1:10, 1:10, tick = T)
   lines(c(5.5, 5.5), c(150, median(pots)), lty = 1, lwd = the.lwd, col = the.cols[2])
@@ -464,7 +471,7 @@ The mean and the median are quite informative measures of the central tendency.
 Finally, we'll now generalise the concept of the median, and we'll re-introduce the mode for numeric variables (which we glossed over at the beginning of this section).
 Figure~\ref{fig:numericrawq} repeats Figure~\ref{fig:numericraw} with some additional vertical lines.
 
-<<numericrawq, fig.cap=paste0("Raw data plot of a sorted sample of a numeric variable; the coloured lines mark the position of the median, the lower and upper quartile, as well as the minimum and the maximum"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<numericrawq, fig.cap=paste0("Raw data plot of a sorted sample of a numeric variable; the coloured lines mark the position of the median, the lower and upper quartile, as well as the minimum and the maximum"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
   axis(1, 1:10, 1:10, tick = T)
   lines(c(5.5, 5.5), c(150, median(pots)), lty = 1, lwd = the.lwd, col = the.cols[2])
@@ -487,7 +494,7 @@ There is a number of algorithms available that adjusts the quartiles based on th
 Please consider the documentation.
 It's particularly embarrassing if you first notice the resulting discrepancies while teaching with R.\label{fn:quartiles}}
 
-<<numericsummary, echo=F, cache=F, out.width="85%", results="asis">>=
+<<numericsummary, echo=F, cache=T, out.width="85%", results="asis">>=
   numsum <- matrix(
     round(c(pots[1], pots[3], median(pots), mean(pots), pots[8], pots[10], length(pots)), 0),
     nrow = 7)
@@ -508,7 +515,7 @@ For a sample with 10 data points, providing a summary in 7 values might not appe
 When samples get bigger, however, this changes very quickly.
 Table~\ref{tab:numericsummaryx} shows the same for a very similar sample but with $n=100$.
 
-<<numericsummaryx, echo=F, cache=F, out.width="85%", results="asis">>=
+<<numericsummaryx, echo=F, cache=T, out.width="85%", results="asis">>=
   sumsum <- summary(potsx)
   numsumx <- matrix(
     round(c(sumsum, length(potsx)), 0),
@@ -530,7 +537,7 @@ The summary characterised a sample of 100 values in 7 values, which is much more
 Also, most humans aren't very good at processing 100 raw values and get an idea of what the tendencies and trends in the data are.
 A histogram as in Figure~\ref{fig:numhist} (left panel) is a helpful companion to the table.
 Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and the individual bars represent counts of occurrences of values from a certain range:%
-<<numhist, fig.cap=paste0("Histogram of a sample of a numeric variable with n=100 and a corresponding density plot based on an estimated probability density function"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<numhist, fig.cap=paste0("Histogram of a sample of a numeric variable with n=100 and a corresponding density plot based on an estimated probability density function"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
   par(mfrow = c(1,2))
 
   h <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 25), col = the.midgray)
@@ -579,7 +586,7 @@ However, before using density plots one should do some research as to which spec
 \footnote{Look under \textit{smoother}, \textit{smoothing}, or \textit{kernel}.
 We use a cosine kernel by default.}
 
-<<boxplot, fig.cap=paste0("A box plot and a violin plot for a numeric sample with n=100"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<boxplot, fig.cap=paste0("A box plot and a violin plot for a numeric sample with n=100"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   par(mfrow=c(1,2), mar=c(2,5,1,0))
   boxplot(potsx, frame = F, ylab = "Milliseconds", col = the.lightcols[2],
           notch = T, pch = the.pchs[1], medcol = the.cols[2])
@@ -655,7 +662,7 @@ The same statistics should always be defined (as a parameter) for the population
 
 \subsection{Spread and Shape of a Distribution}
 
-<<variancesetup, cache=F, echo=FALSE, include=FALSE, results='asis'>>=
+<<variancesetup, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   set.seed(47)
   potsy <- c(potsy1 <- round(rnorm(50, 200, sd = 45), 0),
              potsy2 <- round(rnorm(50, 300, sd = 45), 0)) %>% sort
@@ -668,7 +675,7 @@ Let's illustrate this using two samples.
 One is the larger sample of reaction times from Section~\ref{sec:numeric} (called \xsample\ here), the other one is a sample that is superficially similar (called \ysample).
 Compare the summary of both samples in Table~\ref{tab:varxandy}.
 
-<<varxandy, echo=F, cache=F, out.width="85%", results="asis">>=
+<<varxandy, echo=F, cache=T, out.width="85%", results="asis">>=
   numsumxy <- matrix(
     round(c(summary(potsx), length(potsx), summary(potsy), length(potsy)), 0),
     nrow = 7)
@@ -695,7 +702,7 @@ The \Key{spread} of \ysample\ is larger than the spread of \xsample.
 Both a histogram and a density plot should be used to corroborate this and to find out what the shapes of the distributions are.
 Figure~\ref{fig:xyhist} shows both types of plots for both samples.
 
-<<xyhist, fig.cap=paste0("Histograms and density plots of two different samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<xyhist, fig.cap=paste0("Histograms and density plots of two different samples of a numeric variable with n=100"), echo=F, fig.pos="t", out.width="100%", cache=T>>=
   par(mfrow = c(2,2), mar = c(2, 3, 2, 2))
   h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
   h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
@@ -740,7 +747,7 @@ Its mean is \Sexpr{round(mean(pots, 0))}.
 As we've argued that the variance is related to the distances of the individual points around the mean, we begin by plotting the data points (x-axis) and their measured reaction times (y-axis) in Figure~\ref{fig:meandist}.
 We also add the mean as a horizontal line plus lines measuring the distance from the mean to the individual data points (using colour to differentiate between negative and positive distances).
 
-<<meandist, fig.cap=paste0("Raw data plot of a sample with n=100; distances to mean plotted as vertical lines"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<meandist, fig.cap=paste0("Raw data plot of a sample with n=100; distances to mean plotted as vertical lines"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
   .mean <- round(mean(pots), 0)
   axis(1, 1:10, 1:10, tick = T)
@@ -759,7 +766,7 @@ Table~\ref{tab:xdistances} show the results.%
 \footnote{The mean is actually $\xmean=\Sexpr{mean(pots)}$.
 We took the liberty of rounding it to an integer for clarity.}
 
-<<xdistances, echo=F, cache=F, out.width="85%", results="asis">>=
+<<xdistances, echo=F, cache=T, out.width="85%", results="asis">>=
   distxy <- matrix(
     c(pots, paste0("$", pots, "-", round(.mean, 0), "=", round(pots-.mean, 0), "$")),
     nrow = 10)
@@ -864,7 +871,7 @@ Finally, Table~\ref{tab:summaries} provides an overview of the statistics that w
 In the next chapter, we build upon these statistics and discuss the relation between populations and samples in more detail.
 The ultimate goal is a flexible and general approach to statistical inference based on samples in later chapters.
 
-<<varxandyvar, echo=F, cache=F, out.width="85%", results="asis">>=
+<<varxandyvar, echo=F, cache=T, out.width="85%", results="asis">>=
   numsumxy <- matrix(
     c(formatC(as.numeric(round(summary(potsx), 0), format="d")),
       round(var(potsx), 1),

@@ -4,12 +4,35 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Inferences About Means [old version]}
+\chapter{Inferences About Means}
 \label{sec:zandt}
 
-\section{Population Means and Sample Means}
+\section*{Overview}
 
-\Problem{Z-Tests}{Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause. This mean reaction time and the corresponding variance in measurements are extremely well established parameters. They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments. For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times. You conduct an experiment and measure reaction times in the critical region. \alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
+In this chapter, we introduce the z-test and the t-test.
+We have introduces the logic of frequentist testing (Chapter~\ref{sec:fischer}), shown how samples can be summarised through measures of central tendency (Chapter~\ref{sec:describing}), and we've shown how we can adjust the safety and the precision of means and proportions estimated from samples (Chapter~\ref{sec:confidence}).
+In this chapter, we return to inferential tests using the results from the chapters on descriptive statistics and estimation.
+
+The tests introduced in this chapter compare means of samples.
+The z-test compares the mean of a sample with the mean of a population for which the true mean and the true variance are known for sure.
+The t-test for a single sample does the same but for cases where the true variance isn't known.
+Finally, the t-test for two samples compares means of two independent samples.
+
+The substantive hypothesis in such tests is usually that the means differ.
+Hence, the Null is that they are the same.
+We calculate the frequentist probability of measuring the difference between the means that was actually measured (or a larger difference) if the Null is true.
+The frequentist probability is not calculated directly as in our presentation of Fisher's Exact Test.
+Instead, we calculate a test statistic ($z$ or $t$), for which the probability density is known (in the form of the Normal Distribution and the very similar t Distribution) and we can use it to look up p-values.
+
+\Problem{Z-Tests}{%
+Let's assume you know the mean reaction time for a critical region when native speakers process a certain type of relative clause.
+This mean reaction time and the corresponding variance in measurements are extremely well established parameters.
+They were predicted by a robust theory of syntactic processing, and this prediction has been corroborated by a large number of diverse experiments.
+For an emergent subtype of this kind of relative clause, the theory predicts considerably higher precessing effort and thus longer reaction times.
+You conduct an experiment and measure reaction times in the critical region.
+\alert{Which outcomes of the experiment would you interpret as indidcating that reaction times are indeed longer for the emergent type of relative clause?}}
+
+\section{Population Means and Sample Means}
 
 \subsection{Introducing the Logic}
 

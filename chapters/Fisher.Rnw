@@ -1,5 +1,5 @@
 % !Rnw root = ../main.Rnw
-<<setupfisher, cache=F, echo=FALSE, include=FALSE, results='asis'>>=
+<<setupfisher, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
 
 set.seed(949)
@@ -706,7 +706,7 @@ How many cups of tea were chosen correctly relative to the number of possible ev
 The comparison of these numbers allowed us to calculate the probability of an outcome as extreme as or more extreme than the actual outcome under the assumption that the process generating the guesses (for example, Muriel Bristow) is completely random.
 Such counts are customarily summarised in \Key{contingency tables}, see Table~\ref{tab:contingency}.
 
-<<contingency, echo=F, cache=F, out.width="85%", results="asis">>=
+<<contingency, echo=F, cache=T, out.width="85%", results="asis">>=
   contingency.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
   colnames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(contingency.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -740,7 +740,7 @@ To calculate the p-value for Fisher's Exact Test---which is exactly what we've b
 the shaded cells in Table~\ref{tab:fisherone}.
 With those counts, we can calculate the probability of drawing 3 cups from a set of 4 and independently 1 cup from a different set of 4, which corresponds exactly to the binomial coefficient calculated in Equation~\ref{eq:threefour}.
 
-<<fisherone, echo=F, cache=F, out.width="85%", results="asis">>=
+<<fisherone, echo=F, cache=T, out.width="85%", results="asis">>=
   fisherone.cont <- matrix(c(3, 1, 4, 1, 3, 4, 4, 4, 8), nrow = 3)
   colnames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(fisherone.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -762,7 +762,7 @@ With those counts, we can calculate the probability of drawing 3 cups from a set
 
 As was shown above, we need to add the probability of obtaining a more extreme result, which is illustrated for completeness in Table~\ref{tab:fishertwo}.
 
-<<fishertwo, echo=F, cache=F, out.width="85%", results="asis">>=
+<<fishertwo, echo=F, cache=T, out.width="85%", results="asis">>=
   fishertwo.cont <- matrix(c(4, 0, 4, 0, 4, 4, 4, 4, 8), nrow = 3)
   colnames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(fishertwo.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -793,7 +793,7 @@ Assume that we drew 90 active sentences containing \textit{sleep} in addition to
 Furthermore, assume that the corpus contains 1100 sentences in total, 890 of them active sentences, 210 passive sentences.
 The corresponding contingency table is shown in Table~\ref{tab:corpussleep}.
 
-<<corpussleep, echo=F, cache=F, out.width="85%", results="asis">>=
+<<corpussleep, echo=F, cache=T, out.width="85%", results="asis">>=
   corpussleep.cont <- matrix(c(90, 800, 890, 10, 200, 210, 100, 1000, 1100), nrow = 3)
   colnames(corpussleep.cont) <- c("Active", "Passive", "Sum")
   rownames(corpussleep.cont) <- c("Sleep", "Other", "Sum")
@@ -894,7 +894,7 @@ In order to test a Null based on this substantive hypothesis, we have to reverse
 \end{math}
 \end{center}
 
-<<arrest, echo=F, cache=F, out.width="85%", results="asis">>=
+<<arrest, echo=F, cache=T, out.width="85%", results="asis">>=
   arrest.cont <- matrix(c(69, 800, 869, 31, 200, 231, 100, 1000, 1100), nrow = 3)
   colnames(arrest.cont) <- c("Active", "Passive", "Sum")
   rownames(arrest.cont) <- c("Arrest", "Other", "Sum")
@@ -943,7 +943,7 @@ Assume that Fisher and Ms Bristow, after fiercely discussing (as one should) the
 This time, she agrees to taste 80 cups of tea, 40 of which are tea-first.
 After the Tea Tasting Marathon, Fisher counts the successes and failures and aggregates the numbers in Table~\ref{tab:teamarathon}.
 
-<<teamarathon, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teamarathon, echo=F, cache=T, out.width="85%", results="asis">>=
   teamarathon.cont <- matrix(c(30, 10, 40, 10, 30, 40, 40, 40, 80), nrow = 3)
   colnames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
   rownames(teamarathon.cont) <- c("Tea-First", "Milk-First", "Sum")
@@ -1081,7 +1081,7 @@ The open-source code for the simulations is written in R, and it can be consulte
 Based on this uninformed guesser, we simulate a classic Tea Tasting Experiment with four tea-first and four milk-first cups.
 Table~\ref{tab:teasim1} shows the raw results, and Table~\ref{tab:teasim1cont} shows the contingency table.
 
-<<teasim1, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teasim1, echo=F, cache=T, out.width="85%", results="asis">>=
   teaexp1.raw <- rbind(ifelse(tea.exp==0, "Tea-First", "Milk-First"),
                        ifelse(tea0==0, "Tea-First", "Milk-First"))
   colnames(teaexp1.raw) <- paste0("Cup ", 1:8)
@@ -1096,7 +1096,7 @@ Table~\ref{tab:teasim1} shows the raw results, and Table~\ref{tab:teasim1cont} s
     kable_styling(latex_options = "scale_down")
 @
 
-<<teasim1cont, echo=F, cache=F, out.width="85%", results="asis">>=
+<<teasim1cont, echo=F, cache=T, out.width="85%", results="asis">>=
   teaexp1.cont <- table(tea0, tea.exp) %>%
     as.data.frame.matrix
   teaexp1.cont <- cbind(teaexp1.cont, apply(teaexp1.cont, 1, sum))
@@ -1143,7 +1143,7 @@ Let's run \Sexpr{sim.guess.n} simulations of the same experiment where the perso
 To make the properties of the test pop out more clearly, we also change the number of cups per experiment from 8 to \Sexpr{sim.guess.s}.
 Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.guess.s} cups individually, we aggregate them in a certain type of plot---a \Key{histogram}---in Figure~\ref{fig:hist}.
 
-<<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "P-Values", main ="", border=F, col = the.midgray)
   text(h[["mids"]], h[["counts"]]-5, labels = h[["counts"]])
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
@@ -1182,7 +1182,7 @@ Figure~\ref{fig:histbetter} shows the distributions of p-values for \Sexpr{sim.b
 The different panels plot the p-values for simulated participants with a varying tea-first detection accuray.
 In the upper-left panel, it's 51\%, in the upper-right 52\%, in the lower-left 55\%, and in the lower-right 70\%.
 
-<<histbetter, fig.cap=paste0("Histograms of p-values of ", sim.better.n, " simulated experiments with ", sim.better.s, " cups where the participant has increasing prediction accuracy (increasing from upper-left to lower-right); all y-axes are scaled to 1000 for better comparability"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<histbetter, fig.cap=paste0("Histograms of p-values of ", sim.better.n, " simulated experiments with ", sim.better.s, " cups where the participant has increasing prediction accuracy (increasing from upper-left to lower-right); all y-axes are scaled to 1000 for better comparability"), echo=F, fig.pos="t", out.width="85%", cache=T>>=
   par(mfrow=c(2,2))
   h <- hist(sim.fiftyone.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
             main = "51% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F, col = the.midgray)
@@ -1292,7 +1292,7 @@ We also provide the plot for the Tea Tasting Marathon from Section~\ref{sec:samp
 Notice that the grey lines are merely visual helper lines.
 As the distribution is discrete (see below), it does not define a curve.
 
-<<hypergeom844,  fig.cap=paste0("Probability density for k successes in Tea Tasting Experiments; the density function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=F>>=
+<<hypergeom844,  fig.cap=paste0("Probability density for k successes in Tea Tasting Experiments; the density function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=T>>=
   par(mfrow=c(1,2))
 
   ks <- 0:4
@@ -1339,7 +1339,7 @@ For example, we can only achieve between 0 and 4 correctly classified cups in a 
 If the cat jumps onto the table in the middle of the experiment and breaks all cups, the Hypergeometric Distribution is no longer applicable.}
 The exact maths aside, as exactly one outcome has to occur, the probability of the union of the outcomes must be~1 (see Section~\ref{sec:probability}).
 
-<<hypergeom844c, fig.cap=paste0("Cumulative distribution function for k successes in Tea Tasting Experiments; the distribution function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=F>>=
+<<hypergeom844c, fig.cap=paste0("Cumulative distribution function for k successes in Tea Tasting Experiments; the distribution function of the Hypergeometric Distribution"), echo=F, fig.pos="t", out.width="75%", cache=T>>=
   par(mfrow=c(1,2))
 
   ks <- 0:4
