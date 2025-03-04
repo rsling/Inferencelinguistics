@@ -72,6 +72,13 @@ If these conditions are not met, other tests (such as the t-test for two samples
   z2.dnorm.sample <- function(x) {
     dnorm(x, mean = z.mu, sd = z2.se)
   }
+
+  z2.mu <- mean(z2.sample)
+  z2.z <- (mean(z2.sample)-z.mu)/z2.se.rnd
+  z2.z.rnd <- round(z2.z, 2)
+
+  z2.p <- 1-pnorm(z2.z)
+  z2.p.rnd <- round(z2.p, 3)
 @
 
 For the sake of illustration, let's assume that the population mean is $\mu=\Sexpr{z.mu}$ (for example milliseconds) and the population variance is\label{page:varianceisfour} $\sigma^2=\Sexpr{z.sigma^2}$, which corresponds to a standard deviation of $\sigma=\Sexpr{z.sigma}$.
@@ -103,7 +110,6 @@ lines(x = seq(z.minmax[1], z.minmax[2], 0.1),
      lwd = the.lwd, col = the.darkgray
 )
 
-
 plot(x = z.sample, y = 1:length(z.sample),
      pch = 20,
      bty="n", yaxt="n", ylab = "", cex = 1.5,
@@ -116,14 +122,16 @@ To recapitulate, the PDF gives for each measurement (x-axis) the probability wit
 Informally speaking, the curve shows that if we measure random values from this population, the probability of measuring a value close to $\mu$ is highest, and measurements deviate on average by the standard deviation $\sigma$ from $\mu$.
 The blue line shows the mean, and the green lines show one standard deviation in each direction from the mean.
 As a result, a very much expected sample of $n=\Sexpr{z.n}$ measurements is shown in the form of the point cloud below the curve (90° rotated compared to the raw data plots we've shown before).
-It's a simulated sample, and the simulation was set up according to the known facts about the overall population.
+It's a simulated sample, and the simulation was set up according to the known facts about the overall population ($\mu=\Sexpr{z.mu}$and $\sigma^2=\Sexpr{z.sigma^2}$).
 The measurements are indeed centred around the mean, and they seem to follow the normal distribution.
 
 If, however, we draw a sample from a different population where the true mean is slightly higher (for example because we're measuring reaction times under a condition that incurs a processing penalty) we expect samples to turn out differently on average and have a higher sample mean compared to the known population mean.
 However, this on-average expectation can be treacherous because individual samples are not in any way \textit{guaranteed} to represent their population well, as we have shown in Chapter~\ref{sec:confidence}.
 Very similar to Ronald A.~Fisher in his experiment with Muriel Bristow (see Chapter~\ref{sec:fisher}), we need to ask whether the actual sample warrants any inference regarding the underlying mechanism.
-It does that if it's a sufficiently unexpected results under the assumption that the desired inference is not correct, \ie, under the Null.
+It does that if it's a sufficiently unexpected result under the assumption that the desired inference is not correct, \ie, under the Null.
+It's sufficiently unexpected if it had a low pre-experiment probability of occurring.
 
+We'll show how this works out for the given example.
 In the case of the reaction times described in the Problem Statement, substantive hypothesis is that reaction times are higher with the emergent subtype of relative clauses because of assumed processing penalties.
 However---especially if our sample is small---inferring anything from a specific result is tricky.
 Figure~\ref{fig:z2} shows a possible outcome with $n=\Sexpr{z2.n}$ in red, and it should be obvious why it's tricky to infer anything from it.
@@ -178,14 +186,14 @@ Let's call the sample plotted in Figure~\ref{fig:z2} \xsample, a tuple of \Sexpr
 The mean of \xsample\ is $\xmean=\Sexpr{round(mean(z2.sample), 2)}$.
 As we've shown, inferences in frequentist logic (see Chapter~\ref{sec:fisher}) are always made by taking into account what the outcome of an experiment could have been under one or several possibly correct hypotheses.
 In the case at hand, we're interested in the hypothesis that the true mean under the experimental condition (call it $\mu_1$) is larger than the known mean $\mu$.
-In other words, we would like to \alert{gather evidence in support of a hypothesis H: $\mu_1>\mu$}.
+In other words, we would like to \alert{gather evidence in support of a substantive hypothesis: $\mu_1>\mu$}.
 We use the symbol $\mu_1$ for the hypothesised larger mean as it is the mean of a slightly different theoretical population, and $\mu$ is the symbol reserved for population means.
 
 For several reasons, we cannot gather evidence that supports this hypothesis directly.
-First, as a population mean $\mu_1$ is obviously not directly observable as all that we've got are samples.
-Rather, it's a hypothesised mean in a population that exists as separate from the known population if the substantive hypothesis is correct.
+First, as a population mean $\mu_1$ is obviously not directly observable.
+We can virtually never observe whole populations, all we've got are sample.
+Rather, $\mu_1$ is a hypothesised mean in a population that exists as separate from the known population if the substantive hypothesis is correct.
 However, if that population is not substantially different from the known one, then we have $\mu_1=\mu$.
-Given that $\mu_1$ is a non-observable, we've got to work with the $\Sexpr{z2.n}$ data points from \xsample\ and the sample mean \xmean\ calculated from them.
 While we certainly hope that \xmean\ is a good indicator of the true value $\mu_1$, we have no guarantees whatsoever that it actually is.
 Second, as Fisherians we have no formal method of gathering positive evidence.%
 \footnote{Only Neyman-Pearson philosophy and the Severity approach will give us this power (pun intended) later in Chapter~\ref{sec:powerseverity}, but with some important caveats.}
@@ -232,7 +240,7 @@ The question is:
 How often would we expect to see a sample of $\Sexpr{z2.n}$ measurements with a sample mean of $\Sexpr{round(mean(z2.sample),2)}$ or larger if the true mean is that specified by the Null, which is $\mu=\Sexpr{z.mu}$?
 Luckily, we have already introduced the tool that we need: the \Key{standard error} of the mean $\ssigma_{\mu}$.
 The standard error for $n=\Sexpr{z2.n}$ and the known variance $\sigma=\Sexpr{z.sigma}$ (see p.~\pageref{page:varianceisfour}) tells us how strongly samples of this size deviate from the true mean (on average) in each direction.
-The standard error of the mean in this case is:
+The standard error of the mean in this case is (revise Equation~\ref{eq:semean} if necessary):
 
 \begin{center}\begin{math}
   \ssigma_{\mu}=\frac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\sqrt{\frac{\Sexpr{z.sigma}^2}{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
@@ -266,8 +274,8 @@ text(x = z.mu+0.6, y = z.dnorm(z.mu)/2, labels = "μ", col = the.cols[2])
 @
 
 Remember what the standard error is all about (Chapter~\ref{sec:confidence}).
-If the mean in a population is $\mu$ and the standard deviation is $\sigma$, then the sample means of size $n$ are themselves normally distributed, and the standard error $\ssigma_{\mu}$ is the standard deviation of that normal distribution.
-Furthermore, keep in mind that we're talking about the distribution of sample means drawn from the known population.
+If the mean in a population is $\mu$ and the standard deviation is $\sigma$, then the sample means of samples of size $n$ are themselves normally distributed, and the standard error $\ssigma_{\mu}$ is the standard deviation of that normal distribution.
+Furthermore, keep in mind that we're talking about the distribution of sample means drawn from a known population.
 Under the Null, it is also the distribution from which our small sample was drawn.
 Figure~\ref{fig:z3} contrasts the density of the distribution of individual data points (in our example: individual reaction times) with the much narrower distribution of sample means.
 Mathematically, it is narrower because the standard error is always smaller or equal to the standard deviation.
@@ -277,7 +285,7 @@ Intuitively, it should be narrower because on average sample means from samples 
 Remember from Chapter~\ref{sec:confidence} that a Normal Distribution is exhaustively defined by the parameters $\mu$ and $\sigma$.
 Since (i)~the distribution of sample means is Normal, (ii)~we know its mean $\mu$, (iii)~we know its variance $\sigma^2$ and standard deviation $\sigma$, we can calculate how many samples (in the long run) drawn from the known population would have a mean of $\Sexpr{round(mean(z2.sample),2)}$ or larger.
 In other words, we can calculate how many sample means (from samples of size $n=\Sexpr{z2.n}$) would deviate by $\Sexpr{round(mean(z2.sample)-z.mu,2)}$ from the population mean anyway due to expected sampling error.
-Instead of calculating the individual events as in the Tea-Tasting Experiment, we use the known functions of the Normal Distribution to look up those values.
+Instead of calculating the numbers and probabilities of individual events as in the Tea-Tasting Experiment, we use the known functions of the Normal Distribution to look up those values.
 This gives us a very precise and well-defined measure of how surprising the obtained result would be if the Null were true.
 
 <<z4, fig.cap=paste0("Left: PDF of the distribution of sample means for mean µ and standard error SE with obtained sample mean $\\xmean$ and corresponding z-value; area under the curve for results equal to or greater than $\\xmean$ is shaded; Right: CDF for the same distribution with obtained sample mean $\\xmean$"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
@@ -285,14 +293,6 @@ This gives us a very precise and well-defined measure of how surprising the obta
 par(mfrow=c(1,2))
 
 z.minmax <- c(114, 126)
-
-z2.mu <- mean(z2.sample)
-z2.z <- (mean(z2.sample)-z.mu)/z2.se.rnd
-z2.z.rnd <- round(z2.z, 2)
-
-z2.p <- 1-pnorm(z2.z)
-z2.p.rnd <- round(z2.p, 3)
-
 xs <- seq(z.minmax[1], z.minmax[2], 0.1)
 ys <- z2.dnorm.sample(seq(z.minmax[1], z.minmax[2], 0.1))
 
@@ -309,10 +309,10 @@ lines(x = c(z.mu, z.mu), y = c(0, z2.dnorm.sample(z.mu)),
 shade(xs, ys, 122 , z.minmax[2],
       col = the.lightcols[1], border=the.cols[1], lwd = the.lwd)
 
-text(x = z.mu+3, y = z2.dnorm.sample(z.mu)/2.5, col = the.cols[2],
+text(x = z.mu+3.25, y = z2.dnorm.sample(z.mu)/2.5, col = the.cols[2],
      labels = bquote(μ*"="*.(round(mean(z.mu), 2)))
      )
-text(x = mean(z2.sample)+2, y = z2.dnorm.sample(mean(z2.sample)),
+text(x = mean(z2.sample)+2.25, y = z2.dnorm.sample(mean(z2.sample)),
      labels = bquote(bar("x")*"="*.(round(mean(z2.sample), 2))),
      col = the.cols[1]
      )
@@ -322,11 +322,12 @@ lines(x = c(
       y = 0.01+rep(z2.dnorm.sample(z2.mu), 2),
       lwd = the.lwd, col = the.cols[1]
       )
+)
 
-text(x = mean(z2.sample)+1, y = z2.dnorm.sample(mean(z2.sample))+0.02,
-     labels=bquote("z="*.(z2.z.rnd)),
-     col = the.cols[1]
-     )
+#text(x = mean(z2.sample)+1.5, y = z2.dnorm.sample(mean(z2.sample))+0.02,
+#     labels=paste0("z=", z2.z.rnd),
+#     col = the.cols[1]
+#     )
 
 lines(x = xs,
      y = ys,
@@ -373,13 +374,15 @@ par.defaults()
 
 @
 
-The left panel of Figure~\ref{fig:z4} show the PDF of the distribution of sample means with the area under the curve corresponding to results as extreme or more extreme than \xmean\ highlighted.
+The left panel of Figure~\ref{fig:z4} show the PDF of the distribution of sample means, and the highlightes area under the curve corresps to results as extreme or more extreme than \xmean.
 The corresponding \Key{cumulative distribution function} (CDF) can be used to calculate the statistics of interest.
 The right panel of Figure~\ref{fig:z4} shows the Normal CDF for $\mu=\Sexpr{z.mu}$ and $\sigma=\Sexpr{z2.se}$ (which happens to be $SE_{\mu}$).
 For the observed sample mean $\xmean=\Sexpr{round(z2.samplemean,1)}$, the CDF has the value $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$, which means that the probability of obtaining this or a more extreme result is $1-\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}=\Sexpr{1-round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$.
+Think of the value $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$ as indicating that $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)*100}$\% of the probability mass lie to the right of $\xmean=\Sexpr{round(z2.samplemean,1)}$.
 If you have access to a software that has built-in functions for such CDFs, this is the most straightforward way to arrive at a p-value for a sample mean and a known Normal Distribution.
+In this case, you don't even need to calculate $z$ to perform a z-test.
 
-Otherwise, you can calculate the $z$-score and look the p-value up in a table.
+Otherwise, you can calculate the so-called z-score and look up the p-value in a table.
 To to this, we simply count the distance between the distribution mean and the sample mean in multiples of the standard error, which gives us the \Key{z-score}.
 It's the same $z$ we introduced in Chapter~\ref{sec:confidence}, except we're using it the other way round.
 For estimation, we looked up z-scores corresponding to probabilities, now we're calculating z-scores in order to lookup probabilities.
@@ -390,10 +393,11 @@ z=\frac{\xmean-\mu}{SE_{\mu}}=\frac{\Sexpr{round(mean(z2.sample), 2)}-\Sexpr{z.m
 \end{math}\end{center}
 
 By dividing the distance by the standard error and calculating the z-score, we normalise it and make its interpretation independent of the concrete slope ($\sigma$) of the distribution.
-Hence, $z=\Sexpr{z2.z.rnd}$ is independent of the concrete sample mean and population mean, and it establishes a direct link to the probability we're looking for: another \Key{p-value}.
-We can use tables to look up p-values corresponding to z-scores.
-An example is shown in Table~\ref{tab:ptable}, and it's the reverse of tables such as Table~\ref{tab:ztable}.
-The values are those for the STandard Normal Distribution with $\mu=0$ and $\sigma=1$.
+The z-score is the distance from the mean in a Standard Normal Distribution (with $\mu=0$ and $\sigma=1$) that corresponds to the measured distance from the known mean.
+Hence, $z=\Sexpr{z2.z.rnd}$ can be interpreted independently of the concrete sample mean and population mean, and it establishes a direct link to the probability we're looking for: another \Key{p-value}.
+We can use tables to look up p-values corresponding to z-scores, and for $z=2.1$, we get $Pr=0.02$, which in our application is the p-value $p=0.02$.
+Table~\ref{tab:ptable} shows such a table, and it's the reverse of tables such as Table~\ref{tab:ztable}.
+The values are those for the Standard Normal Distribution with $\mu=0$ and $\sigma=1$.
 Do sou see why?
 
 <<ptable, echo=F, cache=T, out.width="85%", results="asis">>=
@@ -409,24 +413,18 @@ Do sou see why?
     row_spec(0, bold=TRUE)
 @
 
-
-
-
-
-
-
-% \begin{center}\begin{math}
-%   Pr(\xmean|H_0)=p(\Sexpr{z2.z.rnd})=\Sexpr{z2.p.rnd}
-% \end{math}\end{center}
-%
-% Let's go through this step by step.
-% First, \alert{$Pr(\bar{x}|H_0)$} reads as \textit{the probability of the sample mean \xmean\ assuming that the Null is true}.
-% Remember that the Null was specified as $H_0: \mu_1\leq\mu$, which reads \textit{the mean under the condition of interest} (the mean reaction time in the emergent type of relative clause) \textit{is less than or equal to the population mean} (the reaction time in other relative clauses).
-% Second, this probability is equated to \alert{$p_{\mathbf{Norm}}(\Sexpr{z2.z.rnd})$}, which is the p-value corresponding to the z-value of $\Sexpr{z2.z.rnd}$ as calculated above, which is \alert{$\Sexpr{z2.p.rnd}$}.
-%
-% \Bigpoint{Interpretation of the P-Value in Z-Tests}{The p-value in a z-test is the \alert{frequentist probability} of drawing a sample $x$ with a mean as extreme as or more extreme than the one that was actually obtained \alert{if the Null were true}. The frequentist probability (p-value) is the probability of an event occurring \alert{before it has actually occurred}. After the sample has been drawn, there is no longer a frequentist probability attached to the event of drawing it.}
+Clearly, either the Null is false or the Null is true and a relatively rare event has occurred.
+Whether a chance of 1 in 50 (equivalent to $p=0.02$) is rare or unexpected enough to make an inference can only be decided by you based on your knowledge of the field you're working in.
+How precise are your measurements?
+What magnitude does your theory predict the difference should be?%
+\footnote{It doesn't make numeric predictions?
+Blimey! Then back to the drawing board.}
+How does the measured difference in reading times compare to differences observed for similar processing penalties?
+In corpus linguistics, we fail to see how $p=0.02$ would be surprising enough in any situation to warrant substantive inferences.
 
 \subsection{The Difference Between Error Intervals and the Z-Test}
+
+The z-test allows us to
 
 \subsection{Differences Between the Fisher Test and the Z-Test}
 
