@@ -428,7 +428,7 @@ The z-test allows us to
 
 \subsection{Differences Between the Fisher Test and the Z-Test}
 
-\subsection{The Distribution of P Values}
+\subsection{The Distribution of P-Values}
 
 \section{The Undiscovered Population}
 

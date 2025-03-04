@@ -656,8 +656,7 @@ We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the 
 Then, we used the samples to calculate the empirical error intervals exclusively based on each sample.
 Think about it:
 We used the simulations of a known population to generate samples, then we took the samples and calculated the error interval \textit{as if we didn't know the population} to see whether the error interval works as we think it should do.
-It's not as good as a mathematical proof, but it relly helps in understanding what statistics is about.
-
+It's not as good as a mathematical proof, but it really helps in understanding what statistics is about.
 Figure~\ref{fig:cisim} shows the true mean and all those empirical error intervals.
 The ones that don't include the true mean are coloured red.
 
@@ -675,7 +674,10 @@ The ones that don't include the true mean are coloured red.
 
 The number of empirical error intervals in these \Sexpr{reps.ci} replications that did include the true mean was \Sexpr{cov.ci}, \ie, \Sexpr{round(cov.ci/reps.ci*100, 1)}\%.
 This is called the \Key{coverage}, and it's very close to the expected---or rather \textit{requested}---value of 95\%.
-We say \textit{requested} because in deciding to calculate the intervals for a proportion of $a=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical error intervals should contain the true mean.
+We say \textit{requested} because in deciding to calculate the intervals for a proportion of $a=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical error intervals should contain the true mean.%
+\footnote{Actually, by calculating error intervals with $a=0.95$ for any parameter, our long-run error is 5\%.
+It doesn't matter whether we keep taking samples from the same population over and over again or whether we first sample this, then that, and then the other.
+It's of no big practical consequence, but a good thing to keep in mind in order not to misinterpret error intervals.}
 We've now called it a \textit{proportion}, but think about it again in terms of \textit{probability}.
 It's the frequentist probability of drawing a sample whose empirical error interval contains the true mean before we actually draw the sample.
 Once it has been drawn, the empirical error interval either contains the true mean or it doesn't, but that's a fact and has no probability attached to it.
@@ -683,7 +685,7 @@ Once it has been drawn, the empirical error interval either contains the true me
 The term \textit{error interval} is our invention.
 It's usually called the \Key{confidence interval}.
 However, there are so many misinterpretations attached to this term that we decided to avoid it.
-A error interval with $a=0.95$ is called the \textit{95\% confidence interval} (and similar for other values of $a$).
+An error interval with $a=0.95$ is called the \textit{95\% confidence interval} (and similar for other values of $a$).
 A very wrong way of interpreting an empirical error interval then goes like this:
 
 \begin{quote} \itshape
@@ -703,7 +705,7 @@ We use error intervals to get an estimate of the true mean with a known probabil
 We call this the \Key{safety of the estimate}:
 The lower the error probability, the safer the estimate.
 If we set $z=1.96$, we will estimate 95\% of all intervals correctly in the long run.
-Setting $z=2.58$ gives us even better chances of getting the estimate right.
+Setting $z$ higher (for example, $z=2.58$) gives us even better long-run chances of getting our estimates right.
 So why don't we always set $z=5$ or something really high?
 Look at Figure~\ref{fig:cisim}.
 If we increased $z$, the samples themselves wouldn't change.
@@ -711,6 +713,8 @@ However, we'd require that more intervals should include the true mean, and the 
 This leads to a higher rate of correct estimates, but the \Key{precision of the estimate} decreases.
 We call precision the narrowness of the error interval:
 The narrower the interval, the higher the precision.
+But be aware that the precision is a value set by us.
+Once again, it does not change the sample itself, and hence it does not change the fact that the sample represents the population (parameter) either well or not.
 
 First, let's calculate empirical error intervals with $z=1.96$ and $z=2.58$, before looking at some more illustrative plots.
 A random replications of the simulation led to the following statistics:
@@ -735,7 +739,7 @@ The 95\% error interval (\ie, $z=1.96$) and the 99\% error interval (\ie, $z=2.5
   \end{math}
 \end{center}
 
-The interval is roughly 6ms larger for the added 4\% success rate.
+\noindent The interval is roughly 6ms larger for the added 4\% success rate.
 For a more comprehensive impression of the effect of manipulating $z$ and the effect of the sample size $n$, we provide Figure~\ref{fig:fourcisims}.
 
 <<fourcisims, fig.cap=paste0("Simulations of empirical error intervals for different z and n with 100 replications each"), echo=F, out.width="85%", fig.pos="t", cache=T>>=
@@ -819,8 +823,12 @@ In the remainder of the chapter, we will introduce error intervals for proportio
 \Bigpoint{Interpretation of Error Intervals}{%
 An error interval for the mean is an attempt to estimate the true mean.
 It provides an interval which covers the true mean with a specified frequentist pre-sample probability.
-For example, a 95\% error interval ($q=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
+For example, a 95\% error interval ($a=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
 Once it is drawn, it either includes the true mean, or a (relatively) rare event has occurred.
+In the long run, it is guaranteed that a proportion of $a$ intervals thus calculated ($a*100$\%) include the true mean.
+An error interval does not quantify any justifiable degree of \textit{confidence} we should have in the estimate, which is why we don't call it \textit{confidence interval}.
+The term \textit{error interval} reflects the fact that all we do is control the error rate of the estimation.
+
 If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% error interval).
 This lowers the error rate in the long run and makes the estimation \textit{safer}.
 A safer estimates increase the size of the intervals and makes it less \textit{precise} (larger intervals).
