@@ -3,5 +3,5 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Modelling With Groups}
+\chapter{Modelling: Grouped Data}
 \label{sec:mixed}

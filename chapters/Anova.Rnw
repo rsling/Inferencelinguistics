@@ -3,7 +3,7 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Differences in Means and Variances}
+\chapter{Inference: Three or More Means}
 \label{sec:anova}
 
 \subsection{\Indepth\ The F Distribution}

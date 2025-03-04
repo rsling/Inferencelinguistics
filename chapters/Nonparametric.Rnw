@@ -3,7 +3,7 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Some Other Scenarios}
+\chapter{Inference: This and That}
 \label{sec:nonparametric}
 
 

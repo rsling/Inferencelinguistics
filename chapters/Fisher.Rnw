@@ -57,7 +57,7 @@ for (i in 1:sim.better.n) {
 
 @
 
-\chapter{Guessing and Counting}
+\chapter{Inference: Successes and Failures}
 \label{sec:fisher}
 
 \section*{Overview}

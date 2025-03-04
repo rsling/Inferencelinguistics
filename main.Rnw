@@ -87,7 +87,7 @@ which.closest <- function(x, v) {
 }
 
 # Shade an area under a curve with xs and ys provided.
-shade <- function(x, y, from, to, col, border = F) {
+shade <- function(x, y, from, to, col, border = F, lwd = the.lwd) {
   .xstart <- which.closest(from, x)
   .xend   <- which.closest(to, x)
 
@@ -102,7 +102,8 @@ shade <- function(x, y, from, to, col, border = F) {
     y[.xend:.xstart],
     min(y)
     )
-  polygon(x = .xcoords, y = .ycoords, col = col, border = border)
+  polygon(x = .xcoords, y = .ycoords, col = col, border = border,
+          lwd = the.lwd)
 }
 @
 

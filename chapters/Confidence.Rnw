@@ -48,7 +48,7 @@ for (n in berry.ns) {
 
 @
 
-\chapter{Sampling Accuracy and Parameter Estimation}
+\chapter{Estimation: Means and Proportions}
 \label{sec:confidence}
 
 \section*{Overview}
@@ -151,7 +151,7 @@ However, this chapter is not about testing but rather about the \Key{estimation}
 In order to get there, we need to talk about the distribution of results in repeated experiments in relation to true values of the DGP.
 We'll use the results from this chapter to develop a general framework for inferential testing in Chapter~\ref{sec:zandt}.
 
-\subsection{Sampling Berries: One, Two, Three, Many}
+\subsection{Sampling Berries: One, Two, Three, Many}\label{sec:samplinberries}
 
 We begin with a simulation of a known situation.
 As explained in Section~\ref{sec:pdist}, this is never the case in actual empirical work.
@@ -351,11 +351,11 @@ Hence, parameter estimates from larger samples have a better chance of estimatin
 However, no amount of quantifiable certainty about the true parameter can ever be gained from a sample!
 }
 
-\section{Variance of Sample Means}\label{sec:variancesamplemeans}
+\section{Error Intervals for Normal Numeric Measurements}
+% \section{Variance of Sample Means}
+\label{sec:variancesamplemeans}
 
-\subsection{Error Intervals for Normal Numeric Measurements}
-
-\subsubsection{The Variance of Sample Means}
+\subsection{The Variance of Sample Means}
 
 Now we know that each increment in sample size counteracts the variance that's inherent in the data points.
 In other words, samples have (on average, \ie, under repeated sampling) the same or less variance than the raw data points.
@@ -547,7 +547,7 @@ In our notation for probabilities from Section~\ref{sec:probability}, for any sa
 The standard error is sometimes also just called $\sigma$ as it is a kind of standard deviation.
 We find it best to distinguish clearly between the standard deviation of primary data points $\sigma$ and the standard deviation of sample means, the standard error of the mean $\ssigma_{\mu}$.
 
-\subsubsection{Theoretical Error Intervals}
+\subsection{Theoretical Error Intervals}
 
 Given that we can calculate the probability of outcomes that lie within a certain interval, we can also ask the inverse question:
 \textit{How many standard errors into each direction (from the mean) define the central 90\%, 95\%, 99\%, etc. sample means under long-run repetition?}
@@ -625,7 +625,7 @@ Continuing with the reading time example, we can take the $\ssigma_{\mu}$ calcul
   \end{math}
 \end{center}
 
-\subsubsection{Empirical Error Intervals}
+\subsection{Empirical Error Intervals}
 
 But wait!
 In normal empirical work, we don't know the true mean and the true standard deviation.
@@ -697,7 +697,7 @@ What it really means is that before taking the sample, there was a probability o
 Now, all we know is that the interval either contains the true mean or a rare event occurred.
 Please go back to Section~\ref{sec:pandsig} to convince yourself that an event with a probability of 0.05 is not that rare after all.
 
-\subsubsection{Varying Z and N}
+\subsection{Varying Z and N}
 
 We use error intervals to get an estimate of the true mean with a known probability of being wrong.
 We call this the \Key{safety of the estimate}:
@@ -1136,7 +1136,7 @@ Figure~\ref{fig:plotnormalone} panel (3) is exactly the same as Figure~\ref{fig:
 Subtracting $\mu$ from the numerator in the exponent just centres it around the mean $\mu$.
 This happens independently of the exponential function.
 Try removing the exponential, and it will still move the curve (which would still look like a scaled parabola by itself).
-Figure~\ref{fig:plotnormalone} panel~(4) corresponds to
+Figure~\ref{fig:plotnormalone} panel~(4) corresponds to:
 
 \begin{center}
   \begin{math}

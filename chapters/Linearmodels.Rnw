@@ -3,7 +3,7 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Modelling Linear Relationships}
+\chapter{Modelling: Linear Relationships}
 \label{sec:modellinglinearrelationships}
 
 

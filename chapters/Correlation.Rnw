@@ -3,5 +3,5 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Quantifiying Correlation Between Variables}
+\chapter{Data: Co-Varying Variables}
 \label{sec:correlation}

@@ -3,7 +3,7 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Summarising Data}
+\chapter{Data: Central Tendency and Variance}
 \label{sec:describing}
 
 \section*{Overview}

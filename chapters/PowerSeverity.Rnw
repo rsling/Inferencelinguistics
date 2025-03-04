@@ -3,5 +3,5 @@
 opts_knit$set(self.contained=FALSE)
 @
 
-\chapter{Positive Inferences}
+\chapter{Inference: Making Positive Inferences}
 \label{sec:powerseverity}
