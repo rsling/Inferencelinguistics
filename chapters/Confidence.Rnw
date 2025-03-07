@@ -1127,8 +1127,8 @@ Figure~\ref{fig:plotnormalone} panel (3) is exactly the same as Figure~\ref{fig:
        xlim = c(60, 180), ylim = c(0, 0.02), bty ="n", xlab = "", ylab = "",
        main = "",
        lwd = 0.5, col = the.cols[2])
-  arrows(125, 0.005, 150, 0.005, 0.075, col = the.cols[3], lwd = the.lwd, code = 3)
-  arrows(115, 0.005, 90, 0.005, 0.075, col = the.cols[3], lwd = the.lwd, code = 3)
+  arrows(125, 0.005, 150, 0.005, 0.075, col = the.cols[3], lwd = the.lwd, code = 2)
+  arrows(115, 0.005, 90, 0.005, 0.075, col = the.cols[3], lwd = the.lwd, code = 2)
   text(137.5, 0.0055, "σ", col = the.cols[3], 0.5)
   text(102.5, 0.0055, "σ", col = the.cols[3], 0.5)
 

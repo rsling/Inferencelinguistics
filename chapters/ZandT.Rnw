@@ -396,20 +396,23 @@ By dividing the distance by the standard error and calculating the z-score, we n
 The z-score is the distance from the mean in a Standard Normal Distribution (with $\mu=0$ and $\sigma=1$) that corresponds to the measured distance from the known mean.
 Hence, $z=\Sexpr{z2.z.rnd}$ can be interpreted independently of the concrete sample mean and population mean, and it establishes a direct link to the probability we're looking for: another \Key{p-value}.
 We can use tables to look up p-values corresponding to z-scores, and for $z=2.1$, we get $Pr=0.02$, which in our application is the p-value $p=0.02$.
-Table~\ref{tab:ptable} shows such a table, and it's the reverse of tables such as Table~\ref{tab:ztable}.
-The values are those for the Standard Normal Distribution with $\mu=0$ and $\sigma=1$.
-Do sou see why?
+Table~\ref{tab:ptable} shows such a table, and it's the reverse of tables such as Table~\ref{tab:ztable}.%
+By the way, the values are those for the Standard Normal Distribution with $\mu=0$ and $\sigma=1$.
+Do you see why?
+We give two columns, one for the single-sided test and one for the two-sided test (see p.~\ref{abs:sided} and immediately Section~\ref{sec:diffciz} below).
 
 <<ptable, echo=F, cache=T, out.width="85%", results="asis">>=
   zs <- seq(1.5, 2.5, 0.1)
   ps <- round(pnorm(zs, lower.tail = F), 2)
-  ztable <- data.frame(Z=zs, Pr = ps)
+  pstt <- round(2*pnorm(zs, lower.tail = F), 2)
+  ztable <- data.frame(Z=zs, "Pr1" = ps, "Pr2" = pstt)
 
   ztable %>%
     as.data.frame.matrix %>%
     kable(align = c("c", "c"), booktabs = T, linesep = "",
           caption = "Probabilities for Some Z-Values",
-          label = "ptable") %>%
+          label = "ptable",
+          col.names = c("Z", "Pr (one-sided)", "Pr (two-sided)")) %>%
     row_spec(0, bold=TRUE)
 @
 
@@ -422,9 +425,125 @@ Blimey! Then back to the drawing board.}
 How does the measured difference in reading times compare to differences observed for similar processing penalties?
 In corpus linguistics, we fail to see how $p=0.02$ would be surprising enough in any situation to warrant substantive inferences.
 
-\subsection{The Difference Between Error Intervals and the Z-Test}
+\subsection{The Difference Between Error Intervals and the Z-Test}\label{sec:diffciz}
 
-The z-test allows us to
+The z-test allows us to check whether a mean measured in an experiment was an unexpected outcome under the Null.
+While we attach a specific statistic---the p-value---to the outcome, it's a matter of debate whether the statistic itself should be interpreted.
+You've probably heard of people calling results \textit{significant} when the reach a certain $sig$-level such as $sig=0.05$.
+When $p<sig$, \textit{we've reached significance}, but when they obtain $p=0.009$ in the next experiment, suddenly that result is \textit{even more significant}.
+While we consider it vital to report the actual p-value and not just $p<sig$, we advise against cascaded conceptions of significance.
+Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the pre-conditions for the test were met properly, and probably many other factors.
+Nobody can tell you or your community what your threshold needs to be.
+For example, you might have seen reports from nuclear physics (such as results from experiments with the Large Hadron Collider of CERN) where it is claimed that $5\sigma$ was reached.
+That's just 5 standard deviations from the expected value under the Null ($z=5$), which corresponds approximately to $p=0.00000029$.
+In physics, this is not interpreted as a test but rather as a requirement for measurements to be taken seriously at all, to be accepted as measurements of something.
+That's because there is large uncertainty in the measurements, and the phenomena of interest are beyond microscopic and can only observed very indirectly.
+Do you need that level of unexpectedness?
+Think about it.
+If you're uncertain and your field has just gotten started (such as linguistics, cognitive science, or social psychology), we recommend you don't start above $sig=0.001$.
+Honestly, $sig=0.05$ is borderline ridiculous.
+
+In any case, if you reach some sig-level under a testing approach, you might proceed to an inference, a decision of some sort.
+Usually, it should be something like this:
+
+\begin{quote} \itshape
+  We're not going to discard our substantive hypothesis just yet, but we'll submit it to further error probing.
+\end{quote}
+
+\noindent Do you see how this is different from the following statement?
+
+\begin{quote} \itshape
+  \Argh We've statistically proven that our substantive hypothesis is correct with a probability of 95\%.
+\end{quote}
+
+\noindent If not, go back to Chapter~\ref{sec:fisher} and start all over again.
+
+While tests and error intervals are related mathematically (see below), they're entirely different in their interpretation.
+You can estimate a value without having any hypotheses at all.
+If you just need to know the average rate at which a manufacturing machine produces defective parts, you might take a sample of 1000 parts, count the proportion of defective parts, calculate a safe error interval (at, say, $a=0.99$), and see whether the resulting interval looks acceptable from an economic point of view.
+If you do this with all your machines over years and decades, you're estimate should have included the true value in close to 99\% of all times.
+Depending on the value of the individual parts, this might be acceptable.
+In Chapter~\ref{sec:powerseverity}, we'll return to this example from toy manufacturing and move it closer to a testing framework.
+
+<<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+
+par.defaults()
+
+xs <- seq(-4, 4, 0.01)
+ys <- dnorm(xs)
+
+plot(x = xs,
+     y = ys,
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = c(-4, 4), col = "white"
+)
+
+shade(xs, ys, -14 , -1.96,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lwd)
+shade(xs, ys, 1.96 , 4,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lwd)
+
+points(1.96, 0.1,
+      col = the.cols[2], pch = 20, cex = 2)
+lines(c(0, 2*1.96), rep(0.1, 2),
+      col = the.cols[2], lwd = the.lwd)
+lines(rep(0, 2),  c(0.11, 0.09),
+      col = the.cols[2], lwd = the.lwd)
+lines(rep(2*1.96, 2),  c(0.11, 0.09),
+      col = the.cols[2], lwd = the.lwd)
+
+lines(x = xs,
+     y = ys,
+     lwd = the.lwd, col = the.darkgray
+)
+@
+
+Their interpretations differ, but frequentist error intervals and frequentist tests are related mathematically.
+To illustrate, let's use an even simpler example where the sampling distribution is the Standard Normal Distribution.
+Hence, $\mu=0$, $\sigma=\ssigma_{\mu}=1$, and we assume that the measured mean was $\xmean=1.96$.
+Since the standard error is 1, all calculations are quite simple.
+First, for the test, $z=1.96\div 1= 1.96$.
+This gives almost exactly $p=0.05$ for the two-sided test, \ie, the test which merely checks whether the measured mean lies in the outermost 5\% of the probability mass.
+In Figure~\ref{fig:convzci}, the shaded areas correspond to those five percent, and they begin at a distance of $1.96$ to both sides of the mean.
+If we calculate an error interval with $a=0.95$ around the measurement of $\xmean=1.96$, it is exactly $1.96$ wide to both sides of the measured mean.
+Hence, it includes $0$, as you can see in Figure~\ref{fig:convzci}, where the error interval is plotted in blue.
+
+<<convzciss, fig.cap=paste0("Convergence of z-test and error interval: single-sided test"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+
+par.defaults()
+
+xs <- seq(-4, 4, 0.01)
+ys <- dnorm(xs)
+
+plot(x = xs,
+     y = ys,
+     type = "l", lwd = the.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = c(-4, 4), col = "white"
+)
+
+shade(xs, ys, 1.645, 4,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lwd)
+
+points(1.645, 0.15,
+      col = the.cols[2], pch = 20, cex = 2)
+lines(c(0, 1.645), rep(0.15, 2),
+      col = the.cols[2], lwd = the.lwd)
+lines(rep(0, 2),  c(0.14, 0.16),
+      col = the.cols[2], lwd = the.lwd)
+
+lines(x = xs,
+     y = ys,
+     lwd = the.lwd, col = the.darkgray
+)
+@
+
+The two-sided z-test at some $sig$-level (in this case $sig=0.05$) is equivalent to checking whether the error interval for $a=1-sig$ contains the population mean $\mu$.
+This extends to a single-sided test and a single-sided error interval, which only extends to one side from the measured mean.
+See Figure~\ref{fig:convzciss}, where we assume $\mu=0$, $\sigma=\ssigma_{\mu}=1$, and $\xmean=1.65$.
+The error interval is left-sided, and it corresponds to the right-sided test.
+As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the single-sided z-test, the interval again includes $0$.
 
 \subsection{Differences Between the Fisher Test and the Z-Test}
 

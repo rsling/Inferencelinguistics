@@ -876,7 +876,7 @@ The test would be a \Key{two-sided test} because it would test for deviations to
 Based on our substantive hypothesis, however, we were only interested in deviations into one direction, namely \alert{a lower relative number (proportion) of occurrences of \textit{sleep} in the passive voice compared to the overall proportion of active and passive voice in the corpus}.
 Hence, the actual Null must have something like: \textit{The verb `sleep' passivises as often or less often than the totality of all other verbs verb.}
 The test was a \Key{single-sided test}, in this case a right-sided test (see Section~\ref{sec:hypergeometric}).
-If $q_{\textsc{passive}(\textit{sleep})}$ denotes the proportion of passives of \textit{sleep} and $q_{\textsc{passive}(\neg\textit{sleep})}$ denotes the proportion of passives of all the other verbs, then the formalisation of the Null is:
+If $q_{\textsc{passive}(\textit{sleep})}$ denotes the proportion of passives of \textit{sleep} and $q_{\textsc{passive}(\neg\textit{sleep})}$ denotes the proportion of passives of all the other verbs, then the formalisation of the Null is:\label{abs:sided}
 
 \begin{center}
 \begin{math}
