@@ -440,8 +440,8 @@ In physics, this is not interpreted as a test but rather as a requirement for me
 That's because there is large uncertainty in the measurements, and the phenomena of interest are beyond microscopic and can only observed very indirectly.
 Do you need that level of unexpectedness?
 Think about it.
-If you're uncertain and your field has just gotten started (such as linguistics, cognitive science, or social psychology), we recommend you don't start above $sig=0.001$.
-Honestly, $sig=0.05$ is borderline ridiculous.
+If you're uncertain and your field has just gotten started (such as linguistics, cognitive science, or social psychology), we recommend you don't dare to be any more lenient than $sig=0.001$.
+Honestly, $sig=0.05$ is borderline ridiculous!
 
 In any case, if you reach some sig-level under a testing approach, you might proceed to an inference, a decision of some sort.
 Usually, it should be something like this:
@@ -456,13 +456,13 @@ Usually, it should be something like this:
   \Argh We've statistically proven that our substantive hypothesis is correct with a probability of 95\%.
 \end{quote}
 
-\noindent If not, go back to Chapter~\ref{sec:fisher} and start all over again.
+\noindent If you don't see this, go back to Chapter~\ref{sec:fisher} and start all over again.
 
 While tests and error intervals are related mathematically (see below), they're entirely different in their interpretation.
 You can estimate a value without having any hypotheses at all.
 If you just need to know the average rate at which a manufacturing machine produces defective parts, you might take a sample of 1000 parts, count the proportion of defective parts, calculate a safe error interval (at, say, $a=0.99$), and see whether the resulting interval looks acceptable from an economic point of view.
-If you do this with all your machines over years and decades, you're estimate should have included the true value in close to 99\% of all times.
-Depending on the value of the individual parts, this might be acceptable.
+If you do this with all your machines over many years and decades, your estimate will included the true value in close to 99\% of all times.
+Depending on the value of the individual parts that you're working with in your business, this might be acceptable.
 In Chapter~\ref{sec:powerseverity}, we'll return to this example from toy manufacturing and move it closer to a testing framework.
 
 <<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
