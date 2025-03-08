@@ -69,6 +69,7 @@ opts_chunk$set(cache.path='cache/',
 # render_listings()
 
 the.lwd <- 4
+the.lean.lwd <- 3
 the.pchs <- c(20)
 the.cols <- c("seagreen", "dodgerblue3", "sienna3", "gold1")
 the.lightcols <- c(lighten(the.cols[1], 0.75), lighten(the.cols[2], 0.75), lighten(the.cols[3], 0.5), lighten(the.cols[4], 0.5))
@@ -78,7 +79,7 @@ the.midgray <- "darkgray"
 the.darkgray <- darken("darkgray", 0.5)
 
 par.defaults <- function(){
-  par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))
+  par(mfrow=c(1,1), mar = c(5.1, 4.1, 4.1, 2.1), family = "Plotfont")
 }
 
 # Get value closest to given value.
@@ -87,7 +88,7 @@ which.closest <- function(x, v) {
 }
 
 # Shade an area under a curve with xs and ys provided.
-shade <- function(x, y, from, to, col, border = F, lwd = the.lwd) {
+shade <- function(x, y, from, to, col, border = F, lwd = 1) {
   .xstart <- which.closest(from, x)
   .xend   <- which.closest(to, x)
 
@@ -103,8 +104,34 @@ shade <- function(x, y, from, to, col, border = F, lwd = the.lwd) {
     min(y)
     )
   polygon(x = .xcoords, y = .ycoords, col = col, border = border,
-          lwd = the.lwd)
+          lwd = lwd)
 }
+
+
+
+# To reliably set the font in R plots.
+font_paths("/Users/roland/Library/Fonts")
+font_add("Plotfont",
+         regular    = "LinBiolinum_R.otf",
+         bold       = "LinBiolinum_RB.otf",
+         italic     = "LinBiolinum_RI.otf")
+showtext_auto()
+
+font.settings <- list(
+         font = 1,
+         cex = 1,
+         fontfamily = "Plotfont")
+my.theme <- list(
+         par.xlab.text = font.settings,
+         par.ylab.text = font.settings,
+         axis.text = font.settings)
+trellis.par.set(my.theme)
+
+
+my.largs <- list(
+     gp_labels = gpar(fontfamily = "Plotfont"),
+     gp_varnames = gpar(fontfamily = "Plotfont")
+     )
 @
 
 <<child="localfontconfig.Rnw">>=

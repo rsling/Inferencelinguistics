@@ -84,9 +84,9 @@ If these conditions are not met, other tests (such as the t-test for two samples
 For the sake of illustration, let's assume that the population mean is $\mu=\Sexpr{z.mu}$ (for example milliseconds) and the population variance is\label{page:varianceisfour} $\sigma^2=\Sexpr{z.sigma^2}$, which corresponds to a standard deviation of $\sigma=\Sexpr{z.sigma}$.
 If the population values are generated according to a normal distribution, values are distributed according to the now well-known \Key{Probability Density Function} (PDF) in Figure~\ref{fig:z1}.
 
-<<z1, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z.n, " measurements from the population"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+<<z1, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z.n, " measurements from the population"), echo=F, fig.pos="t", cache=F>>=
 
-par(mfrow = c(2,1), mar = c(2,1,1,1))
+par(mfrow = c(2,1), mar = c(2,1,1,1), family = "Plotfont")
 
 plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
      y = z.dnorm(seq(z.minmax[1], z.minmax[2], 0.1)),
@@ -139,9 +139,9 @@ The mean from the sample is higher than the theoretically known mean, but this m
 In frequentist terms, such a sample is expected under the Null as well.
 We need to know the probability of a sample that deviates from the known mean to such a degree (or a stronger degree) in order to proceed to an inference.
 
-<<z2, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z2.n, " measurements from some population"), echo=F, out.width="85%", fig.pos="t", cache=F>>=
+<<z2, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z2.n, " measurements from some population"), echo=F, fig.pos="t", cache=F>>=
 
-par(mfrow = c(2,1), mar = c(2,1,1,1))
+par(mfrow = c(2,1), mar = c(2,1,1,1), family = "Plotfont")
 
 plot(x = seq(z.minmax[1], z.minmax[2], 0.1),
      y = z.dnorm(seq(z.minmax[1], z.minmax[2], 0.1)),
@@ -246,7 +246,9 @@ The standard error of the mean in this case is (revise Equation~\ref{eq:semean} 
   \ssigma_{\mu}=\frac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\sqrt{\frac{\Sexpr{z.sigma}^2}{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
 \end{math}\end{center}
 
-<<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", out.width="85%", cache=F>>=
+<<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", fig.height=4, cache=F>>=
+
+par(mar=c(3,2,2,2), family = "Plotfont")
 
 z.minmax <- c(110, 130)
 
@@ -271,6 +273,8 @@ lines(x = seq(z.minmax[1], z.minmax[2], 0.1),
 )
 
 text(x = z.mu+0.6, y = z.dnorm(z.mu)/2, labels = "μ", col = the.cols[2])
+
+par.defaults()
 @
 
 Remember what the standard error is all about (Chapter~\ref{sec:confidence}).
@@ -288,9 +292,9 @@ In other words, we can calculate how many sample means (from samples of size $n=
 Instead of calculating the numbers and probabilities of individual events as in the Tea-Tasting Experiment, we use the known functions of the Normal Distribution to look up those values.
 This gives us a very precise and well-defined measure of how surprising the obtained result would be if the Null were true.
 
-<<z4, fig.cap=paste0("Left: PDF of the distribution of sample means for mean µ and standard error SE with obtained sample mean $\\xmean$ and corresponding z-value; area under the curve for results equal to or greater than $\\xmean$ is shaded; Right: CDF for the same distribution with obtained sample mean $\\xmean$"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<z4, fig.cap=paste0("Left: PDF of the distribution of sample means for mean µ and standard error SE with obtained sample mean $\\xmean$ and corresponding z-value; area under the curve for results equal to or greater than $\\xmean$ is shaded; Right: CDF for the same distribution with obtained sample mean $\\xmean$"), echo=F, fig.pos="t", cache=F, fig.height=4>>=
 
-par(mfrow=c(1,2))
+par(mfrow=c(1,2), mar=c(3,2,2,2), family = "Plotfont")
 
 z.minmax <- c(114, 126)
 xs <- seq(z.minmax[1], z.minmax[2], 0.1)
@@ -306,7 +310,7 @@ plot(x = xs,
 lines(x = c(z.mu, z.mu), y = c(0, z2.dnorm.sample(z.mu)),
       lwd = the.lwd, col = the.cols[2])
 
-shade(xs, ys, 122 , z.minmax[2],
+shade(xs, ys, z2.mu, z.minmax[2],
       col = the.lightcols[1], border=the.cols[1], lwd = the.lwd)
 
 text(x = z.mu+3.25, y = z2.dnorm.sample(z.mu)/2.5, col = the.cols[2],
@@ -399,9 +403,9 @@ We can use tables to look up p-values corresponding to z-scores, and for $z=2.1$
 Table~\ref{tab:ptable} shows such a table, and it's the reverse of tables such as Table~\ref{tab:ztable}.%
 By the way, the values are those for the Standard Normal Distribution with $\mu=0$ and $\sigma=1$.
 Do you see why?
-We give two columns, one for the single-sided test and one for the two-sided test (see p.~\ref{abs:sided} and immediately Section~\ref{sec:diffciz} below).
+We give two columns, one for the single-sided test and one for the two-sided test (see p.~\ref{abs:sided}, immediately below, and Section~\ref{sec:diffciz}).
 
-<<ptable, echo=F, cache=T, out.width="85%", results="asis">>=
+<<ptable, echo=F, cache=T, results="asis">>=
   zs <- seq(1.5, 2.5, 0.1)
   ps <- round(pnorm(zs, lower.tail = F), 2)
   pstt <- round(2*pnorm(zs, lower.tail = F), 2)
@@ -424,6 +428,118 @@ What magnitude does your theory predict the difference should be?%
 Blimey! Then back to the drawing board.}
 How does the measured difference in reading times compare to differences observed for similar processing penalties?
 In corpus linguistics, we fail to see how $p=0.02$ would be surprising enough in any situation to warrant substantive inferences.
+
+One final word on the \Key{one-sided test} and the \Key{two-sided test}, also called single-tailed and two-tailed.
+In the example in this section, the substantive hypothesis was $\mu_1>\mu$, and the Null was consequently $H_0: \mu_1\leq\mu$.
+We were interested in the probability of obtaining a mean as high as $\Sexpr{z2.z.rnd}$ or higher if $\mu_1\leq\mu$, and hence values that deviate negatively (to the left of) $\mu=\Sexpr{z.mu}$ wouldn't be surprising at all and aren't counted.
+There are two other possible scenarios we could have wished to test.
+Our substantive hypothesis could have been $\mu_1<\mu$.
+Alternatively, it could have been $\mu_1\not =\mu$.
+The corresponding Nulls are $H_0: \mu_1\geq\mu$ and $H_0: \mu_1=\mu$.
+
+<<tails, fig.cap=paste0("Single-sided and two-sided tests"), echo=F, fig.pos="t", fig.height=4, cache=F>>=
+
+par(mfrow=c(1,3), mar=c(2,0.5,1.5,0.5), family = "Plotfont")
+
+xs <- seq(-4, 4, 0.01)
+ys <- dnorm(xs)
+a.cex <- 1.4
+
+plot(x = xs,
+     y = ys,
+     type = "l", lwd = the.lean.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = c(-4, 4), col = "white",
+     main="Null: μ₁≤μ"
+)
+
+lines(c(0, 0), c(0, ys[round(length(xs)/2+0.1, 0)]),
+      lwd = the.lean.lwd, col = the.cols[2])
+
+shade(xs, ys, z2.z.rnd, 4,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lean.lwd)
+
+arrows(0.2, 0.025, z2.z.rnd-0.2, 0.025, length = 0.05,
+       lwd = the.lean.lwd, col = the.cols[3])
+text(z2.z.rnd/2, 0.05, paste0("z=", z2.z.rnd), col = the.cols[3], cex=a.cex)
+text(z2.z.rnd+1.2, 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+
+lines(x = xs,
+     y = ys,
+     lwd = the.lean.lwd, col = the.darkgray
+)
+
+plot(x = xs,
+     y = ys,
+     type = "l", lwd = the.lean.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = c(-4, 4), col = "white",
+     main="Null: μ₁≥μ"
+)
+
+lines(c(0, 0), c(0, ys[round(length(xs)/2+0.1, 0)]),
+      lwd = the.lean.lwd, col = the.cols[2])
+
+shade(xs, ys, -4, -z2.z.rnd,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lean.lwd)
+
+arrows(-0.2, 0.025, -(z2.z.rnd-0.2), 0.025, length = 0.05,
+       lwd = the.lean.lwd, col = the.cols[3])
+text(-(z2.z.rnd/2), 0.05, paste0("z=-", z2.z.rnd), col = the.cols[3], cex=a.cex)
+text(-(z2.z.rnd+1.2), 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+
+lines(x = xs,
+     y = ys,
+     lwd = the.lean.lwd, col = the.darkgray
+)
+
+
+plot(x = xs,
+     y = ys,
+     type = "l", lwd = the.lean.lwd,
+     bty="n", yaxt="n", ylab = "", xlab = "",
+     xlim = c(-4, 4), col = "white",
+     main="Null: μ₁≠μ"
+)
+lines(c(0, 0), c(0, ys[round(length(xs)/2+0.1, 0)]),
+      lwd = the.lean.lwd, col = the.cols[2])
+
+shade(xs, ys, z2.z.rnd, 4,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lean.lwd)
+arrows(0.2, 0.025, z2.z.rnd-0.2, 0.025, length = 0.05,
+       lwd = the.lean.lwd, col = the.cols[3])
+text(z2.z.rnd/2, 0.05, paste0("z=", z2.z.rnd), col = the.cols[3], cex=a.cex)
+text(z2.z.rnd+1.2, 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+
+shade(xs, ys, -4, -z2.z.rnd,
+      col = the.lightcols[1], border=the.cols[1], lwd = the.lean.lwd)
+arrows(-0.2, 0.025, -(z2.z.rnd-0.2), 0.025, length = 0.05,
+       lwd = the.lean.lwd, col = the.cols[3])
+text(-(z2.z.rnd/2), 0.05, paste0("z=-", z2.z.rnd), col = the.cols[3], cex=a.cex)
+text(-(z2.z.rnd+1.2), 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+
+lines(x = xs,
+     y = ys,
+     lwd = the.lean.lwd, col = the.darkgray
+)
+
+par.defaults()
+@
+
+Each of these cases corresponds to a slightly different test, illustrated in Figure~\ref{fig:tails} for the Standard Normal Distribution as the distribution of sample means, but with the z-value from the example above\ie, $z=\Sexpr{z2.z.rnd}$.
+On the left, the test as conducted above is repeated.
+We deviate by $z=\Sexpr{z2.z.rnd}$ from the known mean $\mu$, and that defines 2\% of the area under the curve, hence $p=0.02$.
+In the middle, the opposite is shown, which is applicable if the Null is: \textit{the unknown mean $\mu_1$ is equal to or larger than the known mean $\mu$}.
+In this case, we're only interested in negative deviations from the known mean $\mu$.
+The probability corresponding to a negative z-statistic in the one-sided case is the same as the one corresponding to a positive z-statistic, hence $p=0.02$ according to Table~\ref{tab:ptable}.
+Finally, if your hypothesis is an \Key{undirected hypothesis} and we only suspect the sample mean \xmean\ represents a mean $\mu_1$ that is different from $\mu$, we have to take into account both tails of the distribution, which simply doubles the p-value to $p=0.04$.
+The right panel in Figure~\ref{fig:tails} clearly shows that values as extreme of more extreme than $z=\Sexpr{z2.z.rnd}$ in either direction of $\mu$ correspond to the double area under the curve.
+
+If you think this is trivial, you're lucky.
+However, don't be too hard on yourself if you find this difficult to fiddle apart and to memorise.
+This is completely normal, and it has nothing to do with you or frequentist statistics.
+Fort some reason, many human brains have difficulties of keeping track of positive and negative signs of z-statistics, greater-than and smaller-than relation, while having to flip them around in formulating and evaluating hypotheses.
+Just give it time.
 
 \subsection{The Difference Between Error Intervals and the Z-Test}\label{sec:diffciz}
 
@@ -465,9 +581,10 @@ If you do this with all your machines over many years and decades, your estimate
 Depending on the value of the individual parts that you're working with in your business, this might be acceptable.
 In Chapter~\ref{sec:powerseverity}, we'll return to this example from toy manufacturing and move it closer to a testing framework.
 
-<<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", cache=F, fig.height=5>>=
 
 par.defaults()
+par(family = "Plotfont")
 
 xs <- seq(-4, 4, 0.01)
 ys <- dnorm(xs)
@@ -509,9 +626,10 @@ In Figure~\ref{fig:convzci}, the shaded areas correspond to those five percent, 
 If we calculate an error interval with $a=0.95$ around the measurement of $\xmean=1.96$, it is exactly $1.96$ wide to both sides of the measured mean.
 Hence, it includes $0$, as you can see in Figure~\ref{fig:convzci}, where the error interval is plotted in blue.
 
-<<convzciss, fig.cap=paste0("Convergence of z-test and error interval: single-sided test"), echo=F, fig.pos="t", out.width="100%", cache=F>>=
+<<convzciss, fig.cap=paste0("Convergence of z-test and error interval: single-sided test"), echo=F, fig.pos="t", cache=F, fig.height=5>>=
 
 par.defaults()
+par(family = "Plotfont")
 
 xs <- seq(-4, 4, 0.01)
 ys <- dnorm(xs)
