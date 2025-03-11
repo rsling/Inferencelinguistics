@@ -834,7 +834,7 @@ An error interval for the mean is an attempt to estimate the true mean.
 It provides an interval which covers the true mean with a specified frequentist pre-sample probability.
 For example, a 95\% error interval ($a=0.95$) means that before the sample is drawn, it has a probability of 0.95 of actually including the true mean.
 Once it is drawn, it either includes the true mean, or a (relatively) rare event has occurred.
-In the long run, it is guaranteed that a proportion of $a$ intervals thus calculated ($\Sexpr{a*100}$\%) include the true mean.
+In the long run, it is guaranteed that a proportion of $a$ intervals thus calculated ($a\cdot 100$\%) include the true mean.
 An error interval does not quantify any justifiable degree of \textit{confidence} we should have in the estimate, which is why we don't call it \textit{confidence interval}.
 The term \textit{error interval} reflects the fact that we merely control the error rate of the estimation.
 
