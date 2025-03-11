@@ -544,16 +544,19 @@ Just give it time.
 \subsection{The Difference Between Error Intervals and the Z-Test}\label{sec:diffciz}
 
 The z-test allows us to check whether a mean measured in an experiment was an unexpected outcome under the Null.
-While we attach a specific statistic---the p-value---to the outcome, it's a matter of debate whether the statistic itself should be interpreted.
-You've probably heard of people calling results \textit{significant} when the reach a certain $sig$-level such as $sig=0.05$.
-When $p<sig$, \textit{we've reached significance}, but when they obtain $p=0.009$ in the next experiment, suddenly that result is \textit{even more significant}.
+We attach a specific statistic---the p-value---to the outcome.
+It's a matter of debate whether the statistic itself should be interpreted directly numerically.
+However, you've probably heard of people using the p-value to make decisions when it's smaller than a certain threshold called $\alpha$-level or---as we prefer---$sig$-level
+They call results \textit{significant} when they reach a certain level such as $sig=0.05$.
+When $p<sig$, \textit{we've reached significance}.
+However, when $p=0.009$ in the next experiment, suddenly that result might be called \textit{even more significant}.
 While we consider it vital to report the actual p-value and not just $p<sig$, we advise against cascaded conceptions of significance.
 Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the pre-conditions for the test were met properly, and probably many other factors.
-Nobody can tell you or your community what your threshold needs to be.
+Nobody can tell you or your reseqarch community what your threshold needs to be.
 For example, you might have seen reports from nuclear physics (such as results from experiments with the Large Hadron Collider of CERN) where it is claimed that $5\sigma$ was reached.
-That's just 5 standard deviations from the expected value under the Null ($z=5$), which corresponds approximately to $p=0.00000029$.
+That's just 5 standard deviations from the expected value under the Null ($z=5$), which corresponds to approximately $p=0.00000029$.
 In physics, this is not interpreted as a test but rather as a requirement for measurements to be taken seriously at all, to be accepted as measurements of something.
-That's because there is large uncertainty in the measurements, and the phenomena of interest are beyond microscopic and can only observed very indirectly.
+That's because there is large uncertainty in the measurements, and the phenomena of interest are tiny beyond microscopic and can only observed very indirectly.
 Do you need that level of unexpectedness?
 Think about it.
 If you're uncertain and your field has just gotten started (such as linguistics, cognitive science, or social psychology), we recommend you don't dare to be any more lenient than $sig=0.001$.
@@ -575,8 +578,8 @@ Usually, it should be something like this:
 \noindent If you don't see this, go back to Chapter~\ref{sec:fisher} and start all over again.
 
 While tests and error intervals are related mathematically (see below), they're entirely different in their interpretation.
-You can estimate a value without having any hypotheses at all.
-If you just need to know the average rate at which a manufacturing machine produces defective parts, you might take a sample of 1000 parts, count the proportion of defective parts, calculate a safe error interval (at, say, $a=0.99$), and see whether the resulting interval looks acceptable from an economic point of view.
+You can estimate a value without having any hypothesis at all.
+For example, if you just want to find out the average rate at which a manufacturing machine produces defective parts, you might take a sample of 1000 parts, count the proportion of defective parts, calculate a safe error interval (at, say, $a=0.99$), and see whether the resulting interval looks acceptable from an economic point of view.
 If you do this with all your machines over many years and decades, your estimate will included the true value in close to 99\% of all times.
 Depending on the value of the individual parts that you're working with in your business, this might be acceptable.
 In Chapter~\ref{sec:powerseverity}, we'll return to this example from toy manufacturing and move it closer to a testing framework.

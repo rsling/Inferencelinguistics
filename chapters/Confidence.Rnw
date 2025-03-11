@@ -130,45 +130,46 @@ People in Buckinghamshire are born and die, and people change their political af
 German sentences are produced at a breathtaking rate, and even the population of speakers of German changes every minute.
 If the population really mattered as a fixed construct of a well-defined (even if unknown) size, we'd have to repeat all empirical work every day, second, or even millisecond.
 
-While it's sometimes stressed that the population needs to be infinite or at least significantly larger than the sample, we see this rarely ever playing an important role in empirical science.
+While it's sometimes stressed that the population needs to be conceptuall infinite or at least significantly larger than the sample (for mathematical reasons), we see this rarely ever playing an important role in empirical science.
 What's more, the whole idea of a fixed and huge population from which we draw a sample is not very helpful.
 Why does any linguist draw a sample of German sentences?
-In the post-structuralist era, it's not because we want to find out properties of a massive collection of sentences but because we're interested in the mechanism that generates such sentences.
+In the post-structuralist era, it's not because we want to find out the properties of a massive collection of sentences but because we're interested in the mechanism that generates such sentences.
 It doesn't matter which model of grammar a linguist believes in:
-When they look at a sample of sentences they ask what is the grammar like that produces such sentences, be it a formal or a cognitive concept of grammar.
-Hence, we consider it much more appropriate and intuitive to speak of the \Key{data-generating process} (DGP) rather than the population.
-The process can be conceived of as cognitive, social, or even purely formal.
+When they look at a sample of sentences they ask what is the grammar like that produces such sentences, be it a formal or a cognitive type of grammar.
+Hence, we consider it much more appropriate and intuitive to speak of the \Key{data-generating process} (DGP) rather than the population, although we conveniently drop back to talking about a \textit{population} because it sometimes just sounds better in a sentence.
+The data-generating process can be conceived of as cognitive, social, or even purely formal.
 In fact, our simulations (see Section~\ref{sec:pdist}) simulate exactly such processes.
 Since any scientifically interesting process can, in principle, generate ever new data points, the population of those data points is conceptually infinite.
 
 In this chapter, we ask a very crucial question.
-How reliable is a sample in representing the DGP (or, in old-school terms, the population)?
+How reliable can we expect a sample to be in representing the DGP (or, in old-school terms, the population)?
 Imagine English speakers were programmed (through cognitive constraints) to produce only 2\% passives of \textit{sleep}.
 In this case, the true parameter with which the DGP was set up is 2\% (a proportion of 0.02).
 How well can you expect to approximate this percentage\slash proportion with a sample of size $n=1$, $n=10$, $n=100$, and so on?
 Do you see how this question is related to the logic of testing introduced in Chapter~\ref{sec:fisher}?
-However, this chapter is not about testing but rather about the \Key{estimation} a parameter of the population from a sample.
+However, this chapter is not about \textit{testing} but rather about the \Key{estimation} a parameter of the population from a sample.
 In order to get there, we need to talk about the distribution of results in repeated experiments in relation to true values of the DGP.
 We'll use the results from this chapter to develop a general framework for inferential testing in Chapter~\ref{sec:zandt}.
 
 \subsection{Sampling Berries: One, Two, Three, Many}\label{sec:samplinberries}
 
 We begin with a simulation of a known situation.
-As explained in Section~\ref{sec:pdist}, this is never the case in actual empirical work.
+As explained in Section~\ref{sec:pdist}, we can never do this in actual empirical work.
 We do empirical research to find out what reality is like, precisely because we don't know what it's like.
-However, simulating a known reality allows us to explore and illustrate what happens in actual empirical work.
+However, simulating a known (even fictitious) reality allows us to explore and illustrate what happens in actual empirical work.
 Hence, we now simulate a berry-generating Haribo process that produces blackberries at a rate of $\Sexpr{berry.prob}$ (or $\Sexpr{berry.prob*100}$\%).
-In the long run, bags of Haribo Berries produced by this process should contain a proportion of $q\Sub{blackberry}=\Sexpr{berry.prob}$ on average.
+In the long run, bags of Haribo Berries produced by this process will contain a proportion of $q\Sub{blackberry}=\Sexpr{berry.prob}$ on average.
 That does not mean, however, that \textit{each} bag will contain \textit{exactly} $\Sexpr{berry.prob*100}$\% blackberries.
 Also, we expect larger samples to better approximate the true proportion of blackberries.
 We've been re-iterating this point and variations of it throughout the previous chapters.
 
 The simulated process allows us to pretend that we have a machine that randomly fills bags with berries from a production line that produces $\Sexpr{berry.prob*100}$\% blackberries and $\Sexpr{(1-berry.prob)*100}$\% raspberries.
-We call each such bag a \textit{simulation run} or a \Key{replication}.
+We call each simulated filling of such bag a \textit{simulation run} or a \Key{replication}.
 In Figure~\ref{fig:berryone}, we plot the results for \Sexpr{berry.reps} replications at a sample size of $n=1$.
 Each dot represents one bag containing a single berry filled by a machine that produces $\Sexpr{berry.prob*100}$\% blackberries by design.
 We plot the proportion of blackberries in the sample.
-As a sample of 1 berry contains either a blackberry or a raspberry and nothing else, the proportion of blackberries can only be either 0 or 1.
+As a sample of 1 berry contains either a blackberry or a raspberry, and there isn't an in-between option.
+Hence, the proportion of blackberries can only be either 0 or 1 at $n=1$.
 
 <<berryone, fig.cap=paste0("Proportions measured in 100 replications at n=1 with a true proportion of 0.3"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
@@ -183,8 +184,8 @@ As a sample of 1 berry contains either a blackberry or a raspberry and nothing e
   text(x = 70, y = 0.35, paste0("True proportion: ", berry.prob), col = the.cols[2])
 @
 
-That's \Sexpr{length(which(unlist(berry.sims["1"])==0))} samples of size $n=1$ containing no blackberry (proportion $q=0$) and \Sexpr{berry.reps-length(which(unlist(berry.sims["1"])==0))} containing a blackberry (proportion $q=1$).
-The individual samples do the best they can to approximate the true proportion of $\Sexpr{berry.prob}$, but at $n=1$, the options are limited.
+We got \Sexpr{length(which(unlist(berry.sims["1"])==0))} samples of size $n=1$ containing no blackberry (proportion $q=0$) and \Sexpr{berry.reps-length(which(unlist(berry.sims["1"])==0))} containing one blackberry (proportion $q=1$).
+The individual samples do the best they can to approximate the true proportion of $\Sexpr{berry.prob}$, but at $n=1$, the options are severely limited.
 In this extreme case, however, the \textit{proportion of samples} where there was a blackberry (\Sexpr{(berry.reps-length(which(unlist(berry.sims["1"])==0)))/berry.reps}) approximates the true value reasonably well.
 
 We now increase the sample size step by step.
@@ -205,13 +206,13 @@ At each increment, we simulate \Sexpr{berry.reps} replications and plot the prop
  par.defaults()
 @
 
-We don't need to analyse these results numerically.
+\noindent We don't need to analyse these results numerically.
 It should be immediately obvious that the samples approximate the true value more reliably.
 With very small samples (up to $n=5$ in this example), results are still very limited in their possible outcomes, and it's impossible to hit the true proportion of \Sexpr{berry.prob} precisely.
 But most of the samples drift towards the best approximation possible.
-(Keep in mind that each dot represents ons sample at the respective sample size.)
-With $n=10$, the sample proportions start to form a clearly distinguishable cloud around the true value.
-Let's see what happens with samples of substantial size in Figure~\ref{fig:berrybig}.
+(Keep in mind that each dot represents one sample of the respective sample size.)
+At $n=10$, the sample proportions start to form a clearly distinguishable cloud around the true value.
+Let's see what happens with samples of more substantial sizes in Figure~\ref{fig:berrybig}.
 
 <<berrybig, fig.cap=paste0("Proportions measured in 100 replications at n=20, n=50, n=100, and n=1000 with a true proportion of 0.3"), echo=F, fig.pos="t", cache=T>>=
   par(mfrow=c(2,2), mar = c(2,2,2,2), family = "Plotfont")
@@ -285,11 +286,11 @@ points(.normsample,
 @
 
 It shows a single sample with $n=100$ generated by a DGP that is set to $\mu=\Sexpr{rt.mean}$ and $\sigma=\Sexpr{rt.sd}$.
-The dots are single data points.
+The dots are single data points (\ie, one person reading one word).
 Values close to $\mu=\Sexpr{rt.mean}$ have the highest probability (and hence the highest frequency in repeated sampling).
 The average deviation of the values is at $\mu-\sigma=\Sexpr{rt.mean-rt.sd}$ and at $\mu+\sigma=\Sexpr{rt.mean+rt.sd}$.
-Since this is just the average deviation, we do not expect there to be a higher number of measurements around these two points, of course.
-They're just the centre points of the negative and positive deviations, respectively.
+Since this is just the average deviation, and we do not expect there to be a higher number of measurements around these two points, of course.
+They're just the central tendency of the negative and positive deviations, respectively.
 Figure~\ref{fig:rtsmall} shows what happens in \Sexpr{rt.reps} simulated samples at sizes of $n=1$, $n=3$, $n=5$, and $n=10$.
 
 <<rtsmall, fig.cap=paste0("Means measured in 100 replications at n=1, n=3, n=5, and n=10 with a true mean of σ=120 and a true standard deviation of μ=20"), echo=F, fig.pos="t", cache=T>>=
@@ -341,13 +342,13 @@ It's still possible to draw a very extreme sample, but the probability of drawin
 We hope that our illustration was intuitive enough and laid the foundations for the statistics introduced in Section~\ref{sec:variancesamplemeans} and \ref{sec:variabilitysampleproportions}.
 The way we introduced the idea of sampling variation---we hope---has made it clear that it's a frequentist concept.
 If we took a lot of samples (100 in the examples above), then we'd see the patterns that we saw in the plots.
-Nothing can be known for certain or with a quantifiable reliability from a single sample.
+However, nothing can be known for certain or with a quantifiable reliability about the DGB from a single sample.
 Please keep this in mind.
-The Statistics Wars were fought about misunderstandings of this simple fact (see Chapter~\ref{sec:powerseverity}).
+The Statistics Wars were fought about misunderstandings of this and other simple facts (see Chapter~\ref{sec:powerseverity}).
 
 \Bigpoint{Sample Size in Parameter Estimation}{%
 When we use a sample to estimate a population parameter, we can rely on some simple facts about variance and sample size.
-A larger variance in the data-generating process (DGP) makes estimates less accurate.
+A larger variance in the data-generating process (DGP) makes estimates of their mean less accurate.
 On the other hand, larger samples average over the variance that makes the individual data points bounce around the true parameter.
 Hence, parameter estimates from larger samples have a better chance of estimating the true parameter more accurately.
 However, no amount of quantifiable certainty about the true parameter can ever be gained from a sample!
@@ -360,17 +361,18 @@ However, no amount of quantifiable certainty about the true parameter can ever b
 \subsection{The Variance of Sample Means}
 
 Now we know that each increment in sample size counteracts the variance that's inherent in the data points.
-In other words, samples have (on average, \ie, under repeated sampling) the same or less variance than the raw data points.
-They only have the same variance if $n=1$, and even with $n=2$, the variance already decreases.
+In other words, repeated (not individual!) samples have the same or less variance than the raw data points.
+They only have the same variance (under repeated sampling) if $n=1$.
+Even with $n=2$, the variance already decreases (on average).
 As it happens, we can express this mathematically and at the same time very intuitively for means like so:
 
 \begin{center}
   \begin{math}
-    \text{variance of sample means at sample size }n=\cfrac{s^2}{n}
+    \text{variance of sample means at sample size }n=\cfrac{\sigma^2}{n}
   \end{math}
 \end{center}
 
-The variance of the sample means is the variance of the individual measurements $s^2$ divided by the sample size $n$.
+The variance of the sample means is the variance of the individual measurements $\sigma^2$ divided by the sample size $n$.
 Hence, when the variance among the individual measurements goes up, the variance among the sample means goes up.
 On the other hand, when the sample size goes up, the variance among the sample means goes down.%
 \footnote{Notice that, from this angle, we can answer \textit{yes} to the questions from the Problem Statement asking something like:
@@ -378,7 +380,7 @@ On the other hand, when the sample size goes up, the variance among the sample m
 In order to get the \textit{average deviation of sample means from the true mean at sample size $n$}, we need to take the square root.
 In Section~\ref{sec:quantifyvariance}, we did the same to calculate the standard deviation from the variance.
 The result is called the \Key{standard error} of the mean $\ssigma_{\mu}$.
-It's simply the standard deviation of sample means at a given sample size $n$ and given the variance among the individual data points $s^2$.
+It's simply the standard deviation of sample means at a given sample size $n$ and given the variance among the individual data points $\sigma^2$.
 The formula in Equation~\ref{eq:semean} is often expressed by the equivalent Equation~\ref{eq:semeanalt}, but we consider the first variant more transparent and easier to memorise.
 
 \begin{equation}
@@ -442,7 +444,7 @@ You've probably seen the Normal Distribution before with the characteristic bell
 \footnote{See Section~\ref{sec:gaussian} for a slightly more in-depth look at the Normal Distribution.}
 Not only do many numeric measurements in nature follow this distribution, it also pops up in an almost creepy way in a family of fundamental proofs in statistics, the so-called \textit{Central Limit Theorem} (which has a lot to do with what we're in the middle of introducing at the moment).
 Be that as it may, for samples from normally distributed data, the simple formula for the standard error of the mean given above is provably correct.
-Notice that the density curve is fully defined once the mean and the standard deviation are given (see also the in-depth Section~\ref{sec:gaussian}).
+Notice that the density curve is fully defined by the mean and the standard deviation (see also the in-depth Section~\ref{sec:gaussian}).
 This means that we can calculate the probability for each value of $x$ or each interval of $x$.
 For example, we can calculate the probability of $x\ge 1$, written: $Pr(x\ge 1)$.
 As the area under any probability density curve is 1, $Pr(x\ge 1)$ is the integral of the normal density from 1 to infinity.
@@ -498,8 +500,9 @@ Let's focus on one of those curves, the density function of the means at $n=10$.
 It's shown in Figure~\ref{fig:meandensten}.
 In addition, the centre area under the curve that spans from the mean $1SE$ to the left and to the right ($\mu\pm 1SE$) is shaded in blue.
 The are covering $\mu\pm 2SE$ is shaded in green.
-As the Normal Distribution has known mathematical properties and we know the real mean and the real standard deviation, we can calculate the shaded areas.
-The blue area is approximately $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}$, \ie, $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1.01, 0, 1, T), 2)*100}$\% of the whole area under the curve.
+As the Normal Distribution has known mathematical properties and we know the real mean and the real standard deviation, we can calculate the size of the shaded areas.
+Well, \textit{we} here stands for \textit{fully qualified statisticians}, and for the purpose of this book, we just tell you some useful values (see also Tables below).
+The blue area is approximately $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}$, \ie, $\Sexpr{round((pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T))*100, 0)}$\% of the whole area under the curve.
 The green area (plus the blue area) is approximately $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$, \ie, $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)*100}$\%.
 
 <<meandensten, fig.cap=paste0("Density of the distribution of the means at n=20 with μ=", rt.mean, " and σ=", rt.sd, "; are at μ±σ is highlighted"), echo=F, fig.pos="t", cache=T>>=
@@ -533,7 +536,7 @@ lines(x = .xs, y = .ys,
 
 How is this useful?
 Think about what it means in terms of probability.
-It means that we know for sure that (i)~if the true mean of a variable is $\mu$, (ii)~its true standard deviation is $\sigma$, and (iii)~we draw a sample with $n$, then the probability that the mean of any sample lies in the interval $\mu\pm 1SE$ is $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1.01, 0, 1, T), 2)}$.
+It means that (i)~if the true mean of a variable is $\mu$, (ii)~its true standard deviation is $\sigma$, and (iii)~we draw a sample with $n$, then the probability that the mean of any sample lies in the interval $\mu\pm 1SE$ is $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}$.
 Similarly, the probability that the mean of any sample lies in the interval $\mu\pm 2SE$ is $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$.
 The frequentist interpretation consistently equates the probability of an event occurring with its long-run proportion among repeated repetitions.
 In our notation for probabilities from Section~\ref{sec:probability}, for any sample mean \xmean:
@@ -655,13 +658,13 @@ The calculations are the same, only the symbols change:
   \end{math}
 \end{center}
 
-Then, as the inverse of the theoretical error interval, the empirical error interval will contain the true value in $a$ of all cases (as  $z_a$ corresponds to $a$).
-Hence, we don't already have to know the truth but still use error intervals.
-To make absolutely clear, what an error interval is, we have simulated it.
-We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the distribution of reading times.
+Then, as the inverse of the theoretical error interval, the empirical error interval will contain the true value in $a$ of all cases (with $z_a$ chosen appropriately for $a$).
+Hence, we don't already have to know the truth but can still use error intervals.
+To make it absolutely clear what an error interval is, we have simulated it for you.
+We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the distribution of reading times introduced above.
 Then, we used the samples to calculate the empirical error intervals exclusively based on each sample.
 Think about it:
-We used the simulations of a known population to generate samples, then we took the samples and calculated the error interval \textit{as if we didn't know the population} to see whether the error interval works as we think it should do.
+We used the simulations of a known fictitious population to generate samples, then we took the samples and calculated the error interval \textit{pretending we didn't know the population} to check whether the error interval works as we think it should.
 It's not as good as a mathematical proof, but it really helps in understanding what statistics is about.
 Figure~\ref{fig:cisim} shows the true mean and all those empirical error intervals.
 The ones that don't include the true mean are coloured red.
@@ -696,7 +699,7 @@ A very wrong way of interpreting an empirical error interval then goes like this
 
 \begin{quote} \itshape
   \Argh The 95\% confidence interval for the mean contains the true mean with 95\% certainty.
-  (That means we can be 95\% sure that it contains the true mean.)
+  (Meaning: We can be 95\% sure that it contains the true mean.)
 \end{quote}
 
 What's this even supposed to mean?
@@ -722,8 +725,8 @@ The narrower the interval, the higher the precision.
 But be aware that the precision is a value set by us.
 Once again, it does not change the sample itself, and hence it does not change the fact that the sample represents the population (parameter) either well or not.
 
-First, let's calculate empirical error intervals with $z=1.96$ and $z=2.58$, before looking at some more illustrative plots.
-A random replications of the simulation led to the following statistics:
+First, let's calculate an empirical error interval with $z=1.96$ and $z=2.58$ before looking at some more illustrative plots.
+A single example replications of the simulation led to the following statistics:
 $\xmean=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}$ and $s^2(\xsample)=\Sexpr{round(ci.sims[[333]][["var"]], 2)}$.
 The $\ssigma_{\mu}$ is calculated as follows:
 
@@ -829,11 +832,11 @@ In the remainder of the chapter, we will introduce error intervals for proportio
 \Bigpoint{Interpretation of Error Intervals}{%
 An error interval for the mean is an attempt to estimate the true mean.
 It provides an interval which covers the true mean with a specified frequentist pre-sample probability.
-For example, a 95\% error interval ($a=0.95$) means that before the sample is drawn, it has a probability of 0.95 to actually include the true mean.
+For example, a 95\% error interval ($a=0.95$) means that before the sample is drawn, it has a probability of 0.95 of actually including the true mean.
 Once it is drawn, it either includes the true mean, or a (relatively) rare event has occurred.
-In the long run, it is guaranteed that a proportion of $a$ intervals thus calculated ($a*100$\%) include the true mean.
+In the long run, it is guaranteed that a proportion of $a$ intervals thus calculated ($\Sexpr{a*100}$\%) include the true mean.
 An error interval does not quantify any justifiable degree of \textit{confidence} we should have in the estimate, which is why we don't call it \textit{confidence interval}.
-The term \textit{error interval} reflects the fact that all we do is control the error rate of the estimation.
+The term \textit{error interval} reflects the fact that we merely control the error rate of the estimation.
 
 If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% error interval).
 This lowers the error rate in the long run and makes the estimation \textit{safer}.
@@ -847,11 +850,11 @@ Finally, error intervals (also called confidence intervals) have nothing to do w
 
 The idea behind error intervals for proportions is essentially the same as for means.
 Look back at Figures~\ref{fig:berryone}, \ref{fig:berrythreetoten}, and~\ref{fig:berrybig}.
-The distribution of the proportions from samples with very low sample size show obvious banding and look irregular.
+The distributions of the proportions from samples with very low sample size show obvious banding and look irregular.
 However, at least starting with $n=20$, the plots look very similar to the plots of means in Figure~\ref{fig:rtsmall} and Figure~\ref{fig:rtsbig}.
 Compare the density plots in Figure~\ref{fig:histcompare}.
 Keep in mind:
-These are plots of the distribution of proportion and means calculated from a lot of (simulated) samples, not plots of raw individual measurements.
+These are plots of the distribution of proportions and means calculated from a lot of (simulated) samples, not plots of raw individual measurements.
 
 <<histcompare, fig.cap=paste0("Histograms of 1000 proportions measured in samples (left) and 1000 sample means (right) at the same sample sizes"), echo=F, fig.pos="t", cache=T>>=
   par(mfrow=c(3,2), mar=c(5,5,1.5,1), family = "Plotfont")
@@ -881,7 +884,7 @@ These are plots of the distribution of proportion and means calculated from a lo
 @
 
 The distributions still look bumpy at $n=20$, but that is expected.
-Most importantly, however, there is virtually not distinction between the distributions proportions at $n=20$, even though the proportions reflect counts of a discrete variable and the means derive from a continuous numerical variable.
+Most importantly, however, there is virtually no qualitative distinction anymore between the distributions of proportions and menas at $n=20$, even though proportions reflect counts of a discrete variable and means derive from a continuous numerical variable.
 It was also shown beyond such impressionistic comparisons that the sampling distributions of proportions is reasonably well approximated by a normal distribution.
 Hence, we can use the normal error interval we introduced for the mean $\mu$ for proportions as well.
 The theoretical error interval for the population proportion $\rho$ is:
@@ -905,8 +908,7 @@ We need a measure for the sample proportions that is not directly derived from v
 \footnote{Of course, real statisticians have conducted proofs and done all the proper maths.
 We skip all of this and try to make things easy to grasp intuitively.}
 We expect the standard error for proportions to be smaller for larger samples (see Figure~\ref{fig:histcompare}).
-Hence, we probably divide by $n$.
-
+Hence, we divide by $n$.
 Additionally, consider that proportions range from 0 to 1 and consider at which values between 0 and 1 the variance in proportions might be higher.
 Again, we use lots of simulated samples for illustration, see Figure~\ref{fig:propdist}.
 
@@ -939,7 +941,7 @@ Again, we use lots of simulated samples for illustration, see Figure~\ref{fig:pr
 @
 
 We hope you noticed what's going on there.
-At $\rho=0.5$, the sample proportion deviates from the true propoertion into the negative and the positive direction.
+At $\rho=0.5$, the sample proportion deviates from the true proportion into the negative and the positive direction.
 The farther towards 0 or 1 the true proportion is moved, the more restricted the possible variation is in one of the two directions.
 As proportions can't be negative or larger than 1, the variance in the sample proportions hits a ceiling of 1 and a floor of 0.
 Hence, the variance is largest at $\rho=0.5$ and smallest at $\rho=0$ and $\rho=1$.
@@ -964,7 +966,8 @@ Figure~\ref{fig:qnotq} illustrates it for all values of $\rho$ or $q$.
 Multiplying $\rho$ by $1-\rho$ (or $q$ by $q-1$) gives us exactly what we need:
 a function that starts at the function value 0 for the input 0, then increases as we move towards 0.5 (with a function value of 0.25).
 Then, the function value returns to 0 as we move towards the input value 1.
-The square root conserves this principle property.
+The square root conserves this property.
+While it's good that mathematical proofs have led to the development of the maths, we can also make sense of the formulas and understand them from the viewpoint of a mere practitioner.
 
 <<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis) and its square root"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
