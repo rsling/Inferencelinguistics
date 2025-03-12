@@ -31,9 +31,9 @@
 \frontmatter
 \currentpdfbookmark{Contents}{name} % adds a PDF bookmark
 {\sloppy\tableofcontents}
-  \include{chapters/Preface}
-  \include{chapters/Acknowledgments}
-%  \include{chapters/Abbreviations}
+  %\include{chapters/Preface}
+  %\include{chapters/Acknowledgments}
+  %\include{chapters/Abbreviations}
 \mainmatter
 
 <<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=

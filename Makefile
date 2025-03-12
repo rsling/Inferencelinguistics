@@ -2,7 +2,7 @@
 SOURCE = $(wildcard local*.tex) $(wildcard chapters/*.tex)
 
 # specify your main target here:
-main: main.tex main.bbl main.pdf  #by the time main.pdf, bib assures there is a newer aux file
+main: main.tex main.bbl main.pdf  # by the time main.pdf, bib assures there is a newer aux file
 
 complete: index main.pdf
 
