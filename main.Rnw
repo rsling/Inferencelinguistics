@@ -13,7 +13,7 @@
 %  , modfonts
 %  , colorlinks
 %  , showindex
-  , draftmode
+%  , draftmode
 %  , tblseight
 		  ]{langscibook}
 
@@ -36,7 +36,7 @@
   %\include{chapters/Abbreviations}
 \mainmatter
 
-<<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+<<packagesetup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 
 library(tidyverse)
 require(lattice)
@@ -65,8 +65,12 @@ opts_chunk$set(cache.path='cache/',
 	             background='#F7F7F7',
 	             tidy=FALSE,
                formatR.arrow = TRUE)
+@
 
-# render_listings()
+<<child="localfontconfig.Rnw">>=
+@
+
+<<setup, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
 
 the.lwd <- 4
 the.lean.lwd <- 3
@@ -107,10 +111,30 @@ shade <- function(x, y, from, to, col, border = F, lwd = 1) {
           lwd = lwd)
 }
 
-
-
 # To reliably set the font in R plots.
-font_paths("/Users/roland/Library/Fonts")
+
+font_add("Libertine",
+         regular    = "LinLibertine_R.otf",
+         bold       = "LinLibertine_RB.otf",
+         italic     = "LinLibertine_RI.otf",
+         bolditalic = "LinLibertine_RBI.otf")
+showtext_auto()
+
+font.settings <- list(
+  font = 1,
+  cex = 1,
+  fontfamily = "Libertine")
+my.theme <- list(
+  par.xlab.text = font.settings,
+  par.ylab.text = font.settings,
+  axis.text = font.settings)
+trellis.par.set(my.theme)
+
+my.largs <- list(
+  gp_labels = gpar(fontfamily = "Libertine"),
+  gp_varnames = gpar(fontfamily = "Libertine")
+)
+
 font_add("Plotfont",
          regular    = "LinBiolinum_R.otf",
          bold       = "LinBiolinum_RB.otf",
@@ -132,9 +156,6 @@ my.largs <- list(
      gp_labels = gpar(fontfamily = "Plotfont"),
      gp_varnames = gpar(fontfamily = "Plotfont")
      )
-@
-
-<<child="localfontconfig.Rnw">>=
 @
 
 \include{chapters/Inference}

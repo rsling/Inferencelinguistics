@@ -136,7 +136,7 @@ chapternames:
 
 #housekeeping
 clean:
-	rm -f *.bak *~ *.backup *.tmp \
+	rm -f main.tex *.bak *~ *.backup *.tmp \
 	*.adx *.and *.idx *.ind *.ldx *.lnd *.sdx *.snd *.rdx *.rnd *.wdx *.wnd \
 	*.log *.blg *.ilg \
 	*.aux *.toc *.cut *.out *.tpm *.bbl *-blx.bib *_tmp.bib *bcf \

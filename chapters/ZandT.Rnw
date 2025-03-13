@@ -509,14 +509,14 @@ shade(xs, ys, z2.z.rnd, 4,
 arrows(0.2, 0.025, z2.z.rnd-0.2, 0.025, length = 0.05,
        lwd = the.lean.lwd, col = the.cols[3])
 text(z2.z.rnd/2, 0.05, paste0("z=", z2.z.rnd), col = the.cols[3], cex=a.cex)
-text(z2.z.rnd+1.2, 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+text(z2.z.rnd+1.2, 0.05, bquote(frac("p", "2")*" =0.02"), col = the.cols[1], cex=a.cex)
 
 shade(xs, ys, -4, -z2.z.rnd,
       col = the.lightcols[1], border=the.cols[1], lwd = the.lean.lwd)
 arrows(-0.2, 0.025, -(z2.z.rnd-0.2), 0.025, length = 0.05,
        lwd = the.lean.lwd, col = the.cols[3])
 text(-(z2.z.rnd/2), 0.05, paste0("z=-", z2.z.rnd), col = the.cols[3], cex=a.cex)
-text(-(z2.z.rnd+1.2), 0.05, paste0("p=0.02"), col = the.cols[1], cex=a.cex)
+text(-(z2.z.rnd+1.2), 0.05, bquote(frac("p", "2")*" =0.02"), col = the.cols[1], cex=a.cex)
 
 lines(x = xs,
      y = ys,
