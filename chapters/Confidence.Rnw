@@ -1182,3 +1182,8 @@ To dig at least a bit deeper while still being entertained, two videos by Grant 
 For non-mathematicians, that's already quite sophisticated material.
 
 
+\begin{exercises}
+
+\exercise{confidence1} One Two Three
+
+\end{exercises}

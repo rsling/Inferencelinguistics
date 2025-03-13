@@ -201,6 +201,18 @@
 
 
 % [icon]{color}{title}{text}
+\newenvironment{tblscolorenviron}[3][]{
+  \ifthenelse{\equal{#1}{}}
+    {\renewcommand{\localstyle}{tblsfilledbox}}
+    {\renewcommand{\localstyle}{tblsfillediconbox}
+     \renewcommand{\langscisymbol}{#1}}
+  \renewcommand{\tblscolor}{#2}
+  \begin{mdframed}[style=\localstyle,frametitle={#3}]}%
+  %
+  {\end{mdframed}}
+
+
+% [icon]{color}{title}{text}
 \newcommand{\tblssandwich}[4][]{
   \ifthenelse{\equal{#1}{}}
     {\renewcommand{\localstyle}{tblslinebox}}

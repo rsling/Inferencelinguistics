@@ -681,3 +681,8 @@ As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the singl
 
 
 
+\begin{exercises}
+
+\exercise{zandt1} One Two Three
+
+\end{exercises}

@@ -1384,3 +1384,8 @@ First, the proofs underlying frequentism (and Bayesianism, for that matter) make
 It's therefore helpful for anyone who wants to dig deeper and study more sophisticated text books after this one.
 Second, statistics programs such as R give us access to these functions, and it's much easier to use them with a minimal understanding of their workings.
 
+\begin{exercises}
+
+\exercise{fisher1} One Two Three
+
+\end{exercises}

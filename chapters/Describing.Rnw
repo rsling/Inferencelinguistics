@@ -752,7 +752,7 @@ Its mean is \Sexpr{round(mean(pots, 0))}.
 As we've argued that the variance is related to the distances of the individual points around the mean, we begin by plotting the data points (x-axis) and their measured reaction times (y-axis) in Figure~\ref{fig:meandist}.
 We also add the mean as a horizontal line plus lines measuring the distance from the mean to the individual data points (using colour to differentiate between negative and positive distances).
 
-<<meandist, fig.cap=paste0("Raw data plot of a sample with n=100; distances to mean plotted as vertical lines"), echo=F, fig.pos="t", cache=T>>=
+<<meandist, fig.cap=paste0("Raw data plot of a sample with n=10; distances to mean plotted as vertical lines"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
   p <- plot(pots, xaxt = "n", xlab = "Sorted Data Points", ylab = "Milliseconds", main ="", ylim = c(150, 400), frame.plot = F)
   .mean <- round(mean(pots), 0)
@@ -802,7 +802,7 @@ It would be best to make all values positive.
 One option would be to take the \Key{absolute} value, which is achieved by discarding the minus sign.
 While this is an option, another one is more appropriate for many further calculations in statistics: taking the square of the distance.
 This makes their absolute value much bigger, but it also means that negative signs cancel out.
-If we then sum up the squared distances, we get a squared value of the total deviation of the data points from the mean.
+If we then sum up the squared distances, we get the squared total deviation of the data points from the mean.
 It's called the \Key{sum of squares}, and we abbreviate it as $SQ(\xsample)$ in function notation or simply $SQ$.%
 \footnote{This is the abbreviation of German \textit{Summe der Quadrate}, but you can also read it as \textit{Sum of sQuares}.
 We feel more comfortable with this abbreviation than with \textit{SS}, which is often used in English.}
@@ -920,3 +920,10 @@ The ultimate goal is a flexible and general approach to statistical inference ba
     \bottomrule
   \end{tabular}}
 \end{table}
+
+
+\begin{exercises}
+
+\exercise{describing1} One Two Three
+
+\end{exercises}

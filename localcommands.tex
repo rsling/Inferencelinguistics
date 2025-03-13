@@ -4,12 +4,10 @@
   \usebibmacro{index:entry}{#1}
     {\iffieldundef{usera}{}{\thefield{usera}\actualoperator}\mkbibindexname{#2}{#3}{#4}{#5}}}
 
-
 % By LSP.
 \makeatletter
 \def\blx@maxline{77}
 \makeatother
-
 
 % Fix line spacing in list environmens.
 %\setlist{noitemsep}
@@ -35,11 +33,9 @@
 %    , runcolor        = {}
 }
 
-
 % Use a better mono font, ideal for code.
 % https://github.com/chrissimpkins/codeface/tree/master/fonts/inconsolata-g
 %\setmonofont{Inconsolata-g}
-
 
 % Use a math font that actually works! Requires unicode-math paackage.
 % https://github.com/khaledhosny/libertinus
@@ -78,6 +74,29 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Exercises %%%
+
+\newcounter{exerccc}
+\counterwithin{exerccc}{chapter}
+
+\newenvironment{exercises}
+{%
+\clearpage
+\begin{tblscolorenviron}{lightgray}{Exercises for Chapter~\thechapter}
+}{%
+\end{tblscolorenviron}%
+}
+
+\newcommand{\exercise}[1]{%
+  \stepcounter{exerccc}%
+  \textbf{(\arabic{exerccc})}\label{exer:#1}~%
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % From EGBD4
@@ -108,7 +127,6 @@
 #2}}
 
 \newcommand{\Indepth}{\colorbox{lightgray}{\textsc{In-Depth}}}
-
 
 \newcommand{\Dice}[1]{\raisebox{-1pt}{\epsdice{#1}}}
 
