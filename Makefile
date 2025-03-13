@@ -145,19 +145,14 @@ clean:
 	chapters/*aux chapters/*~ chapters/*.bak chapters/*.backup \
 	langsci/*/*aux langsci/*/*~ langsci/*/*.bak langsci/*/*.backup
 
-realclean: clean
-	rm -f *.dvi *.ps *.pdf
-
 chapterlist:
 	grep chapter main.toc|sed "s/.*numberline {[0-9]\+}\(.*\).newline.*/\\1/"
-
 
 barechapters:
 	cat chapters/*tex | detex > barechapters.txt
 
 languagecandidates:
 	grep -ohP "(?<=[a-z]|[0-9])(\))?(,)? (\()?[A-Z]['a-zA-Z-]+" chapters/*tex| grep -o  [A-Z].* |sort -u >languagelist.txt
-
 
 FORCE:
 
