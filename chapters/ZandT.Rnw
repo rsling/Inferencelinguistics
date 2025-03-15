@@ -378,7 +378,7 @@ par.defaults()
 
 @
 
-The left panel of Figure~\ref{fig:z4} show the PDF of the distribution of sample means, and the highlightes area under the curve corresps to results as extreme or more extreme than \xmean.
+The left panel of Figure~\ref{fig:z4} show the PDF of the distribution of sample means, and the highlightes area under the curve corresponds to results as extreme or more extreme than \xmean.
 The corresponding \Key{cumulative distribution function} (CDF) can be used to calculate the statistics of interest.
 The right panel of Figure~\ref{fig:z4} shows the Normal CDF for $\mu=\Sexpr{z.mu}$ and $\sigma=\Sexpr{z2.se}$ (which happens to be $SE_{\mu}$).
 For the observed sample mean $\xmean=\Sexpr{round(z2.samplemean,1)}$, the CDF has the value $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$, which means that the probability of obtaining this or a more extreme result is $1-\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}=\Sexpr{1-round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$.
@@ -499,7 +499,7 @@ plot(x = xs,
      type = "l", lwd = the.lean.lwd,
      bty="n", yaxt="n", ylab = "", xlab = "",
      xlim = c(-4, 4), col = "white",
-     main="Null: μ₁≠μ"
+     main="Null: μ₁=μ"
 )
 lines(c(0, 0), c(0, ys[round(length(xs)/2+0.1, 0)]),
       lwd = the.lean.lwd, col = the.cols[2])
@@ -666,9 +666,77 @@ See Figure~\ref{fig:convzciss}, where we assume $\mu=0$, $\sigma=\ssigma_{\mu}=1
 The error interval is left-sided, and it corresponds to the right-sided test.
 As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the single-sided z-test, the interval again includes $0$.
 
-\subsection{Differences Between the Fisher Test and the Z-Test}
+\subsection{The Distribution of P-Values}\label{sec:distpz}
 
-\subsection{The Distribution of P-Values}
+<<setupzsim, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
+  set.seed(848)
+  z.sim.rep <- 1000
+  z.sim.n <- 100
+  z.sim.mu <- 120
+  z.sim.sigma <- 16
+  z.sim.se <- z.sim.sigma/sqrt(z.sim.n)
+
+  z.sim <- function(m) {
+      .m <- mean(rnorm(n = z.sim.n, mean = m, sd = z.sim.sigma))
+      .z <- (.m-z.sim.mu)/z.sim.se
+      pnorm(abs(.z), lower.tail = F)*2
+  }
+@
+
+<<simznull, fig.cap=paste0("Histograms of p-values from z-tests when the Null is true; it's irrelevant what the parameters were, as any p-values have a uniformly random distribution under any true Null"), echo=F, fig.pos="t", cache=T>>=
+  par.defaults()
+  z.sims.null <- unlist(unname(lapply(1:z.sim.rep,
+                                      function(x) {z.sim(z.sim.mu)} )))
+
+  h <- hist(z.sims.null, breaks = 20, xaxt = "n", xlab = "P-Values", main ="",
+            border=F, col = the.midgray, ylim = c(0,70))
+  text(h[["mids"]], h[["counts"]]-5, labels = h[["counts"]])
+  axis(1, seq(0, 2, 0.2), seq(0, 1, 0.1))
+@
+
+In Section~\ref{sec:pdist} we showed how simulated p-values of Fisher's Exact Test are distributed when the Null is true and when it it's false.
+In this section, we'll do the same for the z-test.
+First, let's assume the Null is true.
+We simulate a two-sided test with $H_0:\mu_1=\mu$.
+The measurements are normally distributed with $\mu=\Sexpr{z.sim.mu}$ and $\sigma=\Sexpr{z.sim.sigma}$.
+We simulate $n=\Sexpr{z.sim.n}$ data points per sample in $\Sexpr{z.sim.rep}$ replications.
+The standard error of the mean is $\ssigma_{\mu}=\Sexpr{z.sim.sigma}\div\sqrt{\Sexpr{z.sim.n}}=\Sexpr{z.sim.se}$.
+Figure~\ref{fig:simznull} show that each p-value has (minor fluctuations aside) the same probability if the Null is true.
+If the mean within the population from which our samples are drawn is $\mu_1=\mu=120$, any p-value between 0 and 1 has an equal chance of resulting from the experiment.
+
+<<simzh1, fig.cap=paste0("Histograms of p-values from z-tests when the Null is false with different effect strengths"), echo=F, fig.pos="t", cache=T>>=
+  par.defaults()
+  par(mfrow=c(3,2))
+
+  z.sims.plotone <- function(m) {
+    .z.simses <- unlist(unname(lapply(1:z.sim.rep, function(x) {z.sim(m)} )))
+    h <- hist(.z.simses, breaks = 20, xaxt = "n", xlab = "P-Values",
+              border=F, col = the.midgray,
+              ylim=c(0, ifelse(mean(.z.simses)<0.1, 1000, 110)),
+              main = paste0("μ₁=", m))
+    #text(h[["mids"]], h[["counts"]]-5, labels = h[["counts"]])
+    axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
+  }
+
+  z.sim.truemeans <- 120+c(-1, 1, -5, 5, -10, 10)
+  for (m in z.sim.truemeans) z.sims.plotone(m)
+@
+
+We then simulated the same for $\mu_1\not=\mu$.
+Clearly, there are many ways to satisfy $\mu_1\not=\mu$.
+The difference between the two means could be $-0.1$, $+29$, or what have you.
+All these different possible concrete numerical inequalities between $\mu_1$ and $\mu$ make the Null false.
+The larger the difference, the larger the effect strength.
+For example, if reading times under a marked condition differ from those in the unmarked condition by 200~ms, the effect is much larger than if they differ by only 2~ms.
+We simulated \Sexpr{z.sim.rep} samples each for the true means $\mu_1\in\{\Sexpr{paste0(z.sim.truemeans, collapse = ", ")}\}$.
+Figure~\ref{fig:simzh1} shows histograms of the results.
+Even if the difference between the means is only 5 ($\mu_1=115$ or $\mu=120$), the p-values already collapse close to 0.
+Once again (remember Section~\ref{sec:pdist}), larger effect strengths make it easier to detect the effect by rejecting the Null.
+As in the case of Fisher's Exact Test, a large sample alone does not increase the chance of obtaining a low p-value.
+However, as soon as there is even a small true effect, and we draw a relatively large sample, p-values go down rapidly.
+If the effect is tiny and irrelevant from a theoretical point of view, it's our duty to have a good enough understanding of the statistical methods we use to be able to detect that.
+The behaviour of the test itself is, of course, by design.
+Frequentist statistics per se is not responsible for misinterpretations and misuse by lazy or corrupt practitioners.
 
 \section{The Undiscovered Population}
 
@@ -683,6 +751,11 @@ As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the singl
 
 \begin{exercises}
 
-\exercise{zandt1} One Two Three
+\exercise{zandt10} We have argued in Section~\ref{sec:distpz} that larger effect sizes (increasing actual differences between the known population mean and the measured means) tilt the distribution of p-values increasingly towards 0 .
+There is a tradition where researchers don't look at the concrete p-value but just perform a mechanical significance test at a pre-set sig-level such as $sig=0.05$.
+This means that tests where $p\leq sig$ are called \textit{significant}, all others \textit{not significant}.
+Under such an approach, do you get more, less, or a constant number of significant results when the actual effect strength increases (all other things beaing equal)?
+Still under this approach, is your \textit{error rate} constant or does it change with increased effect strength?
+The error rate is the percentage of samples which make you erroneously rejected Null when it is true.
 
 \end{exercises}

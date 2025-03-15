@@ -104,14 +104,14 @@ What does this even mean?
 Before we discuss sampling accuracy, we need to clarify what we mean by a population.
 In Section~\ref{sec:populationssamples} we colloquially compared three populations: (i)~all galaxies in the Laniakea Supercluster, (ii)~all adult Tories in Buckinghamshire, and (iii)~all sentences of contemporary German.
 Clearly, these are very different in type and count.
-There are (according to Wikipedia) roughly 100,000 galaxies in Laniakea.
-The population in Buckinghamshire is roughly 850,000, and it's a very conservative county.
+There are (according to Wikipedia) roughly 100000 galaxies in Laniakea.
+The population in Buckinghamshire is roughly 850000, and it's a very conservative county.
 Let's estimate 70\% of the population are Tory supporters.%
 \footnote{According to the Buckinghamshire Council website, there are 105 conservative councillors, 15 are independent, 15 are liberal democrats, 6 belong to Labour, and 5 have other affiliations as of 25 February 2025.
 That's approximately 70\% Tories.
 However, given the British voting system, the council is a bad estimator of the composition of the electorate in terms of political affiliation.
 (\url{https://buckinghamshire.moderngov.co.uk/mgMemberIndex.aspx})}
-The population of Tory supporters in Buckinghamshire probably consists of some 400,000 to 450,000 humans (having subtracted 20\% of the total population to account for minors and apolitical people).
+The population of Tory supporters in Buckinghamshire probably consists of some 400000 to 450000 humans (having subtracted 20\% of the total population to account for minors and apolitical people).
 How many \textit{sentences of contemporary German} are there?
 That's a much more difficult question.
 What counts as German?
@@ -124,7 +124,7 @@ These questions can't be answered in a statistics text book.%
 If you're a corpus linguist who believes that your corpus of choice \textit{represents} a population, you should have a very good answer to these questions.
 In this respect, the most important property of works such as \citet{Biber1993} is that they're over 30 years old.}
 What matters is that none of these populations is static.
-Over the lifespan of the universe, the number of galaxies in Laniakea went from 0 to 100,000, and it will return to 0.
+Over the lifespan of the universe, the number of galaxies in Laniakea went from 0 to 100000, and it will return to 0.
 Galaxies form or are drawn into superclusters all the time, and galaxies are torn apart and will eventually fall apart (in layman's terms) in the distant future.
 People in Buckinghamshire are born and die, and people change their political affiliation all the time.
 German sentences are produced at a breathtaking rate, and even the population of speakers of German changes every minute.
