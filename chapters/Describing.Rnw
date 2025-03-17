@@ -596,8 +596,8 @@ We use a cosine kernel by default.}
   boxplot(potsx, frame = F, ylab = "Milliseconds", col = the.lightcols[2],
           notch = T, pch = the.pchs[1], medcol = the.cols[2])
   vioplot(potsx, frame.plot = F, add = F, xlab = "", xaxt = "n", #side = "right", horizontal = T,
-          col = the.lightcols[4], colMed = the.cols[2],
-          rectCol = the.lightcols[2], lineCol = the.lightcols[4])
+          col = the.lightcols[5], colMed = the.cols[2],
+          rectCol = the.lightcols[2], lineCol = the.lightcols[5])
   par(mfrow=c(1,1), mar = rep(4, 4))
 @
 

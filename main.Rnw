@@ -75,8 +75,15 @@ opts_chunk$set(cache.path='cache/',
 the.lwd <- 4
 the.lean.lwd <- 3
 the.pchs <- c(20)
-the.cols <- c("seagreen", "dodgerblue3", "sienna3", "gold1")
-the.lightcols <- c(lighten(the.cols[1], 0.75), lighten(the.cols[2], 0.75), lighten(the.cols[3], 0.5), lighten(the.cols[4], 0.5))
+the.cols <- c("seagreen", "dodgerblue3", "maroon", "sienna3", "gold1", "khaki")
+the.lightcols <- c(
+  lighten(the.cols[1], 0.75),
+  lighten(the.cols[2], 0.75),
+  lighten(the.cols[3], 0.75),
+  lighten(the.cols[4], 0.5),
+  lighten(the.cols[5], 0.5),
+  lighten(the.cols[6], 0.25)
+  )
 
 the.lightgray <- "lightgray"
 the.midgray <- "darkgray"
@@ -107,7 +114,7 @@ shade <- function(x, y, from, to, col, border = F, lwd = 1) {
     y[.xend:.xstart],
     min(y)
     )
-  polygon(x = .xcoords, y = .ycoords, col = col, border = border,
+  polygon(x = .xcoords, y = .ycoords, col = alpha(col, 0.5), border = border,
           lwd = lwd)
 }
 

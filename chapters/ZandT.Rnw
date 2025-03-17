@@ -701,7 +701,7 @@ We simulate a two-sided test with $H_0:\mu_1=\mu$.
 The measurements are normally distributed with $\mu=\Sexpr{z.sim.mu}$ and $\sigma=\Sexpr{z.sim.sigma}$.
 We simulate $n=\Sexpr{z.sim.n}$ data points per sample in $\Sexpr{z.sim.rep}$ replications.
 The standard error of the mean is $\ssigma_{\mu}=\Sexpr{z.sim.sigma}\div\sqrt{\Sexpr{z.sim.n}}=\Sexpr{z.sim.se}$.
-Figure~\ref{fig:simznull} show that each p-value has (minor fluctuations aside) the same probability if the Null is true.
+Figure~\ref{fig:simznull} shows that each p-value has (minor fluctuations aside) the same probability if the Null is true.
 If the mean within the population from which our samples are drawn is $\mu_1=\mu=120$, any p-value between 0 and 1 has an equal chance of resulting from the experiment.
 
 <<simzh1, fig.cap=paste0("Histograms of p-values from z-tests when the Null is false with different effect strengths"), echo=F, fig.pos="t", cache=T>>=
@@ -730,19 +730,103 @@ The larger the difference, the larger the effect strength.
 For example, if reading times under a marked condition differ from those in the unmarked condition by 200~ms, the effect is much larger than if they differ by only 2~ms.
 We simulated \Sexpr{z.sim.rep} samples each for the true means $\mu_1\in\{\Sexpr{paste0(z.sim.truemeans, collapse = ", ")}\}$.
 Figure~\ref{fig:simzh1} shows histograms of the results.
-Even if the difference between the means is only 5 ($\mu_1=115$ or $\mu=120$), the p-values already collapse close to 0.
+Even if the difference between the means is only 5 ($\mu_1=115$ or $\mu=125$), the p-values already collapse close to 0 (middle left and middle right panel).
 Once again (remember Section~\ref{sec:pdist}), larger effect strengths make it easier to detect the effect by rejecting the Null.
 As in the case of Fisher's Exact Test, a large sample alone does not increase the chance of obtaining a low p-value.
 However, as soon as there is even a small true effect, and we draw a relatively large sample, p-values go down rapidly.
-If the effect is tiny and irrelevant from a theoretical point of view, it's our duty to have a good enough understanding of the statistical methods we use to be able to detect that.
-The behaviour of the test itself is, of course, by design.
+If the effect is tiny and irrelevant from a theoretical point of view, we can detect it easily with a large sample, it's our duty to have a good enough understanding of the statistical methods we use to be able to interpret that.
+This behaviour of the test itself is, of course, by design.
 Frequentist statistics per se is not responsible for misinterpretations and misuse by lazy or corrupt practitioners.
 
 \section{The Undiscovered Population}
 
 \subsection{Accounting for Unknown Variance}
 
-\subsection{Comparing Two Means From Undiscovered Populations}
+The z-test allowed us to test whether some mean $\mu_1$ is different (smaller, larger, or any of the two) from a known population mean if the population variance is unknown.
+Some readers might have wondered when on Earth that is actually the case.
+Since the t-test doesn't account for any uncertainties in the knwon mean and variance, they must be known beyond any need for further testing.
+This is where the \Key{t-test} comes into play.
+It allows us to test for mean differences if the variance is unknown (this section) or both means and the variance are unknown (Section~\ref{sec:ttwo}).
+
+The logic of the test is perfectly identical to the z-test.
+We simply substitute the sample variance $s^2$ for the population variance $\sigma^2$ and go on with the calculations but call the test statistic $t$ instead of $z$ (hence \textit{t-test}).
+To remind us all of Equation~\ref{eq:variance}:
+
+\begin{equation}
+  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ(\xsample)}{n-1}
+\end{equation}
+
+Do you see why this can't be all?
+While the sample variance might be the best approximation of the population variance we have, it's not going to be a perfect approximation in most (virtually all) cases.
+There might be cases where $s^2$ \textit{overestimates} $\sigma$.
+Imagine what this would do to our statistic $t$, which is calculated exactly the same way as $z$:
+
+\begin{equation}
+  t=\frac{\xmean-\mu}{SE_{\mu}}
+  \label{eq:tone}
+\end{equation}
+
+\noindent Except $\ssigma_{\mu}$ is calculated from the sample variance:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\mu}=\sqrt{\frac{\xmean}{n}}
+  \end{math}
+\end{center}
+
+With increasing $s^2$, \ssigma\ increases, and $t$ decreases as the denominator of its formula is \ssigma.
+However, smaller values of the $z$ or $t$ statistics leads to larger p-values.
+Look at Figure~\ref{fig:z4} to convince yourself that this is true.
+Whichever criterion we adopt to reject the Null based on an obtained p-value, we'd reject less Nulls.%
+\footnote{Once again, we encourage you to go through this argument step by step multiple times until you're satisfied that you've understood and memorised the argument.}
+Since we attach no inferential interpretation to a rejected Null, rejecting more Nulls than we should because the sample variance overestimates the population variance is not a big deal.%
+\footnote{If you find this a very unsatisfying claim, read on until Chapter~\ref{sec:powerseverity}.}
+
+If, on the other hand, the sample variance $s^2$ underestimates the population variance $\sigma^2$, we might end up rejecting less Nulls than we should.
+Convince yourself that this is true by going through the formulas above.
+This is potentially harmful as rejections of a Null have a limited inferential interpretation:
+\textit{Either the Null is false or a rare event has occurred.}
+To compensate for this, a statistician by the name of William Sealy Gosset, who called himself \textit{Student}, came up with a distribution similar to the Standard Normal Distribution: \Key{Student's t-Distribution}.
+It accounts for the fact that in the long run a larger sample provides a better estimate of the population variance than a smaller sample.
+The distribution has only one parameter: the sample size $n$, or rather the \Key{degrees of freedom} $\nu$ with $\nu=n-1$.
+We'll return to the idea of degrees of freedom repeatedly.
+For now, we just contemplate why the t-Distribution has this one parameter and don't worry too much about its name.
+
+<<t1, fig.cap=paste0("Densities of the Standard Normal Distribution and a selection of t-Distributions for increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+par.defaults()
+
+t.minmax <- c(-4, 4)
+
+t.dfs <- c(1, 2, 5, 10, 20)
+xs <- seq(t.minmax[1], t.minmax[2], 0.01)
+
+plot(x = xs,
+     y = dnorm(xs),
+     type = "l", lwd = the.lean.lwd,
+     bty="n", yaxt="n", ylab = "Density", xlab = "z or t",
+     xlim = t.minmax, col = the.darkgray
+)
+
+for (i in 1:length(t.dfs)) {
+  .df <- t.dfs[i]
+  lines(x = xs,
+       y = dt(xs, df = .df),
+       lwd = the.lean.lwd, col = the.cols[i]
+  )
+}
+
+legend("topleft", legend = c("Normal", rev(paste0("t with ν=", t.dfs))),
+       col = c(the.darkgray, rev(the.cols[1:length(t.dfs)])), lwd = the.lwd, bty = "n")
+@
+
+First, the t-Distribution corresponds to the \textit{Standard} Normal Distribution, not the more general Normal Distribution.
+Hence, its variance is fixed at $1$ and its mean is fixed at $0$.
+At the same time, the effect of the expected mismatch described above between the sample variance and the true population variance is small when the sample is large and vice versa.
+A larger sample approximates any population parameter more accurately than a smaller sample.
+Now, see Figure~\ref{fig:t1} to grasp the effect of the $\nu$ parameter.
+
+\subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
 
 
@@ -754,8 +838,8 @@ Frequentist statistics per se is not responsible for misinterpretations and misu
 \exercise{zandt10} We have argued in Section~\ref{sec:distpz} that larger effect sizes (increasing actual differences between the known population mean and the measured means) tilt the distribution of p-values increasingly towards 0 .
 There is a tradition where researchers don't look at the concrete p-value but just perform a mechanical significance test at a pre-set sig-level such as $sig=0.05$.
 This means that tests where $p\leq sig$ are called \textit{significant}, all others \textit{not significant}.
-Under such an approach, do you get more, less, or a constant number of significant results when the actual effect strength increases (all other things beaing equal)?
+Under such an approach, do you get more, less, or a constant number of significant results when the actual effect strength increases (all other things being equal) in the long run?
 Still under this approach, is your \textit{error rate} constant or does it change with increased effect strength?
-The error rate is the percentage of samples which make you erroneously rejected Null when it is true.
+The error rate is the percentage of samples which make you erroneously reject the Null when it is true.
 
 \end{exercises}
