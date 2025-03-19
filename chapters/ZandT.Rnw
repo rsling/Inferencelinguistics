@@ -825,6 +825,36 @@ Hence, its variance is fixed at $1$ and its mean is fixed at $0$.
 At the same time, the effect of the expected mismatch described above between the sample variance and the true population variance is small when the sample is large and vice versa.
 A larger sample approximates any population parameter more accurately than a smaller sample.
 Now, see Figure~\ref{fig:t1} to grasp the effect of the $\nu$ parameter.
+A lower $\nu$, which corresponds to a lower sample size $n$, flattens the peak of the curve around the mean while lifting both tails up.
+However, even at $\nu=20$, the density of the t-Distribution is already almost identical to that of the Standard Normal Distribution.
+
+<<t2, fig.cap=paste0("How the p-value from the t-Distribution at t=1.96 (two-sided) approaches the p-value from the Standard Normal Distribution at z=1.96 (two-sided) with increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+par.defaults()
+
+ts <- 2*pt(1.96, df = 1:100, lower.tail = F)
+
+plot(ts,
+     type = "l", lwd = the.lwd,
+     bty="n", ylab = "p-value", xlab = "Degrees of freedom ν",
+     col = "white"
+)
+lines(c(0, 100), rep(0.05, 2), lwd = the.lwd, col = the.cols[1])
+lines(ts, lwd = the.lwd, col = the.cols[2])
+
+legend("topright", legend = c("p-value from Standard Normal", "p-value from t (with increasing ν)"),
+       title = "For z=1.96 and t=1.96, respectively:",
+       col = the.cols[1:2], lwd = the.lwd, bty = "n")
+@
+
+Figure~\ref{fig:t2} shows how two-sided p-values from the t-Distribution for a fixed t-value of 1.96 but with increasing sample size and thus increasing degrees of freedom.
+The t-value of 1.96 was chosen because we know that it corresponds to $p=0.05$ in a z-Test with a Standard Normal Distribution.
+The Normal Distribution has no parameter for degrees of freedom, and the p-value is therefore always $p=0.05$ for $z=1.96$.
+With ever larger samples, the p-value from a t-test approximates that from a z-test very quickly.
+With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
+With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
+
+Finally, we simulate t-tests and compare them to simulations of z-tests.
 
 \subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
@@ -838,7 +868,7 @@ Now, see Figure~\ref{fig:t1} to grasp the effect of the $\nu$ parameter.
 \exercise{zandt10} We have argued in Section~\ref{sec:distpz} that larger effect sizes (increasing actual differences between the known population mean and the measured means) tilt the distribution of p-values increasingly towards 0 .
 There is a tradition where researchers don't look at the concrete p-value but just perform a mechanical significance test at a pre-set sig-level such as $sig=0.05$.
 This means that tests where $p\leq sig$ are called \textit{significant}, all others \textit{not significant}.
-Under such an approach, do you get more, less, or a constant number of significant results when the actual effect strength increases (all other things being equal) in the long run?
+Under such an approach, do you get in the long run: (i)~more significant results, (ii)~less significant results, or (iii)~a constant number of significant results when the actual effect strength increases (all other things being equal)?
 Still under this approach, is your \textit{error rate} constant or does it change with increased effect strength?
 The error rate is the percentage of samples which make you erroneously reject the Null when it is true.
 
