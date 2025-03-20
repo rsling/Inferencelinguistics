@@ -243,7 +243,7 @@ The standard error for $n=\Sexpr{z2.n}$ and the known variance $\sigma=\Sexpr{z.
 The standard error of the mean in this case is (revise Equation~\ref{eq:semean} if necessary):
 
 \begin{center}\begin{math}
-  \ssigma_{\mu}=\frac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\sqrt{\frac{\Sexpr{z.sigma}^2}{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
+  \ssigma_{\mu}=\cfrac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\sqrt{\cfrac{\Sexpr{z.sigma}^2}{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
 \end{math}\end{center}
 
 <<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", fig.height=4, cache=F>>=
@@ -380,7 +380,7 @@ par.defaults()
 
 The left panel of Figure~\ref{fig:z4} show the PDF of the distribution of sample means, and the highlightes area under the curve corresponds to results as extreme or more extreme than \xmean.
 The corresponding \Key{cumulative distribution function} (CDF) can be used to calculate the statistics of interest.
-The right panel of Figure~\ref{fig:z4} shows the Normal CDF for $\mu=\Sexpr{z.mu}$ and $\sigma=\Sexpr{z2.se}$ (which happens to be $SE_{\mu}$).
+The right panel of Figure~\ref{fig:z4} shows the Normal CDF for $\mu=\Sexpr{z.mu}$ and $\sigma=\Sexpr{z2.se}$ (which happens to be $\ssigma_{\mu}$).
 For the observed sample mean $\xmean=\Sexpr{round(z2.samplemean,1)}$, the CDF has the value $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$, which means that the probability of obtaining this or a more extreme result is $1-\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}=\Sexpr{1-round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$.
 Think of the value $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)}$ as indicating that $\Sexpr{round(pnorm(z2.samplemean, z.mu, z2.se), 2)*100}$\% of the probability mass lie to the right of $\xmean=\Sexpr{round(z2.samplemean,1)}$.
 If you have access to a software that has built-in functions for such CDFs, this is the most straightforward way to arrive at a p-value for a sample mean and a known Normal Distribution.
@@ -390,10 +390,10 @@ Otherwise, you can calculate the so-called z-score and look up the p-value in a 
 To to this, we simply count the distance between the distribution mean and the sample mean in multiples of the standard error, which gives us the \Key{z-score}.
 It's the same $z$ we introduced in Chapter~\ref{sec:confidence}, except we're using it the other way round.
 For estimation, we looked up z-scores corresponding to probabilities, now we're calculating z-scores in order to lookup probabilities.
-In this case, it's particularly easy because $SE_{\mu}=1$:
+In this case, it's particularly easy because $\ssigma_{\mu}=1$:
 
 \begin{center}\begin{math}
-z=\frac{\xmean-\mu}{SE_{\mu}}=\frac{\Sexpr{round(mean(z2.sample), 2)}-\Sexpr{z.mu}}{\sqrt{\frac{4^2}{16}}}=\frac{\Sexpr{round(mean(z2.sample)-z.mu, 2)}}{\Sexpr{z2.se.rnd}}=\Sexpr{z2.z.rnd}
+z=\cfrac{\xmean-\mu}{\ssigma_{\mu}}=\frac{\Sexpr{round(mean(z2.sample), 2)}-\Sexpr{z.mu}}{\sqrt{\frac{4^2}{16}}}=\frac{\Sexpr{round(mean(z2.sample)-z.mu, 2)}}{\Sexpr{z2.se.rnd}}=\Sexpr{z2.z.rnd}
 \end{math}\end{center}
 
 By dividing the distance by the standard error and calculating the z-score, we normalise it and make its interpretation independent of the concrete slope ($\sigma$) of the distribution.
@@ -762,7 +762,7 @@ There might be cases where $s^2$ \textit{overestimates} $\sigma$.
 Imagine what this would do to our statistic $t$, which is calculated exactly the same way as $z$:
 
 \begin{equation}
-  t=\frac{\xmean-\mu}{SE_{\mu}}
+  t=\cfrac{\xmean-\mu}{\ssigma_{\mu}}
   \label{eq:tone}
 \end{equation}
 
@@ -770,7 +770,7 @@ Imagine what this would do to our statistic $t$, which is calculated exactly the
 
 \begin{center}
   \begin{math}
-    \ssigma_{\mu}=\sqrt{\frac{s^2}{n}}
+    \ssigma_{\mu}=\sqrt{\cfrac{s^2}{n}}
   \end{math}
 \end{center}
 
@@ -854,7 +854,7 @@ With ever larger samples, the p-value from a t-test approximates that from a z-t
 With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
 With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
 
-<<tsim, fig.cap="Simulations of z-Tests and t-Tests with variances estimated from samples; the z-Tests are therefore inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<tsim, fig.cap="Simulations of z-Tests and t-Tests with variances estimated from samples; therefore, the z-Tests are inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
 
 par.defaults()
 par(mfrow=c(2, 2), mar=c(4.5,4,2,0.5))
@@ -909,7 +909,7 @@ for (n in 1:2) {
          main = .main,
          type = "l", lwd = the.lwd,
          bty="n",
-         xlab = ifelse(tsim.n==10, "p-value", ""),
+         xlab = "p-value",
          ylab = ifelse(u==0, "Density", ""), yaxt = "n",
          col = "white"
     )
@@ -935,7 +935,7 @@ The z-value and the t-value are numerically identical in this case, and they bot
 
 \begin{center}
   \begin{math}
-    \ssigma_{\xsample}=\sqrt{\frac{s^2}{n}}
+    \ssigma_{\xsample}=\sqrt{\cfrac{s^2}{n}}
   \end{math}
 \end{center}
 
@@ -943,7 +943,8 @@ Each curve in Figure~\ref{fig:tsim} plots the estimated density of p-values from
 In the two left panels, the Null is true, and the data are generated from a Standard Normal Distribution.
 Hence, the the z-values and the t-values should be centred around 0, and all p-values should have the same long-run frequency, which is always assumed under the Null.
 We see that for $n=\Sexpr{tsim.ns[1]}$, the z-Test produces incorrect results if the variance is not known but merely estimated.
-Under the Null (upper left panel) and with $n=\Sexpr{tsim.ns[1]}$ ($\nu=\Sexpr{tsim.ns[1]-1}$), the t-Tests correctly land at $p<\Sexpr{tsim.sig}$ in \Sexpr{tsim.props[2]}\% of all simulations, but the z-Tests produce many false significant results, namely in \Sexpr{tsim.props[1]}\% of the simulations.%
+Under the Null (upper left panel) and with $n=\Sexpr{tsim.ns[1]}$ ($\nu=\Sexpr{tsim.ns[1]-1}$), the t-Tests correctly land at $p<\Sexpr{tsim.sig}$ in \Sexpr{tsim.props[2]}\% of all simulations, but the z-Tests produce many false significant results.
+Instead of the nominal 1\% at $sig=0.01$, the Null is rejected in \Sexpr{tsim.props[1]}\% of the simulations.%
 \footnote{We arbitrarily chose $sig=\Sexpr{tsim.sig}$ for convenience.
 Results would be similar for other sig-levels.}
 
@@ -968,8 +969,136 @@ The solution is presented in the next section.
 
 \subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
+We now turn to a much more realistic scenario:
+You have no precise idea about any population mean to compare a sample mean to, and you've got no idea about the population variance (at least no sufficiently precise idea).
+For example, as a socio-phonetician you might be interested in comparing the mean frequency of the F1 formant in articulations of self-described members of US coastal elites to the mean frequency of the same formant in articulations of self-described rural folk from the Midwest in the long [iː] in \textit{weakling}.%
+\footnote{As usual in this book, the examples are completely made up and come with a dose of irony.
+This stems from our conviction that the examples shouldn't matter for a sound understanding of statistics.
+Whether it's mean formant frequencies in hertz or mean daily milk yield of cows in pints doesn't really matter.}
+Some deep sociolinguistic theory predicts that the formant frequency should be lower for rural folk.
+
+<<setupformants, echo=FALSE>>=
+
+set.seed(74)
+
+f.n <- 10
+
+f.elite.m <- 240
+f.elite.sd <- 9
+f.elite.var <- f.elite.sd^2
+f.elite <- round(rnorm(n = f.n, mean = f.elite.m, sd = f.elite.sd), 0)
+
+f.rural.m <- 232
+f.rural.sd <- 6
+f.rural.var <- f.rural.sd^2
+f.rural <- round(rnorm(n = f.n, mean = f.rural.m, sd = f.rural.sd), 0)
+
+f.se <- round(sqrt(var(f.elite)/f.n+var(f.rural)/f.n), 2)
+f.t <- round((mean(f.elite)-mean(f.rural))/f.se, 2)
+f.p <- round(pt(f.t, df = 2*(f.n-1), lower.tail = F), 2)
+@
+
+Per group, $n=\Sexpr{f.n}$ participants read a short text where the word \textit{weakling} occurs once.
+Hence, you have to work with 20 data points in total.
+The results are (where \xsample\ is from the elites and \ysample\ from the rural folk):
+
+\begin{center}
+  \begin{math}
+    \xsample=\langle\Sexpr{paste0(f.elite, collapse=", ")}\rangle
+  \end{math}
+  \begin{math}
+    \ysample=\langle\Sexpr{paste0(f.rural, collapse=", ")}\rangle
+  \end{math}
+\end{center}
 
 
+The means are $\xmean=\Sexpr{f.elite.m}$ and $\ymean=\Sexpr{f.rural.m}$.
+The standard deviations are $s_{\xsample}=\Sexpr{f.elite.sd}$ and $s_{\ysample}=\Sexpr{f.rural.sd}$.
+Indeed, the formant frequency differs by \Sexpr{f.elite.m-f.rural.m} Hz.
+How can we apply a t-Test under these circumstances?
+First of all, what is the substantive hypothesis?
+It's that the true means between the DGPs producing the formant frequencies differ.
+In other words, by hypothesis there are two DGPs and thus two populations, one corresponding to coastal speakers (with true mean $\mu$) and one corresponding to speakers from the Midwest (with true mean $\mu_1$).
+Under the Null, they are identical ($\mu=\mu_1$).
+
+This leads us nicely to the maths we need.
+The t-Test, like the z-Test, is based on subtracting a population mean from a sample mean.
+Remember Equation~\ref{eq:tone} for a single sample mean \xmean\ and a known true mean $\mu$, repeated here for convenience:
+
+\begin{center}
+  \begin{math}
+    t=\cfrac{\xmean-\mu}{\ssigma_{\mu}}
+  \end{math}
+\end{center}
+
+Conveniently, it turns out that results of subtracting \textit{differences of population means} from  \textit{differences of sample means} are Normal or t-distributed if the individual statistics are also Normal or t-distributed.
+Hence, we can calculate a t-statistic for two samples like so:
+
+\begin{center}
+  \begin{math}
+    t=\cfrac{(\xmean-\ymean)-(\mu-\mu_1)}{\ssigma_{\mu-\mu_1}}
+  \end{math}
+\end{center}
+
+\noindent Keep in mind that the test is always performed under the assumption that the Null is true.
+But what is $\mu-\mu_1$ under the Null?
+As both true means are identical under the Null, the difference between them is $\mu-\mu_1=0$.
+Hence:
+
+\begin{center}
+  \begin{math}
+    t=\cfrac{(\xmean-\ymean)-(\mu-\mu_1)}{\ssigma_{\mu-\mu_1}}=\cfrac{(\xmean-\ymean)-0}{\ssigma_{\mu-\mu_1}}
+  \end{math}
+\end{center}
+
+\noindent The final t-statistic for two samples is thus:
+
+\begin{equation}
+  t=\cfrac{\xmean-\ymean}{\ssigma_{\mu-\mu_1}}
+  \label{eq:ttwo}
+\end{equation}
+
+Alas, there is a catch to be taken into account, which is related to the calculation of the appropriate standard error, which we referred to above simply as $\ssigma_{\mu-\mu_1}$.
+The simple logic and maths described above only work as expected if the variances $\sigma$ and $\sigma_1$ from both populations are equal.
+If that is the case \textit{and the two samples have the same size}, the estimated standard error for the mean differences $\ssigma_{\xmean-\ymean}$ is calculated by just adding the variances of the two samples:
+
+\begin{equation}
+  \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample}}{n_{\xsample}}+\frac{s^2_{\ysample}}{n_{\ysample}}}
+  \label{eq:setwo}
+\end{equation}
+
+\noindent This estimated standard error $\ssigma_{\xmean-\ymean}$ is used as the estimate of $\ssigma_{\mu-\mu_1}$ with a t-Distribution with degrees of freedom which are also merely added:
+
+\begin{equation}
+  \nu_{\xmean-\ymean}=\nu_{\xmean}+\nu_{\ymean}=(n_{\xsample}-1)+(n_{\ysample}-1)
+  \label{eq:dfttwo}
+\end{equation}
+
+For our example, we get:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\xmean-\ymean}=\sqrt{\cfrac{\Sexpr{f.elite.var}}{\Sexpr{f.n}}+\cfrac{\Sexpr{f.rural.var}}{\Sexpr{f.n}}}=\sqrt{\Sexpr{f.elite.var/f.n}+\Sexpr{f.rural.var/f.n}}=\Sexpr{f.se}
+  \end{math}
+\end{center}
+
+\noindent and:
+
+\begin{center}
+  \begin{math}
+    \nu_{\xmean-\ymean}=(\Sexpr{f.n}-1)+(\Sexpr{f.n}-1)=\Sexpr{(f.n-1)+(f.n-1)}
+  \end{math}
+\end{center}
+
+\noindent And the t-statistic is calculated as:
+
+\begin{center}
+  \begin{math}
+    t=\cfrac{\Sexpr{f.elite.m}-\Sexpr{f.rural.m}}{\Sexpr{f.se}}=\cfrac{\Sexpr{f.elite.m-f.rural.m}}{\Sexpr{f.se}}=\Sexpr{f.t}
+  \end{math}
+\end{center}
+
+\noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided logic), we get $p=\Sexpr{f.p}$.
 
 
 
@@ -1013,15 +1142,25 @@ Under such an approach, do you get in the long run: (i)~more significant results
 Still under this approach, is your \textit{error rate} constant or does it change with increased effect strength?
 The error rate is the percentage of samples which make you erroneously reject the Null when it is true.
 
-\exercise{zandt20} A fictitious big data study in sociolinguistics has found through a popular social media app (and only from users that consented to be part of the experiment) that the mean time it took self-identified men to read a specific message about tomato ketchup was \ldots\ seconds ($n_x=45231$, $s_x=$), whereas the mean reading time for self-identified women was \ldots\ seconds ($n_y=21231$, $s_y=$).
+\exercise{zandt20} A fictitious big data study in sociolinguistics has found through a popular social media app (and only from users that consented to be part of the experiment) that the mean time it took self-identified men to read a specific message about tomato ketchup was 8.9 seconds ($n_x=45231$, $s_x^2=0.3$), whereas the mean reading time for self-identified women was 9.2 seconds ($n_y=21231$, $s_y^2=0.4$).
 The theory-driven substantive hypothesis was that men should read the message faster.
 Formulate the Null and perform a t-Test for means from two samples.
-Calculate all required statistics using a calculator, including the correct variance.
+Calculate all required statistics using a pocket calculator, including the appropriate variance.
 Interpret and evaluate the result.
 
-\exercise{zandt30} The co-supervisor of the dissertation that led to the study in Exercise~\ref{exer:zandt20} reads the report and quickly writes an email to the author\slash candidate.
-He says that the study is invalid because the sample wasn't \textit{balanced}.
-It should have contained an equal number of data points from men and from women.
-What do you -- the main supervisor -- reply to him to defend your candidate?
+\exercise{zandt30} The co-supervisor of the dissertation that led to the study described in Exercise~8 reads the report and quickly writes an email to the author, cc'ing the supervisor.
+They say that the study is invalid anyway because the sample wasn't \textit{balanced}.
+It should have contained an equal number of data points from men and from women in order to be \textit{properly representative of all relevant groups in the study}.
+What do you -- the main supervisor -- reply in order to defend your candidate?
+(We experienced this exact situation at some university some time ago, except in a different sub-field of linguistics and with real data.)
+
+\exercise{zandt40} The fictitious study on formants in Section~\ref{sec:ttwo} didn't produce surprising (\ie, \textit{significant}) results, and the authors point out in the publication that the experiment did not lend support to their substantive hypothesis, discussing potential reasons for the failure as well as possible future experiments.
+The publication was pre-registered (see Chapter~\ref{sec:inference}) and was published despite reporting only negative results.
+Swiftly, a proponent of a rival theory submits a short reply to the \textit{Bulletin of the Sociolinguistic Society}.
+The rival theory explicitly predicts that rural folk should \textit{not} produce higher F1 frequencies in the word \textit{weakling}.
+The author of the short reply argues that the failed experiment indirectly counts as evidence for the rival theory and demands that the original paper be retracted because the theory that motivated the reported experiment is clearly inferior, maybe even utterly false.
+You are known as an expert on statistics and asked to review the short reply.
+Do you recommend to accept it or to rejected it?
+What do you think about the demand that the original paper be retracted?
 
 \end{exercises}
