@@ -770,7 +770,7 @@ Imagine what this would do to our statistic $t$, which is calculated exactly the
 
 \begin{center}
   \begin{math}
-    \ssigma_{\mu}=\sqrt{\frac{\xmean}{n}}
+    \ssigma_{\mu}=\sqrt{\frac{s^2}{n}}
   \end{math}
 \end{center}
 
@@ -854,7 +854,117 @@ With ever larger samples, the p-value from a t-test approximates that from a z-t
 With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
 With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
 
-Finally, we simulate t-tests and compare them to simulations of z-tests.
+<<tsim, fig.cap="Simulations of z-Tests and t-Tests with variances estimated from samples; the z-Tests are therefore inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+par.defaults()
+par(mfrow=c(2, 2), mar=c(4.5,4,2,0.5))
+
+tsim.reps <- 10000
+tsim.t.ps <- rep(0, tsim.reps)
+tsim.z.ps <- rep(0, tsim.reps)
+
+tsim.1 <- 0.5
+tsim.sig <- 0.01
+tsim.ns <- c(5, 10)
+tsim.props <- rep(0, 8)
+
+for (n in 1:2) {
+  tsim.n <- tsim.ns[n]
+  for (u in 0:1) {
+    for (i in 1:tsim.reps) {
+      if (u == 0) {
+        .xs <- rnorm(n = tsim.n)
+      } else {
+        .xs <- rnorm(n = tsim.n, mean = tsim.1)
+      }
+
+      .mean <- mean(.xs)
+      .var <- var(.xs)
+      .sd <- sqrt(.var)
+      .se.hat <- sqrt(.var/tsim.n)
+
+      # z-test and t.test
+      .t <- .mean/.se.hat
+
+      .z.p <- 2*pnorm(abs(.t), lower.tail = F)
+      .t.p <- 2*pt(abs(.t), tsim.n-1, lower.tail = F)
+
+      tsim.z.ps[i] <- .z.p
+      tsim.t.ps[i] <- .t.p
+    }
+
+    .z.prop <- round(length(which(tsim.z.ps < tsim.sig))/tsim.reps*100, 1)
+    .t.prop <- round(length(which(tsim.t.ps < tsim.sig))/tsim.reps*100, 1)
+
+    # For later in the text.
+    tsim.props[ifelse(n==1, 1, 5)+u*2] <- .z.prop
+    tsim.props[ifelse(n==1, 1, 5)+u*2+1] <- .t.prop
+
+    .main <- paste0(
+      ifelse(u==0, "H₀ is true", paste0("H₀ is false (μ₁=", tsim.1, ")")),
+      ", n=", tsim.n
+      )
+
+    plot(density(tsim.z.ps, from = 0, to = 1),
+         main = .main,
+         type = "l", lwd = the.lwd,
+         bty="n",
+         xlab = ifelse(tsim.n==10, "p-value", ""),
+         ylab = ifelse(u==0, "Density", ""), yaxt = "n",
+         col = "white"
+    )
+    lines(density(tsim.z.ps, from = 0, to = 1),
+          col = the.cols[3], lwd = the.lwd)
+    lines(density(tsim.t.ps, from = 0, to = 1),
+          col = the.cols[1], lwd = the.lwd)
+    legend(ifelse(u==0, "bottom", "topright"),
+           legend = c(paste0("z-Test with p<", tsim.sig, ": ", .z.prop, "%"),
+                      paste0("t-Test with p<", tsim.sig, ": ", .t.prop, "%")),
+           col = the.cols[c(3,1)], lwd = the.lwd, bty = "n"
+    )
+  }
+}
+@
+
+Finally, we simulate t-tests and compare them to incorrectly conducted z-tests.
+The simulation answers the question of what happens if we disregard the fact that the variance was merely estimated from a sample and was not known, and we decide to perform a z-Test.
+For simplicity's sake, let's say the known mean is $\mu=0$, and the true but unknown standard deviation is $\sigma=1$.
+Figure~\ref{fig:tsim} shows the distributions of p-values for inappropriate z-Tests based on the sample variance and the corresponding appropriate t-Tests.
+The only difference is that for the z-Test, the cumulative distribution function of the Standard Normal Distribution was used, and for the t-Test, the cumulative distribution function of the t-Distribution (with the respective degrees of freedom) was used.
+The z-value and the t-value are numerically identical in this case, and they both use the standard error calculated from the sample variance, which is, again, only correct for the t-Test:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\xsample}=\sqrt{\frac{s^2}{n}}
+  \end{math}
+\end{center}
+
+Each curve in Figure~\ref{fig:tsim} plots the estimated density of p-values from \Sexpr{tsim.reps} random experiments with the accompanying two-sided tests.
+In the two left panels, the Null is true, and the data are generated from a Standard Normal Distribution.
+Hence, the the z-values and the t-values should be centred around 0, and all p-values should have the same long-run frequency, which is always assumed under the Null.
+We see that for $n=\Sexpr{tsim.ns[1]}$, the z-Test produces incorrect results if the variance is not known but merely estimated.
+Under the Null (upper left panel) and with $n=\Sexpr{tsim.ns[1]}$ ($\nu=\Sexpr{tsim.ns[1]-1}$), the t-Tests correctly land at $p<\Sexpr{tsim.sig}$ in \Sexpr{tsim.props[2]}\% of all simulations, but the z-Tests produce many false significant results, namely in \Sexpr{tsim.props[1]}\% of the simulations.%
+\footnote{We arbitrarily chose $sig=\Sexpr{tsim.sig}$ for convenience.
+Results would be similar for other sig-levels.}
+
+With more degrees of freedom, this problem is alleviated as the variance estimate gets more precise.
+In the lower-left panel, the simulations for $n=\Sexpr{tsim.ns[2]}$ ($\nu=\Sexpr{tsim.ns[2]-1}$) are shown.
+The t-Test is still almost spot-on and reaches $p<\Sexpr{tsim.sig}$ in \Sexpr{tsim.props[6]}\% of all simulations.
+The z-Tests now produce \Sexpr{tsim.props[5]}\% reaching the threshold, which means at least many fewer false significant results.
+Still, this would lead to false rejections of the Null and false positive inferences regarding the substantive hypothesis much more often than it should.
+The error rate increases sharply, as it should be 1\% at $sig=\Sexpr{tsim.sig}$, 0.1\% at $sig=0.001$, etc.
+
+In the panels on the right-hand side, p-values from simulations are shown where the Null is false.
+The samples now come from a DGP with $\mu_1=\Sexpr{tsim.1}$.
+We haven't discussed yet how this effect strength affects the tilt of the p-values numerically.
+Therefore, we have no precise expectation of how many simulations we expect to achieve $p<\Sexpr{tsim.sig}$.
+However, we clearly see that the inappropriate z-Tests are shifted much more heavily towards 0.
+Under the assumption (corroborated in the simulations with a true Null) that the t-Test is appropriate and the z-Test isn't under the given circumstances, the z-Test will lead to many more wrong inferences than we expect from correct z-Tests.
+In sum, using the z-Test where a t-Test would be appropriate leads to a considerable and incorrect increase in rejections of the Null.
+As this would mar our inferences, the t-Test is a highly useful tool when the true variance is unknown.
+But, we hear you say, population means are also largely unknown, which makes the t-Test much less useful than we claim.
+Hold that thought!
+The solution is presented in the next section.
 
 \subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
@@ -865,11 +975,53 @@ Finally, we simulate t-tests and compare them to simulations of z-tests.
 
 \begin{exercises}
 
-\exercise{zandt10} We have argued in Section~\ref{sec:distpz} that larger effect sizes (increasing actual differences between the known population mean and the measured means) tilt the distribution of p-values increasingly towards 0 .
+\exercise{z1} \xsample\ as given below is a series of numeric measurements.
+The known population variance is $\sigma=$.
+Under the substantive hypothesis that the mean is smaller than the know population mean $\mu=$, formulate a Null and perform a z-Test.
+All required statistics should be calculated by hand with a pocket calculator.
+Interpret the result, and make an inference if possible.
+
+\exercise{z2} \xsample\ as given below is a series of numeric measurements.
+The known population variance is $\sigma=$.
+Under the substantive hypothesis that the mean is greater than the know population mean $\mu=$, formulate a Null and perform a z-Test.
+All required statistics should be calculated by hand with a pocket calculator.
+Interpret the result, and make an inference if possible.
+
+\exercise{z3} \xsample\ as given below is a series of numeric measurements.
+The known population variance is $\sigma=$.
+Under the substantive hypothesis that the mean is different from the know population mean $\mu=$, formulate a Null and perform a z-Test.
+All required statistics should be calculated by hand with a pocket calculator.
+Interpret the result, and make an inference if possible.
+
+\exercise{t1} Assuming the population variance is unknown, perform a t-Test corresponding to Exercise~\ref{exer:z3}.
+Interpret the differences in the results between the z-Test and the t-Test.
+
+\exercise{t2} For the samples \xsample\ and \ysample\ given below, perform a t-Test for differences in sample means under the substantive hypothesis that \ymean\ is smaller than \xmean.
+Formulate a Null and perform the test.
+All required statistics should be calculated by hand with a pocket calculator.
+Interpret the result, and make an inference if possible.
+
+\exercise{t3} For the samples \xsample\ and \ysample\ given below, perform a t-Test for differences in sample means under the substantive hypothesis that \xmean\ and \ymean\ are not equal.
+Formulate a Null and perform the test.
+All required statistics should be calculated by hand with a pocket calculator.
+Interpret the result, and make an inference if possible.
+
+\exercise{zandt10} We have argued in Section~\ref{sec:distpz} that larger effect sizes (increasing actual differences between the known population mean and the measured means) tilt the distribution of p-values increasingly towards 0.
 There is a tradition where researchers don't look at the concrete p-value but just perform a mechanical significance test at a pre-set sig-level such as $sig=0.05$.
 This means that tests where $p\leq sig$ are called \textit{significant}, all others \textit{not significant}.
 Under such an approach, do you get in the long run: (i)~more significant results, (ii)~less significant results, or (iii)~a constant number of significant results when the actual effect strength increases (all other things being equal)?
 Still under this approach, is your \textit{error rate} constant or does it change with increased effect strength?
 The error rate is the percentage of samples which make you erroneously reject the Null when it is true.
+
+\exercise{zandt20} A fictitious big data study in sociolinguistics has found through a popular social media app (and only from users that consented to be part of the experiment) that the mean time it took self-identified men to read a specific message about tomato ketchup was \ldots\ seconds ($n_x=45231$, $s_x=$), whereas the mean reading time for self-identified women was \ldots\ seconds ($n_y=21231$, $s_y=$).
+The theory-driven substantive hypothesis was that men should read the message faster.
+Formulate the Null and perform a t-Test for means from two samples.
+Calculate all required statistics using a calculator, including the correct variance.
+Interpret and evaluate the result.
+
+\exercise{zandt30} The co-supervisor of the dissertation that led to the study in Exercise~\ref{exer:zandt20} reads the report and quickly writes an email to the author\slash candidate.
+He says that the study is invalid because the sample wasn't \textit{balanced}.
+It should have contained an equal number of data points from men and from women.
+What do you -- the main supervisor -- reply to him to defend your candidate?
 
 \end{exercises}
