@@ -803,17 +803,17 @@ One option would be to take the \Key{absolute} value, which is achieved by disca
 While this is an option, another one is more appropriate for many further calculations in statistics: taking the square of the distance.
 This makes their absolute value much bigger, but it also means that negative signs cancel out.
 If we then sum up the squared distances, we get the squared total deviation of the data points from the mean.
-It's called the \Key{sum of squares}, and we abbreviate it as $SQ(\xsample)$ in function notation or simply $SQ$.%
+It's called the \Key{sum of squares} of a sample \xsample, and we abbreviate it as $SQ_{\xsample}$, or simply $SQ$ if there is just one sample.%
 \footnote{This is the abbreviation of German \textit{Summe der Quadrate}, but you can also read it as \textit{Sum of sQuares}.
 We feel more comfortable with this abbreviation than with \textit{SS}, which is often used in English.}
 
 \begin{equation}
-  SQ(\xsample)=\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2
+  SQ_{\xsample}=\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2
   \label{eq:sq}
 \end{equation}
 
 While the $SQ$ is the \textit{total} (summed) squared deviation from the mean, we're rather looking for the \textit{average} deviation per data point.
-We can get there by dividing $SQ$ by $n$, which gives us the so-called sample \Key{variance} of \xsample\ denoted by $s^2(\xsample)$ in function notation or simply $s^2$ if it's clear that we're talking about one sample only.
+We can get there by dividing $SQ$ by $n$, which gives us the so-called sample \Key{variance} of \xsample\ denoted by $s^2_{\xsample}$, or simply $s^2$ if it's clear that we're talking about one sample only.
 There is a minor catch:
 We're going to use the variance from a sample as an estimate of the variance in the corresponding population.
 Statisticians have found out that small samples tend to underestimate the variance of the population and that the best practical remedy is to divide by $n-1$ instead of $n$.
@@ -821,7 +821,7 @@ The larger $n$, the smaller the effect of this correction, and for populations, 
 Thus, the sample variance is customarily computed as according to Equation~\ref{eq:variance} and the population variance (denoted $\sigma^2$ with a population size of $N$ and a mean of $\mu$) is understood to be given by Equation~{eq:variancepop}.
 
 \begin{equation}
-  s^2(\xsample)=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ(\xsample)}{n-1}
+  s^2_{\xsample}=\cfrac{\sum\limits_{i=1}^{n}(x_i-\bar{\xsample})^2}{n-1}=\cfrac{SQ_{\xsample}}{n-1}
   \label{eq:variance}
 \end{equation}
 
@@ -832,23 +832,23 @@ Thus, the sample variance is customarily computed as according to Equation~\ref{
 
 In order to arrive at the \textit{average deviation of the data points from the mean} instead of the \textit{average squared deviation of the data points from the mean}, we need to reverse the upscaling effect of squaring the distances when calculating $SQ$.
 We can do this by taking the square root of the variance $s^2$.
-The result is called the \Key{standard deviation}, denoted $s(\xsample)$ in function notation or simply $s$:
+The result is called the \Key{standard deviation}, denoted $s_{\xsample}$, or simply $s$ if it's clear that there is only one sample under discussion:
 
 \begin{equation}
-  s(\xsample)=\sqrt{s^2}
+  s_{\xsample}=\sqrt{s^2}
   \label{eq:stdev}
 \end{equation}
 
 It is customary to switch between variance and standard deviation as the information conveyed by them is equivalent.
 Most people will probably call the overall phenomenon \textit{variance}, but \textit{standard deviation} is the measure more frequently used in calculations.
 Let's do it for the small sample \xsample, based on the distances to the mean from Table~\ref{tab:xdistances}.
-First, we calculate $SQ(\xsample)$:
+First, we calculate $SQ_{\xsample}$:
 
 \small
 
 \begin{center}
   \begin{math}
-    SQ(\xsample)=%
+    SQ_{\xsample}=%
     \Sexpr{paste("(", round(pots-.mean, 0), collapse = ")^2+")})^2=\Sexpr{paste((round(pots-.mean, 0))^2, collapse = "+")}=\Sexpr{format(sum((round(pots-.mean, 0))^2), scientific = F)}
   \end{math}
 \end{center}
@@ -859,7 +859,7 @@ First, we calculate $SQ(\xsample)$:
 
 \begin{center}
   \begin{math}
-    s^2(\xsample)=\cfrac{\Sexpr{format(sum((round(pots-.mean, 0))^2), scientific = F)}}{\Sexpr{length(pots)-1}}=\Sexpr{round(var(pots), 1)}
+    s^2_{\xsample}=\cfrac{\Sexpr{format(sum((round(pots-.mean, 0))^2), scientific = F)}}{\Sexpr{length(pots)-1}}=\Sexpr{round(var(pots), 1)}
   \end{math}
 \end{center}
 
@@ -867,7 +867,7 @@ First, we calculate $SQ(\xsample)$:
 
 \begin{center}
   \begin{math}
-    s(\xsample)=\sqrt{\Sexpr{round(var(pots), 1)}}=\Sexpr{round(sqrt(round(var(pots), 1)),1)}
+    s_{\xsample}=\sqrt{\Sexpr{round(var(pots), 1)}}=\Sexpr{round(sqrt(round(var(pots), 1)),1)}
   \end{math}
 \end{center}
 

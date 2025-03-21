@@ -526,8 +526,8 @@ lines(x = xs,
 par.defaults()
 @
 
-Each of these cases corresponds to a slightly different test, illustrated in Figure~\ref{fig:tails} for the Standard Normal Distribution as the distribution of sample means, but with the z-value from the example above\ie, $z=\Sexpr{z2.z.rnd}$.
-On the left, the test as conducted above is repeated.
+Each of these cases corresponds to a slightly different test, illustrated in Figure~\ref{fig:tails} for the Standard Normal Distribution as the distribution of sample means, but with the z-value from the example above, \ie, $z=\Sexpr{z2.z.rnd}$.
+On the left, the test as conducted above is illustrated once again.
 We deviate by $z=\Sexpr{z2.z.rnd}$ from the known mean $\mu$, and that defines 2\% of the area under the curve, hence $p=0.02$.
 In the middle, the opposite is shown, which is applicable if the Null is: \textit{the unknown mean $\mu_1$ is equal to or larger than the known mean $\mu$}.
 In this case, we're only interested in negative deviations from the known mean $\mu$.
@@ -1011,7 +1011,6 @@ The results are (where \xsample\ is from the elites and \ysample\ from the rural
   \end{math}
 \end{center}
 
-
 The means are $\xmean=\Sexpr{f.elite.m}$ and $\ymean=\Sexpr{f.rural.m}$.
 The standard deviations are $s_{\xsample}=\Sexpr{f.elite.sd}$ and $s_{\ysample}=\Sexpr{f.rural.sd}$.
 Indeed, the formant frequency differs by \Sexpr{f.elite.m-f.rural.m} Hz.
@@ -1031,16 +1030,20 @@ Remember Equation~\ref{eq:tone} for a single sample mean \xmean\ and a known tru
   \end{math}
 \end{center}
 
-Conveniently, it turns out that results of subtracting \textit{differences of population means} from  \textit{differences of sample means} are Normal or t-distributed if the individual statistics are also Normal or t-distributed.
-Hence, we can calculate a t-statistic for two samples like so:
+Conveniently, it turns out that results of subtracting \textit{differences of population means} from  \textit{differences of sample means} are also normally distributed or t-distributed if the individual statistics are normally distributed or t-distributed.
+Hence, we can calculate a t-statistic for two samples as follows.
+The equation implements the logic of the z-Test and the t-Test based on the \textit{distance between a sample mean} (\textit{difference}) \textit{and a known population mean} (\textit{difference}):
 
-\begin{center}
-  \begin{math}
-    t=\cfrac{(\xmean-\ymean)-(\mu-\mu_1)}{\ssigma_{\mu-\mu_1}}
-  \end{math}
-\end{center}
+\begin{equation}
+  t=\cfrac{(\xmean-\ymean)-(\mu-\mu_1)}{\ssigma_{\mu-\mu_1}}
+  \label{eq:tinterrim}
+\end{equation}
 
-\noindent Keep in mind that the test is always performed under the assumption that the Null is true.
+\noindent We'll return to the question of how to calculate the standard error $\ssigma_{\mu-\mu_1}$ presently.
+For the moment, please believe us that there is an appropriate standard error for mean differences.
+The standard error aside, Equation~\ref{eq:tinterrim} might not seem to be very useful as we clearly haven't got any idea what the true means $\mu$ and $\mu_1$ are.
+But this isn't a dead end.
+To see why, keep in mind that the test is always performed under the assumption that the Null is true.
 But what is $\mu-\mu_1$ under the Null?
 As both true means are identical under the Null, the difference between them is $\mu-\mu_1=0$.
 Hence:
@@ -1058,23 +1061,31 @@ Hence:
   \label{eq:ttwo}
 \end{equation}
 
-Alas, there is a catch to be taken into account, which is related to the calculation of the appropriate standard error, which we referred to above simply as $\ssigma_{\mu-\mu_1}$.
-The simple logic and maths described above only work as expected if the variances $\sigma$ and $\sigma_1$ from both populations are equal.
-If that is the case \textit{and the two samples have the same size}, the estimated standard error for the mean differences $\ssigma_{\xmean-\ymean}$ is calculated by just adding the variances of the two samples:
+Alas, there's a catch to be taken into account.
+It's related to the calculation of the appropriate standard error, which we referred to above simply as $\ssigma_{\mu-\mu_1}$.
+Here's the problem:
+The refreshingly simple logic and maths described above only work as expected if the variances $\sigma$ and $\sigma_1$ from both populations are equal.
+If that is the case \textit{and the two samples have the same size}, the estimated standard error for the mean differences $\ssigma_{\xmean-\ymean}$ is calculated by just adding the variances of the two samples.
+Why do we just add the two?
+We are working with two sample estimates of means in order to approximate a difference between two potential populations (albeit populations with identical variance).
+Both estimates contribute uncertainty to the calculation, which means that we have two sources of error.
+Hence, we use a standard error that adds these two error components (where there is only one error in the One-Sample t-Test):
 
 \begin{equation}
   \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample}}{n_{\xsample}}+\frac{s^2_{\ysample}}{n_{\ysample}}}
   \label{eq:setwo}
 \end{equation}
 
-\noindent This estimated standard error $\ssigma_{\xmean-\ymean}$ is used as the estimate of $\ssigma_{\mu-\mu_1}$ with a t-Distribution with degrees of freedom which are also merely added:
+\noindent This estimated standard error $\ssigma_{\xmean-\ymean}$ is used as the estimate of $\ssigma_{\mu-\mu_1}$.
+Furthermore, we use a t-Distribution with the appropriate degrees of freedom $\nu_{\xmean-\ymean}$.
+Luckily, degrees of freedom can also just be added:
 
 \begin{equation}
   \nu_{\xmean-\ymean}=\nu_{\xmean}+\nu_{\ymean}=(n_{\xsample}-1)+(n_{\ysample}-1)
   \label{eq:dfttwo}
 \end{equation}
 
-For our example, we get:
+\noindent In our example, we get:
 
 \begin{center}
   \begin{math}
@@ -1098,7 +1109,129 @@ For our example, we get:
   \end{math}
 \end{center}
 
-\noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided logic), we get $p=\Sexpr{f.p}$.
+\noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided lookup), we get $p=\Sexpr{f.p}$.
+This doesn't even meet the lowest standard for a surprising result under the Null ($sig=0.05$), and hence we do not conclude anything from this result.
+
+We pointed out that the regular t-Test and its standard error calculated as in Equation~\ref{eq:setwo} are only appropriate if both (potential) populations or DGPs have identical variances, and if the samples have the same size.
+If the variances differ (even potentially), please refer to \Key{Welch's t-Test}, a variant of the t-Test with modified calculations to account for unequal variances.
+We won't cover it in this book for reasons of space and focus.
+If the two samples are of different sizes but the population variances can be safely assumed to be equal, however, there's a relatively simple solution.
+Let's first consider why different sample sizes are a problem at all for calculating the standard error.
+
+We know by now that larger samples represent (on average) a population or a DGP better than smaller samples.
+Remember that the two populations have to have identical variances for the Two-Sample t-Test to be applicable.
+If there is a considerable difference in sample size, one sample---the larger one---is thus a better approximation of the common variance of $\mu$ and $\mu_1$.
+By simply adding error components based in the individual samples' variance estimates, both are given the same weight in the calculation of the total error inherent in the estimation of the mean difference.
+This cannot be the optimal solution, because smaller samples will inevitable drag down larger samples in the long run.
+
+At the same time, keep in mind that the amount of error contributed by the two samples depends on their respective sample sizes.
+We first need to come up with the best estimate of the variance using information from both samples, which---once again---must be identical between the two populations.
+Then, we use this variance estimate to introduce two error components in the formula of the standard error.
+With $s^2_{\xsample,\ysample}$ standing for the variance estimated from both samples, the standard error is given as:
+
+\begin{equation}
+  \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample,\ysample}}{n_{\xsample}}+\frac{s^2_{\xsample,\ysample}}{n_{\ysample}}}
+  \label{eq:setwopooled}
+\end{equation}
+
+\noindent And the best possible estimate of the variance $s^2_{\xsample,\ysample}$, the so-called \Key{pooled variance} is given by:
+
+\begin{equation}
+  s^2_{\xsample,\ysample}=\frac{SQ_{\xsample}+SQ_{\ysample}}{(n_{\xsample}-1)+(n_{\xsample}-1)}
+  \label{eq:varpooled}
+\end{equation}
+
+SQ stands for \textit{sum of squares}.
+Please revise Section~\ref{sec:quantifyvariance} if you don't remember exactly what this means.
+For comparison, the variance of a single sample $s^2_{\xsample}$ was given in Equation~\ref{eq:variance}, repeated here in condensed form for convenience:
+
+\begin{center}
+  \begin{math}
+    s^2_{\xsample}=\cfrac{SQ_{\xsample}}{n-1}
+  \end{math}
+\end{center}
+
+\noindent The pooled variance is what the name suggests:
+We pool both samples to calculate a maximally precise estimate of their variances.
+If one sample is smaller, its sum of squares is smaller, but so is its sample size.
+Hence, Equation~\ref{eq:varpooled} intrinsically weighs the samples' contribution to the common variance.
+Notice that we couldn't simply pool the samples in Equation~\ref{eq:setwopooled} as each error component depends specifically on the size of one of the two samples.
+
+<<setuppvar, echo=FALSE>>=
+set.seed(723)
+
+pvar.reps <- 100
+pvar.n.x <- 5
+pvar.n.y <- 20
+pvar.sd <- 5
+
+pvar.varx <- rep(0, pvar.reps)
+pvar.vary <- rep(0, pvar.reps)
+pvar.vara <- rep(0, pvar.reps)
+pvar.varp <- rep(0, pvar.reps)
+
+pvar.set <- sqrt(pvar.sd^2/pvar.n.x + pvar.sd^2/pvar.n.y)
+@
+
+<<pvarsim, fig.cap=paste0(pvar.reps, " simulations of standard errors for mean differences: calculated with simply added variances (gray squares) and calculated with pooled variances (blue dots and orange dots); sample sizes are ", pvar.n.x, " and ", pvar.n.y, "; the true SE is ", pvar.set, " (red line)"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+par.defaults()
+
+for (i in 1:pvar.reps) {
+  .x <- rnorm(n = pvar.n.x, sd = pvar.sd)
+  .y <- rnorm(n = pvar.n.y, sd = pvar.sd)
+
+  pvar.varx[i] <- var(.x)
+  pvar.vary[i] <- var(.y)
+  pvar.vara[i] <- sqrt( ( var(.x)/pvar.n.x  + var(.y)/pvar.n.y ) )
+  .pvar <- ( sum((.x-mean(.x))^2) + sum((.y-mean(.y))^2) ) / ( (pvar.n.x-1) + (pvar.n.y-1) )
+  pvar.varp[i] <- sqrt( .pvar/pvar.n.x + .pvar/pvar.n.y )
+}
+
+the.order <- order(pvar.varp)
+pvar.vara <- pvar.vara[the.order]
+pvar.varp <- pvar.varp[the.order]
+
+plot(pvar.vara,
+     bty="n", xlab = "Replication (sorted)",
+     ylab = "Estimate of Standard Error",
+     col = "white",
+     ylim = c(1, 4.6)
+     )
+
+points(pvar.vara,
+       pch = 15,
+       col = the.lightgray)
+points(pvar.varp, pch = 16,
+       col = ifelse(abs(pvar.varp-pvar.set)<abs(pvar.vara-pvar.set),
+                    alpha(the.cols[2], 0.75), alpha(the.cols[4], 0.75)))
+abline(h = pvar.set, lwd = the.lwd, col = alpha(the.cols[1], 0.75))
+
+legend("topleft", legend = c("SE with pooled variance (closer true SE)",
+                             "SE with pooled variance (farther from true SE)",
+                             "SE with unweighted variance"),
+       col = c(alpha(the.cols[2], 0.75),
+               alpha(the.cols[4], 0.75),
+               the.lightgray),
+       pch = c(16, 16, 15), bty = "n")
+
+pvar.perc <- round(length(which((abs(pvar.varp-pvar.set)<abs(pvar.vara-pvar.set))==T))/pvar.reps*100, 0)
+@
+
+Figure~\ref{fig:pvarsim} presents a plot of simulated estimates of standard errors from two samples.
+In each of the \Sexpr{pvar.reps} replications, one sample of size \Sexpr{pvar.n.x} and one sample of size \Sexpr{pvar.n.y} were drawn from a DGP with $s=\Sexpr{pvar.sd}$ ($s^2=\Sexpr{pvar.sd^2}$).
+We know (as it's a simulation) that the true standard error is:
+
+\begin{center}
+  \begin{math}
+    \ssigma_{\xmean-\ymean}=\sqrt{\cfrac{\Sexpr{pvar.sd^2}}{\Sexpr{pvar.n.x}} + \cfrac{\Sexpr{pvar.sd^2}}{\Sexpr{pvar.n.y}}}=\Sexpr{pvar.set}
+  \end{math}
+\end{center}
+
+In each replication, we calculated the standard error incorrectly by just adding the individually computed error components (as if the samples were of the same size, Equation~\ref{eq:setwo}) and correctly using the pooled variance (Equation~\ref{eq:setwopooled}).%
+\footnote{To make the plot less cluttered, the replications were sorted by the standard error calculated from the pooled variance.}
+The standard error using the pooled variance is closer to the true standard error in \Sexpr{pvar.perc}\% of the replications.
+This illustrates that with pooled variance, the mostly less accurate variance estimate from the smaller sample gets fewer chances to drag down the precision of the on average more precise variance estimate from the larger sample.
 
 
 

@@ -642,13 +642,13 @@ Some readers might have noticed this very early on and gotten frustrated because
 This is not the case, and the argument will finally bring us back to the frequentist logic of inference.
 What we do in real life is this:
 We calculate an error interval based on the statistics of our concrete empirical sample.
-That is, we use \xmean\ instead of $\mu$ and $s(\xsample)$ instead of $\sigma$.
+That is, we use \xmean\ instead of $\mu$ and $s_{\xsample}$ instead of $\sigma$.
 After all, $\mu$ and $\sigma$ are unknown.
 The calculations are the same, only the symbols change:
 
 \begin{center}
   \begin{math}
-   \ssigma_{\xmean}=\sqrt{\cfrac{s^2(\xsample)}{n}}
+   \ssigma_{\xmean}=\sqrt{\cfrac{s^2_{\xsample}}{n}}
   \end{math}
 \end{center}
 
@@ -727,7 +727,7 @@ Once again, it does not change the sample itself, and hence it does not change t
 
 First, let's calculate an empirical error interval with $z=1.96$ and $z=2.58$ before looking at some more illustrative plots.
 A single example replications of the simulation led to the following statistics:
-$\xmean=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}$ and $s^2(\xsample)=\Sexpr{round(ci.sims[[333]][["var"]], 2)}$.
+$\xmean=\Sexpr{round(ci.sims[[333]][["mu"]], 2)}$ and $s^2_{\xsample}=\Sexpr{round(ci.sims[[333]][["var"]], 2)}$.
 The $\ssigma_{\mu}$ is calculated as follows:
 
 \begin{center}
