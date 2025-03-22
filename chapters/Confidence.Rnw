@@ -856,25 +856,25 @@ Compare the density plots in Figure~\ref{fig:histcompare}.
 Keep in mind:
 These are plots of the distribution of proportions and means calculated from a lot of (simulated) samples, not plots of raw individual measurements.
 
-<<histcompare, fig.cap=paste0("Histograms of 1000 proportions measured in samples (left) and 1000 sample means (right) at the same sample sizes"), echo=F, fig.pos="t", cache=T>>=
+<<histcompare, fig.cap=paste0("Histograms of 1000 sample proportions (left) and 1000 sample means (right) at the same sample sizes"), echo=F, fig.pos="t", cache=T>>=
   par(mfrow=c(3,2), mar=c(5,5,1.5,1), family = "Plotfont")
 
   plot(density(unlist(berry.sims["5"]), kernel = "cosine"),
-       main = "n=5", xlab = "", ylab = "Density", bty="n", yaxt = "n",
+       main = "n=5", xlab = "", ylab = "", bty="n", yaxt = "n",
        lwd = the.lwd, col = the.darkgray, xlim=c(-0.25, 1))
   plot(density(unlist(rt.sims["5"]), kernel = "cosine"),
        main = "n=5", xlab = "", ylab = "", bty="n", yaxt = "n",
        lwd = the.lwd, col = the.darkgray, xlim=c(90, 150))
 
   plot(density(unlist(berry.sims["10"]), kernel = "cosine"),
-       main = "n=10", xlab = "", ylab = "Density", bty="n", yaxt = "n",
+       main = "n=10", xlab = "", ylab = "", bty="n", yaxt = "n",
        lwd = the.lwd, col = the.darkgray, xlim=c(-0.25, 1))
   plot(density(unlist(rt.sims["10"]), kernel = "cosine"),
        main = "n=10", xlab = "", ylab = "", bty="n", yaxt = "n",
        lwd = the.lwd, col = the.darkgray, xlim=c(90, 150))
 
   plot(density(unlist(berry.sims["20"]), kernel = "cosine"),
-       main = "n=20", xlab = "Proportions", ylab = "Density", bty="n", yaxt = "n",
+       main = "n=20", xlab = "Proportions", ylab = "", bty="n", yaxt = "n",
        lwd = the.lwd, col = the.darkgray, xlim=c(-0.25, 1))
   plot(density(unlist(rt.sims["20"]), kernel = "cosine"),
        main = "n=20", xlab = "Means", ylab = "", bty="n", yaxt = "n",

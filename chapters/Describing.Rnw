@@ -153,7 +153,7 @@ In this sense, it would be the \textit{expected value} or \textit{expectation}.%
 <<binaryhist, fig.cap=paste0("Histogram (or bar plot) of counts of a binary variable with the mode highlighted in colour"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
   ex.number <- c(4,5)
-  h <- barplot(ex.number, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.midgray, the.lightcols[2]), ylim=c(0, 6))
+  h <- barplot(ex.number, xaxt = "n", xlab = "", ylab = "Frequency", main ="", border=F, col = c(the.midgray, the.lightcols[2]), ylim=c(0, 6))
   text(h[,1], ex.number+0.5, labels = ex.number)
   axis(1, h[,1], c("Singular", "Plural"), tick = F)
 @
@@ -223,12 +223,12 @@ Since there is no measurable order in grammatical cases, both plots are equivale
   par(mfrow=c(1,2), family = "Plotfont")
 
   ex.case <- c(13,1,7,0)
-  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.lightcols[2], the.midgray, the.midgray, the.midgray), ylim = c(0, 14))
+  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Frequency", main ="", border=F, col = c(the.lightcols[2], the.midgray, the.midgray, the.midgray), ylim = c(0, 14))
   text(h[,1], ex.case+0.5, labels = ex.case)
   axis(1, h[,1], c("Nom", "Acc", "Dat", "Gen"), tick = F)
 
   ex.case <- c(13,7,1,0)
-  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, col = c(the.lightcols[2], the.midgray, the.midgray, the.midgray), ylim = c(0, 14))
+  h <- barplot(ex.case, xaxt = "n", xlab = "", ylab = "Frequency", main ="", border=F, col = c(the.lightcols[2], the.midgray, the.midgray, the.midgray), ylim = c(0, 14))
   text(h[,1], ex.case+0.5, labels = ex.case)
   axis(1, h[,1], c("Nom", "Dat", "Acc", "Gen"), tick = F)
 
@@ -284,7 +284,7 @@ The only difference is that tables and plots should respect the intrinsic order 
 
 <<ordinalhist, fig.cap=paste0("Histograms of counts of an ordinal five-level variable (acceptability ratings) with the mode highlighted in colour"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
-  h <- barplot(ex.rating, xaxt = "n", xlab = "", ylab = "Count", main ="", border=F, ylim = c(0, 6),
+  h <- barplot(ex.rating, xaxt = "n", xlab = "", ylab = "Frequency", main ="", border=F, ylim = c(0, 6),
                col = c(rep(the.midgray, 2), the.lightcols[2], rep(the.midgray, 2)))
   text(h[,1], unname(ex.rating)+0.5, labels = unname(ex.rating))
   axis(1, h[,1], str_to_title(levs), tick = F)
@@ -545,7 +545,7 @@ Like in Chapter~\ref{sec:fisher}, it's a histogram of a continuous variable, and
 <<numhist, fig.cap=paste0("Histogram of a sample of a numeric variable with n=100 and a corresponding density plot based on an estimated probability density function"), echo=F, fig.pos="t", cache=T>>=
   par(mfrow = c(1,2), family = "Plotfont")
 
-  h <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 25), col = the.midgray)
+  h <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Frequency", main ="", border=F, ylim = c(0, 25), col = the.midgray)
 
   densplo <- density(potsx, kernel = "cosine")
   qi <- which.min(abs(densplo$x - summary(potsx)[2]))
@@ -708,22 +708,25 @@ Both a histogram and a density plot should be used to corroborate this and to fi
 Figure~\ref{fig:xyhist} shows both types of plots for both samples.
 
 <<xyhist, fig.cap=paste0("Histograms and density plots of two different samples of a numeric variable with n=100"), echo=F, fig.pos="t", cache=T>>=
-  par(mfrow = c(2,2), mar = c(2, 3, 2, 2), family = "Plotfont")
-  h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
-  h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Count", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
+  par(mfrow = c(2, 2), mar = c(4, 4, 2, 2), family = "Plotfont")
+
+  h1 <- hist(potsx, breaks = 10, xlab = "Milliseconds", ylab = "Frequency", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
+  h2 <- hist(potsy, breaks = 15, xlab = "Milliseconds", ylab = "Frequency", main ="", border=F, ylim = c(0, 27), xlim = c(0,500), col = the.midgray)
 
   densplo1 <- density(potsx, kernel = "cosine")
   qi <- which.min(abs(densplo1$x - summary(potsx)[2]))
   qii <- which.min(abs(densplo1$x - summary(potsx)[3]))
   qiii <- which.min(abs(densplo1$x - summary(potsx)[5]))
-  plot(densplo1, xlab = "Milliseconds", main ="x",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  plot(densplo1, xlab = "Milliseconds", main ="x", ylab = "Density",
+       bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
   lines(densplo1, lwd = the.lwd, col= the.darkgray)
 
   densplo2 <- density(potsy, kernel = "cosine")
   qi <- which.min(abs(densplo2$x - summary(potsy)[2]))
   qii <- which.min(abs(densplo2$x - summary(potsy)[3]))
   qiii <- which.min(abs(densplo2$x - summary(potsy)[5]))
-  plot(densplo2, xlab = "Milliseconds", main ="y",  bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
+  plot(densplo2, xlab = "Milliseconds", main ="y",  ylab = "Density",
+       bty ="n", ylim = c(0, 0.012), xlim = c(0, 500), lwd = 1)
   lines(densplo2, lwd = the.lwd, col= the.darkgray)
 
   par(mfrow = c(1,1), mar = c(5.1, 4.1, 4.1, 2.1))

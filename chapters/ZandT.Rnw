@@ -740,7 +740,7 @@ Frequentist statistics per se is not responsible for misinterpretations and misu
 
 \section{The Undiscovered Population}
 
-\subsection{Accounting for Unknown Variance}
+\subsection{Accounting for Unknown Variance}\label{sec:tvariance}
 
 The z-test allowed us to test whether some mean $\mu_1$ is different (smaller, larger, or any of the two) from a known population mean if the population variance is unknown.
 Some readers might have wondered when on Earth that is actually the case.
@@ -804,7 +804,7 @@ xs <- seq(t.minmax[1], t.minmax[2], 0.01)
 plot(x = xs,
      y = dnorm(xs),
      type = "l", lwd = the.lean.lwd,
-     bty="n", yaxt="n", ylab = "Density", xlab = "z or t",
+     bty="n", yaxt="n", ylab = "", xlab = "z or t",
      xlim = t.minmax, col = the.darkgray
 )
 
@@ -854,7 +854,7 @@ With ever larger samples, the p-value from a t-test approximates that from a z-t
 With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
 With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
 
-<<tsim, fig.cap="Simulations of z-Tests and t-Tests with variances estimated from samples; therefore, the z-Tests are inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<tsim, fig.cap="Distributions (density plots) of p-values from simulations of z-Tests and t-Tests with variances estimated from samples; therefore, the z-Tests are inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
 
 par.defaults()
 par(mfrow=c(2, 2), mar=c(4.5,4,2,0.5))
@@ -910,7 +910,7 @@ for (n in 1:2) {
          type = "l", lwd = the.lwd,
          bty="n",
          xlab = "p-value",
-         ylab = ifelse(u==0, "Density", ""), yaxt = "n",
+         ylab = ifelse(u==0, "", ""), yaxt = "n",
          col = "white"
     )
     lines(density(tsim.z.ps, from = 0, to = 1),
@@ -969,12 +969,14 @@ The solution is presented in the next section.
 
 \subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
+\subsubsection{Extending the Logic of the t-Test to Two Samples}\label{sec:logicttwo}
+
 We now turn to a much more realistic scenario:
 You have no precise idea about any population mean to compare a sample mean to, and you've got no idea about the population variance (at least no sufficiently precise idea).
 For example, as a socio-phonetician you might be interested in comparing the mean frequency of the F1 formant in articulations of self-described members of US coastal elites to the mean frequency of the same formant in articulations of self-described rural folk from the Midwest in the long [iː] in \textit{weakling}.%
 \footnote{As usual in this book, the examples are completely made up and come with a dose of irony.
 This stems from our conviction that the examples shouldn't matter for a sound understanding of statistics.
-Whether it's mean formant frequencies in hertz or mean daily milk yield of cows in pints doesn't really matter.}
+Whether it's mean formant frequencies in hertz or mean daily milk yields of cows in pints doesn't really matter.}
 Some deep sociolinguistic theory predicts that the formant frequency should be lower for rural folk.
 
 <<setupformants, echo=FALSE>>=
@@ -1017,11 +1019,11 @@ Indeed, the formant frequency differs by \Sexpr{f.elite.m-f.rural.m} Hz.
 How can we apply a t-Test under these circumstances?
 First of all, what is the substantive hypothesis?
 It's that the true means between the DGPs producing the formant frequencies differ.
-In other words, by hypothesis there are two DGPs and thus two populations, one corresponding to coastal speakers (with true mean $\mu$) and one corresponding to speakers from the Midwest (with true mean $\mu_1$).
+In other words, by hypothesis there are two DGPs and thus two populations, one corresponding to coastal speakers (with the unknown true mean $\mu$) and one corresponding to speakers from the Midwest (with the unknown true mean $\mu_1$).
 Under the Null, they are identical ($\mu=\mu_1$).
 
 This leads us nicely to the maths we need.
-The t-Test, like the z-Test, is based on subtracting a population mean from a sample mean.
+The t-Test, like the z-Test, is based on subtracting a population mean from sample means.
 Remember Equation~\ref{eq:tone} for a single sample mean \xmean\ and a known true mean $\mu$, repeated here for convenience:
 
 \begin{center}
@@ -1030,18 +1032,25 @@ Remember Equation~\ref{eq:tone} for a single sample mean \xmean\ and a known tru
   \end{math}
 \end{center}
 
-Conveniently, it turns out that results of subtracting \textit{differences of population means} from  \textit{differences of sample means} are also normally distributed or t-distributed if the individual statistics are normally distributed or t-distributed.
-Hence, we can calculate a t-statistic for two samples as follows.
-The equation implements the logic of the z-Test and the t-Test based on the \textit{distance between a sample mean} (\textit{difference}) \textit{and a known population mean} (\textit{difference}):
+Mathematically, the population mean $\mu$ is a constant.
+It's a known and fixed parameter of the population in question.
+Furthermore, we assumed that the sample means are normally distributed, and hence $\xmean-\mu$ should also be normally distributed.%
+\footnote{Notice that the means are really still normally distributed, even in the t-Test.
+Only the t-score is t-distributed because it adds an estimated variance to the calculation.}
+How can we extend this to a two-sample case?
+The t-Test is only applicable when we can subtract a \textit{known population parameter} (mathematically a constant) from a normally distributed sample statistic.
+If we knew the \textit{difference between the population means} (mathematically also a constant), we could compare it to (in other words, subtract it from) the difference of the sample means.%
+\footnote{As we'll demonstrate in Section~\ref{sec:normaldiffs}, differences of normally distributed random variables are themselves normally distributed random variables.}
+The corresponding equation is this:%
+\footnote{We'll return to the question of how to calculate the standard error $\ssigma_{\mu-\mu_1}$ presently.
+For the moment, please believe us that there is an appropriate standard error for mean differences.}
 
 \begin{equation}
   t=\cfrac{(\xmean-\ymean)-(\mu-\mu_1)}{\ssigma_{\mu-\mu_1}}
   \label{eq:tinterrim}
 \end{equation}
 
-\noindent We'll return to the question of how to calculate the standard error $\ssigma_{\mu-\mu_1}$ presently.
-For the moment, please believe us that there is an appropriate standard error for mean differences.
-The standard error aside, Equation~\ref{eq:tinterrim} might not seem to be very useful as we clearly haven't got any idea what the true means $\mu$ and $\mu_1$ are.
+\noindent As indicated above, Equation~\ref{eq:tinterrim} might not seem to be very useful as we clearly haven't got any idea what the true means $\mu$ and $\mu_1$ are.
 But this isn't a dead end.
 To see why, keep in mind that the test is always performed under the assumption that the Null is true.
 But what is $\mu-\mu_1$ under the Null?
@@ -1061,31 +1070,36 @@ Hence:
   \label{eq:ttwo}
 \end{equation}
 
-Alas, there's a catch to be taken into account.
-It's related to the calculation of the appropriate standard error, which we referred to above simply as $\ssigma_{\mu-\mu_1}$.
-Here's the problem:
+There's still one open question, though.
+What is the appropriate standard error, which we referred to above simply as $\ssigma_{\mu-\mu_1}$?
+There's also a minor catch:
 The refreshingly simple logic and maths described above only work as expected if the variances $\sigma$ and $\sigma_1$ from both populations are equal.
-If that is the case \textit{and the two samples have the same size}, the estimated standard error for the mean differences $\ssigma_{\xmean-\ymean}$ is calculated by just adding the variances of the two samples.
+However, if that is the case \textit{and the two samples have the same size}, the estimated standard error for the mean differences $\ssigma_{\xmean-\ymean}$ is calculated by just adding the variances of the two samples.
 Why do we just add the two?
-We are working with two sample estimates of means in order to approximate a difference between two potential populations (albeit populations with identical variance).
-Both estimates contribute uncertainty to the calculation, which means that we have two sources of error.
-Hence, we use a standard error that adds these two error components (where there is only one error in the One-Sample t-Test):
+The variance of the difference score $\xmean-\ymean$ obviously comes from \textit{two} means (estimated from the samples).
+We subtract the sample means in order to make an inference about a difference between two potential population means.
+But as both estimates contribute their own amount of uncertainty to the calculation, we have two sources of error.
+Hence, the standard error adds these two error components.
+In the One-Sample t-Test, there is only one source of error and therefore only one error component.
 
 \begin{equation}
   \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample}}{n_{\xsample}}+\frac{s^2_{\ysample}}{n_{\ysample}}}
   \label{eq:setwo}
 \end{equation}
 
-\noindent This estimated standard error $\ssigma_{\xmean-\ymean}$ is used as the estimate of $\ssigma_{\mu-\mu_1}$.
-Furthermore, we use a t-Distribution with the appropriate degrees of freedom $\nu_{\xmean-\ymean}$.
-Luckily, degrees of freedom can also just be added:
+\noindent With this standard error, we can calculate the t-statistic using Equation~\ref{eq:ttwo}.
+While the sample means and their difference are normally distributed, the unreliability of the standard error with low samples sizes means that the t-statistic is t-distributed and not normal.
+This unreliability disappears when the total number of data points from \textit{both} samples gets larger.
+To account for his, the degrees of freedom for sample differences $\nu_{\xmean-\ymean}$ are simply the added degrees of freedom of the individual samples:
 
 \begin{equation}
   \nu_{\xmean-\ymean}=\nu_{\xmean}+\nu_{\ymean}=(n_{\xsample}-1)+(n_{\ysample}-1)
   \label{eq:dfttwo}
 \end{equation}
 
-\noindent In our example, we get:
+\subsubsection{A Sample Calculation}
+
+\noindent Let's apply all of this to our example:
 
 \begin{center}
   \begin{math}
@@ -1101,7 +1115,7 @@ Luckily, degrees of freedom can also just be added:
   \end{math}
 \end{center}
 
-\noindent And the t-statistic is calculated as:
+\noindent The t-statistic is calculated as:
 
 \begin{center}
   \begin{math}
@@ -1109,32 +1123,30 @@ Luckily, degrees of freedom can also just be added:
   \end{math}
 \end{center}
 
-\noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided lookup), we get $p=\Sexpr{f.p}$.
+\noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided lookup), we get $p=\Sexpr{f.p}$.%
+\footnote{Convenient tables can be found in the appendices.}
 This doesn't even meet the lowest standard for a surprising result under the Null ($sig=0.05$), and hence we do not conclude anything from this result.
+
+\subsubsection{Standard Errors with Unequal Sample Sizes}
 
 We pointed out that the regular t-Test and its standard error calculated as in Equation~\ref{eq:setwo} are only appropriate if both (potential) populations or DGPs have identical variances, and if the samples have the same size.
 If the variances differ (even potentially), please refer to \Key{Welch's t-Test}, a variant of the t-Test with modified calculations to account for unequal variances.
-We won't cover it in this book for reasons of space and focus.
-If the two samples are of different sizes but the population variances can be safely assumed to be equal, however, there's a relatively simple solution.
+We don't cover Welch's Test in this book for reasons of space and focus.
+However, if the two samples are of different sizes but the population variances can be safely assumed to be equal there's a relatively simple solution.
 Let's first consider why different sample sizes are a problem at all for calculating the standard error.
 
 We know by now that larger samples represent (on average) a population or a DGP better than smaller samples.
+It is never the case that sameller samples lead to better estimates of any population parameter (so far, mostly mean and variance) than larger samples.
 Remember that the two populations have to have identical variances for the Two-Sample t-Test to be applicable.
-If there is a considerable difference in sample size, one sample---the larger one---is thus a better approximation of the common variance of $\mu$ and $\mu_1$.
+If there is a considerable difference in sample size, one sample---the larger one---is thus a better approximation of the common variance $\sigma^2=\sigma_1^2$ of $\mu$ and $\mu_1$.
 By simply adding error components based in the individual samples' variance estimates, both are given the same weight in the calculation of the total error inherent in the estimation of the mean difference.
-This cannot be the optimal solution, because smaller samples will inevitable drag down larger samples in the long run.
+This cannot be the optimal solution, because smaller samples will inevitable drag down larger samples, at least on average.
 
 At the same time, keep in mind that the amount of error contributed by the two samples depends on their respective sample sizes.
-We first need to come up with the best estimate of the variance using information from both samples, which---once again---must be identical between the two populations.
-Then, we use this variance estimate to introduce two error components in the formula of the standard error.
-With $s^2_{\xsample,\ysample}$ standing for the variance estimated from both samples, the standard error is given as:
-
-\begin{equation}
-  \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample,\ysample}}{n_{\xsample}}+\frac{s^2_{\xsample,\ysample}}{n_{\ysample}}}
-  \label{eq:setwopooled}
-\end{equation}
-
-\noindent And the best possible estimate of the variance $s^2_{\xsample,\ysample}$, the so-called \Key{pooled variance} is given by:
+The resulting strategy is this:
+First, we calculate the best possible estimate of the common variance $\sigma^2=\sigma_1^2$ using information from \textit{both} samples.
+Then, we use this variance estimate to introduce two error components in the formula of the standard error, which depend on their respective sample sizes.
+The best possible estimate of the variance $s^2_{\xsample,\ysample}$, the so-called \Key{pooled variance} is given by:
 
 \begin{equation}
   s^2_{\xsample,\ysample}=\frac{SQ_{\xsample}+SQ_{\ysample}}{(n_{\xsample}-1)+(n_{\xsample}-1)}
@@ -1143,7 +1155,7 @@ With $s^2_{\xsample,\ysample}$ standing for the variance estimated from both sam
 
 SQ stands for \textit{sum of squares}.
 Please revise Section~\ref{sec:quantifyvariance} if you don't remember exactly what this means.
-For comparison, the variance of a single sample $s^2_{\xsample}$ was given in Equation~\ref{eq:variance}, repeated here in condensed form for convenience:
+For comparison, the variance $s^2_{\xsample}$ of a single sample \xsample\ was given in Equation~\ref{eq:variance}, repeated here in condensed form for convenience:
 
 \begin{center}
   \begin{math}
@@ -1152,10 +1164,16 @@ For comparison, the variance of a single sample $s^2_{\xsample}$ was given in Eq
 \end{center}
 
 \noindent The pooled variance is what the name suggests:
-We pool both samples to calculate a maximally precise estimate of their variances.
+We pool both samples to calculate a maximally precise estimate of the population variance.
 If one sample is smaller, its sum of squares is smaller, but so is its sample size.
 Hence, Equation~\ref{eq:varpooled} intrinsically weighs the samples' contribution to the common variance.
-Notice that we couldn't simply pool the samples in Equation~\ref{eq:setwopooled} as each error component depends specifically on the size of one of the two samples.
+With $s^2_{\xsample,\ysample}$ (the variance estimated from both samples), the standard error is given as in Equation~\ref{eq:setwopooled}.
+Notice that we couldn't simply pool the samples here, as each error component depends specifically on the size of one of the two samples.
+
+\begin{equation}
+  \ssigma_{\xmean-\ymean}=\sqrt{\frac{s^2_{\xsample,\ysample}}{n_{\xsample}}+\frac{s^2_{\xsample,\ysample}}{n_{\ysample}}}
+  \label{eq:setwopooled}
+\end{equation}
 
 <<setuppvar, echo=FALSE>>=
 set.seed(723)
@@ -1173,7 +1191,7 @@ pvar.varp <- rep(0, pvar.reps)
 pvar.set <- sqrt(pvar.sd^2/pvar.n.x + pvar.sd^2/pvar.n.y)
 @
 
-<<pvarsim, fig.cap=paste0(pvar.reps, " simulations of standard errors for mean differences: calculated with simply added variances (gray squares) and calculated with pooled variances (blue dots and orange dots); sample sizes are ", pvar.n.x, " and ", pvar.n.y, "; the true SE is ", pvar.set, " (red line)"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<pvarsim, fig.cap=paste0(pvar.reps, " simulations of standard errors for mean differences: calculated with simply added variances (gray squares) and calculated with pooled variances (blue dots and orange dots); sample sizes are ", pvar.n.x, " and ", pvar.n.y, "; the true SE is ", pvar.set, " (green line)"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
 
 par.defaults()
 
@@ -1199,6 +1217,13 @@ plot(pvar.vara,
      ylim = c(1, 4.6)
      )
 
+for (i in 1:pvar.reps) {
+  lines(x = c(i, i),
+        y = c(pvar.vara[i], pvar.varp[i]),
+        col = the.lightgray
+        )
+}
+
 points(pvar.vara,
        pch = 15,
        col = the.lightgray)
@@ -1207,7 +1232,7 @@ points(pvar.varp, pch = 16,
                     alpha(the.cols[2], 0.75), alpha(the.cols[4], 0.75)))
 abline(h = pvar.set, lwd = the.lwd, col = alpha(the.cols[1], 0.75))
 
-legend("topleft", legend = c("SE with pooled variance (closer true SE)",
+legend("topleft", legend = c("SE with pooled variance (closer to true SE)",
                              "SE with pooled variance (farther from true SE)",
                              "SE with unweighted variance"),
        col = c(alpha(the.cols[2], 0.75),
@@ -1233,7 +1258,110 @@ In each replication, we calculated the standard error incorrectly by just adding
 The standard error using the pooled variance is closer to the true standard error in \Sexpr{pvar.perc}\% of the replications.
 This illustrates that with pooled variance, the mostly less accurate variance estimate from the smaller sample gets fewer chances to drag down the precision of the on average more precise variance estimate from the larger sample.
 
+Except for a short in-depth discussion of the distribution of mean differences, this concludes our introduction to the z-Test and the t-Test.
+We hope that we could convince you that these tests are (as most people think) quite basic, but that there are lots of small catches and details to take into account.
+While the Two-Sample t-Test is applicable to many more situations than the z-Test, we'd like to point out that it's not a test you can apply to any sample means whatsoever.
+Table~\ref{tab:tconds} summarises the pre-conditions that must be met for the tests discussed in this chapter to be applicable.
+If they are not met, inferences will be marred as the error rates you hope to control will not be at the level you think they are.
+Please revise Section~\ref{sec:tvariance} (especially Figure~\ref{fig:tsim}) in order to make absolutely sure that you understand this.
 
+\begin{table}
+  \caption{\label{tab:tconds}Necessary pre-conditions for z-Tests and t-Tests}
+  \centering
+  %\resizebox{\textwidth}{!}{%
+  \begin{tabular}{lccc}
+    \toprule
+    &                 & \textbf{One-Sample}   & \textbf{Two-Sample}   \\\cmidrule{3-4}
+    & \textbf{z-Test} & \multicolumn{2}{c}{\textbf{t-Test}}           \\
+    \midrule
+    The data are normally distributed.  & \CellBlue\ding{51}       & \CellBlue\ding{51}  &\CellBlue\ding{51}   \\
+    The measurements are independent.   & \CellGreen\ding{51}      & \CellGreen\ding{51} & \CellGreen\ding{51} \\
+    The population mean is known.       & \CellBlue\ding{51}       & \CellBlue\ding{51}  & \Dim                \\
+    The population variance is known.   & \CellGreen\ding{51}      & \multicolumn{2}{c}{\Dim}                  \\
+    The population variances are equal. & \multicolumn{2}{c}{\Dim} & \CellBlue\ding{51}                        \\
+    The samples are independent.        & \multicolumn{2}{c}{\Dim} & \CellGreen\ding{51}                       \\
+    \bottomrule
+  \end{tabular}
+  %}
+\end{table}
+
+Some of these requirements have not been mentioned explicitly or very prominently.
+Let's go through them, mentioning solutions for when they're not met.
+
+<++>
+
+\subsubsection{\Indepth\ Mean Differences Are Normally Distributed}\label{sec:normaldiffs}
+
+<<setupndiff, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
+  ndiff.reps <- 10000
+  ndiff.a <- rnorm(n = ndiff.reps, mean = 3)
+  ndiff.b <- rnorm(n = ndiff.reps, mean = 1)
+  ndiff <- sample(ndiff.a)-sample(ndiff.b)
+  ndiff.m <- mean(ndiff)
+  ndiff.sd <- sd(ndiff)
+  @
+
+    <<ndiff, fig.cap=paste0("Left: Density plots of ", ndiff.reps, " random draws each from a Normal Distribution with mean μ=3 and σ=1 (blue), from another Normal Distribution with mean μ₁=1 and σ₁=1 (blue) and the subtraction of random pairs from the second from the first; Right: the theoretical distributions corresponding to the left panel"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+    par.defaults()
+  par(mfrow = c(1,2), mar = c(3,0,2,0), xpd=NA)
+
+  plot(density(ndiff.a, from = -3, to = 7),
+       lwd = the.lwd, main = "Random Draws",
+       col = the.cols[1],
+       bty="n", xlab = "Value", xaxt = "n",
+       yaxt = "n", ylab = ""
+  )
+  lines(density(ndiff.b, from = -3, to = 7),
+        lwd = the.lwd,
+        col = the.cols[2]
+  )
+  lines(density(ndiff, from = -3, to = 7),
+        lwd = the.lwd,
+        col = the.cols[3]
+  )
+  axis(1, at = seq(-3, 7, 2), labels = seq(-3, 7, 2))
+
+  xs <- seq(-3, 7, 0.01)
+  plot(dnorm(xs, mean = 3), type = "l",
+       lwd = the.lwd, main = "Theoretical Distribution",
+       col = the.cols[1],
+       bty="n", xlab = "Value", xaxt = "n",
+       ylab = "", yaxt = "n"
+  )
+  lines(dnorm(xs, mean = 1),
+        lwd = the.lwd,
+        col = the.cols[2]
+  )
+  lines(dnorm(xs, mean = 2, sd = 1.41),
+        lwd = the.lwd,
+        col = the.cols[3]
+  )
+  axis(1, at = c(1, seq(200, 1000, 200)), labels = seq(-3, 7, 2))
+
+  legend(-225, 0.4, c("μ=3", "μ₁=1", "μ-μ₁=2"), lwd = the.lwd,
+         col = the.cols[1:3], bty = "n"
+  )
+  par.defaults()
+  @
+
+In Section~\ref{sec:logicttwo}, we assumed that subtracting two normally distributed random variables results in another normally distributed random variable.
+In this section, we illustrate this fundamental result further.
+Concretely, we subtracted two random variables $\xmean-\ymean$.
+The claim was that if $\xmean$, $\ymean$ are normally distributed, then $\xmean-\ymean$ is also normally distributed.
+We show this in Figure~\ref{fig:ndiff}.
+The left panel provides a density plot of \Sexpr{ndiff.reps} random draws (simulations, if you wish) of two normally distributed random variables:
+\xsample\ with $\mu=3$ and \ysample\ with $\mu_1=1$, both with $\sigma=\sigma_1=1$.
+
+Also, we plotted $\xsample-\ysample$, a subtraction of the randomly paired values from \xsample\ and \ysample.
+As expected, the mean is $\mu-\mu_1=3-1=2$.
+Furthermore, as the subtraction of the two random variables introduces \textit{two} sources of uncertainty, the variance of $\xsample-\ysample$ is larger than that of the two independent variables.
+The standard deviation is around $\Sexpr{round(ndiff.sd,1)}$.
+This directly illustrates what we said in Section~\ref{sec:logicttwo} about adding two error components to calculate the standard error for mean differences (Equations~\ref{eq:setwo} and~\ref{eq:setwopooled}).
+
+To show how simulations and random draws converge with theoretically known facts, we added the right panel of Figure~\ref{fig:ndiff}.
+It's the theoretical expectation for the random draws shown in the left panel.
+It's a theoretical \textit{expectation} inasmuch as we can safely expect the left panel to look more and more like the right panel as the sample sizes approach infinity.
 
 \begin{exercises}
 
