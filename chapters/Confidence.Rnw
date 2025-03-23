@@ -407,7 +407,7 @@ A normally distributed random variable has a characteristic probability density 
 It has two parameters: the mean $\mu$ and the standard deviation $\sigma$.
 Figure~\ref{fig:normal} shows a plot of the normal probability density with $\mu=0$ and $\sigma=1$.
 
-<<normal, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=0 and σ=1"), echo=F, fig.pos="t", cache=T>>=
+<<normal, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=0 and σ=1"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
 par.defaults()
 normal.mu <- 0
@@ -451,7 +451,7 @@ As the area under any probability density curve is 1, $Pr(x\ge 1)$ is the integr
 Piece of cake.
 Let's have that piece of cake now (step by step) and call it the Error Interval.
 
-<<rtsnormal, fig.cap=paste0("Density of a normal distribution with μ=", rt.mean, " and σ=", rt.sd), echo=F, fig.pos="t", cache=T>>=
+<<rtsnormal, fig.cap=paste0("Density of a normal distribution with μ=", rt.mean, " and σ=", rt.sd, " (black); long-run sample means at different sample sizes from that normal distribution"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
 par.defaults()
 rt.minmax <- c(60, 180)
@@ -505,7 +505,7 @@ Well, \textit{we} here stands for \textit{fully qualified statisticians}, and fo
 The blue area is approximately $\Sexpr{round(pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T), 2)}$, \ie, $\Sexpr{round((pnorm(1, 0, 1, T)-pnorm(-1, 0, 1, T))*100, 0)}$\% of the whole area under the curve.
 The green area (plus the blue area) is approximately $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)}$, \ie, $\Sexpr{round(pnorm(2, 0, 1, T)-pnorm(-2.01, 0, 1, T), 2)*100}$\%.
 
-<<meandensten, fig.cap=paste0("Density of the distribution of the means at n=20 with μ=", rt.mean, " and σ=", rt.sd, "; are at μ±σ is highlighted"), echo=F, fig.pos="t", cache=T>>=
+<<meandensten, fig.cap=paste0("Density of the distribution of the means at n=20 with μ=", rt.mean, " and σ=", rt.sd, "; are at μ±σ is highlighted"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
 par.defaults()
 
@@ -664,7 +664,9 @@ To make it absolutely clear what an error interval is, we have simulated it for 
 We simulated \Sexpr{reps.ci} samples with sample size $n=\Sexpr{n.ci}$ from the distribution of reading times introduced above.
 Then, we used the samples to calculate the empirical error intervals exclusively based on each sample.
 Think about it:
-We used the simulations of a known fictitious population to generate samples, then we took the samples and calculated the error interval \textit{pretending we didn't know the population} to check whether the error interval works as we think it should.
+We used the simulations of a known fictitious population to generate samples, then we took the samples and calculated the error interval \textit{pretending we didn't know the population parameters} in order to check whether the error interval works as we think it should.%
+\footnote{Yes, in a way we're playing god.
+But as opposed to real life, playing god is a very good idea in statistics (if you have a good random number generator).}
 It's not as good as a mathematical proof, but it really helps in understanding what statistics is about.
 Figure~\ref{fig:cisim} shows the true mean and all those empirical error intervals.
 The ones that don't include the true mean are coloured red.
@@ -686,7 +688,7 @@ This is called the \Key{coverage}, and it's very close to the expected---or rath
 We say \textit{requested} because in deciding to calculate the intervals for a proportion of $a=0.95$ and consequently choosing $z=1.96$, we required that in the long run 95\% of all empirical error intervals should contain the true mean.%
 \footnote{Actually, by calculating error intervals with $a=0.95$ for any parameter, our long-run error is 5\%.
 It doesn't matter whether we keep taking samples from the same population over and over again or whether we first sample this, then that, and then the other.
-It's of no big practical consequence, but a good thing to keep in mind in order not to misinterpret error intervals.}
+It's of no big practical consequence, but it's a good thing to keep in mind in order not to misinterpret error intervals.}
 We've now called it a \textit{proportion}, but think about it again in terms of \textit{probability}.
 It's the frequentist probability of drawing a sample whose empirical error interval contains the true mean before we actually draw the sample.
 Once it has been drawn, the empirical error interval either contains the true mean or it doesn't, but that's a fact and has no probability attached to it.
@@ -969,7 +971,7 @@ Then, the function value returns to 0 as we move towards the input value 1.
 The square root conserves this property.
 While it's good that mathematical proofs have led to the development of the maths, we can also make sense of the formulas and understand them from the viewpoint of a mere practitioner.
 
-<<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis) and its square root"), echo=F, fig.pos="t", cache=T>>=
+<<qnotq, fig.cap=paste0("Proportions q (x-axis) plotted against q⋅(1-q) (y-axis) and its square root"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
   par.defaults()
   .qnotq <- seq(0, 1, 0.01)
   plot(.qnotq, .qnotq*(1-.qnotq), type = "l", lwd = the.lwd, ylim = c(0, 0.55),
@@ -994,7 +996,7 @@ There are other frequentist alternatives available which are more exact but less
 If you ever have to calculate error intervals for proportions, look for the \Key{Wilson score interval} or our favourite, the \Key{Clopper-Pearson interval}.
 The idea behind all of them is the same, the alternatives just use different maths.
 
-<<cioverview, fig.cap=paste0("Width of error intervals for proportions at three sample sizes, three safety levels, and for proportions from 0 to 1"), echo=F, fig.pos="t", cache=T>>=
+<<cioverview, fig.cap=paste0("Width of error intervals for proportions at three sample sizes, three safety levels, and for proportions from 0 to 1"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
   par.defaults()
 

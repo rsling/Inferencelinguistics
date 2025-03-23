@@ -551,7 +551,7 @@ They call results \textit{significant} when they reach a certain level such as $
 When $p<sig$, \textit{we've reached significance}.
 However, when $p=0.009$ in the next experiment, suddenly that result might be called \textit{even more significant}.
 While we consider it vital to report the actual p-value and not just $p<sig$, we advise against cascaded conceptions of significance.
-Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the pre-conditions for the test were met properly, and probably many other factors.
+Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the preconditions for the test were met properly, and probably many other factors.
 Nobody can tell you or your reseqarch community what your threshold needs to be.
 For example, you might have seen reports from nuclear physics (such as results from experiments with the Large Hadron Collider of CERN) where it is claimed that $5\sigma$ was reached.
 That's just 5 standard deviations from the expected value under the Null ($z=5$), which corresponds to approximately $p=0.00000029$.
@@ -1261,12 +1261,12 @@ This illustrates that with pooled variance, the mostly less accurate variance es
 Except for a short in-depth discussion of the distribution of mean differences, this concludes our introduction to the z-Test and the t-Test.
 We hope that we could convince you that these tests are (as most people think) quite basic, but that there are lots of small catches and details to take into account.
 While the Two-Sample t-Test is applicable to many more situations than the z-Test, we'd like to point out that it's not a test you can apply to any sample means whatsoever.
-Table~\ref{tab:tconds} summarises the pre-conditions that must be met for the tests discussed in this chapter to be applicable.
+Table~\ref{tab:tconds} summarises the preconditions that must be met for the tests discussed in this chapter to be applicable.
 If they are not met, inferences will be marred as the error rates you hope to control will not be at the level you think they are.
 Please revise Section~\ref{sec:tvariance} (especially Figure~\ref{fig:tsim}) in order to make absolutely sure that you understand this.
 
 \begin{table}
-  \caption{\label{tab:tconds}Necessary pre-conditions for z-Tests and t-Tests}
+  \caption{\label{tab:tconds}Necessary preconditions for z-Tests and t-Tests}
   \centering
   %\resizebox{\textwidth}{!}{%
   \begin{tabular}{lccc}
@@ -1274,12 +1274,14 @@ Please revise Section~\ref{sec:tvariance} (especially Figure~\ref{fig:tsim}) in 
     &                 & \textbf{One-Sample}   & \textbf{Two-Sample}   \\\cmidrule{3-4}
     & \textbf{z-Test} & \multicolumn{2}{c}{\textbf{t-Test}}           \\
     \midrule
-    The data are normally distributed.  & \CellBlue\ding{51}       & \CellBlue\ding{51}  &\CellBlue\ding{51}   \\
-    The measurements are independent.   & \CellGreen\ding{51}      & \CellGreen\ding{51} & \CellGreen\ding{51} \\
-    The population mean is known.       & \CellBlue\ding{51}       & \CellBlue\ding{51}  & \Dim                \\
-    The population variance is known.   & \CellGreen\ding{51}      & \multicolumn{2}{c}{\Dim}                  \\
-    The population variances are equal. & \multicolumn{2}{c}{\Dim} & \CellBlue\ding{51}                        \\
-    The samples are independent.        & \multicolumn{2}{c}{\Dim} & \CellGreen\ding{51}                       \\
+    The data are numerical.             & \multicolumn{3}{c}{\CellBlue\dink{192}}             \\
+    The means are normally distributed. & \multicolumn{3}{c}{\CellGreen\dink{193}}            \\
+    The data are normally distributed.  & \multicolumn{3}{c}{\CellBlue\dink{194}}             \\
+    The measurements are independent.   & \multicolumn{3}{c}{\CellGreen\dink{195}}            \\
+    The population mean is known.       & \multicolumn{2}{c}{\CellBlue\dink{196}} & \Dim      \\
+    The population variance is known.   & \CellGreen\dink{197}     & \multicolumn{2}{c}{\Dim} \\
+    The population variances are equal. & \multicolumn{2}{c}{\Dim} & \CellBlue\dink{198}      \\
+    The samples are independent.        & \multicolumn{2}{c}{\Dim} & \CellGreen\dink{199}     \\
     \bottomrule
   \end{tabular}
   %}
@@ -1288,9 +1290,156 @@ Please revise Section~\ref{sec:tvariance} (especially Figure~\ref{fig:tsim}) in 
 Some of these requirements have not been mentioned explicitly or very prominently.
 Let's go through them, mentioning solutions for when they're not met.
 
-<++>
+\noindent\ding{192}~For any of the tests of mean differences (such as z-Tests and t-Tests) the mean has to be computable, which is only the case for numerical measurements.
+In principle, there's nothing more to say about that.
+However, we'd like to tell a story:
+We know of a paper in linguistics (which we gracefully refuse to reference) where a theoretical syntactician and an empiricist demonstrated something very convenient for experiments where participants were asked to produce acceptability ratings for sentences.%
+\footnote{For non-linguists, let us explain that linguists sometimes ask naive speakers to rate sentences for their acceptability.
+Participants are presented with sentences as stimuli, and they're asked to press one button if the sentence sounds \textit{acceptable} to them in their native language and another button if it doesn't, which results in a binary measurement.
+Alternatively, they are asked to rate it on an absolute scale or on a scale relative to other sentences, which results in more or less numerical measurements.}
+The authors showed that instead of numerical ratings of sentence acceptability (such as split-100 ratings or magnitude estimation) one could also use binary ratings (acceptable/not acceptable).
+Calculating a t-Test on the numerical ratings led to the same conclusion as calculating a t-Test on proportions.
+The idea was something along the following lines:
+When participants rate a sentence as 60\% acceptable in the numerical measurement, 60\% of the participants in the binary measurement rated the sentence as fully acceptable.
+When, for example, you have 10 sentences for condition A and 10 sentences for condition B, then you can take the mean of the 10 proportions of \textit{acceptable} ratings for condition A and B and perform a t-Test.
+Mind-boggling!
+Besides the legions of devils that lie in the details with this approach, consider this:
+They tried this out in a single instance, and the inferences were the same for the mistreated binary ratings and the numerical ratings.
+You know enough about frequentist thinking by now to know that you cannot test whether you can break the rules by trying it out once.
+The true error rate can only be found in the limit, which requires either mathematical proof or a long---very long---series of experiments.
+Please go back to Figure~\ref{fig:tsim} and see what might happen if you violate the assumptions.
+Frequentism is all about the control of error rates, and you need to obey the rules (meet the preconditions of your tests) to ensure that your error rates are what you think they are.
+\textit{We tried it out once, and it worked!} is outright ridiculous.
 
-\subsubsection{\Indepth\ Mean Differences Are Normally Distributed}\label{sec:normaldiffs}
+\noindent\ding{193}~The normality of means underlies our entire logic of inferences about means.
+It's a typically frequentist condition, and it's quite difficult to check whether it holds in a specific instance.
+We usually have only a single sample (or at least not more than a few) from which we calculate the mean.
+It's impossible to check whether this one sample comes from a normally distributed population of means, but at the same time the frequentist machinery requires it to be normal.
+There is no easy solution, but there is one, which we'll discuss immediately.
+
+\noindent\ding{194}~Technically speaking, the data themselves (reaction times, formant frequencies, sentence lengths, etc.) don't need to be normally distributed.
+Only the means themselves must fulfil this requirement.
+Interestingly, there is a fundamental result (which at first appears very counterintuitive to many) which roughly speaking states that sample means drawn from any underlying distribution will be normal at sufficiently large sample sizes.
+This fundamental result is called the \Key{Central Limit Theorem} (CLT).
+If you watched the videos recommended in Section~\ref{sec:gaussian} you've already got a basic idea of what it is.
+In any case, if samples are large enough, the data themselves need not be normally distributed, but the mean will be.
+Unfortunately, as nobody knows in advance what the distribution of measurements in your data sets is going to be, nobody can tell you in advance what is \textit{large enough}.
+The safest way to meet the condition of normality of means is having normal data, which entails that means will always be normal, regardless of the sample size.
+There are specific tests to check whether data are normally distributed, but we believe they do not land anywhere near the perfect spot between rejecting too many data sets as non-normal and accepting too many as normal.
+Try a raw plot, a histogram, or a density plot to get a rough idea if your data's normality.
+
+<<lognormal, fig.cap="Left: idealised discrete distribution of sentence lengths measured in words; Right: a continuous Lognormal Distribution corresponding to the left panel", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+
+  par.defaults()
+  par(mfrow = c(1,2), mar = c(3,0,2,1), xpd=NA)
+
+  lnorm.ls <- seq(0.1, 10, 0.4)
+  lnorm.ls.fine <- seq(0.2, 10, 0.04)
+  lnorm.labels <- c(1, seq(5, length(lnorm.ls), 5))
+  lnorm.mu <- 1
+  lnorm.sd <- 0.6
+
+  lnorm.ys <- dlnorm(lnorm.ls, mean = lnorm.mu, sd = lnorm.sd)
+
+  plot(x = lnorm.ls,
+            y = lnorm.ys,
+            pch = 20, bty="n",
+            xlab = "Sentence length in words", xaxt = "n",
+            ylab = "", yaxt = "n",
+            col = "white"
+            )
+  lines(x = lnorm.ls,
+        y = lnorm.ys,
+        col = the.lightgray, lwd = the.lwd
+        )
+  points(x = lnorm.ls,
+         y = lnorm.ys,
+       pch = 20,
+       bty="n", xlab = "Sentence length in words", xaxt = "n",
+       ylab = "", yaxt = "n",
+       col = "black", lwd = the.lwd
+       )
+  axis(side = 1,
+       at = lnorm.ls[lnorm.labels],
+       labels = lnorm.labels)
+
+  plot(dlnorm(lnorm.ls.fine, mean = lnorm.mu, sd = lnorm.sd),
+            type = "l", lwd = the.lwd, bty="n",
+            xlab = "Sentence length in words",
+            ylab = "", yaxt = "n", xaxt = "n",
+            col = the.cols[1]
+            )
+    axis(side = 1,
+       at = c(1, seq(50, 250, 50)),
+       labels = lnorm.labels)
+
+    par.defaults()
+@
+
+In linguistics---and especially in corpus linguistics---, many data are not normally distributed.
+Because many data are counts or frequencies, their distributions are discrete anyway, but they often skewed or diverge from the Normal Distribution in other ways.
+If you look at sentence lengths measured in words, for example, it could never be truly normal because sentence lengths are discrete.
+A sentence can consist of 1, 2, 3, \ldots\ words, but not 3.812 words, for example.
+Additionally, the distribution of sentence lengths usually looks approximately as in the left panel of Figure~\ref{fig:lognormal}.%
+\footnote{Many experts will probably scream at us because distribution of sentence lengths varies greatly by factors such as style, and the distribution as shown is not a good model of sentence lengths, etc.
+This is all true, but for the purpose of a mere illustration of basic differences to the Normal Distribution, Figure~\ref{fig:lognormal} is quite accurate.}
+
+According to Figure~\ref{fig:lognormal}, there are very few very short sentences (of 1 and 2 words), but there are a lot of sentences between roughly 3 and 10 words long.
+For longer sentence lengths, the frequency decreases sharply.
+The distribution clearly isn't normal, but it looks similar to the continuous \Key{Log-Normal Distribution} (maybe with some scaling and offsetting).
+The Log-Normal Distribution has the welcome property of being defined for positive values only, which is plausible for things like sentence lengths, as sentences cannot be $0$ or $-1$ words long.
+A density function of the corresponding Log-Normal Distribution is shown in the right panel of Figure~\ref{fig:lognormal}.
+Interestingly, the Log-Normal Distribution is called Log-Normal because it turns into a Normal Distribution if you logarithmise the values.
+
+Hence, in order to ensure that your sample means are normal, there are at least two strategies.
+You can logarithmise the underlying values and thus indirectly force the means to be normal.
+Or you can increase the sample size and rely on the CLT to make the sample means normally distributed.
+Increasing the sample size has some side-effects to be taken into account (see Chapter~\ref{sec:powerseverity}), but it's relatively unproblematic if you're aware of the side-effects.
+Logarithmising the values is an instance of a \Key{data transformation}.
+If the data don't have the properties they should have, a transformation is any mathematical operation that brings the data closer to the expected distribution in order to make correct frequentist inferences possible.
+There is a considerable downside, however.
+Assume you want to show that mean sentence lengths in forewords to English novels from two decades differ.
+Because the data aren't normal and you've got a limited amount of data, you logarithmise them and make an inference, rejecting the Null which says that the means are equal.
+You also observe that the mean difference is 0.04.
+But what does this mean?
+What do logarithmised sentence lengths mean within your theory, and how do you interpret the result?
+You've not made an inference about sentence lengths but about logarithmised sentence lengths.
+Such questions should be considered with great care, and they are theoretical questions, not mathematical ones.
+
+\noindent\ding{195}~We'll keep this one short as we'll return to it later in the book anyway.
+However, for inferences to be valid, each measurement in your sample(s) must represent an independent random event (see Section~\ref{sec:probability}).
+This condition is violated very easily, but once again, it's not necessarily a statistical matter whether it's violated or not.
+Many situations can potentially lead to non-independence of measurements:
+asking the same person more than once for an acceptability rating;
+taking measurements in a temporal sequence (which might violate independence through priming or repetition effects if you're measuring reactions of humans);
+using the same verb more than once in different stimulus sentences;
+using corpus data from texts written in two very different styles of writing without accounting for those stylistic differences.
+Each of these situations introduces \Key{grouping} into the data.
+You get groups of ratings per participant, sequences of measurements where the previous one affects the subsequent one, groups defined by lexical items, groups defined by styles of writing.
+We'll discuss advanced techniques of taking care of grouping (but not temporal sequences) in Chapter~\ref{sec:mixed}.
+However, in simple tests like the t-Test, such grouping can lead to a situation where the distribution of variance in the data is more complex than the test assumes, which (again) means that your actuall error rates might be off from the nominal error rates.
+For example, the Two-Sample t-Test is applicable if the variance between the two groups is homogeneous and equal, and if the only difference between the groups is the mean difference, which is causally related to the substantive distinction the researcher is interested in.
+
+\noindent\ding{196}~This is straightforward.
+The z-Test and the One-Sample t-Test require that the population mean (the reference, if you will) is known beyond doubt.
+If it's an estimate, you're introducing variability which is not accounted for in the maths, and your error rates will be off.
+There's no way to check for this.
+You---the researcher---need to be aware of what you're doing.
+
+\noindent\ding{197}~Again, this is a very straightforward matter.
+Go back to Figure~\ref{fig:tsim} to see what happens if you pretend you know the population variance (and perform a z-Test) when in fact you just estimated it (and should perform a t-Test).
+
+\noindent\ding{198}~A similar thing holds for the Two-Sample t-Test with respect to the variances in the two (potential) populations.
+They must be equal, and you need to be sure of it.
+If in doubt, use Welch's variant of the t-Test.
+
+\noindent\ding{199}~This is a variation on the theme from \ding{195}.
+In a Two-Sample t-Test, there must be no groupings between data points from one group and the other.
+For example, if you measure the same participants' reactions under two conditions, there is a pairwise grouping between reactions from individual participants under condition A and condition B.
+If you have data that is structured like this, look up the t-Test for Repeated Measures.
+It's just a small amendment, but it will greatly improve your inferences.
+
+\subsection{\Indepth\ Mean Differences Are Normally Distributed}\label{sec:normaldiffs}
 
 <<setupndiff, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
   ndiff.reps <- 10000
@@ -1301,9 +1450,9 @@ Let's go through them, mentioning solutions for when they're not met.
   ndiff.sd <- sd(ndiff)
   @
 
-    <<ndiff, fig.cap=paste0("Left: Density plots of ", ndiff.reps, " random draws each from a Normal Distribution with mean μ=3 and σ=1 (blue), from another Normal Distribution with mean μ₁=1 and σ₁=1 (blue) and the subtraction of random pairs from the second from the first; Right: the theoretical distributions corresponding to the left panel"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<ndiff, fig.cap=paste0("Left: Density plots of ", ndiff.reps, " random draws each from a Normal Distribution with mean μ=3 and σ=1 (blue), from another Normal Distribution with mean μ₁=1 and σ₁=1 (blue) and the subtraction of random pairs from the second from the first; Right: the theoretical distributions corresponding to the left panel"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
 
-    par.defaults()
+  par.defaults()
   par(mfrow = c(1,2), mar = c(3,0,2,0), xpd=NA)
 
   plot(density(ndiff.a, from = -3, to = 7),
@@ -1362,6 +1511,7 @@ This directly illustrates what we said in Section~\ref{sec:logicttwo} about addi
 To show how simulations and random draws converge with theoretically known facts, we added the right panel of Figure~\ref{fig:ndiff}.
 It's the theoretical expectation for the random draws shown in the left panel.
 It's a theoretical \textit{expectation} inasmuch as we can safely expect the left panel to look more and more like the right panel as the sample sizes approach infinity.
+And on that bombshell, we move on to the next chapter.
 
 \begin{exercises}
 
