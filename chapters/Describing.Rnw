@@ -737,7 +737,7 @@ By the way, notice the effect of the density estimator:
 It averages over larger intervals.
 The second spike around 350, which is clearly visible in the histogram, is so narrow that the averaging going on in the density estimate caps it significantly.
 However, in both types of plots it looks like \ysample\ has two local maxima, which accounts for the larger spread.
-Handling data that are distributed thusly requires much more care compared to data that looks like \xsample, and we'll return to this later in the book.
+Handling data that are distributed like this requires much more care compared to data that looks like \xsample, and we'll return to this later in the book.
 
 As we've already pointed out, the data points in \ysample\ are \alert{on average farther away from the mean} than the ones in \xsample, although the means of both samples is virtually the same.
 While the specific shapes of the distributions can't be summarised in one handy statistic, we have one statistic for the overall spread of a sample: the \textit{variance} (and the \textit{standard deviation} derived from it).

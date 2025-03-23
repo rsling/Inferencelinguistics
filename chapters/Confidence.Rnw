@@ -572,7 +572,7 @@ Table~\ref{tab:ztable} is a very sparse example of such a table.
   ztable %>%
     as.data.frame.matrix %>%
     kable(align = c("c", "c"), booktabs = T, linesep = "",
-          caption = "Z-Values for some Probabilities",
+          caption = "z-Values for some Probabilities",
           label = "ztable") %>%
     row_spec(0, bold=TRUE)
 @
@@ -710,7 +710,7 @@ What it really means is that before taking the sample, there was a probability o
 Now, all we know is that the interval either contains the true mean or a rare event occurred.
 Please go back to Section~\ref{sec:pandsig} to convince yourself that an event with a probability of 0.05 is not that rare after all.
 
-\subsection{Varying Z and N}
+\subsection{Varying z and n}
 
 We use error intervals to get an estimate of the true mean with a known probability of being wrong.
 We call this the \Key{safety of the estimate}:

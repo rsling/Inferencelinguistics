@@ -629,7 +629,7 @@ A low probability of a specific outcome merely means that it would be rare if th
 
 \section{Inference With Fisher's Exact Test}\label{sec:inferencefisher}
 
-\subsection{P-Values and Sig-Levels}\label{sec:pandsig}
+\subsection{p-Values and sig-Levels}\label{sec:pandsig}
 
 The frequentist probability that a certain experimental result had before it was actually obtained (when calculated after the experiment) is often called a \Key{p-value}.
 In a Tea Tasting Experiment with 8 cups, 4 tea-first cups, and 3 correctly detected tea-first cups, we can calculate $p=0.24$ with Equation~\ref{eq:hypergeomex2}.
@@ -981,7 +981,7 @@ This should be an intuitively desirable result.
 If she has the ability in question, this will show much better in a larger number of trials.
 Once again, an urn serves as a good and even simpler example of this effect.
 Let's consider a situation where there the suspicion arises that an urn at a funfair might be unfair inasmuch as it does not contain the advertised number of winning lots.
-The showman claims there are 1000 lots in the urn, 300 of them winners, but you suspect that there are much less winners.
+The showman claims there are 1000 lots in the urn, 300 of them winners, but you suspect that there are considerably less winners.
 To test his claim that the urn contains 30\% winning lots, you agree to draw a sample of 10 lots.
 Even if you ended up with 1 winning lot and 9 duds, it wouldn't be (again, intuitively) much evidence of anything because such a small sample is generally not very trustworthy.
 If you drew a sample of 100 lots, however, and you ended up with 10 winners and 90 duds, the showman would be in trouble.%
@@ -1043,7 +1043,7 @@ At the same time, we aren't convinced that it's the final solution to all proble
 Only a true understanding of frequentist inference ensures that is applied correctly in everyday research.
 Therefore, we now dive deeper into the nature of p-values.
 
-\section{The Distribution of P-Values (With Simulations)}\label{sec:pdist}
+\section{The Distribution of p-Values (With Simulations)}\label{sec:pdist}
 
 Did you notice that we talked about \alert{the probability of obtaining a low p-value}?
 We agree that it might sound confusing to speak of the probability of obtaining a p-value, because the p-value is something like a probability itself.
@@ -1145,7 +1145,7 @@ Since we cannot inspect the results for \Sexpr{sim.guess.n} times \Sexpr{sim.gue
 
 <<hist, fig.cap=paste0("Histogram of p-values of ", sim.guess.n, " simulated experiments with ", sim.guess.s, " cups where the participant is merely guessing"), echo=F, fig.pos="t", cache=T>>=
   par(family = "Plotfont")
-  h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "P-Values", main ="", border=F, col = the.midgray)
+  h <- hist(sim.guess.p, breaks = 10, xaxt = "n", xlab = "p-Values", main ="", border=F, col = the.midgray)
   text(h[["mids"]], h[["counts"]]-5, labels = h[["counts"]])
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 @
@@ -1154,7 +1154,7 @@ A histogram shows how often certain values occur in a sample or a population.
 In this case, the values are p-values (on the x-axis).
 The height of the bars (y-axis) corresponds linearly to the number of p-values that lie in the interval delimited by the respective bar.
 For example, p-values between 0 and 0.1 were obtained in \Sexpr{h[["counts"]][1]} simulated experiments.
-P-Values between 0.1 and 0.2 were obtained in \Sexpr{h[["counts"]][2]} simulated experiments, and so on.
+p-Values between 0.1 and 0.2 were obtained in \Sexpr{h[["counts"]][2]} simulated experiments, and so on.
 Some fluctuations aside, it looks like all p-values have the same probability if there is no effect.%
 \footnote{Due to the nature of Fisher's Exact Test and the symmetry of the experiment design, there is some patterning in the p-values, which is hidden by the histogram in Figure~\ref{fig:hist}.
 It's really not relevant at the moment, and our point is still absolutely valid.
@@ -1173,7 +1173,7 @@ That's absolutely correct, but now you know why.
 If the substantive hypothesis is false and the Null describes reality, then high, low, and medium p-values all have the same probability.
 That's why only low p-values (if any) have an inferential interpretation.
 
-\Bigpoint{Distribution of P-Values under the Null}{%
+\Bigpoint{Distribution of p-Values under the Null}{%
 The null hypothesis states in some way, shape, or form that there is no effect.
 If it is true, all p-values from 0 to 1 have the same probability.
 This is the reason why high p-values have no inferential interpretation and must not be taken as evidence for the Null and\slash or against the substantive hypothesis.}
@@ -1185,19 +1185,19 @@ In the upper-left panel, it's 51\%, in the upper-right 52\%, in the lower-left 5
 
 <<histbetter, fig.cap=paste0("Histograms of p-values of ", sim.better.n, " simulated experiments with ", sim.better.s, " cups where the participant has increasing prediction accuracy (increasing from upper-left to lower-right); all y-axes are scaled to 1000 for better comparability"), echo=F, fig.pos="t", cache=T>>=
   par(mfrow=c(2,2), family = "Plotfont")
-  h <- hist(sim.fiftyone.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
+  h <- hist(sim.fiftyone.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "p-Values",
             main = "51% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F, col = the.midgray)
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 
-  h <- hist(sim.fiftytwo.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
+  h <- hist(sim.fiftytwo.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "p-Values",
             main = "52% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F, col = the.midgray)
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 
-  h <- hist(sim.fiftyfive.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
+  h <- hist(sim.fiftyfive.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "p-Values",
             main = "55% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F, col = the.midgray)
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 
-  h <- hist(sim.seventy.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "P-Values",
+  h <- hist(sim.seventy.p, breaks = seq(0,1,0.1), xaxt = "n", xlab = "p-Values",
             main = "70% Accuracy", ylim = c(0,1100), xlim= c(0,1), border=F, col = the.midgray)
   axis(1, seq(0, 1, 0.1), seq(0, 1, 0.1))
 
