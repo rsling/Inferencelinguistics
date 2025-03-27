@@ -5,8 +5,7 @@
 %
 
 \documentclass[output=book
-  , colorlinks
-  , citecolor=darkblue
+%  , citecolor=darkblue
   , nonewtxmath
 %  , output=final
 %  , nonflat
@@ -182,10 +181,10 @@ my.largs <- list(
 <<child="chapters/Anova.Rnw">>=
 @
 
-<<child="chapters/Nonparametric.Rnw">>=
+<<child="chapters/PowerSeverity.Rnw">>=
 @
 
-<<child="chapters/PowerSeverity.Rnw">>=
+<<child="chapters/Nonparametric.Rnw">>=
 @
 
 <<child="chapters/Correlation.Rnw">>=

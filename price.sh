@@ -7,5 +7,5 @@ price=$(bc <<< "scale=2; ((300 + ${p}*7 + ${cp}*20)/(500+1))*5")
 
 echo -e "\n********************************************************************************\n"
 echo "This book has ${p} pages, ${cp} of them in color."
-echo "This book will be priced at ${price} €."
+echo "It will be priced at ${price} €."
 echo -e "\n********************************************************************************\n"

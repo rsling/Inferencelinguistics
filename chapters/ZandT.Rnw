@@ -1,6 +1,6 @@
 % !Rnw root = ../main.Rnw
 
-<<setupzandt, cache=FALSE, echo=FALSE, include=FALSE, results='asis'>>=
+<<setupzandt, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
 opts_knit$set(self.contained=FALSE)
 @
 
@@ -84,7 +84,7 @@ If these conditions are not met, other tests (such as the t-test for two samples
 For the sake of illustration, let's assume that the population mean is $\mu=\Sexpr{z.mu}$ (for example milliseconds) and the population variance is\label{page:varianceisfour} $\sigma^2=\Sexpr{z.sigma^2}$, which corresponds to a standard deviation of $\sigma=\Sexpr{z.sigma}$.
 If the population values are generated according to a normal distribution, values are distributed according to the now well-known \Key{Probability Density Function} (PDF) in Figure~\ref{fig:z1}.
 
-<<z1, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z.n, " measurements from the population"), echo=F, fig.pos="t", cache=F>>=
+<<z1, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z.n, " measurements from the population"), echo=F, fig.pos="t", cache=T>>=
 
 par(mfrow = c(2,1), mar = c(2,1,1,1), family = "Plotfont")
 
@@ -139,7 +139,7 @@ The mean from the sample is higher than the theoretically known mean, but this m
 In frequentist terms, such a sample is expected under the Null as well.
 We need to know the probability of a sample that deviates from the known mean to such a degree (or a stronger degree) in order to proceed to an inference.
 
-<<z2, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z2.n, " measurements from some population"), echo=F, fig.pos="t", cache=F>>=
+<<z2, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " and a simulated random sample of n=", z2.n, " measurements from some population"), echo=F, fig.pos="t", cache=T>>=
 
 par(mfrow = c(2,1), mar = c(2,1,1,1), family = "Plotfont")
 
@@ -246,7 +246,7 @@ The standard error of the mean in this case is (revise Equation~\ref{eq:semean} 
   \ssigma_{\mu}=\cfrac{\Sexpr{z.sigma}}{\sqrt{\Sexpr{z2.n}}}=\sqrt{\cfrac{\Sexpr{z.sigma}^2}{\Sexpr{z2.n}}}=\Sexpr{z2.se.rnd}
 \end{math}\end{center}
 
-<<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", fig.height=4, cache=F>>=
+<<z3, fig.cap=paste0("Theoretical population distribution for a normal distribution with μ=", z.mu, " and σ=", z.sigma, " (green) the distribution of sample means for samples from this distribution with n=", z2.n, " (black)"), echo=F, fig.pos="t", fig.height=4, cache=T>>=
 
 par(mar=c(3,2,2,2), family = "Plotfont")
 
@@ -292,7 +292,7 @@ In other words, we can calculate how many sample means (from samples of size $n=
 Instead of calculating the numbers and probabilities of individual events as in the Tea-Tasting Experiment, we use the known functions of the Normal Distribution to look up those values.
 This gives us a very precise and well-defined measure of how unexpected the obtained result would be if the Null were true.
 
-<<z4, fig.cap=paste0("Left: PDF of the distribution of sample means for mean µ and standard error SE with obtained sample mean $\\xmean$ and corresponding z-value; area under the curve for results equal to or greater than $\\xmean$ is shaded; Right: CDF for the same distribution with obtained sample mean $\\xmean$"), echo=F, fig.pos="t", cache=F, fig.height=4>>=
+<<z4, fig.cap=paste0("Left: PDF of the distribution of sample means for mean µ and standard error SE with obtained sample mean $\\xmean$ and corresponding z-value; area under the curve for results equal to or greater than $\\xmean$ is shaded; Right: CDF for the same distribution with obtained sample mean $\\xmean$"), echo=F, fig.pos="t", cache=T, fig.height=4>>=
 
 par(mfrow=c(1,2), mar=c(3,2,2,2), family = "Plotfont")
 
@@ -437,7 +437,7 @@ Our substantive hypothesis could have been $\mu_1<\mu$.
 Alternatively, it could have been $\mu_1\not =\mu$.
 The corresponding Nulls are $H_0: \mu_1\geq\mu$ and $H_0: \mu_1=\mu$.
 
-<<tails, fig.cap=paste0("Single-sided and two-sided tests"), echo=F, fig.pos="t", fig.height=4, cache=F>>=
+<<tails, fig.cap=paste0("Single-sided and two-sided tests"), echo=F, fig.pos="t", fig.height=4, cache=T>>=
 
 par(mfrow=c(1,3), mar=c(2,0.5,1.5,0.5), family = "Plotfont")
 
@@ -548,7 +548,7 @@ We attach a specific statistic---the p-value---to the outcome.
 It's a matter of debate whether the statistic itself should be interpreted directly numerically.
 However, you've probably heard of people using the p-value to make decisions when it's smaller than a certain threshold called $\alpha$-level or---as we prefer---$sig$-level
 They call results \textit{significant} when they reach a certain level such as $sig=0.05$.
-When $p<sig$, \textit{we've reached significance}.
+If $p<sig$, \textit{we've reached significance}.
 However, when $p=0.009$ in the next experiment, suddenly that result might be called \textit{even more significant}.
 While we consider it vital to report the actual p-value and not just $p<sig$, we advise against cascaded conceptions of significance.
 Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the conditions for the test were met properly, and probably many other factors.
@@ -584,7 +584,7 @@ If you do this with all your machines over many years and decades, your estimate
 Depending on the value of the individual parts that you're working with in your business, this might be acceptable.
 In Chapter~\ref{sec:powerseverity}, we'll return to this example from toy manufacturing and move it closer to a testing framework.
 
-<<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", cache=F, fig.height=5>>=
+<<convzci, fig.cap=paste0("Convergence of z-test and error interval: two-sided test"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
 par.defaults()
 par(family = "Plotfont")
@@ -629,7 +629,7 @@ In Figure~\ref{fig:convzci}, the shaded areas correspond to those five percent, 
 If we calculate an error interval with $a=0.95$ around the measurement of $\xmean=1.96$, it is exactly $1.96$ wide to both sides of the measured mean.
 Hence, it includes $0$, as you can see in Figure~\ref{fig:convzci}, where the error interval is plotted in blue.
 
-<<convzciss, fig.cap=paste0("Convergence of z-test and error interval: single-sided test"), echo=F, fig.pos="t", cache=F, fig.height=5>>=
+<<convzciss, fig.cap=paste0("Convergence of z-test and error interval: single-sided test"), echo=F, fig.pos="t", cache=T, fig.height=5>>=
 
 par.defaults()
 par(family = "Plotfont")
@@ -792,7 +792,7 @@ The distribution has only one parameter: the sample size $n$, or rather the \Key
 We'll return to the idea of degrees of freedom repeatedly.
 For now, we just contemplate why the t-Distribution has this one parameter and don't worry too much about its name.
 
-<<t1, fig.cap=paste0("Densities of the Standard Normal Distribution and a selection of t-Distributions for increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<t1, fig.cap=paste0("Densities of the Standard Normal Distribution and a selection of t-Distributions for increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
 par.defaults()
 
@@ -828,7 +828,7 @@ Now, see Figure~\ref{fig:t1} to grasp the effect of the $\nu$ parameter.
 A lower $\nu$, which corresponds to a lower sample size $n$, flattens the peak of the curve around the mean while lifting both tails up.
 However, even at $\nu=20$, the density of the t-Distribution is already almost identical to that of the Standard Normal Distribution.
 
-<<t2, fig.cap=paste0("How the p-value from the t-Distribution at t=1.96 (two-sided) approaches the p-value from the Standard Normal Distribution at z=1.96 (two-sided) with increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<t2, fig.cap=paste0("How the p-value from the t-Distribution at t=1.96 (two-sided) approaches the p-value from the Standard Normal Distribution at z=1.96 (two-sided) with increasing degrees of freedom ν"), fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
 par.defaults()
 
@@ -854,7 +854,7 @@ With ever larger samples, the p-value from a t-test approximates that from a z-t
 With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
 With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
 
-<<tsim, fig.cap="Distributions (density plots) of p-values from simulations of z-Tests and t-Tests with variances estimated from samples; therefore, the z-Tests are inappropriate", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<tsim, fig.cap="Distributions (histogram densities) of p-values from simulations of z-Tests and t-Tests with variances estimated from samples; the z-Tests are inappropriate in this case", fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
 par.defaults()
 par(mfrow=c(2, 2), mar=c(4.5,4,2,0.5))
@@ -905,7 +905,12 @@ for (n in 1:2) {
       ", n=", tsim.n
       )
 
-    plot(density(tsim.z.ps, from = 0, to = 1),
+    h <- hist(tsim.z.ps, breaks = 40, plot = F)
+    z.smoo <- smooth.spline(h$density~h$mids, spar = 0.6)
+    h <- hist(tsim.t.ps, breaks = 40, plot = F)
+    t.smoo <- smooth.spline(h$density~h$mids, spar = 0.6)
+
+    plot(z.smoo,
          main = .main,
          type = "l", lwd = the.lwd,
          bty="n",
@@ -913,11 +918,11 @@ for (n in 1:2) {
          ylab = ifelse(u==0, "", ""), yaxt = "n",
          col = "white"
     )
-    lines(density(tsim.z.ps, from = 0, to = 1),
+    lines(z.smoo,
           col = the.cols[3], lwd = the.lwd)
-    lines(density(tsim.t.ps, from = 0, to = 1),
+    lines(t.smoo,
           col = the.cols[1], lwd = the.lwd)
-    legend(ifelse(u==0, "bottom", "topright"),
+    legend("topright",
            legend = c(paste0("z-Test with p<", tsim.sig, ": ", .z.prop, "%"),
                       paste0("t-Test with p<", tsim.sig, ": ", .t.prop, "%")),
            col = the.cols[c(3,1)], lwd = the.lwd, bty = "n"
@@ -929,7 +934,10 @@ for (n in 1:2) {
 Finally, we simulate t-tests and compare them to incorrectly conducted z-tests.
 The simulation answers the question of what happens if we disregard the fact that the variance was merely estimated from a sample and was not known, and we decide to perform a z-Test.
 For simplicity's sake, let's say the known mean is $\mu=0$, and the true but unknown standard deviation is $\sigma=1$.
-Figure~\ref{fig:tsim} shows the distributions of p-values for inappropriate z-Tests based on the sample variance and the corresponding appropriate t-Tests.
+Figure~\ref{fig:tsim} shows the distributions of p-values for inappropriate z-Tests based on the sample variance and the corresponding appropriate t-Tests.%
+\footnote{These plots show mildly smoothed densities from a histogram, made using \texttt{hist(breaks = 40)}, the resulting densities, and \texttt{spline.smooth(spar = 0.6)} from R.
+They're not traditional kernel-smoothed density estimates as these would give a false impression by showing the density going down towards 0 and 1.
+Please ignore this information if you don't know what it means.}
 The only difference is that for the z-Test, the cumulative distribution function of the Standard Normal Distribution was used, and for the t-Test, the cumulative distribution function of the t-Distribution (with the respective degrees of freedom) was used.
 The z-value and the t-value are numerically identical in this case, and they both use the standard error calculated from the sample variance, which is, again, only correct for the t-Test:
 
@@ -939,7 +947,7 @@ The z-value and the t-value are numerically identical in this case, and they bot
   \end{math}
 \end{center}
 
-Each curve in Figure~\ref{fig:tsim} plots the estimated density of p-values from \Sexpr{tsim.reps} random experiments with the accompanying two-sided tests.
+Each curve in Figure~\ref{fig:tsim} plots the estimated density of p-values from \Sexpr{format(tsim.reps, scientific=F)} random experiments with the accompanying two-sided tests.
 In the two left panels, the Null is true, and the data are generated from a Standard Normal Distribution.
 Hence, the the z-values and the t-values should be centred around 0, and all p-values should have the same long-run frequency, which is always assumed under the Null.
 We see that for $n=\Sexpr{tsim.ns[1]}$, the z-Test produces incorrect results if the variance is not known but merely estimated.
@@ -1213,7 +1221,7 @@ pvar.varp <- rep(0, pvar.reps)
 pvar.set <- sqrt(pvar.sd^2/pvar.n.x + pvar.sd^2/pvar.n.y)
 @
 
-<<pvarsim, fig.cap=paste0(pvar.reps, " simulations of standard errors for mean differences: calculated with simply added variances (gray squares) and calculated with pooled variances (blue dots and orange dots); sample sizes are ", pvar.n.x, " and ", pvar.n.y, "; the true SE is ", pvar.set, " (green line)"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<pvarsim, fig.cap=paste0(pvar.reps, " simulations of standard errors for mean differences: calculated with simply added variances (gray squares) and calculated with pooled variances (blue dots and orange dots); sample sizes are ", pvar.n.x, " and ", pvar.n.y, "; the true SE is ", pvar.set, " (green line)"), fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
 par.defaults()
 
@@ -1411,7 +1419,7 @@ The safest way to meet the condition of normality of means is having normal data
 There are specific tests to check whether data are normally distributed, but we believe they do not land anywhere near the perfect spot between rejecting too many data sets as non-normal and accepting too many as normal.
 Try a raw plot, a histogram, or a density plot to get a rough idea if your data's normality.
 
-<<lognormal, fig.cap="Left: idealised discrete distribution of sentence lengths measured in words; Right: a continuous Lognormal Distribution corresponding to the left panel", fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<lognormal, fig.cap="Left: idealised discrete distribution of sentence lengths measured in words; Right: a continuous Lognormal Distribution corresponding to the left panel", fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
   par.defaults()
   par(mfrow = c(1,2), mar = c(3,0,2,1), xpd=NA)
@@ -1540,7 +1548,7 @@ It's just a small amendment, but it will greatly improve your inferences.
   ndiff.sd <- sd(ndiff)
   @
 
-<<ndiff, fig.cap=paste0("Left: Density plots of ", ndiff.reps, " random draws each from a Normal Distribution with mean μ=3 and σ=1 (blue), from another Normal Distribution with mean μ₁=1 and σ₁=1 (blue) and the subtraction of random pairs from the second from the first; Right: the theoretical distributions corresponding to the left panel"), fig.height=5, echo=F, fig.pos="t", cache=F>>=
+<<ndiff, fig.cap=paste0("Left: Density plots of ", ndiff.reps, " random draws each from a Normal Distribution with mean μ=3 and σ=1 (blue), from another Normal Distribution with mean μ₁=1 and σ₁=1 (blue) and the subtraction of random pairs from the second from the first; Right: the theoretical distributions corresponding to the left panel"), fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
   par.defaults()
   par(mfrow = c(1,2), mar = c(3,0,2,0), xpd=NA)
