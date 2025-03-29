@@ -10,7 +10,7 @@ index:  main.snd
 
 main.pdf: main.aux main.tex
 	xelatex main
-	@./price.sh
+	@./price.sh main.pdf
 
 main.aux: $(SOURCE) main.tex
 	xelatex -no-pdf main
@@ -193,4 +193,4 @@ wikicite:
 	more wiki
 
 price:
-	@./price.sh
+	@./price.sh main.pdf

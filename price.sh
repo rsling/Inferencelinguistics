@@ -1,11 +1,11 @@
 #!/bin/bash
 
-p="$(gs -o - -sDEVICE=inkcov main.pdf | grep 'CMYK OK' | wc -l | xargs)"
-cp=$(gs -o - -sDEVICE=inkcov main.pdf | grep 'CMYK OK' | grep -v '0.00000  0.00000  0.00000' | wc -l | xargs)
+set -e
 
-price=$(bc <<< "scale=2; ((300 + ${p}*7 + ${cp}*20)/(500+1))*5")
+p="$(pdfinfo ${1} | grep Pages | sed 's/[^0-9]*//' | xargs)"
+cp=$(gs -o - -sDEVICE=inkcov ${1} | grep 'CMYK OK' | grep -v '0.00000  0.00000  0.00000' | wc -l | xargs)
 
-echo -e "\n********************************************************************************\n"
-echo "This book has ${p} pages, ${cp} of them in color."
-echo "It will be priced at ${price} €."
-echo -e "\n********************************************************************************\n"
+price=$(bc <<< "scale=0; (((300 + ${p}*7 + ${cp}*20)/500)+1)*5")
+
+echo -e "\nThe file ${1} has ${p} pages, ${cp} of them in colour."
+echo -e "Language Science Press will price it at ${price}€.\n"

@@ -172,7 +172,7 @@ Usually, it is also understood that this means that if you played this game over
 That's why playing it once and winning is unexpected or surprising:
 Winning is a rare event given the way the urn was set up (one winning lot and 999 duds).
 The maths is slightly more complex for the Eurojackpot because you have to choose five numbers out of fifty and not one lot out of a thousand, but it essentially follows the same logic.
-For the psychic guessing phone numbers, the idea is also the same once the number of phone numbers and the number of the digits per phone number has been determined.
+For the psychic guessing phone numbers, the idea is also the same once the number of phone numbers and the number of the digits per phone number have been determined.
 We will return to the third scenario (the corpus study) later, but we can apply a similar logic even to that example.
 
 \subsection{The Total Number of Possible Outcomes}\label{sec:numberoutcomes}
@@ -443,6 +443,7 @@ While it's hypothetical, it's still quite useful and related to everyday experie
 It's the reason why you can't rely on a fair die to win any money in the long run.
 There is no way to predict the number of pips because each number has the same probability.
 No matter which number you bet on, you'll lose in $5\div 6=0.83$ or 83\% of all rolls.
+This is why nobody ever gets rich through gambling in real life.
 
 Continuing on a slightly more technical note, the so-called \Key{event space} is the set of all possible subsets of the sample space.
 It contains singleton sets $\{E_i\}$ but also any other subset such as $\{E_i, E_j\}$ or $\{E_i, E_j, E_k\}$ (for $i,j,k\in\{1..70\}$).
@@ -511,7 +512,7 @@ When we add and multiply probabilities in the next section, you can verify that 
 
 \subsection{The Number of Some Less Than Perfect Outcomes}\label{sec:lessthanperfect}
 
-Before proceeding to delicate matters of scientific inference, let's calculate the probability of guessing 3 cups correctly and getting 1 wrong, as in our example from Section~\ref{sec:numberoutcomes}.
+Before proceeding towards delicate matters of scientific inference, let's calculate the probability of guessing 3 cups correctly and getting 1 wrong, as in our example from Section~\ref{sec:numberoutcomes}.
 To do that, we first introduce a convenient general notation for the maths of choosing $k$ items out of $n$.
 First, notice that in the calculations above we often multiplied a natural number with the next smaller natural number, then the next smaller number, and so on.
 For example, we calculated $4\cdot 3\cdot 2\cdot 1$.

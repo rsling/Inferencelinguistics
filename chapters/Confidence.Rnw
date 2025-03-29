@@ -840,12 +840,12 @@ In the long run, it is guaranteed that a proportion of $a$ intervals thus calcul
 An error interval does not quantify any justifiable degree of \textit{confidence} we should have in the estimate, which is why we don't call it \textit{confidence interval}.
 The term \textit{error interval} reflects the fact that we merely control the error rate of the estimation.
 
-If safe estimates are of the essence, one should increase $q$ (for example, $q=0.99$ for the 99\% error interval).
+If safe estimates are of the essence, one should increase $a$ (for example, $a=0.99$ for the 99\% error interval).
 This lowers the error rate in the long run and makes the estimation \textit{safer}.
 A safer estimates increase the size of the intervals and makes it less \textit{precise} (larger intervals).
 Changing the sample size does not change the safety of the estimate.
-Hence, if \textit{both a precise and a safe} estimation is required, one should increase $q$ and also increase the sample size $n$.
-Finally, error intervals (also called confidence intervals) have nothing to do with specifying the degree of certainty that the true mean falls within the interval.
+Hence, if \textit{both a precise and a safe} estimation is required, one should increase $a$ and also increase the sample size $n$.
+Once again, error intervals (also called confidence intervals) have nothing to do with specifying the degree of certainty or confidence that the true mean falls within the interval.
 }
 
 \section{Error Intervals for Binary Measurements}\label{sec:variabilitysampleproportions}

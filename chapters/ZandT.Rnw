@@ -427,7 +427,7 @@ What magnitude does your theory predict the difference should be?%
 \footnote{It doesn't make numeric predictions?
 Blimey! Then back to the drawing board.}
 How does the measured difference in reading times compare to differences observed for similar processing penalties?
-In corpus linguistics, we fail to see how $p=0.02$ would be surprising enough in any situation to warrant substantive inferences.
+In modern corpus linguistics, we fail to see how $p=0.02$ would be surprising enough in any situation to warrant substantive inferences.
 
 One final word on the \Key{one-sided test} and the \Key{two-sided test}, also called single-tailed and two-tailed.
 In the example in this section, the substantive hypothesis was $\mu_1>\mu$, and the Null was consequently $H_0: \mu_1\leq\mu$.
@@ -541,6 +541,20 @@ This is completely normal, and it has nothing to do with you or frequentist stat
 Fort some reason, many human brains have difficulties of keeping track of positive and negative signs of z-statistics, greater-than and smaller-than relation, while having to flip them around in formulating and evaluating hypotheses.
 Just give it time.
 
+\Bigpoint{The Logic of Testing With Normal Means}{%
+For understanding the logic of the z-Test, it's important to keep in mind the difference between the underlying distribution of the \textit{data} (for example, reaction times in milliseconds under an experimental condition) and \textit{sample means} (for example, mean reaction times in milliseconds) of samples taken from these data.
+Furthermore, since we're arguing in a frequentist context, we ask how the sample means will be distributed if we take a lot or even infinitely many samples.
+The sample means from any underlying distribution of data points are normally distributed around the true mean of the data.
+The larger the variance in the data, the larger the variance in the sample means, although the sample means vary less and less with increasing sample size.
+If we know the true mean and the true variance in the data, we can perform a frequentist test by asking:
+\textit{What's the frequentist pre-experiment probability of (i)~obtaining a sample of the given size (ii)~with a mean that diverges from the true mean as extremely as or more extremely than the one we actually obtained (iii)~if the sample comes from the population with the known mean.}
+That probability is the p-value of the z-Test.
+If the p-value is low, we've either drawn a rare sample (which is an unexpected event), or the sample does \textit{not}, in fact, come from the known population, but from a population with a lower or higher mean.
+If the probability is low enough, you might make a careful inference and say that the sample provides some evidence that the mean under the experimental condition differs from the known mean.
+Only you and the colleagues in your field can decide what counts as {low enough}.
+Merely reaching a generic sig-level of 0.05 is most likely \textit{not} enough.
+}
+
 \subsection{The Difference Between Error Intervals and the z-Test}\label{sec:diffciz}
 
 The z-test allows us to check whether a mean measured in an experiment was an unexpected outcome under the Null.
@@ -552,7 +566,7 @@ If $p<sig$, \textit{we've reached significance}.
 However, when $p=0.009$ in the next experiment, suddenly that result might be called \textit{even more significant}.
 While we consider it vital to report the actual p-value and not just $p<sig$, we advise against cascaded conceptions of significance.
 Whether an outcome would be unexpected under the Null depends on the phenomenon at hand, the precision of your theory and of your measurement, whether you've ensured that the conditions for the test were met properly, and probably many other factors.
-Nobody can tell you or your reseqarch community what your threshold needs to be.
+Nobody can tell you or your research community what your threshold needs to be.
 For example, you might have seen reports from nuclear physics (such as results from experiments with the Large Hadron Collider of CERN) where it is claimed that $5\sigma$ was reached.
 That's just 5 standard deviations from the expected value under the Null ($z=5$), which corresponds to approximately $p=0.00000029$.
 In physics, this is not interpreted as a test but rather as a requirement for measurements to be taken seriously at all, to be accepted as measurements of something.
@@ -666,6 +680,13 @@ See Figure~\ref{fig:convzciss}, where we assume $\mu=0$, $\sigma=\ssigma_{\mu}=1
 The error interval is left-sided, and it corresponds to the right-sided test.
 As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the single-sided z-test, the interval again includes $0$.
 
+\Bigpoint{Tests and Error Intervals}{%
+Tests like the z-Test and Error Intervals are based on the same maths, but they're interpretations differ.
+Two-sided Error Intervals are probably more appropriate than tests when there is no substantive difference and hence no Null.
+Single-sided Error Intervals are rarely calculated, most likely they only make sense if researchers have at least a directional hypothesis, which is compatible with a very informative single-sided test.
+All in all, we've shown that Error Intervals contain only very little extra information compared to a test if the standard error, the z-value, and the p-value are reported.
+It's never a bad thing to report extra information or report the same information in different ways to make it easier for readers to get the idea.}
+
 \subsection{The Distribution of p-Values}\label{sec:distpz}
 
 <<setupzsim, cache=T, echo=FALSE, include=FALSE, results='asis'>>=
@@ -683,7 +704,7 @@ As $\xmean=1.65$ was chosen as the z-value that reaches $sig=0.05$ for the singl
   }
 @
 
-<<simznull, fig.cap=paste0("Histograms of p-values from z-tests when the Null is true; it's irrelevant what the parameters were, as any p-values have a uniformly random distribution under any true Null"), echo=F, fig.pos="t", cache=T>>=
+<<simznull, fig.cap=paste0("Histograms of p-values from z-tests when the Null is true; it's irrelevant what the parameters were as any p-values have a uniformly random distribution under any true Null"), echo=F, fig.pos="t", cache=T>>=
   par.defaults()
   z.sims.null <- unlist(unname(lapply(1:z.sim.rep,
                                       function(x) {z.sim(z.sim.mu)} )))
@@ -975,6 +996,17 @@ But, we hear you say, population means are also largely unknown, which makes the
 Hold that thought!
 The solution is presented in the next section.
 
+\Bigpoint{Rogue Estimates}{%
+If a test relies on certain parameters being known, you have to know them, and you can't under any circumstances estimate them!
+The z-Test requires that you know the true population mean and the true population variance.
+If you estimate those parameters from a sample and pretend you knew them, your error rates are off.
+We've shown that you'd reject the Null much more often than you should when it's true if you perform a z-Test based on variances estimated from samples.
+for example, you'd think you're wrong in 1\% of all cases, but you'd actually be wrong (much) more often.
+While this effect gets weaker with larger samples, you never know how large your sample needs to be to make the effect vanish sufficiently.
+Hence, whenever we say that \textit{parameter P needs to be known for test T to be applicable}, take that very seriously!
+If it's not known, look for alternative tests.
+}
+
 \subsection{Accounting for Two Unknown Means}\label{sec:ttwo}
 
 \subsubsection{Extending the Logic of the t-Test to Two Samples}\label{sec:logicttwo}
@@ -1151,7 +1183,7 @@ Let's apply all of this to our example:
 
 \noindent By looking up the statistic $t=\Sexpr{f.t}$ in a table for the cumulative density of the t-Distribution ($\nu=\Sexpr{(f.n-1)+(f.n-1)}$, single-sided lookup), we get $p=\Sexpr{f.p}$.%
 \footnote{Convenient tables can be found in the appendices.}
-This doesn't even meet the lowest standard for a unexpected result under the Null ($sig=0.05$), and hence we do not conclude anything from this result.
+This doesn't even meet the lowest standard for an unexpected result under the Null ($sig=0.05$), and hence we do not conclude anything from this result.
 
 \subsubsection{Standard Errors with Unequal Sample Sizes}
 
@@ -1343,7 +1375,7 @@ Also, the standard error went up slightly, leading to a result that is not unexp
 Please keep in mind that the high p-value still is \textit{not} in any way \textit{evidence in favour of the Null}!
 Under the Null, all p-values have the same probability.
 
-\subsubsection{Conditions for Testing Mean Differences}
+\subsubsection{Conditions for Testing Mean Differences}\label{sec:conditionmeantests}
 
 We hope that we could convince you that these tests are (as most people think) quite basic, but that there are lots of small catches and details to take into account.
 While the Two-Sample t-Test is applicable to many more situations than the z-Test, we'd like to point out that it's not a test you can apply to any sample means whatsoever.
@@ -1536,6 +1568,11 @@ In a Two-Sample t-Test, there must be no groupings between data points from one 
 For example, if you measure the same participants' reactions under two conditions, there is a pairwise grouping between reactions from individual participants under condition A and condition B.
 If you have data that is structured like this, use the t-Test for Repeated Measures.
 It's just a small amendment, but it will greatly improve your inferences.
+
+\Bigpoint{You Cannot Just Apply Any Test to Any Data}{%
+The whole of Section~\ref{sec:conditionmeantests} is a big point.
+Read it twice, and memorise it.
+}
 
 \subsection{\Indepth\ Mean Differences Are Normally Distributed}\label{sec:normaldiffs}
 
