@@ -6,15 +6,32 @@ opts_knit$set(self.contained=FALSE)
 \chapter{Inference: Three or More Means}
 \label{sec:anova}
 
-\subsection{\Indepth\ The F Distribution}
+\section*{Overview}
 
-\begin{equation}
-  \sqrt{\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x+d_2)^{d_1+d_2}}}
-  \label{eq:f}
-\end{equation}
+\Problem{But What About Three Means?}{%
+}
 
-\begin{equation}
-  \frac{1}{x\,\mathrm{B}\!\left(\frac{d_1}{2},\frac{d_2}{2}\right)}
-  \label{eq:fscaler}
-\end{equation}
+\section{Nice Idea, Shame about the Inferences: Pairwise Tesing}
+% Multiple t-Tests
+
+\section{Variance Depends on Groupwise Means}
+% Simple ANOVA
+
+\section{Putting Each Variance Where It Belongs}
+% Repeated measures ANOVA
+
+\section{Those Pesky Variances}
+% Multifactorial ANOVA incl. unmodelled influences
+
+\section{\Indepth\ The F Distribution}
+
+% \begin{equation}
+%   \sqrt{\frac{(d_1 x)^{d_1} d_2^{d_2}}{(d_1 x+d_2)^{d_1+d_2}}}
+%   \label{eq:f}
+% \end{equation}
+%
+% \begin{equation}
+%   \frac{1}{x\,\mathrm{B}\!\left(\frac{d_1}{2},\frac{d_2}{2}\right)}
+%   \label{eq:fscaler}
+% \end{equation}
 

@@ -1,12 +1,11 @@
 # specify thh main file and all the files that you are including
 SOURCE = $(wildcard local*.tex) $(wildcard chapters/*.tex)
 
-# specify your main target here:
-main: main.tex main.bbl main.pdf  # by the time main.pdf, bib assures there is a newer aux file
+main: main.tex main.bbl main.pdf
 
-complete: index main.pdf
+complete: main.ind main.pdf
 
-index:  main.snd
+index:  main.ind
 
 main.pdf: main.aux main.tex
 	xelatex main
@@ -25,41 +24,19 @@ main.tex: main.Rnw $(wildcard chapters/*.Rnw) $(wildcard chapters/*.tex)
 %.R: %.Rnw
 	Rscript -e "Sweave('$^', driver=Rtangle())"
 
-#create only the book
 main.bbl:  $(SOURCE) localbibliography.bib
 	xelatex -no-pdf main
 	biber   main
 
+main.ind:
+	xelatex -no-pdf main
+	makeindex main
 
-main.snd: main.bbl
-	touch main.adx main.sdx main.ldx
-	sed -i s/.*\\emph.*// main.adx #remove titles which biblatex puts into the name index
-	sed -i 's/hyperindexformat{\\\(infn {[0-9]*\)}/\1/' main.sdx # ordering of references to footnotes
-	sed -i 's/hyperindexformat{\\\(infn {[0-9]*\)}/\1/' main.adx
-	sed -i 's/hyperindexformat{\\\(infn {[0-9]*\)}/\1/' main.ldx
-	sed -i 's/.*Office.*//' main.adx
-	sed -i 's/.*Team.*//' main.adx
-	sed -i 's/.*Bureau.*//' main.adx
-	sed -i 's/.*Organisation.*//' main.adx
-	sed -i 's/.*Organization.*//' main.adx
-	sed -i 's/.*Embassy.*//' main.adx
-	sed -i 's/.*Association.*//' main.adx
-	sed -i 's/.*Commission.*//' main.adx
-	sed -i 's/.*committee.*//' main.adx
-	sed -i 's/.*government.*//' main.adx
-	sed -i 's/\\MakeCapital//' main.adx
-# 	python3 fixindex.py
-# 	mv mainmod.adx main.adx
-	makeindex -o main.and main.adx
-	grep -o  ", [^0-9, \\]*," main.and
-	makeindex -o main.lnd main.ldx
-	makeindex -o main.snd main.sdx
-	echo "check for doublets in name index"
-	grep -o  ", [^0-9, \\}]*," main.and|sed "s/, //" | sed "s/,\$//"
-	xelatex main
+price:
+	@./price.sh main.pdf
 
+### The rest is mere killefitt. ###
 
-#create a png of the cover
 cover: FORCE
 	convert main.pdf\[0\] -quality 100 -background white -alpha remove -bordercolor "#999999" -border 2  cover.png
 	cp cover.png googlebooks_frontcover.png
@@ -122,10 +99,8 @@ firstedition:
 	git checkout main
 	curl -X POST 'https://paperhive.org/api/document-items/remote?type=langsci&id='`cat ID`
 
-
 proofreading.pdf:
 	pdftk main.pdf multistamp prstamp.pdf output proofreading.pdf
-
 
 chop:
 	egrep -o "\{[0-9]+\}\{chapter\.[0-9]+\}" main.toc| egrep -o "[0-9]+\}\{chapter"|egrep -o [0-9]+ > cuts.txt
@@ -172,9 +147,7 @@ README.md:
 	echo "Copyright: (c) "`date +"%Y"`", the authors." >> README.md
 	echo "All data, code and documentation in this repository is published under the [Creative Commons Attribution 4.0 Licence](http://creativecommons.org/licenses/by/4.0/) (CC BY 4.0)." >> README.md
 
-
 supersede: convert cover.png -fill white -colorize 60%  -pointsize 64 -draw "gravity center fill red rotate -45  text 0,12 'superseded' "  superseded.png; display superseded.png
-
 
 wikicite:
 	echo '<ref name="abc">{{Cite book' > wiki
@@ -192,5 +165,3 @@ wikicite:
 	echo " </ref>" >>wiki
 	more wiki
 
-price:
-	@./price.sh main.pdf

@@ -1,4 +1,4 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
 %%      File: langscibook.cls
 %%    Author: Language Science Press (http://langsci-press.org)
 %%      Date: 2022-02-08 14:00 CET
@@ -49,7 +49,7 @@
 %   \- Miscellaneous
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{langscibook}[2022/02/08 Language Science Press]
+\ProvidesClass{langscibook}[2024/02/07 Language Science Press]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Early load packages
@@ -109,12 +109,13 @@
 \newcommand{\newlineCover}{\\}  % \newline only on cover
 \newcommand{\newlineSpine}{\\}  % \newline only on spine
 \newcommand{\newlineTOC}{\\}    % \newline only in TOC entry
-\newcommand{\affiliation}[1]{}     % A dummy command to process the affiliation info.
+\newcommand{\affiliation}[1]{}  % A dummy command to process the affiliation info.
+\newcommand{\orcid}[1]{}        % A dummy command to process ORCiDs.
 
 \newcommand{\lsSpineTitle}{\@title}
 \newcommand{\lsSpineAuthor}
   {%
-    \ResolveAffiliations[output affiliation=false,
+    \ResolveAffiliations[output affiliation=false, 
                          orcid placement=none,
                          output authors font=\lsSpineAuthorFont]{\@author}%
   }
@@ -140,17 +141,16 @@
 \newbool{babelshorthands}
 \newbool{multiauthors}
 \newbool{showindex}
-\newbool{newtxmath}
 \newbool{minimal}
 \newbool{collection}
 \newbool{collectiontoclong}
 \newbool{uniformtopskip}
 \newbool{oldstylenumbers}
-\newbool{tblseight}%for chinesefonts in tbls series page
 \newbool{lsISBNTwoDigitAddon}
 \newbool{lsFloatCounterWithoutChapter}
     \booltrue{lsFloatCounterWithoutChapter}
 \newbool{lsImportPackagesWhenStandalone}
+\newbool{lsSpineWidthUserConfigured}
 \newbool{infn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,7 +173,8 @@
 		\renewcommand{\lsBiblatexBackend}{#1}}
 \DeclareStringOption{spinewidth}[20mm]
 	\define@key{langscibook}{spinewidth}{%
-		\renewcommand{\lsSpinewidth}{#1}}
+		\renewcommand{\lsSpinewidth}{#1}%
+		\booltrue{lsSpineWidthUserConfigured}}
 \DeclareVoidOption{smallfont}{\renewcommand{\lsFontsize}{10pt}}
 \DeclareVoidOption{decapbib}{
         \booltrue{resetcapitals}
@@ -191,8 +192,6 @@
 \DeclareVoidOption{babelshorthands}{\booltrue{babelshorthands}}
 \DeclareVoidOption{multiauthors}{\booltrue{multiauthors}}
 \DeclareVoidOption{showindex}{\booltrue{showindex}}
-\DeclareVoidOption{nonewtxmath}{\boolfalse{newtxmath}}
-\DeclareVoidOption{newtxmath}{\booltrue{newtxmath}}
 \DeclareVoidOption{minimal}{\booltrue{minimal}}
 \DeclareVoidOption{collection}{\booltrue{collection}}
 \DeclareVoidOption{proofs}
@@ -273,7 +272,6 @@
 	\AdditionalFontImprint{Estrangelo Edessa}
   }
 
-\DeclareVoidOption{tblseight}{\booltrue{tblseight}}
 \DeclareVoidOption{infn}{\booltrue{infn}}
 
 \ProcessKeyvalOptions*
@@ -312,9 +310,7 @@
     fontsize=\lsFontsize,% default is 11pt
     footnotes=multiple,
     numbers=noenddot,% no point after last number of chapters/sections
-    \notbool{collection}{
-      toc=bib, % make bibliography appear in toc
-    }{}
+    toc=bib, % make bibliography appear in toc
     index=totoc,
     headings=optiontohead,
     footnotes=multiple
@@ -394,7 +390,7 @@
     }
 
     % Generates the content of the back cover. The starred variant \backcover*
-    % does not print the ISBN on the back. By default, we use \backcover if
+    % does not print the ISBN on the back. By default, we use \backcover if 
     % we are in a cover generation mode, and backcover* otherwise.
     % Mandatory argument: Text width, corresponding to Argument 1 of \frontcovertoptext
     \NewDocumentCommand \backcover {s m}
@@ -448,8 +444,8 @@
             text width=#2
             ] {\color{#1}\nohyphens{%
             \lsEditorPrefix%
-            \ResolveAffiliations[output in groups=false,
-                                 output affiliation=false,
+            \ResolveAffiliations[output in groups=false, 
+                                 output affiliation=false, 
                                  orcid placement=none,
                                  output authors font=\lsCoverAuthorFont,
                                  separator between two=\\,
@@ -469,8 +465,8 @@
             text width=#2
             ] {\color{#1}\nohyphens{%
             \lsEditorPrefix%
-            \ResolveAffiliations[output in groups=false,
-                                 output affiliation=false,
+            \ResolveAffiliations[output in groups=false, 
+                                 output affiliation=false, 
                                  orcid placement=none,
                                  output authors font=\lsCoverAuthorFont,
                                  separator between two=\\,
@@ -589,16 +585,18 @@
     \AtBeginDocument{%
         \ifbool{minimal}
           {% The minimal mode skips cover generation
-            \renewcommand{\maketitle}{You are using the minimal mode.}
+            \renewcommand{\maketitle}{You are using the minimal mode.} 
           }
           {% else minimal
             \setuptitle
           }
 
-        %% for those who like the example in numbered example sentences to be typeset in italics
-        %% this is possible for a complete series only.
+        %% Series-specific layout settings, governs the entire series
+        %% In SIDL, COGL and RCG, examples are put in italics. Sections are
+        %% referenced using the section sign “§”.
+        
         \ifx\lsSeries\sidl
-        %\def\exfont{\normalsize\itshape}
+        \renewcommand{\sectref}[1]{§\ref{#1}}
         \let\eachwordone=\itshape % only \gll
 
         \let\oldtable\table   % footnotes in tables without horizontal line
@@ -613,17 +611,15 @@
         \ifx\lsSeries\nc
         \let\eachwordone=\itshape
         \fi
-
+        
         \ifx\lsSeries\cogl
         \let\eachwordone=\itshape
+        \renewcommand{\sectref}[1]{§\ref{#1}}
         \fi
-
+        
         \ifx\lsSeries\rcg
         \let\eachwordone=\itshape
-        \fi
-
-        \ifx\lsSeries\eotms
-        \renewcommand{\sectref}[1]{Section~\ref{#1}}
+        \renewcommand{\sectref}[1]{§\ref{#1}}
         \fi
     } %% \AtBeginDocument
 }{} %notbool paper
@@ -644,6 +640,40 @@
 \newlength{\totalheight}
 \setlength{\bleed}{3.175mm}
 \setlength{\spinewidth}{\lsSpinewidth} % Create Space Version
+\ExplSyntaxOn
+% Integers and floats needed for automatic spine width calculation (BoD).
+\int_new:N \l__langsci_bookblock_page_count
+\int_new:N \l_langsci_spine_width_modifier
+\fp_new:N \l__langsci_spine_width
+
+\NewExpandableDocumentCommand{\lsDetermineSpineWidth}{O{Bookblock.pdf} m}
+  {% Collect the page count from input file.
+    \int_set:Nn \l__langsci_bookblock_page_count
+    {\the\XeTeXpdfpagecount"#1"}
+    
+    \str_case:nn {#2}
+      {
+      	{hardcover} % Determine hardcover spine dimensions with 90g white paper
+      	  {
+        	\int_compare:nTF 
+		      { \l__langsci_bookblock_page_count < 300 }
+		      { \int_set:Nn \l_langsci_spine_width_modifier {5} } 
+		      { \int_set:Nn \l_langsci_spine_width_modifier {6} }
+      	  }
+      	{softcover} % Determine softcover spine dimensions with 90g white paper
+      	  {
+        	\int_set:Nn \l_langsci_spine_width_modifier {0}
+      	  }
+      }
+     
+   	\fp_set:Nn \l__langsci_spine_width
+   	  {
+  	    \l__langsci_bookblock_page_count / 2 * 0.12
+  	    + \l_langsci_spine_width_modifier
+   	  }
+    \setlength{\spinewidth}{\fp_use:N \l__langsci_spine_width mm}
+  }
+\ExplSyntaxOff
 \usepackage{calc}
 
 \ifbool{coverCS}{
@@ -655,13 +685,19 @@
 \ifbool{coverBODhc}{
   \booltrue{cover}
   \usepackage{langsci-pod}
-  \bodhcgeometry
+  \ifbool{lsSpineWidthUserConfigured}
+         {}
+         {\lsDetermineSpineWidth{hardcover}}
+  \bodhcgeometry{}
 }{}
 
 \ifbool{coverBODsc}{
   \booltrue{cover}
   \usepackage{langsci-pod}
-  \bodscgeometry
+    \ifbool{lsSpineWidthUserConfigured}
+         {}
+         {\lsDetermineSpineWidth{softcover}}
+  \bodscgeometry{}
 }{}
 
 %Page size and text area if not cover
@@ -690,7 +726,6 @@
 \usepackage{amsmath} % has to be loaded before mathspec/unicode-math
 
 \notbool{minimal}{% The minimal mode skips font loading
-    \notbool{newtxmath}{
     %% There is a known problem in the interplay between \binom, unicode-math, and OTF
     %% https://tex.stackexchange.com/questions/269980/wrong-parentheses-size-in-binom-with-xelatex-and-unicode-math-in-displaystyle
     \ifx\Umathcode\@undefined\else
@@ -716,10 +751,6 @@
     \fi%umathcode
     %% Provides \setmathfont
     \usepackage{unicode-math}
-    }{%else newtxmath
-    %% Deprecated:
-    \PassOptionsToPackage{no-math}{fontspec} % must appear before metalogo or any fontspec stuff; deactivates fontspec's math settings, which is necessary to let newtxmath do the job
-    }
 
     \usepackage{metalogo}\newcommand{\xelatex}{\XeLaTeX\xspace}
 
@@ -738,12 +769,10 @@
     ItalicFont = Arimo-Italic.ttf,
     BoldItalicFont = Arimo-BoldItalic.ttf
     ]{Arimo-Regular.ttf}
-
-    \notbool{newtxmath}{
+    
     \setmathfont[AutoFakeBold]{LibertinusMath-Regular.otf}
     \setmathfont[range={cal},StylisticSet=1]{XITSMath-Regular.otf}
     \setmathfont[range={bfcal},StylisticSet=1]{XITSMath-Bold.otf}
-    }{}
 
     \ifbool{oldstylenumbers}{
     \defaultfontfeatures[LibertinusSerif-Semibold.otf,LibertinusSerif-Italic.otf,LibertinusSerif-SemiboldItalic.otf,LibertinusSerif-Regular.otf]{SmallCapsFeatures={Numbers=OldStyle}}
@@ -764,36 +793,21 @@
       ]
       {LibertinusSerif-Regular.otf}
 
-    %% Deprecated:
-    \ifbool{newtxmath}{
-            \usepackage[libertine]{newtxmath}
-            %% following http://tex.stackexchange.com/questions/297328/xelatex-does-not-load-newtxmath-with-linuxlibertine-sometimes
-            %% due to a bug in XeTeX. This also seems to fix an issue with \url in footnotes.
-    %% Unfortunately, this is NOT extensively tested!
-            \usepackage{xpatch}
-            \xpretocmd{\textsuperscript}
-            {{\sbox0{$\textstyle x$}}}
-            {}{}
-            \AtBeginDocument{%
-            \DeclareSymbolFont{operators}{\encodingdefault}{\familydefault}{m}{n}%
-            \SetSymbolFont{operators}{bold}{\encodingdefault}{\familydefault}{b}{n}%
-            }
-    }{}
-    % Improve the appearance of numbers in tables and the TOC
+    % Improve the appearance of numbers in tables and the TOC 
     % In those places, they should come out monospaced, unlike in main text.
-    \AtBeginEnvironment{tabular}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
-    \AtBeginEnvironment{tabularx}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
-    \AtBeginEnvironment{longtable}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
-
+    \AtBeginEnvironment{tabular}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
+    \AtBeginEnvironment{tabularx}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
+    \AtBeginEnvironment{longtable}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
+    
     \DeclareTOCStyleEntry
-      [
+      [  
         entrynumberformat=\addfontfeature{Numbers={Monospaced,Lining}},
         pagenumberformat=\addfontfeature{Numbers={Monospaced,Lining}}\bfseries,
         raggedentrytext=true
       ]
       {tocline}
       {chapter}
-
+      
     \DeclareTOCStyleEntries
       [
         entrynumberformat=\addfontfeature{Numbers={Monospaced,Lining}},
@@ -802,7 +816,7 @@
       ]
       {tocline}
       {section,subsection,subsubsection,paragraph,subparagraph}
-
+    
     % In collected volumes, adjust the spacing for unnumbered chapters
     \ifbool{collection}{
     \BeforeStartingTOC[toc]{\SetupAffiliations{output affiliation=false,
@@ -928,7 +942,7 @@
         {\g__affiliations_num_authors_int} > {1}
         {\booltrue{multiauthors}} {}
   }
-
+  
 \NewDocumentCommand{\lsDeterminePaperAuthorAffiliationIndexing}{}
   {%
     \int_compare:nNnT
@@ -936,10 +950,10 @@
         {
           \SetupAffiliations
             {
-              mark~style = none,
-              separator~between~affiliations=\&
+              mark~style = none, 
+              separator~between~affiliations={~\&~}
             }
-        }
+        } 
   }
 \ExplSyntaxOff
 
@@ -1027,20 +1041,14 @@
 %    Series history
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\tblseight}{{\color{red}Chinese fonts for TBLS 8 not loaded! Please set the option \textsc{tblseight} in main.tex for final production}}
-
-\ifbool{tblseight}
-  {
-    \newfontfamily\cn
-      [
-        Scale=MatchLowercase,
-        BoldFont=SourceHanSerifSC-Bold.otf
-      ]
-      {SourceHanSerifSC-Regular.otf}
-
-    \renewcommand{\tblseight}{{\cn 语法理论: 从转换语法到基于约束的理论}}
-  }{}
-
+% Load Chinese font for TBLS history display (from CTAN package "fandol")
+\AtEndPreamble
+  {%
+    \ifx\lsSeries\tbls
+      \newfontfamily{\lsSeriesHistoryFandolSong}{FandolSong-Regular.otf}
+    \fi
+  }
+  
 \ExplSyntaxOn
 % A command to output a limited number of items on the series history page.
 % This is useful in case there are too many items in a series history.
@@ -1060,24 +1068,24 @@
 \tl_new:N \langsci__wheel_wastebin_tl
 \cs_new:Npn \langsci_wheel:nn #1#2
   {
-    % Let's split the input at each \item. From the result, remove the
+    % Let's split the input at each \item. From the result, remove the 
     % first item, which will be empty.
     \seq_set_split:Nnn \langsci_wheel_seq {\item} {#2}
     \seq_pop_left:NNTF \langsci_wheel_seq \langsci__wheel_wastebin_tl {} {}
     % The offset is calculated by (length of input - maximum output)
-    \int_set:Nn \langsci_wheel_output_difference_int
+    \int_set:Nn \langsci_wheel_output_difference_int 
       {
         \seq_count:N \langsci_wheel_seq - #1
       }
     % An integer used for counting inside the loop.
     \int_zero:N \langsci_wheel_loop_count_int
     % Loop over the input and determine, for each item, whether to output
-    % it. The item is output when its number is greater than the difference
+    % it. The item is output when its number is greater than the difference 
     % between actual length and maximum.
-    \seq_map_inline:Nn \langsci_wheel_seq
+    \seq_map_inline:Nn \langsci_wheel_seq 
       {
         \int_incr:N \langsci_wheel_loop_count_int
-        \int_compare:nNnTF
+        \int_compare:nNnTF 
           \langsci_wheel_loop_count_int > \langsci_wheel_output_difference_int
           {\item[\int_use:N \langsci_wheel_loop_count_int.] ##1}
           {}
@@ -1358,7 +1366,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 % This setting does not influence the composition of the typearea.
 \AddToLayerPageStyleOptions{plain.scrheadings}
     {onselect={\setlength{\footheight}{3\baselineskip}}}
-
+    
 \ohead{\headmark}
 \ihead{}
 \cfoot{}
@@ -1402,7 +1410,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \def\toclevel@subsubsubsection{4}
 
 % Commands for Sections in Appendices:
-% Use as \appendixsection and \appendixsubsection.
+% Use as \appendixsection and \appendixsubsection. 
 % Further commands for lower levels can be defined following this pattern.
 \DeclareNewSectionCommand
   [
@@ -1451,12 +1459,12 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \def\epigramsource#1{\gdef\@epigramsource{#1}}
 \epigramsource{}
 
-\usepackage{epigraph}
-\setlength{\epigraphrule}{0pt}
-\renewcommand{\textflush}{flushepinormal}
-\setlength{\epigraphwidth}{.618\textwidth}% Set to the longer part of golden ratio
-\setlength{\afterepigraphskip}{0\baselineskip}
-\setlength{\beforeepigraphskip}{0\baselineskip}
+% Apply settings to dictum from scrbook
+\setkomafont{dictum}{\normalfont\small}
+\setkomafont{dictumauthor}{\normalfont\small}
+\renewcommand*{\dictumauthorformat}[1]{#1}
+\renewcommand{\dictumwidth}{.618\textwidth} % longer part of golden ratio
+\renewcommand*{\dictumrule}{\smallskip\par}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Footnotes
@@ -1569,24 +1577,14 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 	indexing=cite
 ]{biblatex}
 
-%% DOIs are handled after hyperref.
-\defbibheading{references}{\chapter{References}\sloppy}
-\defbibheading{english}{\chapter{References}\sloppy}
-\defbibheading{french}{\chapter{Références bibliographiques}\sloppy}
-\defbibheading{spanish}{\chapter{Referencias bibliográficas}\sloppy}
-\defbibheading{german}{\chapter{Literaturverzeichnis}\sloppy}
-\defbibheading{portuguese}{\chapter{Referências}\sloppy}
-\defbibheading{chinese}{\chapter{参考文献}\sloppy}
-
-%% penalties against widows and orphans in bibliography
-%% http://tex.stackexchange.com/questions/297705/atbeginenvironment-does-not-work-with-natbib/297721#297721
-\apptocmd{\thebibliography}{%
-\clubpenalty\@M
-\@clubpenalty\clubpenalty
-\widowpenalty\@M
+\defbibheading{references}[\lsReferencesTitle]{%
+  \addchap{#1}
+  \markdouble{#1}
+  \clubpenalty\@M
+  \@clubpenalty\clubpenalty
+  \widowpenalty\@M
+  \emergencystretch=3em
 }
-{}{}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Floats
@@ -1626,6 +1624,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \usepackage{caption}
 \captionsetup{font={stretch=.8,small},width=.8\textwidth}
 \setcapindent{0pt}
+\AtBeginEnvironment{floatrow}{\captionsetup{margin=.05\linewidth}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1849,7 +1848,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \renewcommand{\Hfootnoteautorefname}{Footnote}%
 \fi
 
-\providecommand{\sectref}[1]{§\ref{#1}}
+\providecommand{\sectref}[1]{Section~\ref{#1}}
 \providecommand{\chapref}[1]{Chapter~\ref{#1}}
 \providecommand{\partref}[1]{Part~\ref{#1}}
 \providecommand{\tabref}[1]{Table~\ref{#1}}
@@ -1899,7 +1898,8 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
       [
         pagenumberbox={\csname @gobble\endcsname},
         raggedentrytext=true,
-        linefill={\hfill}
+        linefill={\hfill},
+        dynnumwidth=true
       ]{tocline}{part}
 
     \usepackage{chngcntr}
@@ -1935,9 +1935,9 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newcommand{\lsCollectionMetadataToBibliography}[1]{%
   \renewcommand{\newlineCover}{}
   \renewcommand{\newlineSpine}{}
-  \renewcommand{\newlineTOC}{}
+  \renewcommand{\newlineTOC}{}  
   %% write bib entry to file
-  \immediate\write\tempfile{@incollection{#1,author={\authorToBib},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\lsCollectionEditor},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},keywords={withinvolume}}}
+  \immediate\write\tempfile{@incollection{#1,author={\authorToBib},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\lsCollectionEditor},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},keywords={LSPWithinVolume}}}
   \immediate\write\tempfile{@incollection{#1footer,author={\authorToBib},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\lsCollectionEditor},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},options={dataonly=true}}}
 }
 
@@ -1973,14 +1973,15 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
             % and their affiliation(s) are part of the \chapter block.
             \CountAuthorsFromAffiliations{\@author}
             \lsDeterminePaperAuthorAffiliationIndexing{}
-            \setchapterpreamble[u]{\ResolveAffiliations{\@author}\\}
+            \setchapterpreamble[u]{\ResolveAffiliations{\@author}}
             \chapter
             [tocentry={\titleToToC~\newline{\normalfont\ResolveAffiliations{\@author}}}]
             {\titleTemp}
+            \vskip1.15\baselineskip plus .1\baselineskip minus .167\baselineskip
             \begin{quote}
                 \small\lsCollectionPaperAbstract
             \end{quote}
-            % Save the current page for the bibliographical information in the
+            % Save the current page for the bibliographical information in the 
             % chapter footer
             \global\edef\lsCollectionPaperFirstPage{\thepage}
             \renewcommand{\newlineCover}{}
@@ -1989,8 +1990,8 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
                 \ifbool{draft}{Draft of \today, \currenttime}{}
                     }
             \ifx\@epigram\empty
-              \else {\epigraph{\@epigram\\[-2\baselineskip]}{\@epigramsource}
-                \epigram{}\epigramsource{}}
+                  \else \dictum[\@epigramsource]{\@epigram}%
+                        \epigram{}\epigramsource{}
             \fi
             \enlargethispage{-1\baselineskip}
         }
@@ -2106,19 +2107,19 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageChinese
-    %%Fonts for Chinese typesetting. If booklanguage=chinese, then
+    %%Fonts for Chinese typesetting. If booklanguage=chinese, then 
     %%xeCJK is loaded, which provides the font commands below.
     \setCJKmainfont[BoldFont = SourceHanSerifSC-Semibold.otf]{SourceHanSerifSC-Regular.otf}
 
     \setCJKsansfont[BoldFont = SourceHanSansSC-Bold.otf]{SourceHanSansSC-Regular.otf}
-
+      
       %% Settings for Punctuation
       \xeCJKsetup{CheckFullRight=true}
       \xeCJKsetup{PunctStyle=CCT}
-
+	
       %% Localisation strings
-      \renewcommand{\sectionname}{节}
-      \renewcommand{\figurename}{图}
+      \renewcommand{\sectionname}{节}  
+      \renewcommand{\figurename}{图}  
       \renewcommand{\tablename}{表}
       \renewcommand{\contentsname}{目\hspace{1em}录}
       \renewcommand{\appendixname}{附录}
@@ -2141,7 +2142,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newcommand{\lsPrefaceTitle}{Preface}
 \newcommand{\lsAcknowledgementTitle}{Acknowledgments}
 \newcommand{\lsAbbreviationsTitle}{Abbreviations}
-\newcommand{\lsReferencesTitle}{references} % This aligns with \defbibheading
+\newcommand{\lsReferencesTitle}{References} % This aligns with \defbibheading
 
 \ifx\lsBookLanguage\lsBookLanguageFrench
     \renewcommand{\lsIndexTitle}{Index}
@@ -2151,10 +2152,10 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsPrefaceTitle}{Préface}
     \renewcommand{\lsAcknowledgementTitle}{Remerciements}
     \renewcommand{\lsAbbreviationsTitle}{Liste des abréviations utilisées dans les gloses des exemples}
-    \renewcommand{\lsReferencesTitle}{french}
+    \renewcommand{\lsReferencesTitle}{Références bibliographiques}
     \ifbool{babel}{
         \renewcommand\frenchfigurename{Figure}
-        \renewcommand\frenchtablename{Table}
+        \renewcommand\frenchtablename{Tableau}
     }{}
 \fi
 
@@ -2166,7 +2167,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsPrefaceTitle}{Prefacio}
     \renewcommand{\lsAcknowledgementTitle}{Agradecimientos}
     \renewcommand{\lsAbbreviationsTitle}{Abreviaciones}
-    \renewcommand{\lsReferencesTitle}{spanish}
+    \renewcommand{\lsReferencesTitle}{Referencias bibliográficas}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageGerman
@@ -2177,7 +2178,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsPrefaceTitle}{Vorwort}
     \renewcommand{\lsAcknowledgementTitle}{Danksagung}
     \renewcommand{\lsAbbreviationsTitle}{Abkürzungsverzeichnis}
-    \renewcommand{\lsReferencesTitle}{german}
+    \renewcommand{\lsReferencesTitle}{Literaturverzeichnis}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguagePortuguese
@@ -2188,7 +2189,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsPrefaceTitle}{Prefácio}
     \renewcommand{\lsAcknowledgementTitle}{Agradecimentos}
     \renewcommand{\lsAbbreviationsTitle}{\colorbox{red}{Translation info for Abbv missing}}
-    \renewcommand{\lsReferencesTitle}{portugese}
+    \renewcommand{\lsReferencesTitle}{Referências}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageChinese
@@ -2198,7 +2199,8 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsLanguageIndexTitle}{语言索引}
     \renewcommand{\lsPrefaceTitle}{前言}
     \renewcommand{\lsAcknowledgementTitle}{致谢}
-    \renewcommand{\lsAbbreviationsTitle}{\colorbox{red}{Translation info for Abbv missing}}
+    \renewcommand{\lsAbbreviationsTitle}{缩写}
+    \renewcommand{\lsReferencesTitle}{参考文献}
 \fi
 
 
@@ -2218,7 +2220,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
       \let\@texttop\lsSaveValueTextTop
       \let\@textbottom\lsSaveValueTextBottom
     }
-
+    
     \def\sloppybottom{%
       \def\@textbottom{\vskip \z@ \@plus.0001fil \@minus .95\topskip}%
       \topskip=1\topskip \@plus 0.625\topskip \@minus .95\topskip%

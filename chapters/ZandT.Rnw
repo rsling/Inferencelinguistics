@@ -795,13 +795,14 @@ Imagine what this would do to our statistic $t$, which is calculated exactly the
   \end{math}
 \end{center}
 
-With increasing $s^2$, \ssigma\ increases, and $t$ decreases as the denominator of its formula is \ssigma.
+With increasing $s^2$, \ssigma\ increases, and $t$ decreases as the denominator of its formula is $\ssigma_{\mu}$.
 However, smaller values of the $z$ or $t$ statistics leads to larger p-values.
 Look at Figure~\ref{fig:z4} to convince yourself that this is true.
 Whichever criterion we adopt to reject the Null based on an obtained p-value, we'd reject less Nulls.%
 \footnote{Once again, we encourage you to go through this argument step by step multiple times until you're satisfied that you've understood and memorised the argument.}
 Since we attach no inferential interpretation to a rejected Null, rejecting more Nulls than we should because the sample variance overestimates the population variance is not a big deal.%
-\footnote{If you find this a very unsatisfying claim, read on until Chapter~\ref{sec:powerseverity}.}
+\footnote{If you find this claim deeply unsatisfying, we hear you.
+Just read on until Chapter~\ref{sec:powerseverity}.}
 
 If, on the other hand, the sample variance $s^2$ underestimates the population variance $\sigma^2$, we might end up rejecting less Nulls than we should.
 Convince yourself that this is true by going through the formulas above.
@@ -870,10 +871,17 @@ legend("topright", legend = c("p-value from Standard Normal", "p-value from t (w
 
 Figure~\ref{fig:t2} shows how two-sided p-values from the t-Distribution for a fixed t-value of 1.96 but with increasing sample size and thus increasing degrees of freedom.
 The t-value of 1.96 was chosen because we know that it corresponds to $p=0.05$ in a z-Test with a Standard Normal Distribution.
-The Normal Distribution has no parameter for degrees of freedom, and the p-value is therefore always $p=0.05$ for $z=1.96$.
+The Normal Distribution has no parameter for degrees of freedom, and the p-value is constant at $p=0.05$ for $z=1.96$.
 With ever larger samples, the p-value from a t-test approximates that from a z-test very quickly.
 With a slight oversimplification, we can say that the t-test makes it harder to reach any standard for an unexpected result compared to the z-test, thus accounting for the added uncertainty from the variance estimated from the sample.
 With a larger sample (higher degrees of freedom), that added uncertainty disappears more and more as the estimate becomes more and more accurate.
+
+\Bigpoint{What's Normal?}{%
+Sample means are normally distributed.
+For normally distributed data, this is always true, and for non-normally distributed data, it's true at large enough sample sizes (see Section~\ref{sec:conditionmeantests}).
+The t-Test does not account for non-normality in the distribution of the means.
+Rather, it accounts for the fact that our knowledge of the variability in the data and consequently of the variability in the means is limited by being estimated from the sample.
+}
 
 <<tsim, fig.cap="Distributions (histogram densities) of p-values from simulations of z-Tests and t-Tests with variances estimated from samples; the z-Tests are inappropriate in this case", fig.height=5, echo=F, fig.pos="t", cache=T>>=
 
@@ -1442,7 +1450,7 @@ There is no easy solution, but there is one, which we'll discuss immediately.
 \noindent\ding{194}~\textbf{The data are normally distributed.}
 Technically speaking, the data themselves (reaction times, formant frequencies, sentence lengths, etc.) don't need to be normally distributed.
 Only the means themselves must fulfil this requirement.
-Interestingly, there is a fundamental result (which at first appears very counterintuitive to many) which roughly speaking states that sample means drawn from any underlying distribution will be normal at sufficiently large sample sizes.
+Interestingly, there is a fundamental result (which at first appears very counterintuitive to many) which roughly states that sample means drawn from any underlying distribution will be normal at sufficiently large sample sizes.
 This fundamental result is called the \Key{Central Limit Theorem} (CLT).
 If you watched the videos recommended in Section~\ref{sec:gaussian} you've already got a basic idea of what it is.
 In any case, if samples are large enough, the data themselves need not be normally distributed, but the mean will be.

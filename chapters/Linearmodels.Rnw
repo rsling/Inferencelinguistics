@@ -4,7 +4,7 @@ opts_knit$set(self.contained=FALSE)
 @
 
 \chapter{Modelling: Linear Relationships}
-\label{sec:modellinglinearrelationships}
+\label{sec:lms}
 
 
-\section{\Indepth\ The Equivalence of the ANOVA and the Linear Model}
+% \section{\Indepth\ The Equivalence of the ANOVA and the Linear Model}

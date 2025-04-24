@@ -126,7 +126,7 @@ Also, $q_m=(n-c_l)\div n$.
 This means that counts of a binary variable are exhaustively summarised by two numbers.
 Neither can we adequately summarise it by one number (just one count, just one proportion, or just the sample size), nor do we absolutely need to provide more than two numbers (provided it's two well-chosen numbers).%
 \footnote{However, we would like to point out that providing the absolute minimum information is not always the nicest thing to do to your readers.
-Usually, the more relevant information you provide in your publications, the bettr it is for the reader.}
+Usually, the more relevant information you provide in your publications, the better it is for your readers' understanding of your point.}
 Either we specify the sample size $n$ and at least one proportion or one count.
 Or we specify the raw counts for both levels of the variable.
 Furthermore, not much is gained by converting counts to proportions, except that some people find proportions more intuitive.
